@@ -1,2 +1,2 @@
 # LGP-5A
-Ver informações fornecidas pelo Emotiv EPOC
+BrainLight - framework para leitura e análise de sinais biomédicos
