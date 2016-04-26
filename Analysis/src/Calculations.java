@@ -6,10 +6,10 @@ import java.util.HashMap;
 public class Calculations {
 
     //see what kind of calculations are needed and for each one call the appropriate functions
-    public HashMap<TypesOfCalculations, Integer> Calculations(int[] values, TypesOfCalculations[] calcs) {
+    public HashMap<TypesOfCalculations, Double> Calculations(double[][] values, TypesOfCalculations[] calcs) {
 
         //hashmap of types of calcs and their respective results
-        HashMap<TypesOfCalculations, Integer> result = new HashMap<>();
+        HashMap<TypesOfCalculations, Double> result = new HashMap<>();
 
         for(TypesOfCalculations type : calcs) {
             switch(type) {
@@ -52,47 +52,47 @@ public class Calculations {
         return result;
     }
 
-    private int calcWaveLength(int[] values) {
+    private double calcWaveLength(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcWaveNumber(int[] values) {
+    private double calcWaveNumber(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcAmplitude(int[] values) {
+    private double calcAmplitude(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcFrequency(int[] values) {
+    private double calcFrequency(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcPeriod(int[] values) {
+    private double calcPeriod(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcVelocity(int[] values) {
+    private double calcVelocity(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcMax(int[] values) {
+    private double calcMax(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcMin(int[] values) {
+    private double calcMin(double[][] values) {
         //TODO
         return 0;
     }
 
-    private int calcMean(int[] values) {
+    private double calcMean(double[][] values) {
         //TODO
         return 0;
     }
