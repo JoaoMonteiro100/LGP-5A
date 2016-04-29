@@ -6,7 +6,7 @@ package j2me.com.NeuroSky.ThinkGear.Util;
  * 
  * @author 		Horace Ko
  */
-public class HeadsetData {
+public class HeadsetData {	
 	/**
 	 * The interpreted meditation level (a value between 0 and 100, 
 	 * where 100 indicates high meditation).
