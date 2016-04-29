@@ -1,7 +1,8 @@
 package com.lgp5;
 
+import java.util.HashMap;
+
 import interfaces.HeadSetDataInterface;
-import j2me.com.NeuroSky.ThinkGear.Util.HeadsetData;
 
 public class Main {
 
@@ -11,8 +12,9 @@ public class Main {
 		sendDataInterface = new HeadSetDataInterface() {
 			
 			@Override
-			public void onReceiveData(HeadsetData headsetData) {
-				System.out.println(headsetData.attention);
+			public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
+				System.err.println(dataToSend.toString());
+				
 			}
 		};
 		
