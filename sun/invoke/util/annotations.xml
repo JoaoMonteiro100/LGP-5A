@@ -1,0 +1,5 @@
+<root>
+  <item name='sun.invoke.util.Wrapper'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+</root>

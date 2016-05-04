@@ -1,0 +1,5 @@
+<root>
+  <item name='java.util.HashMap V put(K, V)'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+</root>
