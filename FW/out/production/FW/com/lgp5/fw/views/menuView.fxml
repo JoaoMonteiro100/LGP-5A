@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/fonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.MenuController">
+   <children>
+      <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="brainLightLabel" style="-fx-cursor: hand;" text="BrainLight" textFill="#868686">
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="dataLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="DATA" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="147.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="20.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="moodLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="MOOD" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="restartLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="RESTART" textAlignment="CENTER" textFill="#1d1d1b" HBox.hgrow="NEVER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="170.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <ImageView fx:id="arrowLabel" fitHeight="25.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../assets/fa-angle-down.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="35.0" top="8.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <Pane id="submenu" layoutX="782.0" layoutY="40.0" prefHeight="147.0" prefWidth="218.0" style="-fx-background-color: #ececec;">
+         <children>
+            <Label fx:id="historyLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" styleClass="bold" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="96.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" styleClass="bold" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
