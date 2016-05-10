@@ -60,7 +60,7 @@
                   <Insets left="170.0" top="4.0" />
                </HBox.margin>
             </Label>
-            <ImageView fx:id="arrowLabel" fitHeight="25.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+            <ImageView fx:id="arrowLabel" fitHeight="25.0" fitWidth="150.0" onMouseEntered="#openMenu" onMouseExited="#closeMenu" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                <image>
                   <Image url="@../assets/fa-angle-down.png" />
                </image>
@@ -70,7 +70,7 @@
             </ImageView>
          </children>
       </HBox>
-      <Pane id="submenu" layoutX="782.0" layoutY="40.0" prefHeight="147.0" prefWidth="218.0" style="-fx-background-color: #ececec;">
+      <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" onMouseEntered="#openMenu" onMouseExited="#closeMenu" prefHeight="147.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
          <children>
             <Label fx:id="historyLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
                <font>

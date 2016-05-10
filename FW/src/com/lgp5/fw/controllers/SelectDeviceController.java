@@ -9,9 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import com.sun.corba.se.spi.orbutil.fsm.Action;
 
 
 public class SelectDeviceController {
@@ -61,5 +64,5 @@ public class SelectDeviceController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }    
 }
