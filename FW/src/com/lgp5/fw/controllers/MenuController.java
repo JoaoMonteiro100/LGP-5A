@@ -21,6 +21,8 @@ public class MenuController {
 
 	@FXML private ImageView arrowLabel;
 	@FXML private Pane painelHSA;
+	@FXML private Pane panelData;
+	@FXML private SplitPane splitPaneMood;
 	@FXML private Label historyLabel;
 	@FXML private Label sensorsLabel;
 	@FXML private Label analysisLabel;
@@ -51,5 +53,25 @@ public class MenuController {
 		fadeTransition.setFromValue(1.0);
 		fadeTransition.setToValue(0.0);
 		fadeTransition.play();
+	}
+	public void showData(MouseEvent event){
+		try {
+			panelData.setVisible(true);	
+		} catch (Exception e) {
+			System.out.println("null");
+		}
+		splitPaneMood.setVisible(false);
+			
+	}
+	public void showMood(MouseEvent event){
+		
+		try {
+			
+			panelData.setVisible(false);
+		} catch (Exception e) {
+			System.out.println("null");
+		}
+		
+		splitPaneMood.setVisible(true);
 	}
 }
