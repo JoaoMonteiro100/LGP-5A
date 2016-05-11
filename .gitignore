@@ -54,3 +54,8 @@ fabric.properties
 *.jar
 *.war
 *.ear
+
+# Intellij
+.idea/
+*.iml
+*.iws
