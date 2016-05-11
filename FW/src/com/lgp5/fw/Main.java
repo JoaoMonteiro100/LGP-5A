@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Font.loadFont(getClass().getResourceAsStream("/assets/fonts/Roboto-Medium.ttf"), 16);
         Font.loadFont(getClass().getResourceAsStream("/assets/fonts/Roboto-Bold.ttf"), 16);
         Font.loadFont(getClass().getResourceAsStream("/assets/fonts/Roboto-Light.ttf"), 16);

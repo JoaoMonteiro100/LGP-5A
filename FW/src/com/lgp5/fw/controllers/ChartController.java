@@ -9,10 +9,9 @@ import javafx.scene.chart.XYChart;
 
 import java.util.Arrays;
 
-/**
- * Created by Joao on 10/05/2016.
- */
-public class chartController {
+
+
+public class ChartController {
     @FXML
     private BarChart<String, Float> barChart;
     @FXML

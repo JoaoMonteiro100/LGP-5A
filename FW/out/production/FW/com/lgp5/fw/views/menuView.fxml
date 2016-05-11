@@ -10,6 +10,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/fonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.MenuController">
    <children>
+      <AnchorPane fx:id="paneLayoutRoot" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Pane fx:id="paneLayout" prefHeight="243.0" prefWidth="304.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+         </children>
+      </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="brainLightLabel" style="-fx-cursor: hand;" text="BrainLight" textFill="#868686">
@@ -70,13 +75,6 @@
             </ImageView>
          </children>
       </HBox>
-      <SplitPane fx:id="splitPaneMood" dividerPositions="0.5" layoutX="2.0" layoutY="66.0" orientation="VERTICAL" prefHeight="530.0" prefWidth="914.0" style="-fx-background-color: green;">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-        </items>
-      </SplitPane>
-      <Pane fx:id="panelData" layoutX="2.0" layoutY="63.0" prefHeight="536.0" prefWidth="914.0" style="-fx-background-color: orange;" />
       <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" onMouseEntered="#openMenu" onMouseExited="#closeMenu" prefHeight="147.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
          <children>
             <Label fx:id="historyLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
