@@ -10,8 +10,8 @@ public class BrainLightFW{
 
     private EmotivDevice emoDevice;
     private int wirelessSignal;
-    private LinkedList sharedQ;
-    private LinkedList localQ;
+    private LinkedList<HashMap<String, HashMap<String, Object>>> sharedQ;
+    private LinkedList<HashMap<String, HashMap<String, Object>>> localQ;
     private boolean running;
     private int deviceNo;
 
@@ -35,7 +35,29 @@ public class BrainLightFW{
 
     }
 
-    public void reciveDeviceData(){
+    //return true if all sensors are ok
+    public boolean getAllSensorsStatusOK(HashMap<String,HashMap<String,Object>> Obj){
+
+        if (deviceNo == 1){
+
+            Iterator iterator = Obj.get("ChannelQuality").entrySet().iterator();
+            while(iterator.hasNext()){
+                Map.Entry map = (Map.Entry) iterator.next();
+
+                if((map.getKey().equals("CMSChanQuality") && !map.getValue().equals(4))
+                        || (map.getKey().equals("DRLChanQuality") && !map.getValue().equals(4))){
+                    return false;
+                }else if((Integer)map.getValue() < 2){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+return true;
+    }
+
+    public void receiveDeviceData(){
 
         Thread receiveDataThread = new Thread("ReceiveDeviceData"){
             public void run() {
@@ -47,7 +69,7 @@ public class BrainLightFW{
 
                     while (running) {
                         if (deviceNo == 1) {
-                            getEmotivValues();
+                            getDeviceData();
                         }
                     }
                 }
@@ -69,7 +91,7 @@ public class BrainLightFW{
     }
 
 
-    public synchronized void getEmotivValues() {
+    public synchronized void getDeviceData() {
         synchronized (sharedQ) {
 
                 try {
@@ -78,11 +100,12 @@ public class BrainLightFW{
                     ex.printStackTrace();
                 }
 
+            if(getAllSensorsStatusOK((HashMap<String, HashMap<String, Object>>) sharedQ.getFirst())) {
+                localQ.addLast(sharedQ.pop());
+                System.out.println(localQ.getLast().get("DeviceInfo"));
+            }
+            else sharedQ.pop();
 
-
-            localQ.addLast(sharedQ.pop());
-            
-            System.out.println(localQ);
         }
     }
 
@@ -95,7 +118,7 @@ public class BrainLightFW{
 
         BrainLightFW fw = new BrainLightFW(1);
 
-        fw.reciveDeviceData();
+        fw.receiveDeviceData();
 
         Scanner scanner = new Scanner(System.in);
         String readString = scanner.nextLine();
