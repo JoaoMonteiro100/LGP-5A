@@ -5,6 +5,7 @@ import Emotiv.Emotiv_SDK.*;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.*;
 
+import javax.swing.text.EditorKit;
 import java.util.*;
 
 
@@ -56,20 +57,21 @@ public class EmotivDevice implements Runnable {
 
         System.out.println("Target IP of EmoComposer: [127.0.0.1]");
 
-        /*
+
         	if (Edk.INSTANCE.IEE_EngineConnect("Emotiv Systems-5") != EdkErrorCode.EDK_OK
 					.ToInt()) {
 				System.out.println("Emotiv Engine start up failed.");
 				return;
 			}
-         */
 
-        if (Edk.INSTANCE.IEE_EngineRemoteConnect("127.0.0.1", composerPort,
+
+     /*  if (Edk.INSTANCE.IEE_EngineRemoteConnect("127.0.0.1", composerPort,
                 "Emotiv Systems-5") != EdkErrorCode.EDK_OK.ToInt()) {
             System.out
                     .println("Cannot connect to EmoComposer on [127.0.0.1]");
             return;
-        }
+        }*/
+
         System.out.println("Connected to EmoComposer on [127.0.0.1]");
         init();
     }
@@ -149,54 +151,38 @@ public class EmotivDevice implements Runnable {
                 Edk.INSTANCE.IEE_EmoEngineEventGetUserId(emotivEvent, userID);
                 newData = eventTypeCheck(eventType);
 
-
-                if (eventType == Edk.IEE_Event_t.IEE_EmoStateUpdated.ToInt()) {
+                if (newData) {
                      timestamp = EmoState.INSTANCE.IS_GetTimeFromStart(emotivState);
-                 //   System.out.println(timestamp + " : New EmoState from user " + userID.getValue());
-
-                    if (newData) {
-                        //??????????????????????????????????????????????????????????????????????????
-                        emotivHeadsetOn = EmoState.INSTANCE.IS_GetHeadsetOn(emotivState);
+                    emotivHeadsetOn = EmoState.INSTANCE.IS_GetHeadsetOn(emotivState);
                         AverageBandPowers();
                         //wireless signal status
                         wirelessSignalStatus = EmoState.INSTANCE.IS_GetWirelessSignalStatus(emotivState);
-                    //    System.out.print("WirelessSignalStatus: ");
-                    //    System.out.println(wirelessSignalStatus);
 
                         //battety level status
                         EmoState.INSTANCE.IS_GetBatteryChargeLevel(emotivState, batteryLevelStatus, maxBatteryLevel);
-                     //   System.out.println("battery level: " + batteryLevelStatus.getValue());
 
                         getEmotivFacialExpression();
                         getEmotivHeadDirections();
 
-
                         //concentration level. return MentalCommand action power (0.0 to 1.0)
-                     //   System.out.print("Get current Action: ");
-                     //   System.out.println(EmoState.INSTANCE.IS_MentalCommandGetCurrentAction(emotivState));
                         emotivCurrentAction = EmoState.INSTANCE.IS_MentalCommandGetCurrentAction(emotivState);
-                        // System.out.println(emotivCurrentAction);
 
                         //cognition action power. return detection state (0: Not Active, 1: Active)
-                      //  System.out.print("CurrentActionPower: ");
-                     //   System.out.println(EmoState.INSTANCE.IS_MentalCommandGetCurrentActionPower(emotivState));
                         emotivCurrentActionPower = EmoState.INSTANCE.IS_MentalCommandGetCurrentActionPower(emotivState);
-
 
                         //battety level status
                         EmoState.INSTANCE.IS_GetBatteryChargeLevel(emotivState, batteryLevelStatus, maxBatteryLevel);
-                       // System.out.println("battery level: " + batteryLevelStatus.getValue());
-
 
                         AverageBandPowers();
                         getSensorsContactQuality();
 
                        sendData();
+
                     }
                 }
             }
         }
-    }
+
 
     private synchronized void sendData(){
         dataToSend = new HashMap<String,HashMap<String,Object>>();
@@ -368,28 +354,24 @@ public class EmotivDevice implements Runnable {
 
         //looking down status
         if (EmoState.INSTANCE.IS_FacialExpressionIsLookingDown(emotivState) == 1){
-         //   System.out.println("Looking Down");
             lookingDownStatus = 1;
         } else
             lookingDownStatus = 0;
 
         //looking up status
         if (EmoState.INSTANCE.IS_FacialExpressionIsLookingUp(emotivState) == 1){
-          //  System.out.println("Looking Up");
             lookingUpStatus = 1;
         } else
             lookingUpStatus = 0;
 
         //looking left status
         if (EmoState.INSTANCE.IS_FacialExpressionIsLookingLeft(emotivState) == 1){
-           // System.out.println("Looking Left");
             lookingLeftStatus = 1;
         } else
             lookingLeftStatus = 0;
 
         //looking right status
         if (EmoState.INSTANCE.IS_FacialExpressionIsLookingRight(emotivState) == 1){
-           // System.out.println("Looking Right");
             lookingRightStatus = 1;
         } else
             lookingRightStatus = 0;
@@ -398,49 +380,42 @@ public class EmotivDevice implements Runnable {
     private void getEmotivFacialExpression(){
         //blink state
         if (EmoState.INSTANCE.IS_FacialExpressionIsBlink(emotivState) == 1) {
-            //System.out.println("Blink");
             blinkStatus = 1;
         } else
             blinkStatus = 0;
 
         //left wink state
         if (EmoState.INSTANCE.IS_FacialExpressionIsLeftWink(emotivState) == 1) {
-            //System.out.println("LeftWink");
             leftWinkStatus = 1;
         } else
             leftWinkStatus = 0;
 
         //right wink state
         if (EmoState.INSTANCE.IS_FacialExpressionIsRightWink(emotivState) == 1) {
-           // System.out.println("RightWink");
             rightWinkStatus = 1;
         } else
             rightWinkStatus = 0;
 
         //eyes open state
         if (EmoState.INSTANCE.IS_FacialExpressionIsEyesOpen(emotivState) == 1){
-           // System.out.println("Eyes open");
             eyesOpenStatus = 1;
         } else
             eyesOpenStatus = 0;
 
         //get smile extention
         smileExtentStatus = EmoState.INSTANCE.IS_FacialExpressionGetSmileExtent(emotivState);
-       // System.out.println("Smile Extention: " + smileExtentStatus);
 
         //get lower face action
         lowerFaceActionStatus = EmoState.INSTANCE.IS_FacialExpressionGetLowerFaceAction(emotivState);
         lowerFaceActionStatusPower = EmoState.INSTANCE.IS_FacialExpressionGetLowerFaceActionPower(emotivState);
-       // System.out.println("Lower Face Action: " + lowerFaceActionStatus);
 
         //get uper face action
         uperFaceActionStatus = EmoState.INSTANCE.IS_FacialExpressionGetUpperFaceAction(emotivState);
         uperFaceActionStatusPower = EmoState.INSTANCE.IS_FacialExpressionGetUpperFaceActionPower(emotivState);
-        //System.out.println("Uper Face Action: " + uperFaceActionStatus);
 
         //get clench extent
         clenchExtentStatus = EmoState.INSTANCE.IS_FacialExpressionGetClenchExtent(emotivState);
-        //System.out.println("Clench Extention: " + clenchExtentStatus);
+
 
     }
 
