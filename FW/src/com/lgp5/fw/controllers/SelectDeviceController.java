@@ -38,9 +38,10 @@ public class SelectDeviceController {
         selectDeviceStartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String comboxBoxValue = selectDeviceComboBox.getSelectionModel().getSelectedItem().toString();
-                if(comboxBoxValue != null) {
-                    switch (comboxBoxValue) {
+                Object comboBox = selectDeviceComboBox.getSelectionModel().getSelectedItem();
+                if(comboBox != null) {
+                    String comboBoxValue = comboBox.toString();
+                    switch (comboBoxValue) {
                         case "NeuroSky Mindset":
                             launchNeuroSkyView();
                             break;
