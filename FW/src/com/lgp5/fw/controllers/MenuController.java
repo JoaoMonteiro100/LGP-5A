@@ -2,7 +2,10 @@ package com.lgp5.fw.controllers;
 
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
+import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
+
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -41,9 +44,6 @@ public class MenuController {
 
 
 	public MenuController() {
-		Neurosky neurosky = new Neurosky("0013EF004809", headSetDataInterface);
-		neurosky.connect();
-		neurosky.startReceivingData();
 	}
 
 
@@ -52,9 +52,21 @@ public class MenuController {
 		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
-				System.out.println("received data");
+				if(gamma1Data != null) {
+					HashMap<String, Object> values = hashMap.get(Constants.WAVES);
+					String gamma1 = values.get(Constants.LOW_GAMMA).toString();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							gamma1Data.setText(gamma1);
+						}
+					});
+				}
 			}
 		};
+		
+		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
 	}
 
 
