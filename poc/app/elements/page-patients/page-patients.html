@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
       </style>
+
       <app-widgets selected="{{selected}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
       <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
 
@@ -43,24 +44,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                {
                  title: 'Patients',
                  component: 'patients-list',
-                 icons:[
-                   {icon: 'icons:add'},
-                   {icon: 'icons:search'},
-                   {icon: 'icons:settings'}
+                 buttons:[
+                   {button: 'add-patient'},
+                //   {buttton: 'icons:search'},
+                //   {buttton: 'icons:settings'}
                  ]
 
                },
                {
                  title: 'cenas',
                  component: 'patients-list',
-                 icons:[
-
+                 buttons:[
                  ]
                },
                {
                  title: 'yoyo',
                  component: 'patients-list',
-                 icons:[
+                 buttons:[
 
                  ]
                }
@@ -72,12 +72,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                {
                  title: 'Patients',
                  component: 'patients-list',
-                 icons:[
+                 buttons:[
 
                  ]
                }]},
+         },
 
-         }
     });
   })();
   </script>
