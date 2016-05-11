@@ -218,7 +218,7 @@
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="31.0" prefWidth="105.0" text="60" GridPane.rowIndex="7">
+                  <Label fx:id="attentionData" prefHeight="31.0" prefWidth="105.0" text="60" GridPane.rowIndex="7">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -231,7 +231,7 @@
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="31.0" prefWidth="105.0" text="60" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <Label fx:id="mediationData" prefHeight="31.0" prefWidth="105.0" text="60" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font size="17.0" />
                      </font>
