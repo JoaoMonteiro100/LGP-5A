@@ -2,19 +2,15 @@ package com.lgp5.fw.controllers;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.net.URL;
+import java.util.Scanner;
 
 
 public class MenuController {
@@ -25,11 +21,23 @@ public class MenuController {
 	@FXML private Label historyLabel;
 	@FXML private Label sensorsLabel;
 	@FXML private Label analysisLabel;
-	@FXML private Pane paneLayout;
+	@FXML private GridPane brainWavesPane;
+	@FXML private Label gamma1Data;
+	@FXML private Label gamma2Data;
+	@FXML private Label alfa1Data;
+	@FXML private Label alfa2Data;
+	@FXML private Label beta1Data;
+	@FXML private Label beta2Data;
+	@FXML private Label deltaData;
+	@FXML private Label thetaData;
+	@FXML private Label errorRateData;
+	@FXML private Label batteryLevelData;
+	@FXML private Label signalQualityData;
+	@FXML private GridPane dataPane;
 	private FadeTransition fadeIn = new FadeTransition(Duration.millis(1000));
 
 
-	public MenuController(){ 
+	public MenuController(){
 	}
 
 
@@ -59,8 +67,10 @@ public class MenuController {
 
 	public void showData(MouseEvent event){
 		try {
-			paneLayout = (Pane) FXMLLoader.load(getClass().getResource("../views/dataView.fxml"));
-			paneLayoutRoot.getChildren().add(paneLayout);
+			if(!dataPane.isVisible()) {
+				brainWavesPane.setVisible(false);
+				dataPane.setVisible(true);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,6 +78,18 @@ public class MenuController {
 
 
 	public void showMood(MouseEvent event){
-		
+
+	}
+
+
+	public void showBrainWaves(MouseEvent event) {
+		try {
+			if(!brainWavesPane.isVisible()) {
+				dataPane.setVisible(false);
+				brainWavesPane.setVisible(true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
