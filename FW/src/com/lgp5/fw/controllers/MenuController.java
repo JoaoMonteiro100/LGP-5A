@@ -1,5 +1,7 @@
 package com.lgp5.fw.controllers;
 
+import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
+import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.util.Scanner;
+import java.util.HashMap;
 
 
 public class MenuController {
@@ -35,14 +37,24 @@ public class MenuController {
 	@FXML private Label signalQualityData;
 	@FXML private GridPane dataPane;
 	private FadeTransition fadeIn = new FadeTransition(Duration.millis(1000));
+	private HeadSetDataInterface headSetDataInterface;
 
 
-	public MenuController(){
+	public MenuController() {
+		Neurosky neurosky = new Neurosky("0013EF004809", headSetDataInterface);
+		neurosky.connect();
+		neurosky.startReceivingData();
 	}
 
 
 	@FXML
 	private void initialize() {
+		headSetDataInterface = new HeadSetDataInterface() {
+			@Override
+			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
+				System.out.println("received data");
+			}
+		};
 	}
 
 
