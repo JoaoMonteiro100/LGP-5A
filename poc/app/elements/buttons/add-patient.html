@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+
+
 <dom-module id="add-patient">
   <template>
     <style include="shared-styles"></style>
@@ -34,22 +36,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           @apply(--layout-flex);
         }
 
+        #genderdrop{
+        @apply(--layout-horizontal);
+        }
+
     </style>
     <paper-icon-button data-dialog="modal" icon="icons:add" on-click="clickHandler"></paper-icon-button>
 
     <paper-dialog id="modal" modal>
       <h1>Add new Patient</h1>
       <form is="iron-form" method="get" action="/" id="newuserform">
-  <paper-input name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
-  <paper-input name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
-  <paper-input name="unumber" label="Number" auto-validate pattern="[0-9]*" error-message="numbers only!" required auto-validate></paper-input>
+  <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
+  <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
+  <paper-input id="unumber" name="unumber" label="Number" auto-validate pattern="[0-9]*" error-message="numbers only!" required auto-validate></paper-input>
   <div class="containerdiv">
     <div class="flexchild">
   <paper-input name="password" id="pwinput" label="Password" minlength="6" required auto-validate></paper-input>
 </div>
   <paper-icon-button id="genpw" icon="icons:create" on-tap="generatePW">
 </div>
-  <paper-button raised onclick="_delayedSubmit(event)" disabled id="newuserformSubmit">
+<paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected" label="Gender">
+<paper-listbox class="dropdown-content">
+  <paper-item>Female</paper-item>
+  <paper-item>Male</paper-item>
+</paper-listbox>
+</paper-dropdown-menu>
+  <paper-button raised on-tap="_nativeSubmit" id="newuserformSubmit">
     <paper-spinner id="spinner" hidden></paper-spinner>Submit</paper-button>
   <paper-button raised on-tap="_reset">Reset</paper-button>
   <div class="output"></div>
@@ -67,12 +79,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'add-patient',
 
       properties: {
+        newPatient: {
+           type: Object,
+           notify: true
+         }
       },
-      ready: function(){
-        this.$.newuserform.addEventListener('change', function(event) {
-      newuserformSubmit.disabled = !newuserform.validate();
-    });
-  },
+
+      setNewPatient: function() {
+          this.newPatient = {
+            name: this.$.firstname.value,
+            lastname: this.$.firstname.value,
+            email: '',
+            phone: '',
+            picture: this.user.google.cachedUserProfile.picture,
+            department: '',
+            job: '',
+            office: '',
+            room: '',
+            notification: {
+              message: true,
+              invitation: true,
+              changes: false,
+              login: false,
+              weekly: true,
+              daily: false
+            }
+          };
+        },
+
+_itemSelected : function(e) {
+  this.$.genderdrop.validate();
+},
+
+      _nativeSubmit: function(event){
+   if (newuserform.validate()) {
+     // For each element the iron-form wants to submit, create a hidden
+     // input in the submission form.
+     var serializedItems = newuserform.serialize();
+     for (var name in serializedItems) {
+       var input = document.createElement('input');
+       input.hidden = true;
+       input.name = name;
+       input.value = serializedItems[name];
+       nativeForm.appendChild(input);
+     }
+     nativeForm.submit();
+   }
+ },
+
       clickHandler:function(e) {
      var button = e.target;
      while (!button.hasAttribute('data-dialog') && button !== document.body) {
@@ -99,7 +153,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         pass += chars.charAt(i);
     }
     this.$.pwinput.value = pass;
-    newuserformSubmit.disabled = !newuserform.validate();
 },
 
     });
