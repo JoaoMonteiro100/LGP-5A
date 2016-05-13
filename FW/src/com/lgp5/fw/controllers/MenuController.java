@@ -181,18 +181,16 @@ public class MenuController {
 		for (int i = 0; i < values.length; i++) {
 			XYChart.Data<String,Float> waveData = new XYChart.Data<>(brainwaves.get(i), values[i]);
 			waveData.nodeProperty().addListener(new ChangeListener<Node>() {
-				
+
 				@Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, Node newNode) {					
 					if (newNode != null) { 
-						if(colorNumber>constants.Constants.colors.length)
-						{
-							colorNumber=0;
-						}
+						if(colorNumber>=constants.Constants.colors.length)						
+							colorNumber=0;						
 						newNode.setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";"); 	
 						colorNumber++;						
 					}					
 				}
-				
+
 			});
 			series.getData().add(waveData);         
 		}
