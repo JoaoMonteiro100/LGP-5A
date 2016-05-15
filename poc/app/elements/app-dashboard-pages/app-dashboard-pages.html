@@ -8,7 +8,11 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+
+<!-- Insert this code before your </body> tag -->
+<link rel="import" href="../../elements/app-snake/snake.html">
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+
 <dom-module id="app-dashboard-pages">
 <style include="shared-styles"></style>
    <style>
@@ -33,6 +37,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <section data-route="patients">
         <app-page-title title="Patients" cols='{{cols}}'></app-page-title>
           <page-patients cols="{{cols}}"></page-patients>
+      </section>
+
+
+      <section data-route="game">
+        <app-snake>
+        </app-snake>
+
       </section>
 
       <section data-route="messages">
