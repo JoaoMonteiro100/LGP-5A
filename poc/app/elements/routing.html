@@ -56,14 +56,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'home';
     });
 
-
+    
 
 
     page('/dashboard/:cenas/coisas', function() {
       alert("aqui2");
     });
-
-
 
 
     page('/users/:name', function(data) {
@@ -82,6 +80,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/contact', function() {
       app.route = 'contact';
+    });
+
+
+    page('/dashboardAdmin', function() {
+      app.route = 'dashboardAdmin';
+    });
+
+
+    page('/dashboardAdmin/:page', function(data) {
+      app.route = 'dashboardAdmin';
+      app.params = data.params;
     });
 
     // 404
