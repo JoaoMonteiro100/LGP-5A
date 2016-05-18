@@ -83,12 +83,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
 
+//Admin
     page('/dashboardAdmin', function() {
       app.route = 'dashboardAdmin';
     });
 
 
     page('/dashboardAdmin/:page', function(data) {
+      app.route = 'dashboardAdmin';
+      app.params = data.params;
+    });
+
+     page('/users/:name', function(data) {
       app.route = 'dashboardAdmin';
       app.params = data.params;
     });
