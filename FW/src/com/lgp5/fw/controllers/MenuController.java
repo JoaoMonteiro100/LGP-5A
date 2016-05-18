@@ -15,6 +15,8 @@ import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -69,12 +71,25 @@ public class MenuController {
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		brainwaves.addAll(Arrays.asList(waves));
 		xAxis.setCategories(brainwaves);
-
-
 		float[] values = {35f, 43f, 27f, 12f, 9.2f, 32f, 16f, 20f};
 		XYChart.Series<String,Float> series = createWaveDataSeries(values);
 		barChart.getData().add(series);
 		barChart.setLegendVisible(false);
+		/*	Platform.runLater(new Runnable() {
+			@Override
+			public void run() {			
+
+				for (Series<String, Float> series : barChart.getData()) {
+					for (Data<String, Float> data : series.getData()) {
+						//data.setExtraValue(Math.random() * 100);
+						data.setYValue((float) (Math.random() * 100));
+						System.out.println("teste");
+					}
+				}				
+			}
+		});
+		 */
+		//new Thread().start();
 
 		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
@@ -91,7 +106,7 @@ public class MenuController {
 					String delta = values.get(Constants.DELTA).toString();
 					String attention = values.get(Constants.ATTENTION).toString();
 					String meditation = values.get(Constants.MEDITATION).toString();
-					String signal = values.get(Constants.POOR_SIGNAL).toString();
+					String signal = values.get(Constants.POOR_SIGNAL).toString();									
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -106,6 +121,44 @@ public class MenuController {
 							attentionData.setText(attention);
 							mediationData.setText(meditation);
 							signalQualityData.setText(signal);
+							for (Series<String, Float> series : barChart.getData()) {
+								int i=0;
+								for (Data<String, Float> data : series.getData()) {									
+									switch (i) {
+									case 0:
+										data.setYValue(Float.parseFloat(delta));
+										break;
+									case 1:
+										data.setYValue(Float.parseFloat(theta));
+										break;
+									case 2:
+										data.setYValue(Float.parseFloat(alpha1));
+										break;
+									case 3:
+										data.setYValue(Float.parseFloat(alpha2));
+										break;
+									case 4:
+										data.setYValue(Float.parseFloat(beta1));
+										break;
+									case 5:
+										data.setYValue(Float.parseFloat(beta2));
+										break;
+									case 6:
+										data.setYValue(Float.parseFloat(gamma1));
+										break;
+									case 7:
+										data.setYValue(Float.parseFloat(gamma2));										
+										break;
+
+									default:
+										break;
+									}
+									i++;
+									//data.setYValue(Math.random() * 100);
+									//float f = Float.parseFloat("25");
+									//String s = Float.toString(25.0f);									
+								}
+							}		
 						}
 					});
 				}
@@ -114,8 +167,6 @@ public class MenuController {
 
 		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
 	}
-
-
 
 	public void openMenu(MouseEvent event){		
 		painelHSA.setVisible(true);
@@ -167,7 +218,6 @@ public class MenuController {
 		}
 	}
 
-
 	/**
 	 * Creates a XYChart.Data object for each wave. All data is then returned as a series.
 	 *
@@ -175,13 +225,10 @@ public class MenuController {
 	 * @return Series of brainwave data
 	 */
 	private XYChart.Series<String,Float> createWaveDataSeries (float[] values) {
-
 		XYChart.Series<String,Float> series = new XYChart.Series<>();
-
 		for (int i = 0; i < values.length; i++) {
 			XYChart.Data<String,Float> waveData = new XYChart.Data<>(brainwaves.get(i), values[i]);
 			waveData.nodeProperty().addListener(new ChangeListener<Node>() {
-
 				@Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, Node newNode) {					
 					if (newNode != null) { 
 						if(colorNumber>=constants.Constants.colors.length)						
@@ -190,11 +237,9 @@ public class MenuController {
 						colorNumber++;						
 					}					
 				}
-
 			});
 			series.getData().add(waveData);         
 		}
-
 		return series;
 	}
 }
