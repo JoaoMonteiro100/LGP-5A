@@ -39,6 +39,7 @@ public class MenuController {
 	@FXML private Label analysisLabel;
 	@FXML private Label brainWavesLabel;
 	@FXML private Label dataLabel;
+	@FXML private Label moodLabel;
 	@FXML private GridPane brainWavesPane;
 	@FXML private Label gamma1Data;
 	@FXML private Label gamma2Data;
@@ -54,10 +55,15 @@ public class MenuController {
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
 	@FXML private GridPane dataPane;
+	@FXML private GridPane moodPane;
 	private HeadSetDataInterface headSetDataInterface;
-	@FXML private BarChart<String, Float> barChart;
-	@FXML private CategoryAxis xAxis;
+	@FXML private BarChart<String, Float> barChartWaves;
+	@FXML private BarChart<String, Float> barChartMoods;
+	@FXML private CategoryAxis xAxisWaves;
+	@FXML private CategoryAxis xAxisMood;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
+	private ObservableList<String> moods = FXCollections.observableArrayList();
+
 
 
 	public MenuController() {
@@ -69,27 +75,20 @@ public class MenuController {
 	@FXML
 	private void initialize() {
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
+		String[] moodsArray = {"Attention","Mediation"};
 		brainwaves.addAll(Arrays.asList(waves));
-		xAxis.setCategories(brainwaves);
+		moods.addAll(Arrays.asList(moodsArray));
+		xAxisWaves.setCategories(brainwaves);
+		xAxisMood.setCategories(moods);
 		float[] values = {35f, 43f, 27f, 12f, 9.2f, 32f, 16f, 20f};
-		XYChart.Series<String,Float> series = createWaveDataSeries(values);
-		barChart.getData().add(series);
-		barChart.setLegendVisible(false);
-		/*	Platform.runLater(new Runnable() {
-			@Override
-			public void run() {			
+		float[] values2 = {35f, 43f};
+		XYChart.Series<String,Float> series = createWaveDataSeries(values,brainwaves);
+		XYChart.Series<String,Float> series2 = createWaveDataSeries(values2,moods);
+		barChartWaves.getData().add(series);
+		barChartMoods.getData().add(series2);
+		barChartWaves.setLegendVisible(false);
+		barChartMoods.setLegendVisible(false);
 
-				for (Series<String, Float> series : barChart.getData()) {
-					for (Data<String, Float> data : series.getData()) {
-						//data.setExtraValue(Math.random() * 100);
-						data.setYValue((float) (Math.random() * 100));
-						System.out.println("teste");
-					}
-				}				
-			}
-		});
-		 */
-		//new Thread().start();
 
 		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
@@ -121,7 +120,23 @@ public class MenuController {
 							attentionData.setText(attention);
 							mediationData.setText(meditation);
 							signalQualityData.setText(signal);
-							for (Series<String, Float> series : barChart.getData()) {
+							for (Series<String, Float> series2 : barChartMoods.getData()) {
+								int j=0;
+								for (Data<String, Float> data2 : series2.getData()) {									
+									switch (j) {
+									case 0:
+										data2.setYValue(Float.parseFloat(attention));
+										break;
+									case 1:
+										data2.setYValue(Float.parseFloat(meditation));
+										break;	
+									default:
+										break;
+									}
+									j++;
+								}
+							}
+							for (Series<String, Float> series : barChartWaves.getData()) {
 								int i=0;
 								for (Data<String, Float> data : series.getData()) {									
 									switch (i) {
@@ -149,16 +164,12 @@ public class MenuController {
 									case 7:
 										data.setYValue(Float.parseFloat(gamma2));										
 										break;
-
 									default:
 										break;
 									}
-									i++;
-									//data.setYValue(Math.random() * 100);
-									//float f = Float.parseFloat("25");
-									//String s = Float.toString(25.0f);									
+									i++;																	
 								}
-							}		
+							}								
 						}
 					});
 				}
@@ -186,12 +197,14 @@ public class MenuController {
 	}
 
 
-	public void showData(MouseEvent event){
-		dataLabel.setDisable(true);
+	public void showData(MouseEvent event){		
 		brainWavesLabel.setDisable(false);
+		moodLabel.setDisable(false);
+		dataLabel.setDisable(true);
 		try {
 			if(!dataPane.isVisible()) {
 				brainWavesPane.setVisible(false);
+				moodPane.setVisible(false);
 				dataPane.setVisible(true);
 			}
 		} catch (Exception e) {
@@ -201,16 +214,29 @@ public class MenuController {
 
 
 	public void showMood(MouseEvent event){
-
+		dataLabel.setDisable(false);
+		brainWavesLabel.setDisable(false);
+		moodLabel.setDisable(true);
+		try {
+			if(!moodPane.isVisible()) {
+				dataPane.setVisible(false);
+				brainWavesPane.setVisible(false);
+				moodPane.setVisible(true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
 	public void showBrainWaves(MouseEvent event) {
 		dataLabel.setDisable(false);
+		moodLabel.setDisable(false);
 		brainWavesLabel.setDisable(true);
 		try {
 			if(!brainWavesPane.isVisible()) {
 				dataPane.setVisible(false);
+				moodPane.setVisible(false);
 				brainWavesPane.setVisible(true);
 			}
 		} catch (Exception e) {
@@ -224,10 +250,10 @@ public class MenuController {
 	 * @param values Array with a value for each brainwave. Must be the same length as the waves array
 	 * @return Series of brainwave data
 	 */
-	private XYChart.Series<String,Float> createWaveDataSeries (float[] values) {
+	private XYChart.Series<String,Float> createWaveDataSeries (float[] values,ObservableList<String> list) {
 		XYChart.Series<String,Float> series = new XYChart.Series<>();
 		for (int i = 0; i < values.length; i++) {
-			XYChart.Data<String,Float> waveData = new XYChart.Data<>(brainwaves.get(i), values[i]);
+			XYChart.Data<String,Float> waveData = new XYChart.Data<>(list.get(i), values[i]);
 			waveData.nodeProperty().addListener(new ChangeListener<Node>() {
 				@Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, Node newNode) {					
 					if (newNode != null) { 
