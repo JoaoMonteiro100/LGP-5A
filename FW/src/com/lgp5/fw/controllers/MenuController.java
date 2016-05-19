@@ -64,10 +64,12 @@ public class MenuController {
 	private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
-    @FXML private LineChart<String, Float> radarGraph;
+    @FXML private StackedAreaChart<Float, Float> radarGraphA;
+    @FXML private StackedAreaChart<Float, Float> radarGraphB;
+    @FXML private StackedAreaChart<Float, Float> radarGraphC;
+    @FXML private StackedAreaChart<Float, Float> radarGraphD;
 	@FXML private CategoryAxis xAxisWaves;
 	@FXML private CategoryAxis xAxisMood;
-    @FXML private CategoryAxis xAxisRadar;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
 
@@ -97,10 +99,42 @@ public class MenuController {
 		barChartMoods.setLegendVisible(false);
 
 
+        XYChart.Series seriesA = new XYChart.Series();
+        seriesA.getData().add(new XYChart.Data(0, 100));
+        seriesA.getData().add(new XYChart.Data(50, 50));
+        seriesA.getData().add(new XYChart.Data(75, 0));
+        radarGraphA.getData().addAll(seriesA);
 
+        XYChart.Series seriesB = new XYChart.Series();
+        seriesB.getData().add(new XYChart.Data(75, 0));
+        seriesB.getData().add(new XYChart.Data(50, -50));
+        seriesB.getData().add(new XYChart.Data(0, -90));
+        radarGraphB.getData().addAll(seriesB);
 
+        XYChart.Series seriesC = new XYChart.Series();
+        seriesC.getData().add(new XYChart.Data(-20, 0));
+        seriesC.getData().add(new XYChart.Data(-50, -50));
+        seriesC.getData().add(new XYChart.Data(0, -90));
+        radarGraphC.getData().addAll(seriesC);
 
-		headSetDataInterface = new HeadSetDataInterface() {
+        XYChart.Series seriesD = new XYChart.Series();
+        seriesD.getData().add(new XYChart.Data(-20, 0));
+        seriesD.getData().add(new XYChart.Data(-50, 50));
+        seriesD.getData().add(new XYChart.Data(0, 100));
+        radarGraphD.getData().addAll(seriesD);
+
+        //look up first series fill
+        Node node = radarGraphA.lookup(".default-color0.chart-series-area-fill");
+        Node node1 = radarGraphB.lookup(".default-color0.chart-series-area-fill");
+        Node node2 = radarGraphC.lookup(".default-color0.chart-series-area-fill");
+        Node node3 = radarGraphD.lookup(".default-color0.chart-series-area-fill");
+        //set the fill to transparent
+        node.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+        node1.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+        node2.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+        node3.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+
+        headSetDataInterface = new HeadSetDataInterface() {
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
 				if(gamma1Data != null) {
