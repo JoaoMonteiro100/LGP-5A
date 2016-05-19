@@ -47,7 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <section>
             <paper-dialog-scrollable>
                 <div>
-                    apsdosaido
+                    texto2
+                    [[user.name]]
                 </div>
             </paper-dialog-scrollable>
         </section>
@@ -60,7 +61,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 is: 'patient-details',
 
                 properties: {
+                    user: {
+                        type: Object,
+                        notify: true
+                    }
+                },
 
+                ready: function() {
+                    var self = this;
+
+                    addEventListener('selected-user', function(user) {
+                        //alert(JSON.stringify(user));
+                        self.user = user.detail;
+                    });
                 }
             });
         })();

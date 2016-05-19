@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </style>
 
-      <app-widgets selected="{{selected}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
+      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
       <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
 
   </template>
@@ -57,13 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  component: 'patient-details',
                  buttons:[
                  ]
-               },
-               {
-                 title: 'yoyo',
-                 component: 'patients-list',
-                 buttons:[
-
-                 ]
                }
              ]
            },
@@ -77,8 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                  ]
                }]},
-         },
-
+         }
     });
   })();
   </script>

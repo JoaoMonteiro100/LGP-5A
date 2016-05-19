@@ -57,7 +57,7 @@ paper-listbox{
   </firebase-collection>
 
   <paper-dialog-scrollable>
-    <paper-listbox selected="{{myChoice}}">
+    <paper-listbox id="patientList" selected="{{myChoice}}">
       <template is="dom-repeat" items="[[users]]" as="usr" sort="_computeSort">
         <paper-item>
           <img src="../../../images/online.png" style="width:10px;height:10px;">
@@ -83,6 +83,11 @@ paper-listbox{
           users: {
             type: Object,
             notify: true
+          },
+          myChoice: {
+            type: Number,
+            notify: true,
+            observer: '_onUserSelected'
           }
       },
 
@@ -90,8 +95,25 @@ paper-listbox{
         if (a.name.toLowerCase() == b.name.toLowerCase()) {
           return 0;
         }
-        return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
+
+        var aLowerCase = a.name.toLowerCase();
+        var bLowerCase = b.name.toLowerCase();
+
+        if(aLowerCase >= bLowerCase) {
+          var indexA = this.users.indexOf(a);
+          var indexB = this.users.indexOf(b);
+          var temp = this.users[indexA];
+          this.users[indexA] = this.users[indexB];
+          this.users[indexB] = temp;
+        }
+
+        return aLowerCase < bLowerCase ? -1 : 1;
       },
+
+      _onUserSelected: function() {
+        var user = this.users[this.myChoice];
+        this.fire('selected-user', user);
+      }
     });
   })();
   </script>
