@@ -296,7 +296,7 @@
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="brainLightLabel" style="-fx-cursor: hand;" text="BrainLight" textFill="#868686">
+            <Label fx:id="radarLabel" style="-fx-cursor: hand;" text="BrainLight" textFill="#868686">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>

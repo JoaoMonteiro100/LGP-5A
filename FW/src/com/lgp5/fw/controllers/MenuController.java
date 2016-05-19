@@ -37,6 +37,7 @@ public class MenuController {
 	@FXML private Label historyLabel;
 	@FXML private Label sensorsLabel;
 	@FXML private Label analysisLabel;
+	@FXML private Label radarLabel;
 	@FXML private Label brainWavesLabel;
 	@FXML private Label dataLabel;
 	@FXML private Label moodLabel;
@@ -54,6 +55,7 @@ public class MenuController {
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
+	@FXML private GridPane radarPane;
 	@FXML private GridPane dataPane;
 	@FXML private GridPane moodPane;
 	private HeadSetDataInterface headSetDataInterface;
@@ -197,15 +199,35 @@ public class MenuController {
 	}
 
 
+	public void showRadar(MouseEvent event){
+		radarLabel.setDisable(true);
+		brainWavesLabel.setDisable(false);
+		moodLabel.setDisable(false);
+		dataLabel.setDisable(false);
+		try {
+			if(!dataPane.isVisible()) {
+				radarPane.setVisible(true);
+				brainWavesPane.setVisible(false);
+				moodPane.setVisible(false);
+				dataPane.setVisible(false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	public void showData(MouseEvent event){		
 		brainWavesLabel.setDisable(false);
 		moodLabel.setDisable(false);
 		dataLabel.setDisable(true);
+		radarLabel.setDisable(false);
 		try {
 			if(!dataPane.isVisible()) {
 				brainWavesPane.setVisible(false);
 				moodPane.setVisible(false);
 				dataPane.setVisible(true);
+				radarPane.setVisible(false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -217,11 +239,13 @@ public class MenuController {
 		dataLabel.setDisable(false);
 		brainWavesLabel.setDisable(false);
 		moodLabel.setDisable(true);
+		radarLabel.setDisable(false);
 		try {
 			if(!moodPane.isVisible()) {
 				dataPane.setVisible(false);
 				brainWavesPane.setVisible(false);
 				moodPane.setVisible(true);
+				radarPane.setVisible(false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -233,11 +257,13 @@ public class MenuController {
 		dataLabel.setDisable(false);
 		moodLabel.setDisable(false);
 		brainWavesLabel.setDisable(true);
+		radarLabel.setDisable(false);
 		try {
 			if(!brainWavesPane.isVisible()) {
 				dataPane.setVisible(false);
 				moodPane.setVisible(false);
 				brainWavesPane.setVisible(true);
+				radarPane.setVisible(false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
