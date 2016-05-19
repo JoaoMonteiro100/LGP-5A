@@ -47,48 +47,23 @@ paper-listbox{
 }
   </style>
 <section>
+  <firebase-collection log
+          location = "https://brainlight.firebaseio.com/users"
+          data = "{{users}}">
+  </firebase-collection>
 
   <paper-dialog-scrollable>
     <paper-listbox selected="{{myChoice}}">
-      <paper-item>
-        <img src="../../../images/online.png" style="width:10px;height:10px;">
-        <div id="name">blabla zzzzz</div>
-        <span> - </span>
-        <div id="nums">23232424</div>
-      </paper-item>
-      <paper-item>
-        <img src="../../../images/online.png" style="width:10px;height:10px;">
-        <div id="name">blabla zzzzz</div>
-        <span> - </span>
-        <div id="nums">23232424</div>
-      </paper-item>
-      <paper-item>
-        <img src="../../../images/online.png" style="width:10px;height:10px;">
-        <div id="name">blabla zzzzz</div>
-        <span> - </span>
-        <div id="nums">23232424</div>
-      </paper-item>
-      <paper-item>
-        <img src="../../../images/online.png" style="width:10px;height:10px;">
-        <div id="name">blabla zzzzz</div>
-        <span> - </span>
-        <div id="nums">23232424</div>
-      </paper-item>
-      <paper-item>
-        <img src="../../../images/online.png" style="width:10px;height:10px;">
-        <div id="name">blabla zzzzz</div>
-        <span> - </span>
-        <div id="nums">23232424</div>
-      </paper-item>
-      <paper-item>
-        <img src="../../../images/online.png" style="width:10px;height:10px;">
-        <div id="name">blabla zzzzz</div>
-        <span> - </span>
-        <div id="nums">23232424</div>
-      </paper-item>
+      <template is="dom-repeat" items="[[users]]" as="usr">
+        <paper-item>
+          <img src="../../../images/online.png" style="width:10px;height:10px;">
+          <div id="name">[[usr.name]] [[usr.lastname]]</div>
+          <span> - </span>
+          <div id="nums">[[usr.number]]</div>
+        </paper-item>
+      </template>
     </paper-listbox>
-
-    </paper-dialog-scrollable>
+  </paper-dialog-scrollable>
   </section>
   </app-grid>
 </template>
@@ -100,9 +75,12 @@ paper-listbox{
       is: 'patients-list',
 
       properties: {
-           selected: Array
-         },
-
+          selected: Array,
+          users: {
+            type: Object,
+            notify: true
+          }
+      }
     });
   })();
   </script>

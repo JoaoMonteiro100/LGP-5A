@@ -85,6 +85,7 @@ app.cols={style1:'1', style2:'2',style3:'3'};
 
   // Firebase location
 app.location = 'https://brainlight.firebaseio.com';
+app.usersLocation = 'https://brainlight.firebaseio.com/users';
 
 // Sign out user
 app.signOut = function() {
