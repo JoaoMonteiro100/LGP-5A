@@ -58,7 +58,7 @@ paper-listbox{
 
   <paper-dialog-scrollable>
     <paper-listbox selected="{{myChoice}}">
-      <template is="dom-repeat" items="[[users]]" as="usr" sort="{{_computeSort}}">
+      <template is="dom-repeat" items="[[users]]" as="usr" sort="_computeSort">
         <paper-item>
           <img src="../../../images/online.png" style="width:10px;height:10px;">
           <div id="name">[[usr.name]] [[usr.lastname]]</div>
@@ -77,14 +77,6 @@ paper-listbox{
 
     Polymer({
       is: 'patients-list',
-    
-    _computeSort: function(a, b) {
-
-      if (a.name == b.name) {
-        return 0;
-      }
-      return a.name > b.name ? -1 : 1;
-    },
 
       properties: {
           selected: Array,
@@ -92,6 +84,13 @@ paper-listbox{
             type: Object,
             notify: true
           }
+      },
+
+      _computeSort: function(a, b) {
+        if (a.name.toLowerCase() == b.name.toLowerCase()) {
+          return 0;
+        }
+        return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
       },
     });
   })();
