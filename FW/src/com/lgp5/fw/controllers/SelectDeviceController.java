@@ -43,6 +43,10 @@ public class SelectDeviceController {
                     switch (comboBoxValue) {
                         case "NeuroSky Mindset":
                             launchNeuroSkyView();
+                            //get a handle to the stage
+                            Stage stage = (Stage) selectDeviceComboBox.getScene().getWindow();
+                            //close current window
+                            stage.close();
                             break;
 
                         default:

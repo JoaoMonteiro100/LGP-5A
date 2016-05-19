@@ -11,10 +11,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.*;
@@ -23,8 +24,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -61,8 +64,10 @@ public class MenuController {
 	private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
+    @FXML private LineChart<String, Float> radarGraph;
 	@FXML private CategoryAxis xAxisWaves;
 	@FXML private CategoryAxis xAxisMood;
+    @FXML private CategoryAxis xAxisRadar;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
 
@@ -90,6 +95,9 @@ public class MenuController {
 		barChartMoods.getData().add(series2);
 		barChartWaves.setLegendVisible(false);
 		barChartMoods.setLegendVisible(false);
+
+
+
 
 
 		headSetDataInterface = new HeadSetDataInterface() {
@@ -205,7 +213,7 @@ public class MenuController {
 		moodLabel.setDisable(false);
 		dataLabel.setDisable(false);
 		try {
-			if(!dataPane.isVisible()) {
+			if(!radarPane.isVisible()) {
 				radarPane.setVisible(true);
 				brainWavesPane.setVisible(false);
 				moodPane.setVisible(false);
@@ -294,4 +302,19 @@ public class MenuController {
 		}
 		return series;
 	}
+
+    public void launchSelectDeviceView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
+            Parent parent = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent, 900, 600));
+            stage.show();
+            //close current stage
+            Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
+            current.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
