@@ -57,18 +57,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
 
-.namestyle
-{
-font-weight:bold;color:#000000;letter-spacing:0pt;word-spacing:2pt;font-size:15px;text-align:left;font-family:arial black, sans-serif;line-height:1;
- margin-bottom: 6px;
-}
+    .namestyle  {
+        font-weight:bold;color:#000000;letter-spacing:0pt;word-spacing:2pt;font-size:15px;text-align:left;font-family:arial black, sans-serif;line-height:1;
+        margin-bottom: 6px;
+    }
 
-.textstyle2
-{
-font-weight:bold;color:#696969;letter-spacing:0pt;word-spacing:2pt;font-size:12px;text-align:left;font-family:arial, helvetica, sans-serif;line-height:1;
-padding-left: 20px;
-margin-bottom: 4px;
-}
+    .textstyle2 {
+        font-weight:bold;color:#696969;letter-spacing:0pt;word-spacing:2pt;font-size:12px;text-align:left;font-family:arial, helvetica, sans-serif;line-height:1;
+        padding-left: 20px;
+        margin-bottom: 4px;
+    }
+
         </style>
         <section>
             <paper-dialog-scrollable>
@@ -109,7 +108,6 @@ margin-bottom: 4px;
                     var self = this;
 
                     addEventListener('selected-user', function(user) {
-                        //alert(JSON.stringify(user));
                         self.user = user.detail;
                     });
                 }
