@@ -47,7 +47,7 @@
                         <paper-item>Male</paper-item>
                     </paper-listbox>
                 </paper-dropdown-menu>
-                <paper-button raised on-tap="_nativeSubmit" id="editUserFormSubmit">
+                <paper-button raised on-tap="_nativeSubmit" >
                     <paper-spinner id="spinner" hidden></paper-spinner>
                     Update
                 </paper-button>
@@ -80,22 +80,23 @@
                 _nativeSubmit: function(event) {
                     var self = this;
 
-                    if(this.$.newuserform.validate()) {
-                        // Create an account for the new user in the database
-                        var appRef = new Firebase(app.location);
-                        var patientNumber = this.$.unumber.value;
-                        appRef.createUser({
-                            email: patientNumber + "@brainstream.com",
-                            password: this.$.pwinput.value
-                        }, function(error, userData) {
-                            if(error) {
-                                alert('Error');
-                            } else {
-                                self.addPatient();
-                                self.$.newuserform.reset();
-                                self.$.modal.close();
-                            }
-                        });
+                    var onPatientUpdated = function(error) {
+                      if(error) {
+                         alert('An error occurred while updating the user!');
+                      } else {
+                          // Close the modal
+                          self.$.editFormModal.close();
+                          self.fire('selected-user', self.user);
+                      }
+                    };
+
+                    if(this.$.editPatientForm.validate()) {
+                        var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
+                        userRef.update({
+                            name: this.$.firstname.value,
+                            lastname: this.$.lastname.value,
+                            gender: this.$.genderdrop.value
+                        }, onPatientUpdated);
                     }
                 },
 
