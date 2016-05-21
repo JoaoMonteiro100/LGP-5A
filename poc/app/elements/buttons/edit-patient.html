@@ -90,6 +90,7 @@
                       } else {
                           // Close the modal
                           self.$.editFormModal.close();
+                          self.user.gender = self.$.genderdrop.value;
                           self.fire('selected-user', self.user);
                       }
                     };

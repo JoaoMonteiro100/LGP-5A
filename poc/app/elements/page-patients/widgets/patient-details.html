@@ -69,6 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
         </style>
+
         <section>
             <paper-dialog-scrollable>
                 <div class="container">
@@ -102,17 +103,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type: Object,
                         notify: true,
                         
+                    },
+                    usrkey:{
+                        type: String,
+                        notify: true,
                     }
+
                 },
     
                 ready: function() {
                     var self = this;
 
                     addEventListener('selected-user', function(user) {
-                        self.set('user', user.detail);
-                        self.set('user.name', user.detail.name);
-                        self.set('user.lastname', user.detail.lastname);
-                        self.set('user.gender', user.detail.gender);
+                       var ref = new Firebase(app.userURL(user.detail.__firebaseKey__));
+                       ref.on("value",function(snapshot){
+                            var user = snapshot.val();
+                            self.set('user', user);
+                       });
+    
                     });
                 },
              
