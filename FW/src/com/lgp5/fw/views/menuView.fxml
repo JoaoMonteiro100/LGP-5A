@@ -406,6 +406,14 @@
                   <Insets left="30.0" top="4.0" />
                </HBox.margin>
             </Label>
+            <Label fx:id="historyLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="4.0" />
+               </HBox.margin>
+            </Label>
             <Label fx:id="restartLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#launchSelectDeviceView" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="RESTART" textAlignment="CENTER" textFill="#1d1d1b" HBox.hgrow="NEVER">
                <font>
                   <Font name="System Bold" size="15.0" />
