@@ -57,7 +57,7 @@ paper-listbox{
   </firebase-collection>
 
   <paper-dialog-scrollable>
-    <paper-listbox id="patientList" selected="{{myChoice}}">
+    <paper-listbox on-iron-select="itemSelected" id="patientList" selected="{{myChoice}}">
       <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
         <paper-item>
           <img src="../../../images/online.png" style="width:10px;height:10px;">
@@ -112,6 +112,11 @@ paper-listbox{
       },
 
       _onUserSelected: function() {
+        var user = this.users[this.myChoice];
+        this.fire('selected-user', user);
+      },
+
+      itemSelected: function() {
         var user = this.users[this.myChoice];
         this.fire('selected-user', user);
       }
