@@ -51,6 +51,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       margin-top: 12px;
     }
 
+     .vertcontainer {
+      @apply(--layout-vertical);
+    }
+
+
     #profimg{
         margin-right: 12px;
         margin-top: 6px;
@@ -68,10 +73,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 4px;
     }
 
+    .mas {
+    white-space: pre-wrap;
+}
+
         </style>
 
         <section>
             <paper-dialog-scrollable>
+            
+                <div class="vertcontainer">
                 <div class="container">
                 <div class="flexchild">
                 <div id="name" class="namestyle">
@@ -88,12 +99,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  <img src="../../../images/profpic.png" id="profilepic" style="width:120px;height:120px;">
                 </div>
                 </div>
-                <div id="notecontainer">
+                <div class="flexchild" id="notecontainer">
                 <h1>Notes: </h1>
-                <div id="note">
-                 [[user.notes]]
+                <div class="mas" id="note">[[user.notes]]</div>
                 </div>
-                </div>
+                </div>       
             </paper-dialog-scrollable>
         </section>
     </template>
@@ -125,6 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                        ref.on("value",function(snapshot){
                             var user = snapshot.val();
                             self.set('user', user);
+                            
                        });
     
                     });

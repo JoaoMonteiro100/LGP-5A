@@ -72,7 +72,8 @@
                 type: Boolean,
                 value: true
             } 
-                },
+                }
+                ,
 
                 _nativeSubmit: function(event) {
                     var self = this;
@@ -85,7 +86,6 @@
                           self.$.editNote.close();
                       }
                     };
-                    
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
                         userRef.update({
                             notes: this.$.note.value
