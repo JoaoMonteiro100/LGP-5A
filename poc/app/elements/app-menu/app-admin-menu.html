@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="stylesheet" href="../../styles/custom.css">
+
 
 <dom-module id="app-admin-menu">
   <template>
@@ -19,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     opacity: 0.54;
   }
   .iron-selected {
-    color: var(--default-primary-color);
+    color: #FFFFFF;
   }
   a {
     text-decoration: none;
@@ -61,6 +63,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   .arow-down {
     margin-right: 0;
   }
+  paper-menu{
+    height: 97%;
+  }
   paper-submenu paper-menu {
     background: var(--drawer-submenu-background);
     padding: 0;
@@ -73,9 +78,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     height: auto;
     max-height: 300px;
   }
+
+.adminPhoto {
+    text-align: center;
+}
+
+.adminPhoto img {
+  width: 183px;
+  height: 177px;
+  display: block;
+  margin-top: 20px;
+}
+
     </style>
     <paper-menu class="list" attr-for-selected="data-route" selected="{{params.page}}">
 
+    
+    <a ata-route="users" href="/dashboardAdmin/users" on-click="onDataRouteClick"> 
+      <div  class="adminPhoto"> 
+           <img src="../../images/pic.png"/>  
+        <h1>Beatriz Lima </h1>
+        <h2>Administrator</h2>
+      </div>  
+    </a>
      <a data-route="users" href="/dashboardAdmin/users" on-click="onDataRouteClick">
        <iron-icon icon="dashboard"></iron-icon>
        <span>Users</span>
