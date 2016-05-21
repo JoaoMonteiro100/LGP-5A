@@ -90,6 +90,10 @@ paper-listbox{
           deletedUserKey: {
             type: Number,
             notify: true
+          },
+          currentKey: {
+            type: Number,
+            notify: true
           }
       }
       ,
@@ -124,11 +128,12 @@ paper-listbox{
 
       _onUserSelected: function() {
         var user = this.users[this.myChoice];
+        this.currentKey = user.__firebaseKey__;
         this.fire('selected-user', user);
       },
 
       itemSelected: function() {
-        if(this.deletedUserKey == this.users[this.myChoice].__firebaseKey__) {
+        if(this.deletedUserKey == this.currentKey) {
           var user = this.users[this.myChoice];
           this.fire('selected-user', user);
         }
