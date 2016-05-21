@@ -52,9 +52,7 @@ paper-listbox{
           order-value-type="boolean"
            equal-to="true"
           location = "https://brainlight.firebaseio.com/users"
-          data = "{{users}}"
-         >
-  </firebase-collection>
+          data = "{{users}}"></firebase-collection>
 
   <paper-dialog-scrollable>
     <paper-listbox on-iron-select="itemSelected" id="patientList" selected="{{myChoice}}">
@@ -88,6 +86,10 @@ paper-listbox{
             type: Number,
             notify: true,
             observer: '_onUserSelected'
+          },
+          deletedUserKey: {
+            type: Number,
+            notify: true
           }
       }
       ,
@@ -111,14 +113,25 @@ paper-listbox{
         return aLowerCase < bLowerCase ? -1 : 1;
       },
 
+      ready: function() {
+        var appRef = new Firebase(app.usersLocation);
+        var self = this;
+
+        appRef.on('child_removed', function(oldChildSnapshot) {
+          self.deletedUserKey = oldChildSnapshot.key();
+        });
+      },
+
       _onUserSelected: function() {
         var user = this.users[this.myChoice];
         this.fire('selected-user', user);
       },
 
       itemSelected: function() {
-        var user = this.users[this.myChoice];
-        this.fire('selected-user', user);
+        if(this.deletedUserKey == this.users[this.myChoice].__firebaseKey__) {
+          var user = this.users[this.myChoice];
+          this.fire('selected-user', user);
+        }
       }
     });
   })();
