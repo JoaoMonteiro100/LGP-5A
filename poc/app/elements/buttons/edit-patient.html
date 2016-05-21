@@ -35,7 +35,7 @@
                 @apply(--layout-horizontal);
             }
         </style>
-        <paper-icon-button data-dialog="modal" icon="icons:flight-land" on-click="editFormClickHandler"></paper-icon-button>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:flight-land" on-click="editFormClickHandler"></paper-icon-button>
         <paper-dialog id="editFormModal" modal>
             <h1>Edit Patient</h1>
             <form is="iron-form" id="editPatientForm">
@@ -74,7 +74,11 @@
                     selected: {
                         type: Number,
                         notify: true
-                    }
+                    },
+                    ishidden: {
+                type: Boolean,
+                value: true
+            } 
                 },
 
                 _nativeSubmit: function(event) {
@@ -110,16 +114,26 @@
 
                 ready: function() {
                     var self = this;
-
+                    var userdef = false;
                     addEventListener('selected-user', function(user) {
                         self.user = user.detail;
                         self.selected = self.user.gender == "Male" ? 1 : 0;
+                        if(!self.userdef){
+                            self.toggle();
+                            self.userdef=true;
+                        }
                     });
                 },
 
                 _reset:function() {
                     document.getElementById('editPatientForm').reset();
-                }
+                },
+                  compute: function() {
+                return this.ishidden;
+            },
+            toggle: function() {
+                this.ishidden = !this.ishidden;
+            }
             });
         })();
     </script>

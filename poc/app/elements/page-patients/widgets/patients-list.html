@@ -58,7 +58,7 @@ paper-listbox{
 
   <paper-dialog-scrollable>
     <paper-listbox id="patientList" selected="{{myChoice}}">
-      <template is="dom-repeat" items="[[users]]" as="usr" sort="_computeSort">
+      <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
         <paper-item>
           <img src="../../../images/online.png" style="width:10px;height:10px;">
           <div id="name">[[usr.name]] [[usr.lastname]]</div>

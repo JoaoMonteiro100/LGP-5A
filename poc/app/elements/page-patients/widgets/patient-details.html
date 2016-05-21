@@ -74,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="container">
                 <div class="flexchild">
                 <div id="name" class="namestyle">
-                    [[user.name]] [[user.lastname]]
+                {{user.name}} {{user.lastname}}
                 </div>
                 <div id="unumber" class="textstyle2">
                     [[user.number]]
@@ -100,17 +100,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 properties: {
                     user: {
                         type: Object,
-                        notify: true
+                        notify: true,
+                        
                     }
                 },
-
+    
                 ready: function() {
                     var self = this;
 
                     addEventListener('selected-user', function(user) {
-                        self.user = user.detail;
+                        self.set('user', user.detail);
+                        self.set('user.name', user.detail.name);
+                        self.set('user.lastname', user.detail.lastname);
+                        self.set('user.gender', user.detail.gender);
                     });
-                }
+                },
+             
             });
         })();
     </script>
