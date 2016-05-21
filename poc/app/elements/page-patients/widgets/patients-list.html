@@ -136,6 +136,8 @@ paper-listbox{
         if(this.deletedUserKey == this.currentKey) {
           var user = this.users[this.myChoice];
           this.fire('selected-user', user);
+        } else {
+          this.myChoice -= 1;
         }
       }
     });
