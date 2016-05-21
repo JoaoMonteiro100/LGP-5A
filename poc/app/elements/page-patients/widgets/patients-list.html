@@ -52,7 +52,8 @@ paper-listbox{
           order-value-type="boolean"
            equal-to="true"
           location = "https://brainlight.firebaseio.com/users"
-          data = "{{users}}"></firebase-collection>
+          data = "{{users}}">
+  </firebase-collection>
 
   <paper-dialog-scrollable>
     <paper-listbox on-iron-select="itemSelected" id="patientList" selected="{{myChoice}}">
@@ -97,6 +98,18 @@ paper-listbox{
           }
       }
       ,
+      ready:function(){
+
+         addEventListener('delete-user', function(user) {
+         if(this.deletedUserKey == this.currentKey) {
+          var user = this.users[this.myChoice];
+          this.fire('selected-user', user);
+        } else {
+          this.myChoice -= 1;
+        }
+      });
+      }
+      ,
 
       _computeSort: function(a, b) {
         if (a.name.toLowerCase() == b.name.toLowerCase()) {
@@ -133,12 +146,8 @@ paper-listbox{
       },
 
       itemSelected: function() {
-        if(this.deletedUserKey == this.currentKey) {
           var user = this.users[this.myChoice];
           this.fire('selected-user', user);
-        } else {
-          this.myChoice -= 1;
-        }
       }
     });
   })();
