@@ -11,8 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../page-patients/widgets/patients-list.html">
 <link rel="import" href="../page-patients/widgets/patient-details.html">
-
-<dom-module id="page-users">
+<dom-module id="page-admin-users">
   <template>
 
       <style include="shared-styles"></style>
@@ -23,8 +22,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
       </style>
-      
-      <app-widgets selected="{{selected}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
+
+      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
 
   </template>
   <script>
@@ -32,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'app-admin-users',
+      is: 'page-admin-users',
 
       properties: {
         cols: {
@@ -42,6 +41,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            widgets: {
              type: Array,
              value: [
+               {
+                 title: 'Doctors',
+                 component: 'doctors-list',
+                 buttons:[
+                   { button: 'add-doctor' }
+                 ]
+
+               },
                {
                  title: 'Patients',
                  component: 'patients-list',
@@ -57,12 +64,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    { button: 'edit-patient' },
                    { button: 'delete-patient' }
                  ]
+               },
+               {
+                 title: 'Doctotr Details',
+                 component: 'doctor-details',
+                 buttons:[
+                   { button: 'edit-patient' },
+                   { button: 'delete-patient' }
+                 ]
                }
              ]
-           }
+           },
          }
     });
   })();
   </script>
 </dom-module>
-s

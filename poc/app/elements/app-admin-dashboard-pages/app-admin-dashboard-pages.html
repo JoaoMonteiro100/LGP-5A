@@ -31,16 +31,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-pages id="innerpages" attr-for-selected="data-route" cols="{{cols}}" selected="{{params.page}}">
       <section data-route="users">
         <app-page-title title="Users" cols='{{cols}}'></app-page-title>
-          <page-patients cols="{{cols}}"></page-patients>
+          <!--<page-patients cols="{{cols}}"></page-patients>-->
+          <page-admin-users cols="{{cols}}"></page-admin-users>
       </section>
 
       <section data-route="transfers">
         <app-page-title title="Transfers" cols='{{cols}}'></app-page-title>
           <page-patients cols="{{cols}}"></page-patients>
+          <div>transferidos</div>
       </section>
       <section data-route="settings">
         <app-page-title title="Settings" cols='{{cols}}'></app-page-title>
-          <div>oi</div>
+          <div>definiçoes</div>
       </section>
     </iron-pages>
   </template>
