@@ -94,11 +94,12 @@
                 },
 
                 editFormClickHandler: function(e) {
-                    var button = e.target;
+                   /* var button = e.target;
                     var dialog = document.getElementById('editNote');
                     if(dialog) {
                         dialog.open();
-                    }
+                    }*/
+                    this.$.editNote.toggle();
                 },
 
                 ready: function() {

@@ -37,7 +37,7 @@
         </style>
         <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:build" on-click="editFormClickHandler"></paper-icon-button>
         <paper-dialog id="editFormModal" modal>
-            <h1>Edit Doctor</h1>
+            <h1>Edit</h1>
             <form is="iron-form" id="editDoctorForm">
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.name}}" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required auto-validate></paper-input>
@@ -106,11 +106,7 @@
                 },
 
                 editFormClickHandler: function(e) {
-                    var button = e.target;
-                    var dialog = document.getElementById('editFormModal');
-                    if(dialog) {
-                        dialog.open();
-                    }
+                    this.$.editFormModal.toggle();
                 },
 
                 ready: function() {
