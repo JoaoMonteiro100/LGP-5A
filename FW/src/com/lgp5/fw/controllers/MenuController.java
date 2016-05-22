@@ -30,7 +30,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 
 
 public class MenuController {
@@ -66,15 +65,30 @@ public class MenuController {
 	private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
-    @FXML private StackedAreaChart<Float, Float> radarGraphA;
-    @FXML private StackedAreaChart<Float, Float> radarGraphB;
-    @FXML private StackedAreaChart<Float, Float> radarGraphC;
-    @FXML private StackedAreaChart<Float, Float> radarGraphD;
+	@FXML private StackedAreaChart<Float, Float> radarGraphA;
+	@FXML private StackedAreaChart<Float, Float> radarGraphB;
+	@FXML private StackedAreaChart<Float, Float> radarGraphC;
+	@FXML private StackedAreaChart<Float, Float> radarGraphD;
 	@FXML private CategoryAxis xAxisWaves;
 	@FXML private CategoryAxis xAxisMood;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
-
+	@FXML private NumberAxis xAxisHistory;
+	@FXML private NumberAxis yAxisHistory;
+	@FXML private LineChart<Number, Number> lineChartHistory;	
+	//history logic
+	private float lowGama[];
+	private float midGama[];
+	private float lowBeta[];
+	private float highBeta[];
+	private float lowAlpha[];
+	private float highAlpha[];
+	private float theta[];
+	private float delta[];
+	private float attention[];
+	private float meditation[];
+	private float poorSignal[];
+	private String time[];
 
 
 	public MenuController() {
@@ -100,43 +114,64 @@ public class MenuController {
 		barChartWaves.setLegendVisible(false);
 		barChartMoods.setLegendVisible(false);
 
+		//history line chart
+		xAxisHistory.setLabel("Time");
 
-        XYChart.Series seriesA = new XYChart.Series();
-        seriesA.getData().add(new XYChart.Data(0, 100));
-        seriesA.getData().add(new XYChart.Data(50, 50));
-        seriesA.getData().add(new XYChart.Data(75, 0));
-        radarGraphA.getData().addAll(seriesA);
+		XYChart.Series<Number, Number> series3 = new XYChart.Series();
+		series3.getData().add(new XYChart.Data(1f, 23f));
+		series3.getData().add(new XYChart.Data(2, 14f));
+		series3.getData().add(new XYChart.Data(3, 15f));
+		series3.getData().add(new XYChart.Data(4, 24f));
+        series3.getData().add(new XYChart.Data(5, 34f));
+        series3.getData().add(new XYChart.Data(6, 36f));
+        series3.getData().add(new XYChart.Data(7, 22f));
+        series3.getData().add(new XYChart.Data(8, 45f));
+        series3.getData().add(new XYChart.Data(9, 43f));
+        series3.getData().add(new XYChart.Data(10, 17f));
+        series3.getData().add(new XYChart.Data(11, 29f));
+        series3.getData().add(new XYChart.Data(12, 25f));
 
-        XYChart.Series seriesB = new XYChart.Series();
-        seriesB.getData().add(new XYChart.Data(75, 0));
-        seriesB.getData().add(new XYChart.Data(50, -50));
-        seriesB.getData().add(new XYChart.Data(0, -90));
-        radarGraphB.getData().addAll(seriesB);
+		lineChartHistory.getData().add(series3);
+		lineChartHistory.setLegendVisible(false);
+		//---------------
 
-        XYChart.Series seriesC = new XYChart.Series();
-        seriesC.getData().add(new XYChart.Data(-20, 0));
-        seriesC.getData().add(new XYChart.Data(-50, -50));
-        seriesC.getData().add(new XYChart.Data(0, -90));
-        radarGraphC.getData().addAll(seriesC);
 
-        XYChart.Series seriesD = new XYChart.Series();
-        seriesD.getData().add(new XYChart.Data(-20, 0));
-        seriesD.getData().add(new XYChart.Data(-50, 50));
-        seriesD.getData().add(new XYChart.Data(0, 100));
-        radarGraphD.getData().addAll(seriesD);
+		XYChart.Series seriesA = new XYChart.Series();
+		seriesA.getData().add(new XYChart.Data(0, 100));
+		seriesA.getData().add(new XYChart.Data(50, 50));
+		seriesA.getData().add(new XYChart.Data(75, 0));
+		radarGraphA.getData().addAll(seriesA);
 
-        //look up first series fill
-        Node node = radarGraphA.lookup(".default-color0.chart-series-area-fill");
-        Node node1 = radarGraphB.lookup(".default-color0.chart-series-area-fill");
-        Node node2 = radarGraphC.lookup(".default-color0.chart-series-area-fill");
-        Node node3 = radarGraphD.lookup(".default-color0.chart-series-area-fill");
-        //set the fill to transparent
-        node.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-        node1.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-        node2.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-        node3.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+		XYChart.Series seriesB = new XYChart.Series();
+		seriesB.getData().add(new XYChart.Data(75, 0));
+		seriesB.getData().add(new XYChart.Data(50, -50));
+		seriesB.getData().add(new XYChart.Data(0, -90));
+		radarGraphB.getData().addAll(seriesB);
 
-        headSetDataInterface = new HeadSetDataInterface() {
+		XYChart.Series seriesC = new XYChart.Series();
+		seriesC.getData().add(new XYChart.Data(-20, 0));
+		seriesC.getData().add(new XYChart.Data(-50, -50));
+		seriesC.getData().add(new XYChart.Data(0, -90));
+		radarGraphC.getData().addAll(seriesC);
+
+		XYChart.Series seriesD = new XYChart.Series();
+		seriesD.getData().add(new XYChart.Data(-20, 0));
+		seriesD.getData().add(new XYChart.Data(-50, 50));
+		seriesD.getData().add(new XYChart.Data(0, 100));
+		radarGraphD.getData().addAll(seriesD);
+
+		//look up first series fill
+		Node node = radarGraphA.lookup(".default-color0.chart-series-area-fill");
+		Node node1 = radarGraphB.lookup(".default-color0.chart-series-area-fill");
+		Node node2 = radarGraphC.lookup(".default-color0.chart-series-area-fill");
+		Node node3 = radarGraphD.lookup(".default-color0.chart-series-area-fill");
+		//set the fill to transparent
+		node.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+		node1.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+		node2.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+		node3.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
+
+		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
 				if(gamma1Data != null) {
@@ -184,7 +219,9 @@ public class MenuController {
 							}
 							for (Series<String, Float> series : barChartWaves.getData()) {
 								int i=0;
-								for (Data<String, Float> data : series.getData()) {									
+								for (Data<String, Float> data : series.getData()) {
+									//Falta Converter !!!!!!!!!!!!!!!!!!!!!!
+									//Volts: [ rawValue * (1.8/4096) ] / 2000
 									switch (i) {
 									case 0:
 										data.setYValue(Float.parseFloat(delta));
@@ -244,29 +281,28 @@ public class MenuController {
 
 
 	public void showRadar(MouseEvent event){
-		changeLabel(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane});
+		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane});
 	}
 
 
 	public void showData(MouseEvent event){		
-		changeLabel(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane});
+		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane});
 	}
 
 
 	public void showMood(MouseEvent event){
-		changeLabel(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane});	
+		changePane(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane});	
 	}
-
 
 	public void showBrainWaves(MouseEvent event) {
-		changeLabel(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane});	
+		changePane(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane});	
 	}
-	
+
 	public void showHistory(MouseEvent event) {
-		changeLabel(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane});	
+		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane});	
 	}
-	
-	public void changeLabel(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
+
+	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
 		for (int i = 0; i < hideL.length; i++) {
 			hideL[i].setDisable(false);
 		}
@@ -308,18 +344,18 @@ public class MenuController {
 		return series;
 	}
 
-    public void launchSelectDeviceView() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
-            Parent parent = (Parent) loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(parent, 900, 600));
-            stage.show();
-            //close current stage
-            Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
-            current.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public void launchSelectDeviceView() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
+			Parent parent = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(parent, 900, 600));
+			stage.show();
+			//close current stage
+			Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
+			current.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
