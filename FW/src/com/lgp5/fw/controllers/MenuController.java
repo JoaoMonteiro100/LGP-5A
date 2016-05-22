@@ -30,6 +30,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 public class MenuController {
@@ -61,6 +62,7 @@ public class MenuController {
 	@FXML private GridPane radarPane;
 	@FXML private GridPane dataPane;
 	@FXML private GridPane moodPane;
+	@FXML private GridPane historyPane;
 	private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
@@ -242,70 +244,39 @@ public class MenuController {
 
 
 	public void showRadar(MouseEvent event){
-		radarLabel.setDisable(true);
-		brainWavesLabel.setDisable(false);
-		moodLabel.setDisable(false);
-		dataLabel.setDisable(false);
-		try {
-			if(!radarPane.isVisible()) {
-				radarPane.setVisible(true);
-				brainWavesPane.setVisible(false);
-				moodPane.setVisible(false);
-				dataPane.setVisible(false);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		changeLabel(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane});
 	}
 
 
 	public void showData(MouseEvent event){		
-		brainWavesLabel.setDisable(false);
-		moodLabel.setDisable(false);
-		dataLabel.setDisable(true);
-		radarLabel.setDisable(false);
-		try {
-			if(!dataPane.isVisible()) {
-				brainWavesPane.setVisible(false);
-				moodPane.setVisible(false);
-				dataPane.setVisible(true);
-				radarPane.setVisible(false);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		changeLabel(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane});
 	}
 
 
 	public void showMood(MouseEvent event){
-		dataLabel.setDisable(false);
-		brainWavesLabel.setDisable(false);
-		moodLabel.setDisable(true);
-		radarLabel.setDisable(false);
-		try {
-			if(!moodPane.isVisible()) {
-				dataPane.setVisible(false);
-				brainWavesPane.setVisible(false);
-				moodPane.setVisible(true);
-				radarPane.setVisible(false);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		changeLabel(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane});	
 	}
 
 
 	public void showBrainWaves(MouseEvent event) {
-		dataLabel.setDisable(false);
-		moodLabel.setDisable(false);
-		brainWavesLabel.setDisable(true);
-		radarLabel.setDisable(false);
+		changeLabel(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane});	
+	}
+	
+	public void showHistory(MouseEvent event) {
+		changeLabel(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane});	
+	}
+	
+	public void changeLabel(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
+		for (int i = 0; i < hideL.length; i++) {
+			hideL[i].setDisable(false);
+		}
+		showL.setDisable(true);
 		try {
-			if(!brainWavesPane.isVisible()) {
-				dataPane.setVisible(false);
-				moodPane.setVisible(false);
-				brainWavesPane.setVisible(true);
-				radarPane.setVisible(false);
+			if(!showP.isVisible()) {
+				for (int i = 0; i < hideP.length; i++) {
+					hideP[i].setVisible(false);
+				}
+				showP.setVisible(true);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
