@@ -36,7 +36,7 @@
             }
         </style>
         <paper-icon-button data-dialog="modal" icon="icons:add" on-click="clickHandler"></paper-icon-button>
-        <paper-dialog id="modal" modal>
+        <paper-dialog id="newPacientDialog" modal>
             <h1>Add new Patient</h1>
             <form is="iron-form" id="newuserform">
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
@@ -128,25 +128,14 @@
                             } else {
                                 self.addPatient();
                                 self.$.newuserform.reset();
-                                self.$.modal.close();
+                                self.$.newPacientDialog.close();
                             }
                         });
                     }
                 },
 
                 clickHandler:function(e) {
-                    var button = e.target;
-                    while (!button.hasAttribute('data-dialog') && button !== document.body) {
-                        button = button.parentElement;
-                    }
-                    if (!button.hasAttribute('data-dialog')) {
-                        return;
-                    }
-                    var id = button.getAttribute('data-dialog');
-                    var dialog = document.getElementById(id);
-                    if (dialog) {
-                        dialog.open();
-                    }
+                    this.$.newPacientDialog.toggle();
                 },
                 _reset:function() {
                     document.getElementById('newuserform').reset();
