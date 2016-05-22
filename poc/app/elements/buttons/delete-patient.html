@@ -49,6 +49,7 @@
                 <paper-button id="closeButton" dialog-confirm autofocus>Close</paper-button>
             </div>
         </paper-dialog>
+        <paper-toast id="toast0" text=""></paper-toast>
     </template>
     <script>
         (function() {
@@ -80,13 +81,16 @@
                             alert('An error occurred while deleting the user!');
                         } else {
                             // Close the modal
+                            //self.fire('delete-user',self.user);
+                        self.$.toast0.textContent = "User "+self.user.name+" "+self.user.lastname+" deleted!";
+                             self.$.toast0.open();
                             self.$.deleteDialog.close();
                         }
                     };
 
                     var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
                     userRef.remove(onDeleted);
-                     self.fire('selected-user',self.user);
+
                 },
 
                 deleteFormClickHandler: function(e) {
