@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="widgets/doctors-list.html">
+<link rel="import" href="widgets/doctor-details.html">
 <link rel="import" href="../page-patients/widgets/patients-list.html">
 <link rel="import" href="../page-patients/widgets/patient-details.html">
 <dom-module id="page-admin-users">
@@ -24,6 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </style>
 
       <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
+      <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
 
   </template>
   <script>

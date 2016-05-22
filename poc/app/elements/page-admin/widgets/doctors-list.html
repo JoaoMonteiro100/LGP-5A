@@ -11,134 +11,137 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <dom-module id="doctors-list">
-  <template>
-  <style is="custom-style">
-    section {
-  width: 100%;
-  height: 250px;
-  @apply(--layout-vertical);
-}
-section paper-dialog-scrollable {
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 250px;
+                @apply(--layout-vertical);
+            }
 
-  @apply(--layout-flex);
-}
-paper-dialog-scrollable::shadow #scrollable {
-   padding:0px;
- }
- paper-item {
-    --paper-item: {
-      cursor: pointer;
-    };
-  }
+            section paper-dialog-scrollable {
 
-#name{
-  padding-left: 10px;
-  padding-right: 10px;
-}
+                @apply(--layout-flex);
+            }
 
-span{
-  padding-right: 10px;
-}
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
 
-paper-listbox{
-  width: 100%;
-}
-  </style>
-<section>
-  <firebase-collection
-          order-by-child="groups/group2"
-          order-value-type="boolean"
-          equal-to="true"
-          location = "https://brainlight.firebaseio.com/users"
-          data = "{{users}}"></firebase-collection>
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
 
-  <paper-dialog-scrollable>
-    <paper-listbox on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
-      <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
-        <paper-item>
-          <img src="../../../images/online.png" style="width:10px;height:10px;">
-          <div id="name">[[usr.name]] [[usr.lastname]]</div>
-          <span> - </span>
-          <div id="nums">[[usr.number]]</div>
-        </paper-item>
-      </template>
-    </paper-listbox>
-  </paper-dialog-scrollable>
-  </section>
-  </app-grid>
-</template>
-  <script>
-  (function() {
-    'use strict';
+            #name {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
 
-    Polymer({
-      is: 'doctors-list',
+            span {
+                padding-right: 10px;
+            }
 
-      properties: {
-          selected: Array,
-          users: {
-            type: Object,
-            notify: true
-          },
-          myChoice: {
-            type: Number,
-            notify: true,
-            observer: '_onUserSelected'
-          },
-          deletedUserKey: {
-            type: Number,
-            notify: true
-          },
-          currentKey: {
-            type: Number,
-            notify: true
-          }
-      }
-      ,
+            paper-listbox {
+                width: 100%;
+            }
+        </style>
+        <section>
+            <firebase-collection
+                    order-by-child="groups/group2"
+                    order-value-type="boolean"
+                    equal-to="true"
+                    location="https://brainlight.firebaseio.com/users"
+                    data="{{users}}"></firebase-collection>
 
-      _computeSort: function(a, b) {
-        if (a.name.toLowerCase() == b.name.toLowerCase()) {
-          return 0;
-        }
+            <paper-dialog-scrollable>
+                <paper-listbox on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
+                    <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
+                        <paper-item>
+                            <img src="../../../images/online.png" style="width:10px;height:10px;">
+                            <div id="name">[[usr.name]] [[usr.lastname]]</div>
+                            <span> - </span>
+                            <div id="nums">[[usr.number]]</div>
+                        </paper-item>
+                    </template>
+                </paper-listbox>
+            </paper-dialog-scrollable>
+        </section>
+        </app-grid>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-        var aLowerCase = a.name.toLowerCase();
-        var bLowerCase = b.name.toLowerCase();
+            Polymer({
+                is: 'doctors-list',
 
-        if(aLowerCase >= bLowerCase) {
-          var indexA = this.users.indexOf(a);
-          var indexB = this.users.indexOf(b);
-          var temp = this.users[indexA];
-          this.users[indexA] = this.users[indexB];
-          this.users[indexB] = temp;
-        }
+                properties: {
+                    selected: Array,
+                    users: {
+                        type: Object,
+                        notify: true
+                    },
+                    myChoice: {
+                        type: Number,
+                        notify: true,
+                        observer: '_onUserSelected'
+                    },
+                    deletedUserKey: {
+                        type: Number,
+                        notify: true
+                    },
+                    currentKey: {
+                        type: Number,
+                        notify: true
+                    }
+                }
+                ,
 
-        return aLowerCase < bLowerCase ? -1 : 1;
-      },
+                _computeSort: function (a, b) {
+                    if (a.name.toLowerCase() == b.name.toLowerCase()) {
+                        return 0;
+                    }
 
-      ready: function() {
-        var appRef = new Firebase(app.usersLocation);
-        var self = this;
+                    var aLowerCase = a.name.toLowerCase();
+                    var bLowerCase = b.name.toLowerCase();
 
-        appRef.on('child_removed', function(oldChildSnapshot) {
-          self.deletedUserKey = oldChildSnapshot.key();
-        });
-      },
+                    if (aLowerCase >= bLowerCase) {
+                        var indexA = this.users.indexOf(a);
+                        var indexB = this.users.indexOf(b);
+                        var temp = this.users[indexA];
+                        this.users[indexA] = this.users[indexB];
+                        this.users[indexB] = temp;
+                    }
 
-      _onUserSelected: function() {
-        var user = this.users[this.myChoice];
-        this.currentKey = user.__firebaseKey__;
-        this.fire('selected-user', user);
-      },
+                    return aLowerCase < bLowerCase ? -1 : 1;
+                },
 
-      itemSelected: function() {
-        if(this.deletedUserKey == this.currentKey) {
-          var user = this.users[this.myChoice];
-          this.fire('selected-user', user);
-        } else {
-          this.myChoice -= 1;
-        }
-      }
-    });
-  })();
-  </script>
+                ready: function () {
+                    var appRef = new Firebase(app.usersLocation);
+                    var self = this;
+
+                    appRef.on('child_removed', function (oldChildSnapshot) {
+                        self.deletedUserKey = oldChildSnapshot.key();
+                    });
+                },
+
+                _onUserSelected: function () {
+                    var user = this.users[this.myChoice];
+                    this.currentKey = user.__firebaseKey__;
+                    this.fire('selected-user', user);
+                },
+
+                itemSelected: function () {
+                    if (this.deletedUserKey == this.currentKey) {
+                        var user = this.users[this.myChoice];
+                        this.fire('selected-user', user);
+                    } else {
+                        this.myChoice -= 1;
+                    }
+                }
+            });
+        })();
+    </script>
 </dom-module>
