@@ -9,8 +9,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="widgets/doctors-list.html">
+<link rel="import" href="widgets/doctor-details.html">
 <link rel="import" href="../page-patients/widgets/patients-list.html">
-<dom-module id="page-settings">
+<link rel="import" href="../page-patients/widgets/patient-details.html">
+<dom-module id="page-admin-settings">
   <template>
 
       <style include="shared-styles"></style>
@@ -21,8 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
       </style>
-      <div> oiodoisd</div>
-      <app-widgets selected="{{selected}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
+
+      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
       <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
 
   </template>
@@ -31,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'app-admin-settings',
+      is: 'page-admin-settings',
 
       properties: {
         cols: {
@@ -43,27 +46,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              value: [
                {
                  title: 'Profile',
-                 component: 'patients-list',
+                 component: 'profile',
                  buttons:[
-                   {button: 'icons:save'}
+                   { button: 'add-doctor' }
                  ]
-               }
+               },
+               
              ]
            },
-           widgets2: {
-             type: Array,
-             value: [
-               {
-                 title: 'Patients',
-                 component: 'patients-list',
-                 buttons:[
-
-                 ]
-               }]},
-         },
-
+         }
     });
   })();
   </script>
 </dom-module>
-s
