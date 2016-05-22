@@ -364,12 +364,12 @@
             </GridPane>
             <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false">
                <children>
-                  <LineChart>
+                  <LineChart fx:id="lineChartHistory">
                      <xAxis>
-                        <NumberAxis side="BOTTOM" />
+                        <NumberAxis side="BOTTOM" fx:id="xAxisHistory" />
                      </xAxis>
                      <yAxis>
-                        <NumberAxis side="LEFT" />
+                        <NumberAxis fx:id="yAxisHistory" side="LEFT" />
                      </yAxis>
                   </LineChart>
                </children>
