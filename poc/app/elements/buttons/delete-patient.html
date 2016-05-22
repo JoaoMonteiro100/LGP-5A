@@ -94,11 +94,7 @@
                 },
 
                 deleteFormClickHandler: function(e) {
-                    var button = e.target;
-                    var dialog = document.getElementById('deleteDialog');
-                    if(dialog) {
-                        dialog.open();
-                    }
+                    this.$.deleteDialog.toggle();
                 },
 
                 ready: function() {

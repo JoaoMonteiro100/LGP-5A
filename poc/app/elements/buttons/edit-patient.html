@@ -106,11 +106,7 @@
                 },
 
                 editFormClickHandler: function(e) {
-                    var button = e.target;
-                    var dialog = document.getElementById('editFormModal');
-                    if(dialog) {
-                        dialog.open();
-                    }
+                    this.$.editFormModal.toggle();
                 },
 
                 ready: function() {
