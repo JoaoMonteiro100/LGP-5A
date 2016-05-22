@@ -35,10 +35,11 @@
                 @apply(--layout-horizontal);
             }
         </style>
-        <paper-icon-button data-dialog="modal" icon="icons:add" on-click="clickHandler"></paper-icon-button>
-        <paper-dialog id="modal" modal>
+        <paper-icon-button icon="icons:add" on-click="clickHandler"></paper-icon-button>
+
+        <paper-dialog id="addDoctorModal" modal>
             <h1>Add new Doctor</h1>
-            <form is="iron-form" id="newuserform">
+            <form is="iron-form" id="newDoctorForm">
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="unumber" name="unumber" label="Number" auto-validate pattern="[0-9]*" error-message="numbers only!" required auto-validate></paper-input>
@@ -115,7 +116,8 @@
                 _nativeSubmit: function(event) {
                     var self = this;
 
-                    if(this.$.newuserform.validate()) {
+                    if(this.$.newDoctorForm.validate()) {
+                        alert('aqui');
                         // Create an account for the new user in the database
                         var appRef = new Firebase(app.location);
                         var doctorNumber = this.$.unumber.value;
@@ -127,29 +129,19 @@
                                 alert('Error');
                             } else {
                                 self.addDoctor();
-                                self.$.newuserform.reset();
-                                self.$.modal.close();
+                                self.$.newDoctorForm.reset();
+                                self.$.addDoctorModal.close();
                             }
                         });
                     }
                 },
 
                 clickHandler:function(e) {
-                    var button = e.target;
-                    while (!button.hasAttribute('data-dialog') && button !== document.body) {
-                        button = button.parentElement;
-                    }
-                    if (!button.hasAttribute('data-dialog')) {
-                        return;
-                    }
-                    var id = button.getAttribute('data-dialog');
-                    var dialog = document.getElementById(id);
-                    if (dialog) {
-                        dialog.open();
-                    }
+                    this.$.addDoctorModal.toggle();
                 },
+
                 _reset:function() {
-                    document.getElementById('newuserform').reset();
+                    document.getElementById('addDoctorModal').reset();
                 },
 
                 generatePW:function() {
@@ -160,8 +152,7 @@
                         pass += chars.charAt(i);
                     }
                     this.$.pwinput.value = pass;
-                },
-
+                }
             });
         })();
     </script>

@@ -13,8 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="doctors-list">
   <template>
   <style is="custom-style">
-
-
     section {
   width: 100%;
   height: 250px;
@@ -50,7 +48,7 @@ paper-listbox{
   <firebase-collection
           order-by-child="groups/group2"
           order-value-type="boolean"
-           equal-to="true"
+          equal-to="true"
           location = "https://brainlight.firebaseio.com/users"
           data = "{{users}}"></firebase-collection>
 
