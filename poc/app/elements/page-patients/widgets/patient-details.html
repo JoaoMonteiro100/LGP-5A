@@ -50,6 +50,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       @apply(--layout-flex);
       margin-top: 12px;
     }
+    .flexchild2 {
+      @apply(--layout-flex);
+    }
 
      .vertcontainer {
       @apply(--layout-vertical);
@@ -76,6 +79,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .mas {
     white-space: pre-wrap;
 }
+        .notecontainer{
+            @apply(--layout-flex);
+            margin-left: 12px;
+            margin-top: 0px;
+        }
+        .noteh1{
+            font-weight:bold;color:#000000;letter-spacing:0pt;word-spacing:2pt;font-size:15px;text-align:left;font-family:arial black, sans-serif;line-height:1;
+        margin-bottom: 6px;
+        margin-top: 0px;
+        }
 
         </style>
 
@@ -99,8 +112,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  <img src="../../../images/profpic.png" id="profilepic" style="width:120px;height:120px;">
                 </div>
                 </div>
-                <div class="flexchild" id="notecontainer">
-                <h1>Notes: </h1>
+                <div class="notecontainer" id="notecontainer">
+                <h1 class="noteh1">Notes: </h1>
                 <div class="mas" id="note">[[user.notes]]</div>
                 </div>
                 </div>       
