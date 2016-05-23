@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
-<dom-module id="doctors-list">
+<dom-module id="admins-list">
     <template>
         <style is="custom-style">
             section {
@@ -49,14 +49,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <section>
             <firebase-collection
-                    order-by-child="groups/group2"
+                    order-by-child="groups/group1"
                     order-value-type="boolean"
                     equal-to="true"
                     location="https://brainlight.firebaseio.com/users"
                     data="{{users}}"></firebase-collection>
 
             <paper-dialog-scrollable>
-                <paper-listbox on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
+                <paper-listbox on-iron-select="itemSelected" id="adminList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
                         <paper-item>
                             <img src={{online(usr)}} style="width:10px;height:10px;">
@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             'use strict';
 
             Polymer({
-                is: 'doctors-list',
+                is: 'admins-list',
 
                 properties: {
                     selected: Array,

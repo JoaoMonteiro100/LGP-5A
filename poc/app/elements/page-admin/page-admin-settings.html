@@ -13,6 +13,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="widgets/doctor-details.html">
 <link rel="import" href="../page-patients/widgets/patients-list.html">
 <link rel="import" href="../page-patients/widgets/patient-details.html">
+<link rel="import" href="widgets/admin-profile.html">
+
+
 <dom-module id="page-admin-settings">
   <template>
 
@@ -44,14 +47,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            widgets: {
              type: Array,
              value: [
-               {
+             {
                  title: 'Profile',
-                 component: 'profile',
+                 component: 'admin-profile',
                  buttons:[
                    { button: 'add-doctor' }
                  ]
                },
-               
+                {
+                 title: 'Admins',
+                 component: 'admins-list',
+                 buttons:[
+                   { button: 'add-admin' },
+                 ]
+               },
+               {
+                 title: 'Details',
+                 component: 'doctor-details',
+                 buttons:[
+                   { button: 'edit-doctor' },
+                   { button: 'delete-doctor' },
+                   { button: 'edit-note' }
+                 ]
+               }          
              ]
            },
          }
