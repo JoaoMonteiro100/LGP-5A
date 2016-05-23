@@ -42,7 +42,7 @@
             <form is="iron-form" id="newDoctorForm">
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
-                <paper-input id="unumber" name="unumber" label="Number" auto-validate pattern="[0-9]*" error-message="numbers only!" required auto-validate></paper-input>
+                <paper-input id="mail" name="mail" label="E-mail" required auto-validate></paper-input>
                 <div class="containerdiv">
                     <div class="flexchild">
                         <paper-input name="password" id="pwinput" label="Password" minlength="6" required auto-validate></paper-input>
@@ -86,7 +86,7 @@
                         name: this.$.firstname.value,
                         lastname: this.$.lastname.value,
                         //picture: this.user.google.cachedUserProfile.picture,
-                        number: this.$.unumber.value,
+                        mail: this.$.mail.value,
                         gender: this.$.genderdrop.value,
                         groups: {
                             group2: true
@@ -120,9 +120,9 @@
                         alert('aqui');
                         // Create an account for the new user in the database
                         var appRef = new Firebase(app.location);
-                        var doctorNumber = this.$.unumber.value;
+                        var doctorMail = this.$.mail.value;
                         appRef.createUser({
-                            email: doctorNumber + "@brainstream.com",
+                            email: doctorMail,
                             password: this.$.pwinput.value
                         }, function(error, userData) {
                             if(error) {
