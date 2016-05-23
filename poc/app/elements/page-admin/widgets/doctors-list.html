@@ -59,9 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-listbox on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
                         <paper-item>
-                           <!--<p>{{online(usr)}} </p> 
-                            <img src={{online}} style="width:10px;height:10px;">-->
-                            <img src="../../../images/online.png" style="width:10px;height:10px;">
+                            <img src={{online(usr)}} style="width:10px;height:10px;">
+                          <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
                             <div id="name">[[usr.name]] [[usr.lastname]]</div>
                             <span> - </span>
                             <div id="nums">[[usr.number]]</div>
@@ -101,12 +100,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
                 ,
 
-              /*  online: function(a) {
+                online: function(a) {
                     if(a.online)
                         return "../../../images/online.png";
                     else 
-                        return "../../../images/false.png";
-                },*/
+                        return "../../../images/offline.png";
+                },
 
                 _computeSort: function (a, b) {
                     if (a.name.toLowerCase() == b.name.toLowerCase()) {
