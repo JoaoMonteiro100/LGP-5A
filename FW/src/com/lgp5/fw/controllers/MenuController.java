@@ -30,6 +30,8 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class MenuController {
@@ -75,7 +77,10 @@ public class MenuController {
 	private ObservableList<String> moods = FXCollections.observableArrayList();
 	@FXML private NumberAxis xAxisHistory;
 	@FXML private NumberAxis yAxisHistory;
-	@FXML private LineChart<Number, Number> lineChartHistory;	
+	@FXML private LineChart<Number, Number> lineChartHistory;
+	@FXML private LineChart<Number, Number> lineChartWaves;
+	Queue<Integer> brainWavesQueue = new LinkedList<Integer>();
+	private long time;
 	//history logic
 	private float lowGama[];
 	private float midGama[];
@@ -88,7 +93,6 @@ public class MenuController {
 	private float attention[];
 	private float meditation[];
 	private float poorSignal[];
-	private String time[];
 
 
 	public MenuController() {
@@ -99,6 +103,7 @@ public class MenuController {
 	 */
 	@FXML
 	private void initialize() {
+		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Mediation"};
 		brainwaves.addAll(Arrays.asList(waves));
@@ -115,24 +120,13 @@ public class MenuController {
 		barChartMoods.setLegendVisible(false);
 
 		//history line chart
-		xAxisHistory.setLabel("Time");
+		xAxisHistory.setLabel("Time");		
 
-		XYChart.Series<Number, Number> series3 = new XYChart.Series();
+		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
+		series3.setName("Delta");
 		series3.getData().add(new XYChart.Data(1f, 23f));
-		series3.getData().add(new XYChart.Data(2, 14f));
-		series3.getData().add(new XYChart.Data(3, 15f));
-		series3.getData().add(new XYChart.Data(4, 24f));
-        series3.getData().add(new XYChart.Data(5, 34f));
-        series3.getData().add(new XYChart.Data(6, 36f));
-        series3.getData().add(new XYChart.Data(7, 22f));
-        series3.getData().add(new XYChart.Data(8, 45f));
-        series3.getData().add(new XYChart.Data(9, 43f));
-        series3.getData().add(new XYChart.Data(10, 17f));
-        series3.getData().add(new XYChart.Data(11, 29f));
-        series3.getData().add(new XYChart.Data(12, 25f));
-
-		lineChartHistory.getData().add(series3);
-		lineChartHistory.setLegendVisible(false);
+		lineChartWaves.getData().add(series3);
+		lineChartWaves.setLegendVisible(false);
 		//---------------
 
 
@@ -215,6 +209,15 @@ public class MenuController {
 										break;
 									}
 									j++;
+								}
+							}
+							for(Series<Number,Number> series : lineChartWaves.getData()){
+								for(Data<Number, Number> data : series.getData()) 
+								{
+
+									series3.getData().add(new XYChart.Data<>((System.currentTimeMillis()/1000)-time, Float.parseFloat(delta)));
+//										data.setXValue(Float.parseFloat(delta));
+//										data.setXValue((System.currentTimeMillis()/1000)-time);
 								}
 							}
 							for (Series<String, Float> series : barChartWaves.getData()) {

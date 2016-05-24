@@ -23,7 +23,7 @@
                         <NumberAxis side="LEFT" />
                      </yAxis>
                   </BarChart>
-                  <LineChart>
+                  <LineChart fx:id="lineChartWaves">
                      <xAxis>
                         <NumberAxis side="BOTTOM" />
                      </xAxis>
