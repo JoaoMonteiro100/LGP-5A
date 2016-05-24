@@ -68,7 +68,8 @@ public class Neurosky implements Runnable {
 					wavesMap.put(Constants.MEDITATION, valueBytes[0] & 0xFF);
 					break;
 				case (0x16):
-					System.out.println("blink: " + (valueBytes[0] & 0xFF));
+					wavesMap.put(Constants.BLINK, valueBytes[0] & 0xFF);
+				break;
 				case 0x83:
 					for (int i = 0; i < 8; i++) {
 						waves[i] = Math.abs((int) valueBytes[i * 3] << 16 | (int) valueBytes[i * 3 + 1] << 8
