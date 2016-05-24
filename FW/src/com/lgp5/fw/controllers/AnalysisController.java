@@ -1,8 +1,6 @@
 package com.lgp5.fw.controllers;
 
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,35 +12,35 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class SelectDeviceController {
+public class AnalysisController {
     @FXML
-    private ComboBox selectDeviceComboBox;
+    private ComboBox waveToAnalyse;
     @FXML
-    private Button selectDeviceStartButton;
+    private Button startAnalysis;
 
 
 
-    public SelectDeviceController() {
+    public AnalysisController() {
     }
 
 
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        selectDeviceComboBox.getItems().addAll("NeuroSky Mindset", "Emotiv Epoc");
+        waveToAnalyse.getItems().addAll("Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2");
 
-
+/*
         selectDeviceStartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Object comboBox = selectDeviceComboBox.getSelectionModel().getSelectedItem();
+                Object comboBox = waveToAnalyse.getSelectionModel().getSelectedItem();
                 if(comboBox != null) {
                     String comboBoxValue = comboBox.toString();
                     switch (comboBoxValue) {
                         case "NeuroSky Mindset":
                             launchNeuroSkyView();
                             //get a handle to the stage
-                            Stage stage = (Stage) selectDeviceComboBox.getScene().getWindow();
+                            Stage stage = (Stage) waveToAnalyse.getScene().getWindow();
                             //close current window
                             stage.close();
                             break;
@@ -52,7 +50,7 @@ public class SelectDeviceController {
                     }
                 }
             }
-        });
+        });*/
     }
 
 
@@ -61,7 +59,6 @@ public class SelectDeviceController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
-            stage.setTitle("BrainLight");
             stage.setScene(new Scene(parent));
             stage.show();
         } catch (IOException e) {

@@ -391,8 +391,6 @@ public class MenuController {
 		return series;
 	}
 	
-
-
 	public void launchSelectDeviceView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
