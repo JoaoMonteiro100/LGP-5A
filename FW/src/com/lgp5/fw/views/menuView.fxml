@@ -384,7 +384,7 @@
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="radarLabel" disable="true" onMouseClicked="#showRadar" style="-fx-cursor: hand;" text="BrainLight" textFill="#1d1d1b">
+            <Label fx:id="radarLabel" disable="true" onMouseClicked="#showRadar" prefHeight="21.0" prefWidth="96.0" style="-fx-cursor: hand;" text="BrainLight" textFill="#1d1d1b">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
@@ -397,7 +397,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="30.0" top="4.0" />
+                  <Insets left="20.0" top="4.0" />
                </HBox.margin>
             </Label>
             <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showBrainWaves" prefHeight="30.0" prefWidth="147.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
@@ -445,7 +445,7 @@
                   <Image url="@../assets/fa-angle-down.png" />
                </image>
                <HBox.margin>
-                  <Insets left="35.0" top="8.0" />
+                  <Insets left="20.0" right="10.0" top="8.0" />
                </HBox.margin>
             </ImageView>
          </children>
