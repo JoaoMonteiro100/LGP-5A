@@ -25,7 +25,7 @@
                   </BarChart>
                   <LineChart fx:id="lineChartWaves">
                      <xAxis>
-                        <NumberAxis side="BOTTOM" />
+                        <NumberAxis side="BOTTOM" fx:id="xAxisWavesLine" />
                      </xAxis>
                      <yAxis>
                         <NumberAxis side="LEFT" />
