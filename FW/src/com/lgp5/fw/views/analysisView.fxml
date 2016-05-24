@@ -5,10 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.AnalysisController">
    <children>
-      <ChoiceBox fx:id="waveToAnalyse" layoutX="30.0" layoutY="45.0" prefWidth="150.0" />
+      <ComboBox fx:id="waveToAnalyse" layoutX="30.0" layoutY="45.0" prefWidth="150.0" />
       <Label layoutX="30.0" layoutY="22.0" text="Wave to be analysed:">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -19,18 +18,18 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <RadioButton layoutX="30.0" layoutY="123.0" mnemonicParsing="false" text="Wavelength (m)" />
-      <RadioButton layoutX="30.0" layoutY="154.0" mnemonicParsing="false" text="Wavenumber (cycles/m)" />
-      <RadioButton layoutX="30.0" layoutY="185.0" mnemonicParsing="false" text="Angular wavenumber (rad/m)" />
-      <RadioButton layoutX="30.0" layoutY="216.0" mnemonicParsing="false" text="Angular frequency (rad/s)" />
-      <RadioButton layoutX="30.0" layoutY="246.0" mnemonicParsing="false" text="Period (s)" />
-      <RadioButton layoutX="30.0" layoutY="276.0" mnemonicParsing="false" text="Peak-to-peak amplitude (Hz)" />
-      <RadioButton layoutX="265.0" layoutY="276.0" mnemonicParsing="false" text="Frequency median (Hz)" />
-      <RadioButton layoutX="265.0" layoutY="246.0" mnemonicParsing="false" text="Frequency mode (Hz)" />
-      <RadioButton layoutX="265.0" layoutY="216.0" mnemonicParsing="false" text="Frequency mean (Hz)" />
-      <RadioButton layoutX="265.0" layoutY="185.0" mnemonicParsing="false" text="Maximum frequency (Hz)" />
-      <RadioButton layoutX="265.0" layoutY="154.0" mnemonicParsing="false" text="Minimum frequency (Hz)" />
-      <RadioButton layoutX="265.0" layoutY="123.0" mnemonicParsing="false" text="Maximum amplitude (Hz)" />
-      <Button layoutX="177.0" layoutY="318.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="109.0" text="Start analysis" />
+      <CheckBox id="wavelength" layoutX="30.0" layoutY="123.0" mnemonicParsing="false" text="Wavelength (m)" />
+      <CheckBox id="wavenumber" layoutX="30.0" layoutY="154.0" mnemonicParsing="false" text="Wavenumber (cycles/m)" />
+      <CheckBox id="angWavenumber" layoutX="30.0" layoutY="185.0" mnemonicParsing="false" text="Angular wavenumber (rad/m)" />
+      <CheckBox id="angFrequency" layoutX="30.0" layoutY="216.0" mnemonicParsing="false" text="Angular frequency (rad/s)" />
+      <CheckBox id="period" layoutX="30.0" layoutY="246.0" mnemonicParsing="false" text="Period (s)" />
+      <CheckBox id="amplitude" layoutX="30.0" layoutY="276.0" mnemonicParsing="false" text="Peak-to-peak amplitude (Hz)" />
+      <CheckBox id="median" layoutX="265.0" layoutY="276.0" mnemonicParsing="false" text="Frequency median (Hz)" />
+      <CheckBox id="mode" layoutX="265.0" layoutY="246.0" mnemonicParsing="false" text="Frequency mode (Hz)" />
+      <CheckBox id="mean" layoutX="265.0" layoutY="216.0" mnemonicParsing="false" text="Frequency mean (Hz)" />
+      <CheckBox id="maxFrequency" layoutX="265.0" layoutY="185.0" mnemonicParsing="false" text="Maximum frequency (Hz)" />
+      <CheckBox id="minFrequency" layoutX="265.0" layoutY="154.0" mnemonicParsing="false" text="Minimum frequency (Hz)" />
+      <CheckBox id="maxAmplitude" layoutX="265.0" layoutY="123.0" mnemonicParsing="false" text="Maximum amplitude (Hz)" />
+      <Button id="startAnalysis" layoutX="177.0" layoutY="318.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="109.0" text="Start analysis" />
    </children>
 </AnchorPane>

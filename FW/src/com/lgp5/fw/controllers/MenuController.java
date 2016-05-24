@@ -3,7 +3,6 @@ package com.lgp5.fw.controllers;
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
-
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -18,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -31,8 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
 
 
 public class MenuController {
@@ -280,7 +277,7 @@ public class MenuController {
 	public void openMenu(MouseEvent event){		
 		painelHSA.setVisible(true);
 		FadeTransition fadeTransition 
-		= new FadeTransition(Duration.millis(1000), painelHSA);
+		= new FadeTransition(Duration.millis(300), painelHSA);
 		fadeTransition.setFromValue(0.0);
 		fadeTransition.setToValue(1.0);
 		fadeTransition.play();				
@@ -365,10 +362,24 @@ public class MenuController {
 			Parent parent = (Parent) loader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(parent, 900, 600));
+            stage.setTitle("BrainLight - Select Device");
 			stage.show();
 			//close current stage
 			Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
 			current.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void launchAnalysisView() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
+			Parent parent = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(parent, 462, 378));
+            stage.setTitle("BrainLight - Analysis");
+			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

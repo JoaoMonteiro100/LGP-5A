@@ -33,13 +33,16 @@
             <Font size="19.0" />
          </font>
       </Button>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+      <ImageView fitHeight="150.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
          <image>
             <Image url="@../assets/logo.png" />
          </image>
          <GridPane.margin>
             <Insets top="135.0" />
          </GridPane.margin>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
       </ImageView>
    </children>
 </GridPane>

@@ -23,7 +23,7 @@
                         <NumberAxis side="LEFT" />
                      </yAxis>
                   </BarChart>
-                  <LineChart>
+                  <LineChart fx:id="lineChartWaves">
                      <xAxis>
                         <NumberAxis side="BOTTOM" />
                      </xAxis>
@@ -265,7 +265,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="moodPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false">
+            <GridPane fx:id="moodPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false">
                <children>
                   <BarChart fx:id="barChartMoods" GridPane.rowIndex="1">
                      <xAxis>
@@ -362,11 +362,29 @@
                   <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false">
+               <children>
+                  <LineChart fx:id="lineChartHistory">
+                     <xAxis>
+                        <NumberAxis side="BOTTOM" fx:id="xAxisHistory" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis fx:id="yAxisHistory" side="LEFT" />
+                     </yAxis>
+                  </LineChart>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
          </children>
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="radarLabel" disable="true" onMouseClicked="#showRadar" style="-fx-cursor: hand;" text="BrainLight" textFill="#1d1d1b">
+            <Label fx:id="radarLabel" disable="true" onMouseClicked="#showRadar" prefHeight="21.0" prefWidth="96.0" style="-fx-cursor: hand;" text="BrainLight" textFill="#1d1d1b">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
@@ -379,7 +397,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="30.0" top="4.0" />
+                  <Insets left="20.0" top="4.0" />
                </HBox.margin>
             </Label>
             <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showBrainWaves" prefHeight="30.0" prefWidth="147.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
@@ -391,6 +409,14 @@
                </HBox.margin>
             </Label>
             <Label fx:id="moodLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="MOOD" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="historyLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showHistory" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -419,7 +445,7 @@
                   <Image url="@../assets/fa-angle-down.png" />
                </image>
                <HBox.margin>
-                  <Insets left="35.0" top="8.0" />
+                  <Insets left="20.0" right="10.0" top="8.0" />
                </HBox.margin>
             </ImageView>
          </children>
@@ -434,17 +460,17 @@
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" styleClass="bold" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
-                  <Font name="System Bold" size="16.0" />
+                  <Font size="16.0" />
                </font>
                <padding>
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="96.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" styleClass="bold" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" onMouseClicked="#launchAnalysisView" layoutX="17.0" layoutY="96.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
-                  <Font name="System Bold" size="16.0" />
+                  <Font size="16.0" />
                </font>
                <padding>
                   <Insets left="20.0" />
