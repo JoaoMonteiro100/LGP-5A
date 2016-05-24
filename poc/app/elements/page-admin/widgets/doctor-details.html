@@ -101,13 +101,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="container">
             <div class="flexchild">
                 <div id="name" class="namestyle">
-                    {{user.name}} {{user.lastname}}
+                    Name: {{user.name}} {{user.lastname}}
+                </div>
+                 <div id="number" class="textstyle2">
+                    Number: [[user.number]]
                 </div>
                 <div id="mail" class="textstyle2">
-                    [[user.mail]]
+                    Mail: [[user.mail]]
                 </div>
                 <div id="gender" class="textstyle2">
-                    [[user.gender]]
+                    Gender: [[user.gender]]
+                </div>
+                <div id="doctorAssociated" class="textstyle2">
+                    DoctorAssociated: [[user.doctorAssociated]]
                 </div>
             </div>
             <div id="profimg">
