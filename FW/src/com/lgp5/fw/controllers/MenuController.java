@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -79,7 +80,8 @@ public class MenuController {
 	@FXML private NumberAxis yAxisHistory;
 	@FXML private LineChart<Number, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
-	Queue<Integer> brainWavesQueue = new LinkedList<Integer>();
+	ArrayList<String> brainWavesQueue =  new ArrayList<String>();
+	ArrayList<Number> brainWavesQueueTime = new ArrayList<Number>();
 	private long time;
 	//history logic
 	private float lowGama[];
@@ -124,7 +126,11 @@ public class MenuController {
 
 		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
 		series3.setName("Delta");
-		series3.getData().add(new XYChart.Data(1f, 23f));
+		for (int i = 0; i < 10; i++) {
+			series3.getData().add(new XYChart.Data(1f, 1f));
+			brainWavesQueue.add("50.0");
+			brainWavesQueueTime.add(1);
+		}		
 		lineChartWaves.getData().add(series3);
 		lineChartWaves.setLegendVisible(false);
 		//---------------
@@ -180,7 +186,14 @@ public class MenuController {
 					String delta = values.get(Constants.DELTA).toString();
 					String attention = values.get(Constants.ATTENTION).toString();
 					String meditation = values.get(Constants.MEDITATION).toString();
-					String signal = values.get(Constants.POOR_SIGNAL).toString();									
+					String signal = values.get(Constants.POOR_SIGNAL).toString();
+					brainWavesQueue.add(delta);
+					brainWavesQueue.remove(0);
+					brainWavesQueueTime.add((System.currentTimeMillis()/1000)-time);
+					brainWavesQueueTime.remove(0);
+					System.out.println(brainWavesQueueTime.toString());
+					System.out.println(brainWavesQueue.toString());
+					
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -212,12 +225,11 @@ public class MenuController {
 								}
 							}
 							for(Series<Number,Number> series : lineChartWaves.getData()){
-								for(Data<Number, Number> data : series.getData()) 
+								for(int i=0;i< series.getData().size();i++) 
 								{
-
-									series3.getData().add(new XYChart.Data<>((System.currentTimeMillis()/1000)-time, Float.parseFloat(delta)));
-//										data.setXValue(Float.parseFloat(delta));
-//										data.setXValue((System.currentTimeMillis()/1000)-time);
+									System.out.println(series.getData().size());
+									series.getData().get(i).setYValue(Float.parseFloat(brainWavesQueue.get(i)));
+									series.getData().get(i).setXValue(brainWavesQueueTime.get(i));
 								}
 							}
 							for (Series<String, Float> series : barChartWaves.getData()) {
