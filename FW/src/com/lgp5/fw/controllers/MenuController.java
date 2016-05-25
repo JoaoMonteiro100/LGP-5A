@@ -3,6 +3,7 @@ package com.lgp5.fw.controllers;
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
+import com.sun.swing.internal.plaf.metal.resources.metal_de;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -64,7 +65,7 @@ public class MenuController {
 	@FXML private Label deltaData;
 	@FXML private Label thetaData;
 	@FXML private Label attentionData;
-	@FXML private Label mediationData;
+	@FXML private Label meditationData; 
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
@@ -82,13 +83,16 @@ public class MenuController {
 	@FXML private CategoryAxis xAxisWaves;
 	@FXML private CategoryAxis xAxisMood;
 	@FXML private NumberAxis xAxisWavesLine;
+	@FXML private NumberAxis xAxisMoodsLine;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
 	@FXML private NumberAxis xAxisHistory;
 	@FXML private NumberAxis yAxisHistory;
 	@FXML private LineChart<Number, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
+	@FXML private LineChart<Number, Number> lineChartMoods;
 	Vector<ArrayList> wavesGroup = new Vector<ArrayList>(2);
+	Vector<ArrayList> moodsGroup = new Vector<ArrayList>(2);
 	ArrayList<String> deltaQueue =  new ArrayList<String>();
 	ArrayList<String> thetaQueue =  new ArrayList<String>();
 	ArrayList<String> highAlphaQueue =  new ArrayList<String>();
@@ -97,6 +101,8 @@ public class MenuController {
 	ArrayList<String> lowBetaQueue =  new ArrayList<String>();
 	ArrayList<String> lowGammaQueue =  new ArrayList<String>();
 	ArrayList<String> highGammaQueue =  new ArrayList<String>();
+	ArrayList<String> attentionQueue =  new ArrayList<String>();
+	ArrayList<String> meditationQueue =  new ArrayList<String>();
 	ArrayList<Number> queueTime = new ArrayList<Number>();
 	private long time;
 
@@ -110,7 +116,7 @@ public class MenuController {
 	private void initialize() {
 		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
-		String[] moodsArray = {"Attention","Mediation"};
+		String[] moodsArray = {"Attention","Meditation"};
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
 		xAxisWaves.setCategories(brainwaves);
@@ -126,6 +132,7 @@ public class MenuController {
 		barChartMoods.setLegendVisible(false);
 
 		createSeriesLineChartWaves(series);
+		createSeriesLineChartMoods(series2);
 
 
 		XYChart.Series seriesA = new XYChart.Series();
@@ -181,6 +188,7 @@ public class MenuController {
 					String signal = values.get(Constants.POOR_SIGNAL).toString();
 
 					updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
+					updateSeriesLineChartMoods(attention,meditation);
 
 					Platform.runLater(new Runnable() {
 						@Override
@@ -194,7 +202,7 @@ public class MenuController {
 							thetaData.setText(theta);
 							deltaData.setText(delta);
 							attentionData.setText(attention);
-							mediationData.setText(meditation);
+							meditationData.setText(meditation);
 							signalQualityData.setText(signal);
 							for (Series<String, Float> series2 : barChartMoods.getData()) {
 								int j=0;
@@ -221,11 +229,20 @@ public class MenuController {
 								}
 								serieNumber++;
 							}
-							for (Series<String, Float> series : barChartWaves.getData()) {
+							int serieNumber2=0;
+							for(Series<Number,Number> series : lineChartMoods.getData()){							
+								for(int i=0;i< series.getData().size();i++) 
+								{									
+									series.getData().get(i).setYValue(Float.parseFloat((String) moodsGroup.get(serieNumber2).get(i)));
+									series.getData().get(i).setXValue(queueTime.get(i));
+								}
+								serieNumber2++;
+							}
+							for (Series<String, Float> series : barChartWaves.getData()) 
+							{
 								int i=0;
-								for (Data<String, Float> data : series.getData()) {
-									//Falta Converter !!!!!!!!!!!!!!!!!!!!!!
-									////Volts: [ rawValue * (1.8/4096) ] / 2000
+								for (Data<String, Float> data : series.getData()) 
+								{
 									switch (i) {
 									case 0:
 										data.setYValue(Float.parseFloat(delta));
@@ -265,9 +282,78 @@ public class MenuController {
 
 		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
 	}
+	public void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
+		xAxisMoodsLine.setLabel("Time");
+		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
+		XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
+		series1.setName("Attention");
+		series2.setName("Meditation");
+		for (int i = 0; i < 10; i++) {
+			series1.getData().add(new XYChart.Data(0f, 0f));
+			series2.getData().add(new XYChart.Data(0f, 0f));
+			attentionQueue.add("0.0");
+			meditationQueue.add("0.0");
+		}
+		moodsGroup.add(attentionQueue);
+		moodsGroup.add(meditationQueue);
+		lineChartMoods.getData().addAll(series1,series2);
+
+		for (int i = 0; i < seriesBarChart.getData().size(); i++) {
+			final int tmp = i;
+			seriesBarChart.getData().get(i).getNode().setOnMouseClicked(new EventHandler<Event>() {
+				@Override
+				public void handle(Event event) {
+					if(lineChartMoods.getData().get(tmp).nodeProperty().get().isVisible())
+					{
+						lineChartMoods.getData().get(tmp).nodeProperty().get().setVisible(false);
+						Set<Node> lookupAll = lineChartMoods.lookupAll(".chart-line-symbol.series" + tmp);
+						for (Node n : lookupAll) {
+							n.setVisible(false);
+						}
+					}
+					else 
+					{
+						Set<Node> lookupAll = lineChartMoods.lookupAll(".chart-line-symbol.series" + tmp);
+						for (Node n : lookupAll) {
+							n.setVisible(true);
+						}
+						lineChartMoods.getData().get(tmp).nodeProperty().get().setVisible(true);
+					}
+				}
+			});
+		}
+		colorNumber=8;
+		for(Series<Number,Number> series : lineChartMoods.getData()){
+			if(colorNumber>=constants.Constants.colors.length)						
+				colorNumber=0;		
+			Set<Node> lookupAll = lineChartMoods.lookupAll(".chart-line-symbol.series" + colorNumber);
+			for (Node n : lookupAll) {
+				n.setStyle("-fx-background-color:"+constants.Constants.colors[colorNumber]+";");
+			}
+			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[colorNumber]+";");		
+			colorNumber++;	
+		}
+		lineChartMoods.setLegendVisible(false);
+		lineChartMoods.setAnimated(false);
+
+		xAxisMoodsLine.setLowerBound(0);
+		xAxisMoodsLine.setUpperBound(50);
+		xAxisMoodsLine.setAutoRanging(false);
+	}
+	public void updateSeriesLineChartMoods(String a,String m)
+	{
+		moodsGroup.get(0).add(a);					
+		moodsGroup.get(1).add(m);		
+
+		for (int i = 0; i < moodsGroup.size(); i++) {
+			moodsGroup.get(i).remove(0);
+		}
+		xAxisMoodsLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
+		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
+	}
 
 	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
-		xAxisHistory.setLabel("Time");	
+		xAxisWavesLine.setLabel("Time");	
 		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
 		XYChart.Series<Number, Number> series4 = new XYChart.Series<>();		
 		XYChart.Series<Number, Number> series5 = new XYChart.Series<>();		
@@ -294,14 +380,14 @@ public class MenuController {
 			series8.getData().add(new XYChart.Data(0f, 0f));
 			series9.getData().add(new XYChart.Data(0f, 0f));
 			series10.getData().add(new XYChart.Data(0f, 0f));
-			deltaQueue.add("50.0");
-			thetaQueue.add("50.0");
-			highAlphaQueue.add("50.0");
-			lowAlphaQueue.add("50.0");
-			highBetaQueue.add("50.0");
-			lowBetaQueue.add("50.0");
-			lowGammaQueue.add("50.0");
-			highGammaQueue.add("50.0");
+			deltaQueue.add("0.0");
+			thetaQueue.add("0.0");
+			highAlphaQueue.add("0.0");
+			lowAlphaQueue.add("0.0");
+			highBetaQueue.add("0.0");
+			lowBetaQueue.add("0.0");
+			lowGammaQueue.add("0.0");
+			highGammaQueue.add("0.0");
 			queueTime.add(0);
 		}		
 		wavesGroup.add(deltaQueue);
@@ -316,7 +402,6 @@ public class MenuController {
 		lineChartWaves.getData().addAll(series3,series4,series6,series5,series8,series7,series9,series10);
 		for (int i = 0; i < seriesBarChart.getData().size(); i++) {
 			final int tmp = i;
-			System.out.println(seriesBarChart.getData().get(i).toString());
 			seriesBarChart.getData().get(i).getNode().setOnMouseClicked(new EventHandler<Event>() {
 				@Override
 				public void handle(Event event) {
@@ -337,7 +422,6 @@ public class MenuController {
 						lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(true);
 					}
 				}
-
 			});
 		}
 
@@ -353,9 +437,6 @@ public class MenuController {
 			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[colorNumber]+";");		
 			colorNumber++;	
 		}
-
-
-
 		lineChartWaves.setLegendVisible(false);
 		lineChartWaves.setAnimated(false);
 
@@ -381,11 +462,7 @@ public class MenuController {
 			wavesGroup.get(i).remove(0);
 		}
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
-		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));					
-		/*
-		System.err.println(queueTime.toString());
-		System.out.println(deltaQueue.toString());
-		System.err.println(thetaQueue.toString());*/
+		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 	}
 
 	public void openMenu(MouseEvent event){		
@@ -451,7 +528,7 @@ public class MenuController {
 	 * @param values Array with a value for each brainwave. Must be the same length as the waves array
 	 * @return Series of brainwave data
 	 */
-	private XYChart.Series<String,Float> createWaveDataSeries (float[] values,ObservableList<String> list) {
+	private XYChart.Series<String,Float> createWaveDataSeries (float[] values,ObservableList<String> list) {	
 		XYChart.Series<String,Float> series = new XYChart.Series<>();
 		for (int i = 0; i < values.length; i++) {
 			XYChart.Data<String,Float> waveData = new XYChart.Data<>(list.get(i), values[i]);
