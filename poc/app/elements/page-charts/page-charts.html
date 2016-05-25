@@ -11,19 +11,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="widgets/line-chart.html">
 <dom-module id="page-charts">
-  <template>
-      <style include="shared-styles"></style>
-      <style>
-        :host::shadow .widget {
-          height: auto !important;  // todo: remove important
-          min-height: 460px;
-        }
-      </style>
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host::shadow .widget {
+                height: auto !important;
+            / / todo: remove important min-height: 460 px;
+            }
+        </style>
         <app-widgets widgets="{{widgets}}" cols="{{cols.style1}}"></app-widgets>
         <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
     </template>
     <script>
-        (function() {
+        (function () {
             'use strict';
 
             Polymer({
@@ -37,14 +37,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     widgets: {
                         type: Array,
-                       value: [
-               {
-                 title: 'Charts',
-                 component: 'line-chart',
-                 buttons:[
-                 ]
-
-               }
+                        value: [
+                            {
+                                title: 'Charts',
+                                component: 'line-chart',
+                                buttons: []
+                            }
                         ]
                     }
                 }

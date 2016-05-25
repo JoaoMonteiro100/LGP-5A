@@ -1,42 +1,88 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/chart-elements/chart-elements.html">
+
 
 <dom-module id="line-chart">
     <template>
         <style is="custom-style">
             section {
                 width: 100%;
-                height: 250px;
+                height: 900px;
                 @apply(--layout-vertical);
             }
+
             section paper-dialog-scrollable {
 
                 @apply(--layout-flex);
             }
+
             paper-dialog-scrollable::shadow #scrollable {
-                padding:0px;
+                padding: 0px;
             }
+
             paper-item {
                 --paper-item: {
                     cursor: pointer;
                 };
             }
 
-            span{
+            span {
                 padding-right: 10px;
             }
         </style>
         <section>
-        <paper-dialog-scrollable>
-            <div>AQUI</div>
-        </paper-dialog-scrollable>
+            <paper-dialog-scrollable>
+                <div>
+                    <chart-line id="chart" data="[[data]]"></chart-line>
+                </div>
+            </paper-dialog-scrollable>
         </section>
     </template>
     <script>
-        (function() {
+        (function () {
             'use strict';
 
             Polymer({
-                is: 'line-chart'
+                is: 'line-chart',
+
+                properties: {
+                    data: {
+                        type: Object,
+                        notify: true
+                    }
+                },
+
+                ready: function () {
+                    this.$.chart.style.width = 600 + 'px';
+                    this.$.chart.style.height = 600 + 'px';
+                    this.$.chart.resize();
+
+                    this.data = {
+                        labels: ["January", "February", "March", "April", "May", "June", "July"],
+                        datasets: [
+                            {
+                                label: "My First dataset",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                pointColor: "rgba(220,220,220,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: [65, 59, 80, 81, 56, 55, 40]
+                            },
+                            {
+                                label: "My Second dataset",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 48, 40, 19, 86, 27, 90]
+                            }
+                        ]
+                    }
+                }
             });
         })();
     </script>
