@@ -47,11 +47,6 @@
             Polymer({
                 is: 'line-chart',
 
-                behaviors: [
-                    Polymer.IronResizableBehavior,
-                    ChartBehaviors.DatasetPropertiesBehavior,
-                ],
-
                 properties: {
                     data: {
                         type: Object,
@@ -81,15 +76,85 @@
                         labels: ["January", "February", "March", "April", "May", "June", "July"],
                         datasets: [
                             {
-                                label: "My Second dataset",
+                                label: "Low Gamma",
                                 fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "rgba(151,187,205,1)",
-                                pointColor: "rgba(151,187,205,1)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
                                 pointStrokeColor: "#fff",
                                 pointHighlightFill: "#fff",
                                 pointHighlightStroke: "rgba(151,187,205,1)",
                                 data: [28, 48, 40, 19, 86, 27, 90]
-                            }
+                            },
+                            {
+                                label: "Mid Gamma",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#f39200",
+                                pointColor: "#f39200",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 48, 40, 19, 86, 27, 90]
+                            },
+                            {
+                                label: "Low beta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#00a09a",
+                                pointColor: "#00a09a",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 48, 40, 19, 86, 27, 90]
+                            },
+                            {
+                                label: "High beta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#2eac66",
+                                pointColor: "#2eac66",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 48, 40, 19, 86, 27, 90]
+                            },
+                            {
+                                label: "Low Alpha",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#302683",
+                                pointColor: "#302683",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 48, 40, 19, 150, 27, 90]
+                            },
+                            {
+                                label: "High Alpha",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#1d70b7",
+                                pointColor: "#1d70b7",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 48, 20, 19, 86, 25, 90]
+                            },
+                            {
+                                label: "Theta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#45405e",
+                                pointColor: "#45405e",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 48, 100, 19, 86, 27, 90]
+                            },
+                            {
+                                label: "Delta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#9d9c9c",
+                                pointColor: "#9d9c9c",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [28, 60, 40, 19, 86, 27, 90]
+                            },
                         ]
                     };
                 },
