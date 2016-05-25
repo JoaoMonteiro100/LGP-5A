@@ -14,14 +14,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="widgets/patient-history.html">
 <dom-module id="page-patients">
   <template>
-
       <style include="shared-styles"></style>
       <style>
         :host::shadow .widget {
           height: auto !important;  // todo: remove important
           min-height: 460px;
         }
-
       </style>
 
       <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>

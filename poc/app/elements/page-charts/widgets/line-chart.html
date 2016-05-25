@@ -1,0 +1,41 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="line-chart">
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 250px;
+                @apply(--layout-vertical);
+            }
+            section paper-dialog-scrollable {
+
+                @apply(--layout-flex);
+            }
+            paper-dialog-scrollable::shadow #scrollable {
+                padding:0px;
+            }
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
+
+            span{
+                padding-right: 10px;
+            }
+        </style>
+        <section>
+            <div>ASIASPOAISPAOISPAOSIAOSI</div>
+        </section>
+    </template>
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'line-chart'
+            });
+        })();
+    </script>
+</dom-module>
