@@ -61,8 +61,8 @@ public class SelectDeviceController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
-            stage.setTitle("BrainLight");
             stage.setScene(new Scene(parent));
+            stage.setTitle("BrainLight");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

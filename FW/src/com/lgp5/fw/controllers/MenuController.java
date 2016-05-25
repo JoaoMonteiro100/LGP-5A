@@ -26,6 +26,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -60,6 +62,7 @@ public class MenuController {
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
 	@FXML private GridPane radarPane;
+	@FXML private WebView radarBrowser;
 	@FXML private GridPane dataPane;
 	@FXML private GridPane moodPane;
 	@FXML private GridPane historyPane;
@@ -124,7 +127,10 @@ public class MenuController {
 		createSeriesLineChartWaves(series);
 		createSeriesLineChartMoods(series2);
 
+		WebEngine webEngine = radarBrowser.getEngine();
+		webEngine.load("http://google.com");
 
+/*
 		XYChart.Series seriesA = new XYChart.Series();
 		seriesA.getData().add(new XYChart.Data(0, 100));
 		seriesA.getData().add(new XYChart.Data(50, 50));
@@ -159,7 +165,7 @@ public class MenuController {
 		node1.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
 		node2.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
 		node3.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-
+*/
 		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
