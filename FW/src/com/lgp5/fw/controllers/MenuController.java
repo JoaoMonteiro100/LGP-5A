@@ -26,12 +26,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 
@@ -106,7 +107,7 @@ public class MenuController {
 	 * Initializes the controller class and sets x axis of the bar chart with the appropriate values
 	 */
 	@FXML
-	private void initialize() {
+	private void initialize() throws MalformedURLException {
 		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
@@ -127,8 +128,8 @@ public class MenuController {
 		createSeriesLineChartWaves(series);
 		createSeriesLineChartMoods(series2);
 
-		WebEngine webEngine = radarBrowser.getEngine();
-		webEngine.load("http://google.com");
+		URL urlHello = getClass().getResource("../views/web/radarChart.html");
+		radarBrowser.getEngine().load(urlHello.toExternalForm());
 
 /*
 		XYChart.Series seriesA = new XYChart.Series();
