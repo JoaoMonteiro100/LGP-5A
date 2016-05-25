@@ -10,6 +10,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -24,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -31,9 +34,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Vector;
 
 
@@ -86,21 +91,14 @@ public class MenuController {
 	Vector<ArrayList> wavesGroup = new Vector<ArrayList>(2);
 	ArrayList<String> deltaQueue =  new ArrayList<String>();
 	ArrayList<String> thetaQueue =  new ArrayList<String>();
+	ArrayList<String> highAlphaQueue =  new ArrayList<String>();
+	ArrayList<String> lowAlphaQueue =  new ArrayList<String>();
+	ArrayList<String> highBetaQueue =  new ArrayList<String>();
+	ArrayList<String> lowBetaQueue =  new ArrayList<String>();
+	ArrayList<String> lowGammaQueue =  new ArrayList<String>();
+	ArrayList<String> highGammaQueue =  new ArrayList<String>();
 	ArrayList<Number> queueTime = new ArrayList<Number>();
 	private long time;
-	//history logic
-	private float lowGama[];
-	private float midGama[];
-	private float lowBeta[];
-	private float highBeta[];
-	private float lowAlpha[];
-	private float highAlpha[];
-	private float theta[];
-	private float delta[];
-	private float attention[];
-	private float meditation[];
-	private float poorSignal[];
-
 
 	public MenuController() {
 	}
@@ -122,36 +120,12 @@ public class MenuController {
 		XYChart.Series<String,Float> series = createWaveDataSeries(values,brainwaves);
 		XYChart.Series<String,Float> series2 = createWaveDataSeries(values2,moods);
 		barChartWaves.getData().add(series);
+
 		barChartMoods.getData().add(series2);
 		barChartWaves.setLegendVisible(false);
 		barChartMoods.setLegendVisible(false);
 
-		//brain line chart
-		xAxisHistory.setLabel("Time");		
-
-		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
-		XYChart.Series<Number, Number> series4 = new XYChart.Series<>();		
-		series3.setName("Delta");
-		series4.setName("Theta");
-		for (int i = 0; i < 10; i++) {
-			series3.getData().add(new XYChart.Data(0f, 0f));
-			series4.getData().add(new XYChart.Data(0f, 0f));
-			deltaQueue.add("50.0");
-			thetaQueue.add("50.0");
-			queueTime.add(0);
-		}		
-		wavesGroup.add(deltaQueue);
-		wavesGroup.add(thetaQueue);
-		lineChartWaves.getData().addAll(series3,series4);
-
-		lineChartWaves.setLegendVisible(false);
-		lineChartWaves.setAnimated(false);
-
-		xAxisWavesLine.setLowerBound(0);
-		xAxisWavesLine.setUpperBound(50);
-		xAxisWavesLine.setAutoRanging(false);
-
-		//---------------
+		createSeriesLineChartWaves(series);
 
 
 		XYChart.Series seriesA = new XYChart.Series();
@@ -205,18 +179,9 @@ public class MenuController {
 					String attention = values.get(Constants.ATTENTION).toString();
 					String meditation = values.get(Constants.MEDITATION).toString();
 					String signal = values.get(Constants.POOR_SIGNAL).toString();
-					wavesGroup.get(0).add(delta);
-					wavesGroup.get(0).remove(0);
-					queueTime.add((System.currentTimeMillis()/1000)-time);
-					queueTime.remove(0);
-					wavesGroup.get(1).add(theta);
-					wavesGroup.get(1).remove(0);
-					xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
-					xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));					
-					/*
-					System.err.println(queueTime.toString());
-					System.out.println(deltaQueue.toString());
-					System.err.println(thetaQueue.toString());*/
+
+					updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -250,17 +215,9 @@ public class MenuController {
 							int serieNumber=0;
 							for(Series<Number,Number> series : lineChartWaves.getData()){							
 								for(int i=0;i< series.getData().size();i++) 
-								{
-									switch(serieNumber){
-									case 0:
-										series.getData().get(i).setYValue(Float.parseFloat((String) wavesGroup.get(serieNumber).get(i)));
-										series.getData().get(i).setXValue(queueTime.get(i));
-										break;
-									case 1:
-										series.getData().get(i).setYValue(Float.parseFloat((String) wavesGroup.get(serieNumber).get(i)));
-										series.getData().get(i).setXValue(queueTime.get(i));
-										break;
-									}										
+								{									
+									series.getData().get(i).setYValue(Float.parseFloat((String) wavesGroup.get(serieNumber).get(i)));
+									series.getData().get(i).setXValue(queueTime.get(i));
 								}
 								serieNumber++;
 							}
@@ -268,7 +225,7 @@ public class MenuController {
 								int i=0;
 								for (Data<String, Float> data : series.getData()) {
 									//Falta Converter !!!!!!!!!!!!!!!!!!!!!!
-									//Volts: [ rawValue * (1.8/4096) ] / 2000
+									////Volts: [ rawValue * (1.8/4096) ] / 2000
 									switch (i) {
 									case 0:
 										data.setYValue(Float.parseFloat(delta));
@@ -307,6 +264,128 @@ public class MenuController {
 		};
 
 		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
+	}
+
+	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
+		xAxisHistory.setLabel("Time");	
+		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
+		XYChart.Series<Number, Number> series4 = new XYChart.Series<>();		
+		XYChart.Series<Number, Number> series5 = new XYChart.Series<>();		
+		XYChart.Series<Number, Number> series6 = new XYChart.Series<>();		
+		XYChart.Series<Number, Number> series7 = new XYChart.Series<>();		
+		XYChart.Series<Number, Number> series8 = new XYChart.Series<>();		
+		XYChart.Series<Number, Number> series9 = new XYChart.Series<>();		
+		XYChart.Series<Number, Number> series10 = new XYChart.Series<>();		
+		series3.setName("Delta");
+		series4.setName("Theta");
+		series5.setName("highAlpha");
+		series6.setName("lowAlpha");
+		series7.setName("highBeta");
+		series8.setName("lowBeta");
+		series9.setName("lowGamma");
+		series10.setName("highGamma");
+
+		for (int i = 0; i < 10; i++) {
+			series3.getData().add(new XYChart.Data(0f, 0f));
+			series4.getData().add(new XYChart.Data(0f, 0f));
+			series5.getData().add(new XYChart.Data(0f, 0f));
+			series6.getData().add(new XYChart.Data(0f, 0f));
+			series7.getData().add(new XYChart.Data(0f, 0f));
+			series8.getData().add(new XYChart.Data(0f, 0f));
+			series9.getData().add(new XYChart.Data(0f, 0f));
+			series10.getData().add(new XYChart.Data(0f, 0f));
+			deltaQueue.add("50.0");
+			thetaQueue.add("50.0");
+			highAlphaQueue.add("50.0");
+			lowAlphaQueue.add("50.0");
+			highBetaQueue.add("50.0");
+			lowBetaQueue.add("50.0");
+			lowGammaQueue.add("50.0");
+			highGammaQueue.add("50.0");
+			queueTime.add(0);
+		}		
+		wavesGroup.add(deltaQueue);
+		wavesGroup.add(thetaQueue);		
+		wavesGroup.add(highAlphaQueue);		
+		wavesGroup.add(lowAlphaQueue);		
+		wavesGroup.add(highBetaQueue);		
+		wavesGroup.add(lowBetaQueue);		
+		wavesGroup.add(lowGammaQueue);		
+		wavesGroup.add(highGammaQueue);		
+
+		lineChartWaves.getData().addAll(series3,series4,series6,series5,series8,series7,series9,series10);
+		for (int i = 0; i < seriesBarChart.getData().size(); i++) {
+			final int tmp = i;
+			System.out.println(seriesBarChart.getData().get(i).toString());
+			seriesBarChart.getData().get(i).getNode().setOnMouseClicked(new EventHandler<Event>() {
+				@Override
+				public void handle(Event event) {
+					if(lineChartWaves.getData().get(tmp).nodeProperty().get().isVisible())
+					{
+						lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(false);
+						Set<Node> lookupAll = lineChartWaves.lookupAll(".chart-line-symbol.series" + tmp);
+						for (Node n : lookupAll) {
+							n.setVisible(false);
+						}
+					}
+					else 
+					{
+						Set<Node> lookupAll = lineChartWaves.lookupAll(".chart-line-symbol.series" + tmp);
+						for (Node n : lookupAll) {
+							n.setVisible(true);
+						}
+						lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(true);
+					}
+				}
+
+			});
+		}
+
+
+		colorNumber=0;
+		for(Series<Number,Number> series : lineChartWaves.getData()){
+			if(colorNumber>=constants.Constants.colors.length)						
+				colorNumber=0;		
+			Set<Node> lookupAll = lineChartWaves.lookupAll(".chart-line-symbol.series" + colorNumber);
+			for (Node n : lookupAll) {
+				n.setStyle("-fx-background-color:"+constants.Constants.colors[colorNumber]+";");
+			}
+			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[colorNumber]+";");		
+			colorNumber++;	
+		}
+
+
+
+		lineChartWaves.setLegendVisible(false);
+		lineChartWaves.setAnimated(false);
+
+		xAxisWavesLine.setLowerBound(0);
+		xAxisWavesLine.setUpperBound(50);
+		xAxisWavesLine.setAutoRanging(false);
+	}
+
+	public void updateSeriesLineChartWaves(String d,String t,String g1,String g2,String a1,String a2,String b1,String b2)
+	{
+		queueTime.add((System.currentTimeMillis()/1000)-time);
+		queueTime.remove(0);
+		wavesGroup.get(0).add(d);					
+		wavesGroup.get(1).add(t);
+		wavesGroup.get(2).add(a2);
+		wavesGroup.get(3).add(a1);
+		wavesGroup.get(4).add(b2);
+		wavesGroup.get(5).add(b1);
+		wavesGroup.get(6).add(g1);
+		wavesGroup.get(7).add(g2);
+
+		for (int i = 0; i < wavesGroup.size(); i++) {
+			wavesGroup.get(i).remove(0);
+		}
+		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
+		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));					
+		/*
+		System.err.println(queueTime.toString());
+		System.out.println(deltaQueue.toString());
+		System.err.println(thetaQueue.toString());*/
 	}
 
 	public void openMenu(MouseEvent event){		
@@ -390,7 +469,7 @@ public class MenuController {
 		}
 		return series;
 	}
-	
+
 	public void launchSelectDeviceView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
