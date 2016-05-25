@@ -4,6 +4,7 @@ import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
 import javafx.animation.FadeTransition;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -454,23 +455,28 @@ public class MenuController {
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 	}
 
-	public void openMenu(MouseEvent event){		
-		painelHSA.setVisible(true);
-		FadeTransition fadeTransition 
-		= new FadeTransition(Duration.millis(1000), painelHSA);
-		fadeTransition.setFromValue(0.0);
-		fadeTransition.setToValue(1.0);
-		fadeTransition.play();				
+	public void openMenu(MouseEvent event){
+		if(!painelHSA.isVisible()) {
+			painelHSA.setVisible(true);
+			FadeTransition fadeTransition
+					= new FadeTransition(Duration.millis(100), painelHSA);
+			fadeTransition.setFromValue(0.0);
+			fadeTransition.setToValue(1.0);
+			fadeTransition.play();
+		}
+		else {
+			painelHSA.setVisible(false);
+			FadeTransition fadeTransition = new FadeTransition(Duration.millis(100), painelHSA);
+			fadeTransition.setFromValue(1.0);
+			fadeTransition.setToValue(0.0);
+			fadeTransition.play();
+		}
+
+		RotateTransition rotation = new RotateTransition(Duration.seconds(0.1), arrowLabel);
+		rotation.setCycleCount(1);
+		rotation.setByAngle(180);
+		rotation.play();
 	}
-
-
-	public void closeMenu(MouseEvent event){		
-		FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), painelHSA);
-		fadeTransition.setFromValue(1.0);
-		fadeTransition.setToValue(0.0);
-		fadeTransition.play();
-	}
-
 
 	public void showRadar(MouseEvent event){
 		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane});
