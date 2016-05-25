@@ -25,7 +25,7 @@
                   </BarChart>
                   <LineChart fx:id="lineChartWaves">
                      <xAxis>
-                        <NumberAxis side="BOTTOM" />
+                        <NumberAxis side="BOTTOM" fx:id="xAxisWavesLine" />
                      </xAxis>
                      <yAxis>
                         <NumberAxis side="LEFT" />
@@ -226,12 +226,12 @@
                         <Insets left="130.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Mediation" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Meditation" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label fx:id="mediationData" prefHeight="31.0" prefWidth="105.0" text="60" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <Label fx:id="meditationData" prefHeight="31.0" prefWidth="105.0" text="60" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -275,9 +275,9 @@
                         <NumberAxis side="LEFT" />
                      </yAxis>
                   </BarChart>
-                  <LineChart>
+                  <LineChart fx:id="lineChartMoods">
                      <xAxis>
-                        <NumberAxis side="BOTTOM" />
+                        <NumberAxis side="BOTTOM" fx:id="xAxisMoodsLine" />
                      </xAxis>
                      <yAxis>
                         <NumberAxis side="LEFT" />
@@ -468,7 +468,7 @@
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" onMouseClicked="#launchAnalysisView" layoutX="17.0" layoutY="96.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="analysisLabel" onMouseClicked="#launchAnalysisView" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="96.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font size="16.0" />
                </font>
