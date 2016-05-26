@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../page-patients/widgets/patients-list.html">
 <link rel="import" href="../page-patients/widgets/patient-details.html">
 <link rel="import" href="widgets/pending-requests.html">
-
+<link rel="import" href="widgets/request-details.html">
 
 <dom-module id="page-admin-transfers">
   <template>
@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </style>
 
-      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style1}}"></app-widgets>
+      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
       <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
 
   </template>
@@ -51,21 +51,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  title: 'Pending',
                  component: 'pending-requests',
                  buttons:[
-                   { button: 'add-doctor' }
+                   
                  ]
-               }
-             ]
-           },
-            widgets2: {
-             type: Array,
-             value: [
-             {
-                 title: 'Transfer Request',
-                 component: 'admin-profile',
+               },
+               {
+                 title: 'Transfer Request Details',
+                 component: 'request-details',
                  buttons:[
-                   { button: 'add-doctor' }
+                   { button: 'delete-request' }
                  ]
-               }          
+               }    
              ]
            },
          }

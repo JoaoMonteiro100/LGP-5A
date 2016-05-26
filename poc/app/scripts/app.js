@@ -85,10 +85,16 @@
     // Firebase location
     app.location = 'https://brainlight.firebaseio.com';
     app.usersLocation = 'https://brainlight.firebaseio.com/users';
+    app.requestsLocation = 'https://brainlight.firebaseio.com/requests';
 
     app.userURL = function(userID) {
         return app.location + "/users/" + userID;
     };
+
+    app.requestURL = function(requestID) {
+        return app.location + "/requests/" + requestID;
+    };
+
 
 
 // Sign out user

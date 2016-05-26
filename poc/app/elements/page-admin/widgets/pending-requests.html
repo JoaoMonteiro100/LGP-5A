@@ -99,7 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
                 ,
                     ready: function () {
-                    var appRef = new Firebase('https://brainlight.firebaseio.com/requests');
+                    var appRef = new Firebase(app.requestsLocation);
                     var self = this;
 
                     appRef.on('child_removed', function (oldChildSnapshot) {
