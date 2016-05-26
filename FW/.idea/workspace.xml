@@ -61,26 +61,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MenuController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MenuController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/MenuController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="704">
-              <caret line="131" column="41" selection-start-line="131" selection-start-column="41" selection-end-line="131" selection-end-column="41" />
-              <folding>
-                <element signature="e#3317#3328#0" expanded="true" />
-                <element signature="e#3375#3386#0" expanded="true" />
-                <element signature="e#3437#3445#0" expanded="true" />
-                <element signature="e#3495#3503#0" expanded="true" />
-                <element signature="e#3557#3565#0" expanded="true" />
-                <element signature="e#3618#3626#0" expanded="true" />
-                <element signature="e#3679#3687#0" expanded="true" />
-                <element signature="e#3739#3747#0" expanded="true" />
-                <element signature="e#3800#3808#0" expanded="true" />
-                <element signature="e#3862#3870#0" expanded="true" />
-                <element signature="e#3924#3932#0" expanded="true" />
-                <element signature="e#3987#3995#0" expanded="true" />
-                <element signature="e#4043#4051#0" expanded="true" />
-              </folding>
+              <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -121,7 +107,7 @@
       <file leaf-file-name="SelectDeviceController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/SelectDeviceController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="918">
+            <state relative-caret-position="1088">
               <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -143,11 +129,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="analysisView.fxml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="analysisView.fxml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/analysisView.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="171" selection-start-line="7" selection-start-column="164" selection-end-line="7" selection-end-column="171" />
+            <state relative-caret-position="83">
+              <caret line="23" column="124" selection-start-line="7" selection-start-column="164" selection-end-line="7" selection-end-column="171" />
               <folding />
             </state>
           </provider>
@@ -179,7 +165,7 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="340">
               <caret line="20" column="8" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -222,6 +208,7 @@
         <option value="$PROJECT_DIR$/src/com/lgp5/fw/controllers/MenuController.java" />
         <option value="$PROJECT_DIR$/src/com/lgp5/fw/views/web/radarChart.html" />
         <option value="$PROJECT_DIR$/src/com/lgp5/fw/views/web/css/style.css" />
+        <option value="$PROJECT_DIR$/src/com/lgp5/fw/views/analysisView.fxml" />
       </list>
     </option>
   </component>
@@ -234,7 +221,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1616" />
+    <option name="width" value="1612" />
     <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -267,9 +254,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -422,6 +407,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -746,7 +733,7 @@
     <option name="totallyTimeSpent" value="13423000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1612" height="876" extended-state="1" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -757,11 +744,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24871466" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24935567" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -801,25 +788,96 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/selectDeviceView.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="43" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/web/radarChart.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/web/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/SelectDeviceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/menuView.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7038">
+          <caret line="414" column="270" selection-start-line="414" selection-start-column="269" selection-end-line="414" selection-end-column="270" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/analysisView.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="171" selection-start-line="7" selection-start-column="164" selection-end-line="7" selection-end-column="171" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/AnalysisController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/DataController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="8" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/MenuController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#3317#3328#0" expanded="true" />
-            <element signature="e#3375#3386#0" expanded="true" />
-            <element signature="e#3437#3445#0" expanded="true" />
-            <element signature="e#3495#3503#0" expanded="true" />
-            <element signature="e#3557#3565#0" expanded="true" />
-            <element signature="e#3618#3626#0" expanded="true" />
-            <element signature="e#3679#3687#0" expanded="true" />
-            <element signature="e#3739#3747#0" expanded="true" />
-            <element signature="e#3800#3808#0" expanded="true" />
-            <element signature="e#3862#3870#0" expanded="true" />
-            <element signature="e#3924#3932#0" expanded="true" />
-            <element signature="e#3987#3995#0" expanded="true" />
-            <element signature="e#4043#4051#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -912,21 +970,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#3317#3328#0" expanded="true" />
-            <element signature="e#3375#3386#0" expanded="true" />
-            <element signature="e#3437#3445#0" expanded="true" />
-            <element signature="e#3495#3503#0" expanded="true" />
-            <element signature="e#3557#3565#0" expanded="true" />
-            <element signature="e#3618#3626#0" expanded="true" />
-            <element signature="e#3679#3687#0" expanded="true" />
-            <element signature="e#3739#3747#0" expanded="true" />
-            <element signature="e#3800#3808#0" expanded="true" />
-            <element signature="e#3862#3870#0" expanded="true" />
-            <element signature="e#3924#3932#0" expanded="true" />
-            <element signature="e#3987#3995#0" expanded="true" />
-            <element signature="e#4043#4051#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -989,21 +1033,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#3317#3328#0" expanded="true" />
-            <element signature="e#3375#3386#0" expanded="true" />
-            <element signature="e#3437#3445#0" expanded="true" />
-            <element signature="e#3495#3503#0" expanded="true" />
-            <element signature="e#3557#3565#0" expanded="true" />
-            <element signature="e#3618#3626#0" expanded="true" />
-            <element signature="e#3679#3687#0" expanded="true" />
-            <element signature="e#3739#3747#0" expanded="true" />
-            <element signature="e#3800#3808#0" expanded="true" />
-            <element signature="e#3862#3870#0" expanded="true" />
-            <element signature="e#3924#3932#0" expanded="true" />
-            <element signature="e#3987#3995#0" expanded="true" />
-            <element signature="e#4043#4051#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1021,21 +1051,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#3317#3328#0" expanded="true" />
-            <element signature="e#3375#3386#0" expanded="true" />
-            <element signature="e#3437#3445#0" expanded="true" />
-            <element signature="e#3495#3503#0" expanded="true" />
-            <element signature="e#3557#3565#0" expanded="true" />
-            <element signature="e#3618#3626#0" expanded="true" />
-            <element signature="e#3679#3687#0" expanded="true" />
-            <element signature="e#3739#3747#0" expanded="true" />
-            <element signature="e#3800#3808#0" expanded="true" />
-            <element signature="e#3862#3870#0" expanded="true" />
-            <element signature="e#3924#3932#0" expanded="true" />
-            <element signature="e#3987#3995#0" expanded="true" />
-            <element signature="e#4043#4051#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1063,21 +1079,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="e#3317#3328#0" expanded="true" />
-            <element signature="e#3375#3386#0" expanded="true" />
-            <element signature="e#3437#3445#0" expanded="true" />
-            <element signature="e#3495#3503#0" expanded="true" />
-            <element signature="e#3557#3565#0" expanded="true" />
-            <element signature="e#3618#3626#0" expanded="true" />
-            <element signature="e#3679#3687#0" expanded="true" />
-            <element signature="e#3739#3747#0" expanded="true" />
-            <element signature="e#3800#3808#0" expanded="true" />
-            <element signature="e#3862#3870#0" expanded="true" />
-            <element signature="e#3924#3932#0" expanded="true" />
-            <element signature="e#3987#3995#0" expanded="true" />
-            <element signature="e#4043#4051#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1102,21 +1104,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="e#3317#3328#0" expanded="true" />
-            <element signature="e#3375#3386#0" expanded="true" />
-            <element signature="e#3437#3445#0" expanded="true" />
-            <element signature="e#3495#3503#0" expanded="true" />
-            <element signature="e#3557#3565#0" expanded="true" />
-            <element signature="e#3618#3626#0" expanded="true" />
-            <element signature="e#3679#3687#0" expanded="true" />
-            <element signature="e#3739#3747#0" expanded="true" />
-            <element signature="e#3800#3808#0" expanded="true" />
-            <element signature="e#3862#3870#0" expanded="true" />
-            <element signature="e#3924#3932#0" expanded="true" />
-            <element signature="e#3987#3995#0" expanded="true" />
-            <element signature="e#4043#4051#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1181,7 +1169,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="340">
           <caret line="20" column="8" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1191,7 +1179,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/SelectDeviceController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
+        <state relative-caret-position="1088">
           <caret line="64" column="41" selection-start-line="64" selection-start-column="41" selection-end-line="64" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1214,17 +1202,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/analysisView.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="171" selection-start-line="7" selection-start-column="164" selection-end-line="7" selection-end-column="171" />
           <folding />
         </state>
       </provider>
@@ -1259,22 +1236,19 @@
     <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/controllers/MenuController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="704">
-          <caret line="131" column="41" selection-start-line="131" selection-start-column="41" selection-end-line="131" selection-end-column="41" />
-          <folding>
-            <element signature="e#3317#3328#0" expanded="true" />
-            <element signature="e#3375#3386#0" expanded="true" />
-            <element signature="e#3437#3445#0" expanded="true" />
-            <element signature="e#3495#3503#0" expanded="true" />
-            <element signature="e#3557#3565#0" expanded="true" />
-            <element signature="e#3618#3626#0" expanded="true" />
-            <element signature="e#3679#3687#0" expanded="true" />
-            <element signature="e#3739#3747#0" expanded="true" />
-            <element signature="e#3800#3808#0" expanded="true" />
-            <element signature="e#3862#3870#0" expanded="true" />
-            <element signature="e#3924#3932#0" expanded="true" />
-            <element signature="e#3987#3995#0" expanded="true" />
-            <element signature="e#4043#4051#0" expanded="true" />
-          </folding>
+          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/analysisView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="23" column="124" selection-start-line="7" selection-start-column="164" selection-end-line="7" selection-end-column="171" />
+          <folding />
         </state>
       </provider>
     </entry>

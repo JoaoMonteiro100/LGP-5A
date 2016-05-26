@@ -324,6 +324,14 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <GridPane fx:id="settingsPane" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
          </children>
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
@@ -368,7 +376,7 @@
                   <Insets left="30.0" top="4.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showSettings" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -394,9 +402,9 @@
             </ImageView>
          </children>
       </HBox>
-      <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="147.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
+      <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="110.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
          <children>
-            <Label fx:id="historyLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font size="16.0" />
                </font>
@@ -404,15 +412,7 @@
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="96.0" onMouseClicked="#launchAnalysisView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" onMouseClicked="#launchAnalysisView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font size="16.0" />
                </font>

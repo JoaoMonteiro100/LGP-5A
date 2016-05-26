@@ -30,6 +30,22 @@
       <CheckBox id="maxFrequency" layoutX="265.0" layoutY="185.0" mnemonicParsing="false" text="Maximum frequency (Hz)" />
       <CheckBox id="minFrequency" layoutX="265.0" layoutY="154.0" mnemonicParsing="false" text="Minimum frequency (Hz)" />
       <CheckBox id="maxAmplitude" layoutX="265.0" layoutY="123.0" mnemonicParsing="false" text="Maximum amplitude (Hz)" />
-      <Button id="startAnalysis" layoutX="177.0" layoutY="318.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="109.0" text="Start analysis" />
+      <Button id="startAnalysis" disable="true" layoutX="177.0" layoutY="318.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="109.0" text="Start analysis" />
+      <Label layoutX="267.0" layoutY="22.0" text="Period of analysis:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="267.0" layoutY="48.0" text="Every">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField alignment="CENTER" layoutX="304.0" layoutY="45.0" prefHeight="25.0" prefWidth="31.0" text="5" />
+      <Label layoutX="342.0" layoutY="48.0" text="second(s)">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
