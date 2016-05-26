@@ -128,8 +128,8 @@ public class MenuController {
 		createSeriesLineChartWaves(series);
 		createSeriesLineChartMoods(series2);
 
-		URL urlHello = getClass().getResource("../views/web/radarChart.html");
-		radarBrowser.getEngine().load(urlHello.toExternalForm());
+		URL url = getClass().getResource("../views/web/radarChart.html");
+		radarBrowser.getEngine().load(url.toExternalForm());
 
 /*
 		XYChart.Series seriesA = new XYChart.Series();
