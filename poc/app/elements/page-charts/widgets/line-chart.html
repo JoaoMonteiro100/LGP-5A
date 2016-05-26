@@ -3,168 +3,214 @@
 
 
 <dom-module id="line-chart">
-    <template>
-        <style is="custom-style">
-            section {
-                width: 100%;
-                height: 900px;
-                @apply(--layout-vertical);
-            }
+<template>
+    <style is="custom-style">
+        section {
+            width: 100%;
+            height: 900px;
+            @apply(--layout-vertical);
+        }
 
-            section paper-dialog-scrollable {
+        section paper-dialog-scrollable {
 
-                @apply(--layout-flex);
-            }
+            @apply(--layout-flex);
+        }
 
-            paper-dialog-scrollable::shadow #scrollable {
-                padding: 0px;
-            }
+        paper-dialog-scrollable::shadow #scrollable {
+            padding: 0px;
+        }
 
-            paper-item {
-                --paper-item: {
-                    cursor: pointer;
-                };
-            }
+        paper-item {
+            --paper-item: {
+                cursor: pointer;
+            };
+        }
 
-            span {
-                padding-right: 10px;
-            }
-        </style>
-        <section>
-            <paper-dialog-scrollable>
-                <div>
-                    <chart-line id="chart" data="[[data]]" options="[[options]]"></chart-line>
-                </div>
+        span {
+            padding-right: 10px;
+        }
+    </style>
+    <section>
 
-                <paper-button raised id="button" on-tap="_nativeSubmit">Login</paper-button>
-            </paper-dialog-scrollable>
-        </section>
-    </template>
-    <script>
-        (function () {
-            'use strict';
+        <paper-dialog-scrollable>
+        <div>
+            <chart-line id="chart" data="[[data]]" options="[[options]]"></chart-line>
+        </div>
 
-            Polymer({
-                is: 'line-chart',
+        <paper-button raised id="button" on-tap="_nativeSubmit">Login</paper-button>
+    </paper-dialog-scrollable>
+</section>
+</template>
+<script>
+    (function () {
+        'use strict';
 
-                properties: {
-                    data: {
-                        type: Object,
-                        notify: true
-                    },
-                    options: {
-                        type: Object,
-                        notify: true
-                    },
-                    chart: {
-                        type: Object,
-                        notify: true
-                    }
+        Polymer({
+            is: 'line-chart',
+
+            properties: {
+                data: {
+                    type: Object,
+                    notify: true
                 },
-
-                ready: function () {
-                    this.$.chart.style.width = 600 + 'px';
-                    this.$.chart.style.height = 600 + 'px';
-                    this.$.chart.resize();
-
-
-                    this.options = {
-                        animation: false
-                    };
-
-                    this.data = {
-                        labels: ["January", "February", "March", "April", "May", "June", "July"],
-                        datasets: [
-                            {
-                                label: "Low Gamma",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#fcea0f",
-                                pointColor: "#fcea0f",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 48, 40, 19, 86, 27, 90]
-                            },
-                            {
-                                label: "Mid Gamma",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#f39200",
-                                pointColor: "#f39200",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 48, 40, 19, 86, 27, 90]
-                            },
-                            {
-                                label: "Low beta",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#00a09a",
-                                pointColor: "#00a09a",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 48, 40, 19, 86, 27, 90]
-                            },
-                            {
-                                label: "High beta",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#2eac66",
-                                pointColor: "#2eac66",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 48, 40, 19, 86, 27, 90]
-                            },
-                            {
-                                label: "Low Alpha",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#302683",
-                                pointColor: "#302683",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 48, 40, 19, 150, 27, 90]
-                            },
-                            {
-                                label: "High Alpha",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#1d70b7",
-                                pointColor: "#1d70b7",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 48, 20, 19, 86, 25, 90]
-                            },
-                            {
-                                label: "Theta",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#45405e",
-                                pointColor: "#45405e",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 48, 100, 19, 86, 27, 90]
-                            },
-                            {
-                                label: "Delta",
-                                fillColor: "rgba(0,0,0,0)",
-                                strokeColor: "#9d9c9c",
-                                pointColor: "#9d9c9c",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [28, 60, 40, 19, 86, 27, 90]
-                            },
-                        ]
-                    };
+                options: {
+                    type: Object,
+                    notify: true
                 },
-
-                _nativeSubmit: function() {
-                    this.data.datasets[0].data.push(200);
-                    this.data.labels.push("Time");
-                    this.$.chart.updateChart();
+                chart: {
+                    type: Object,
+                    notify: true
                 }
+            },
+
+            ready: function () {
+
+                var self = this;
+
+               this.$.chart.style.width = 600 + 'px';
+               this.$.chart.style.height = 600 + 'px';
+               this.$.chart.resize();
+
+               this.options = {
+                animation: false
+            };
+
+            this.data = {
+                labels: [],
+                datasets: [
+                {
+                    label: "Low Gamma",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#fcea0f",
+                    pointColor: "#fcea0f",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Mid Gamma",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#f39200",
+                    pointColor: "#f39200",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Low beta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#00a09a",
+                    pointColor: "#00a09a",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "High beta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#2eac66",
+                    pointColor: "#2eac66",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Low Alpha",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#302683",
+                    pointColor: "#302683",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "High Alpha",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#1d70b7",
+                    pointColor: "#1d70b7",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Theta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#45405e",
+                    pointColor: "#45405e",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Delta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#9d9c9c",
+                    pointColor: "#9d9c9c",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                ]
+            };
+
+
+            this.lowgamma = this.data.datasets[0].data;
+            this.midgama = this.data.datasets[1].data;
+            this.lowbeta = this.data.datasets[2].data;
+            this.highbeta = this.data.datasets[3].data;
+            this.lowalpha = this.data.datasets[4].data;
+            this.highalpha = this.data.datasets[5].data;
+            this.theta = this.data.datasets[6].data;
+            this.delta = this.data.datasets[7].data;
+
+
+
+            var ref = new Firebase("https://brainlight.firebaseio.com/leituras/leitura1");
+            ref.on("child_added",function(snapshot){
+                if(self.data.labels.length > 10){
+                    self.data.labels = self.data.labels.slice(self.data.labels.length - 10, 10);
+                    self.lowgamma = self.lowgamma.slice(self.lowgamma.length - 10, 10);
+                    self.midgama = self.midgama.slice(self.midgama.length - 10, 10);
+                    self.lowbeta = self.lowbeta.slice(self.lowbeta.length - 10, 10);
+                    self.highbeta = self.highbeta.slice(self.highbeta.length - 10, 10);
+                    self.lowalpha = self.lowalpha.slice(self.lowalpha.length - 10, 10);
+                    self.highalpha = self.highalpha.slice(self.highalpha.length - 10, 10);
+                    self.theta = self.theta.slice(self.theta.length - 10, 10);
+                    self.delta = self.delta.slice(self.delta.length - 10, 10);
+                }
+
+                var data = snapshot.val();
+                self.lowgamma.push(data.low_gamma);
+                self.midgama.push(data.mid_gama);
+                self.lowbeta.push(data.low_beta);
+                self.highbeta.push(data.high_beta);
+                self.lowalpha.push(data.low_alpha);
+                self.highalpha.push(data.high_alpha);
+                self.theta.push(data.theta);
+                self.delta.push(data.delta);
+                
+                self.data.labels.push(data.elapsedTime);
+                self.$.chart.updateChart();
             });
-        })();
-    </script>
+
+
+
+        },
+
+        _nativeSubmit: function() {
+            this.data.datasets[0].data.push(200);
+            this.data.labels.push("Time");
+            this.$.chart.updateChart();
+        }
+    });
+})();
+</script>
 </dom-module>
