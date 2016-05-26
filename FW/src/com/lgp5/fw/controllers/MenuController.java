@@ -48,6 +48,7 @@ public class MenuController {
 	@FXML private Label brainWavesLabel;
 	@FXML private Label dataLabel;
 	@FXML private Label moodLabel;
+	@FXML private Label settingsLabel;
 	@FXML private GridPane brainWavesPane;
 	@FXML private Label gamma1Data;
 	@FXML private Label gamma2Data;
@@ -67,6 +68,7 @@ public class MenuController {
 	@FXML private GridPane dataPane;
 	@FXML private GridPane moodPane;
 	@FXML private GridPane historyPane;
+	@FXML private GridPane settingsPane;
 	private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
@@ -486,25 +488,28 @@ public class MenuController {
 	}
 
 	public void showRadar(MouseEvent event){
-		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane});
+		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,settingsLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,settingsPane});
+	}
+	
+	public void showSettings(MouseEvent event){
+		changePane(settingsLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel},settingsPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,settingsPane});
 	}
 
-
 	public void showData(MouseEvent event){		
-		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane});
+		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane,settingsPane});
 	}
 
 
 	public void showMood(MouseEvent event){
-		changePane(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane});	
+		changePane(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane,settingsPane});	
 	}
 
 	public void showBrainWaves(MouseEvent event) {
-		changePane(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane});	
+		changePane(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel,settingsLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane,settingsPane});	
 	}
 
 	public void showHistory(MouseEvent event) {
-		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane});	
+		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel,settingsLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane,settingsPane});	
 	}
 
 	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
