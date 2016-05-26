@@ -352,7 +352,7 @@
                   </AnchorPane>
                </children>
             </GridPane>
-            <Text layoutX="20.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NeuroSky" />
+            <Text layoutX="20.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Emotiv" />
          </children>
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">

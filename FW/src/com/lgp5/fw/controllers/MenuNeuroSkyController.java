@@ -20,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -145,8 +144,6 @@ public class MenuNeuroSkyController {
 		moods.addAll(Arrays.asList(moodsArray));
 		xAxisWaves.setCategories(brainwaves);
 		xAxisMood.setCategories(moods);
-		float[] values = {35f, 43f, 27f, 12f, 9.2f, 32f, 16f, 20f};
-		float[] values2 = {35f, 43f};
 		XYChart.Series<String,Float> series = new XYChart.Series<>();
 		series.getData().add(new XYChart.Data("Delta", 35f));
 		series.getData().add(new XYChart.Data("Theta", 35f));
@@ -446,7 +443,6 @@ public class MenuNeuroSkyController {
 			colorNumber++;
 		}
 
-
 		this.colorNumber=0;
 		for(Series<Number,Number> series : lineChartWaves.getData()){
 			if(this.colorNumber>=constants.Constants.colors.length)						
@@ -566,32 +562,7 @@ public class MenuNeuroSkyController {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Creates a XYChart.Data object for each wave. All data is then returned as a series.
-	 *
-	 * @param values Array with a value for each brainwave. Must be the same length as the waves array
-	 * @return Series of brainwave data
-	 */
-	private XYChart.Series<String,Float> createWaveDataSeries (float[] values,ObservableList<String> list) {	
-		XYChart.Series<String,Float> series = new XYChart.Series<>();
-		for (int i = 0; i < values.length; i++) {
-			XYChart.Data<String,Float> waveData = new XYChart.Data<>(list.get(i), values[i]);
-			series.getData().add(waveData); 
-			System.out.println(colorNumber);
-		}
-		for (int i = 0; i < series.getData().size(); i++) {
-			if(colorNumber>=constants.Constants.colors.length)						
-				colorNumber=0;						
-			series.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	"); 	
-			colorNumber++;	
-		}
-
-
-
-		return series;
-	}
-
+	
 	public void launchSelectDeviceView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
