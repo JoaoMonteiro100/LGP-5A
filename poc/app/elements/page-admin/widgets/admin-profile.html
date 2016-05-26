@@ -48,26 +48,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
         <section>
-            <firebase-collection
-                    order-by-child="groups/group2"
-                    order-value-type="boolean"
-                    equal-to="true"
-                    location="https://brainlight.firebaseio.com/users"
-                    data="{{users}}"></firebase-collection>
-
-            <paper-dialog-scrollable>
-                <paper-listbox on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
-                    <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
-                        <paper-item>
-                            <img src={{online(usr)}} style="width:10px;height:10px;">
-                          <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
-                            <div id="name">[[usr.name]] [[usr.lastname]]</div>
-                            <span> - </span>
-                            <div id="mail">[[usr.mail]]</div>
-                        </paper-item>
-                    </template>
-                </paper-listbox>
-            </paper-dialog-scrollable>
+            <div class="container">
+            <div class="flexchild">
+                <div id="name" class="namestyle">
+                    {{user.name}} {{this.lastname}} <!-- change -->
+                </div>
+                 <div id="admin" class="textstyle2">
+                    ADMINISTRATOR
+                </div>
+                <div id="mail" class="textstyle2">
+                     [[user.mail]] <!-- change -->
+                </div>
+                <div id="gender" class="textstyle2">
+                     [[user.gender]] <!-- change -->
+                </div>
+            </div>
         </section>
         </app-grid>
     </template>
@@ -79,75 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 is: 'admin-profile',
 
                 properties: {
-                    selected: Array,
-                    users: {
-                        type: Object,
-                        notify: true
-                    },
-                    myChoice: {
-                        type: Number,
-                        notify: true,
-                        observer: '_onUserSelected'
-                    },
-                    deletedUserKey: {
-                        type: Number,
-                        notify: true
-                    },
-                    currentKey: {
-                        type: Number,
-                        notify: true
-                    }
-                }
-                ,
-
-                online: function(a) {
-                    if(a.online)
-                        return "../../../images/online.png";
-                    else 
-                        return "../../../images/offline.png";
-                },
-
-                _computeSort: function (a, b) {
-                    if (a.name.toLowerCase() == b.name.toLowerCase()) {
-                        return 0;
-                    }
-
-                    var aLowerCase = a.name.toLowerCase();
-                    var bLowerCase = b.name.toLowerCase();
-
-                    if (aLowerCase >= bLowerCase) {
-                        var indexA = this.users.indexOf(a);
-                        var indexB = this.users.indexOf(b);
-                        var temp = this.users[indexA];
-                        this.users[indexA] = this.users[indexB];
-                        this.users[indexB] = temp;
-                    }
-
-                    return aLowerCase < bLowerCase ? -1 : 1;
-                },
-
-                ready: function () {
-                    var appRef = new Firebase(app.usersLocation);
-                    var self = this;
-
-                    appRef.on('child_removed', function (oldChildSnapshot) {
-                        self.deletedUserKey = oldChildSnapshot.key();
-                    });
-                },
-
-                _onUserSelected: function () {
-                    var user = this.users[this.myChoice];
-                    this.currentKey = user.__firebaseKey__;
-                    this.fire('selected-user', user);
-                },
-
-                itemSelected: function () {
-                    if (this.deletedUserKey == this.currentKey) {
-                        var user = this.users[this.myChoice];
-                        this.fire('selected-user', user);
-                    } else {
-                        this.myChoice -= 1;
-                    }
+                   
                 }
             });
         })();

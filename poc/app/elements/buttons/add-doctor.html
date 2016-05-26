@@ -8,6 +8,8 @@
    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
    -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/gold-email-input/gold-email-input.html">
+
 <dom-module id="add-doctor">
     <template>
         <style include="shared-styles"></style>
@@ -42,7 +44,7 @@
             <form is="iron-form" id="newDoctorForm">
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
-                <paper-input id="mail" name="mail" label="E-mail" required auto-validate></paper-input>
+                <gold-email-input id="mail" name="mail" required auto-validate></gold-email-input>
                 <div class="containerdiv">
                     <div class="flexchild">
                         <paper-input name="password" id="pwinput" label="Password" minlength="6" required auto-validate></paper-input>
