@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="widgets/patients-list.html">
 <link rel="import" href="widgets/patient-details.html">
 <link rel="import" href="widgets/patient-history.html">
+<link rel="import" href="widgets/patient-chart.html">
 <dom-module id="page-patients">
   <template>
       <style include="shared-styles"></style>
@@ -71,8 +72,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              type: Array,
              value: [
                {
-                 title: 'Patients',
-                 component: 'patients-list',
+                 title: 'Chart',
+                 component: 'patient-chart',
                  buttons:[
 
                  ]

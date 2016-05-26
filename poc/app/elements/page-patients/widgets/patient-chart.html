@@ -2,12 +2,13 @@
 <link rel="import" href="../../../bower_components/chart-elements/chart-elements.html">
 
 
-<dom-module id="line-chart">
+<dom-module id="patient-chart">
     <template>
         <style is="custom-style">
+       
             section {
                 width: 100%;
-                height: 900px;
+                height: 100%;
                 @apply(--layout-vertical);
             }
 
@@ -29,25 +30,40 @@
             span {
                 padding-right: 10px;
             }
+            #grafcontainer{
+            	width: 50%;
+            	height: 450px;
+            }
+            #chart-line{
+            	height: 450px!important;
+            }
+            #chart::content{
+     		max-height: 450px;
+    		}
+    		#buttonscontainer{
+    			width: 50%;
+    		}
         </style>
         <section>
 
-            <paper-dialog-scrollable>
-                <div>
+            
+                <div id ="grafcontainer">
                     <chart-line id="chart" data="[[data]]" options="[[options]]"></chart-line>
                 </div>
-
-                <paper-checkbox id="lowGamma" on-change="thetaChange" checked="{{lowGammaChecked}}">Theta</paper-checkbox>
+                <div id="buttonscontainer">
+                <app-grid sm-cols="1" md-cols='4'>
+                <paper-checkbox on-change="thetaChange" checked="{{thetaChecked}}">Theta</paper-checkbox>
                 <paper-checkbox on-change="lowGammaChange" checked="{{lowGammaChecked}}">Low Gamma</paper-checkbox>
-                <paper-checkbox id="midGamma" on-change="midGammaChange" checked="{{midGammaChecked}}">Mid Gamma</paper-checkbox>
+                <paper-checkbox on-change="midGammaChange" checked="{{midGammaChecked}}">Mid Gamma</paper-checkbox>
                 <paper-checkbox on-change="lowBetaChange" checked="{{lowBetaChecked}}">Low Beta</paper-checkbox>
                 <paper-checkbox on-change="highBetaChange" checked="{{highBetaChecked}}">Low Beta</paper-checkbox>
                 <paper-checkbox on-change="lowAlphaChange" checked="{{lowAlphaChecked}}">Low Alpha</paper-checkbox>
                 <paper-checkbox on-change="highAlphaChange" checked="{{highAlphaChecked}}">High Alpha</paper-checkbox>
                 <paper-checkbox on-change="deltaChange" checked="{{deltaChecked}}">Delta</paper-checkbox>
+                </app-grid>
+                </div>
 
-                <paper-button raised id="button" on-tap="_nativeSubmit">Login</paper-button>
-            </paper-dialog-scrollable>
+         
         </section>
     </template>
     <script>
@@ -55,7 +71,7 @@
             'use strict';
 
             Polymer({
-                is: 'line-chart',
+                is: 'patient-chart',
 
                 properties: {
                     data: {
@@ -257,7 +273,8 @@
                     this.$.chart.resize();
 
                     this.options = {
-                        animation: false
+                        animation: false,
+                        responsive:true
                     };
 
                     this.data = {
