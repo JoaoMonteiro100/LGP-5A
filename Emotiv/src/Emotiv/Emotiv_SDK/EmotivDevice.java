@@ -12,6 +12,7 @@ public class EmotivDevice implements Runnable {
 
     private LinkedList sharedQ;
     private HashMap<String,HashMap<String,Object>> dataToSend;
+    private HashMap<String, HashMap<String, Object>> finalData;
 
     //vars
     public int wirelessSignalStatus=0;
@@ -21,7 +22,6 @@ public class EmotivDevice implements Runnable {
             lowerFaceActionStatusPower = 0, uperFaceActionStatusPower = 0;
 
     float timestamp=0;
-
     private HashMap<String,HashMap<String,Double>> channelsAverageBandPowers;
 
     private int AF3ChanQuality=0, AF4ChanQuality=0, CMSChanQuality=0, F3ChanQuality=0, F4ChanQuality=0, F7ChanQuality=0, F8ChanQuality=0, FC5ChanQuality=0, FP1ChanQuality=0,
@@ -80,7 +80,7 @@ public class EmotivDevice implements Runnable {
         batteryLevelStatus = new IntByReference(0);
         maxBatteryLevel = new IntByReference(0);
         initChannelsArray();
-        dataToSend = new HashMap<String,HashMap<String,Object>>();
+        setDataToSend(new HashMap<String,HashMap<String,Object>>());
 
     }
 
@@ -191,7 +191,8 @@ public class EmotivDevice implements Runnable {
                         AverageBandPowers();
                         getSensorsContactQuality();
 
-                       sendData();
+                      sendData(); 
+					//sendDataTest(); //TODO
                     }
                 }
             }
@@ -199,13 +200,20 @@ public class EmotivDevice implements Runnable {
     }
 
     private synchronized void sendData(){
-        dataToSend = new HashMap<String,HashMap<String,Object>>();
+        setDataToSend(new HashMap<String,HashMap<String,Object>>());
         createDataArray();
         synchronized (sharedQ) {
-            sharedQ.addLast(dataToSend);
+            sharedQ.addLast(getDataToSend());
             sharedQ.notify();
         }
     }
+    
+   /* // TODO
+    private void sendDataTest(){
+    	 setDataToSend(new HashMap<String,HashMap<String,Object>>());
+    	 createDataArray();
+    }*/
+	
 
     public String parseAction(int act){
 
@@ -332,7 +340,7 @@ public class EmotivDevice implements Runnable {
         mapType.put("DeviceInfo",deviceInfoMap);
         mapType.put("ChannelQuality",chanQualityMap);
 
-        dataToSend = (HashMap<String, HashMap<String, Object>>) mapType.clone();
+        setDataToSend((HashMap<String, HashMap<String, Object>>) mapType.clone());
 
     }
 
@@ -481,6 +489,16 @@ public class EmotivDevice implements Runnable {
     public void run() {
         receiveDataEmotiv();
     }
+
+
+	public HashMap<String,HashMap<String,Object>> getDataToSend() {
+		return dataToSend;
+	}
+
+
+	public void setDataToSend(HashMap<String,HashMap<String,Object>> dataToSend) {
+		this.dataToSend = dataToSend;
+	}
 }
 
 
