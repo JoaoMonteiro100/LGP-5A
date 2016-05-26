@@ -38,15 +38,22 @@ public class SelectDeviceController {
                 Object comboBox = selectDeviceComboBox.getSelectionModel().getSelectedItem();
                 if(comboBox != null) {
                     String comboBoxValue = comboBox.toString();
+                    Stage stage;
                     switch (comboBoxValue) {
                         case "NeuroSky Mindset":
                             launchNeuroSkyView();
                             //get a handle to the stage
-                            Stage stage = (Stage) selectDeviceComboBox.getScene().getWindow();
+                            stage = (Stage) selectDeviceComboBox.getScene().getWindow();
                             //close current window
                             stage.close();
                             break;
-
+                        case "Emotiv Epoc":
+                        	launchEmotivView();
+                            //get a handle to the stage
+                            stage = (Stage) selectDeviceComboBox.getScene().getWindow();
+                            //close current window
+                            stage.close();
+                            break;
                         default:
                             break;
                     }
@@ -58,7 +65,7 @@ public class SelectDeviceController {
 
     private void launchNeuroSkyView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuNeuroSkyView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
@@ -67,5 +74,17 @@ public class SelectDeviceController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }    
+    }  
+    private void launchEmotivView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuEmotivView.fxml"));
+            Parent parent = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.setTitle("BrainLight");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } 
 }

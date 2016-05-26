@@ -40,7 +40,7 @@ import java.net.URL;
 import java.util.*;
 
 
-public class MenuController {
+public class MenuNeuroSkyController {
 	private int colorNumber=0;
 	@FXML private AnchorPane paneLayoutRoot;
 	@FXML private Text daysText;
@@ -111,7 +111,7 @@ public class MenuController {
 	ArrayList<Number> queueTime = new ArrayList<Number>();
 	private long time;
 
-	public MenuController() {
+	public MenuNeuroSkyController() {
 	}
 
 	/**
