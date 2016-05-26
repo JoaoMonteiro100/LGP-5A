@@ -42,7 +42,35 @@
     		}
     		#buttonscontainer{
     			width: 50%;
+    			margin-left: 15px;
     		}
+
+    		#thetacheck{
+			--paper-checkbox-checked-color:#45405e;
+    		}
+
+    		#lowgammacheck{
+				--paper-checkbox-checked-color:#fcea0f;
+    		}
+    		#midgammacheck{
+			--paper-checkbox-checked-color:#f39200;
+    		}
+    		#lowbetacheck{
+			--paper-checkbox-checked-color:#00a09a;
+    		}
+    		#highbetacheck{
+			--paper-checkbox-checked-color:#2eac66;
+    		}
+    		#lowalphacheck{
+			--paper-checkbox-checked-color:#302683;
+    		}
+    		#highalphacheck{
+			--paper-checkbox-checked-color:#1d70b7;
+    		}
+    		#deltacheck{
+			--paper-checkbox-checked-color:#9d9c9c;
+    		}
+
         </style>
         <section>
 
@@ -52,14 +80,14 @@
                 </div>
                 <div id="buttonscontainer">
                 <app-grid sm-cols="1" md-cols='4'>
-                <paper-checkbox on-change="thetaChange" checked="{{thetaChecked}}">Theta</paper-checkbox>
-                <paper-checkbox on-change="lowGammaChange" checked="{{lowGammaChecked}}">Low Gamma</paper-checkbox>
-                <paper-checkbox on-change="midGammaChange" checked="{{midGammaChecked}}">Mid Gamma</paper-checkbox>
-                <paper-checkbox on-change="lowBetaChange" checked="{{lowBetaChecked}}">Low Beta</paper-checkbox>
-                <paper-checkbox on-change="highBetaChange" checked="{{highBetaChecked}}">Low Beta</paper-checkbox>
-                <paper-checkbox on-change="lowAlphaChange" checked="{{lowAlphaChecked}}">Low Alpha</paper-checkbox>
-                <paper-checkbox on-change="highAlphaChange" checked="{{highAlphaChecked}}">High Alpha</paper-checkbox>
-                <paper-checkbox on-change="deltaChange" checked="{{deltaChecked}}">Delta</paper-checkbox>
+                <paper-checkbox id="thetacheck" on-change="thetaChange" checked="{{thetaChecked}}">Theta</paper-checkbox>
+                <paper-checkbox id="lowgammacheck" on-change="lowGammaChange" checked="{{lowGammaChecked}}">Low Gamma</paper-checkbox>
+                <paper-checkbox id="midgammacheck" on-change="midGammaChange" checked="{{midGammaChecked}}">Mid Gamma</paper-checkbox>
+                <paper-checkbox id="lowbetacheck" on-change="lowBetaChange" checked="{{lowBetaChecked}}">Low Beta</paper-checkbox>
+                <paper-checkbox id="highbetacheck" on-change="highBetaChange" checked="{{highBetaChecked}}">Low Beta</paper-checkbox>
+                <paper-checkbox id="lowalphacheck" on-change="lowAlphaChange" checked="{{lowAlphaChecked}}">Low Alpha</paper-checkbox>
+                <paper-checkbox id="highalphacheck" on-change="highAlphaChange" checked="{{highAlphaChecked}}">High Alpha</paper-checkbox>
+                <paper-checkbox id="deltacheck" on-change="deltaChange" checked="{{deltaChecked}}">Delta</paper-checkbox>
                 </app-grid>
                 </div>
 
