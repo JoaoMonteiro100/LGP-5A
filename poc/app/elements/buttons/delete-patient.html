@@ -38,9 +38,7 @@
         <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:delete" on-click="deleteFormClickHandler"></paper-icon-button>
         <paper-dialog id="deleteDialog" modal>
             <h1>Delete Patient</h1>
-
             <h2>Are you sure you want to delete this patient?</h2>
-
             <paper-button raised on-tap="_nativeSubmit" >
                 <paper-spinner id="spinner" hidden></paper-spinner>
                 Delete

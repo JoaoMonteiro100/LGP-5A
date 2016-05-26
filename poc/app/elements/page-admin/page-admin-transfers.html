@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </style>
 
-      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
+      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style1}}"></app-widgets>
       <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
 
   </template>
@@ -53,21 +53,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  buttons:[
                    { button: 'add-doctor' }
                  ]
-               },
-                {
-                 title: 'Admins',
-                 component: 'admins-list',
+               }
+             ]
+           },
+            widgets2: {
+             type: Array,
+             value: [
+             {
+                 title: 'Transfer Request',
+                 component: 'admin-profile',
                  buttons:[
-                   { button: 'add-admin' },
-                 ]
-               },
-               {
-                 title: 'Details',
-                 component: 'doctor-details',
-                 buttons:[
-                   { button: 'edit-doctor' },
-                   { button: 'delete-doctor' },
-                   { button: 'edit-note' }
+                   { button: 'add-doctor' }
                  ]
                }          
              ]
