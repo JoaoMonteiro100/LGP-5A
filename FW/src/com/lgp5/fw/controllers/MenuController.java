@@ -147,16 +147,39 @@ public class MenuController {
 		xAxisMood.setCategories(moods);
 		float[] values = {35f, 43f, 27f, 12f, 9.2f, 32f, 16f, 20f};
 		float[] values2 = {35f, 43f};
-		XYChart.Series<String,Float> series = createWaveDataSeries(values,brainwaves);		
-		XYChart.Series<String,Float> series2 = createWaveDataSeries(values2,moods);
+		XYChart.Series<String,Float> series = new XYChart.Series<>();
+		series.getData().add(new XYChart.Data("Delta", 35f));
+		series.getData().add(new XYChart.Data("Theta", 35f));
+		series.getData().add(new XYChart.Data("Alfa 1", 35f));
+		series.getData().add(new XYChart.Data("Alfa 2", 35f));
+		series.getData().add(new XYChart.Data("Beta 1", 35f));
+		series.getData().add(new XYChart.Data("Beta 2", 35f));
+		series.getData().add(new XYChart.Data("Gamma 1", 35f));
+		series.getData().add(new XYChart.Data("Gamma 2", 35f));
+		XYChart.Series<String,Float> series2 = new XYChart.Series<>();
+		series2.getData().add(new XYChart.Data("Attention", 35f));
+		series2.getData().add(new XYChart.Data("Meditation", 35f));
 		System.out.println(this.colorNumber);
 		barChartWaves.getData().add(series);
-
+		for (int i = 0; i < series.getData().size(); i++) {
+			if(colorNumber>=constants.Constants.colors.length)						
+				colorNumber=0;						
+			series.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	"); 	
+			colorNumber++;	
+		}
+		colorNumber=0;
 		barChartMoods.getData().add(series2);
+		for (int i = 0; i < series2.getData().size(); i++) {
+			if(colorNumber>=constants.Constants.colors.length)						
+				colorNumber=0;						
+			series2.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	"); 	
+			colorNumber++;	
+		}
 		barChartWaves.setLegendVisible(false);
 		barChartMoods.setLegendVisible(false);
 		colorNumber=0;
 		createSeriesLineChartWaves(series);
+		colorNumber=0;
 		createSeriesLineChartMoods(series2);
 
 		URL url = getClass().getResource("../views/web/radarChart.html");
@@ -301,7 +324,7 @@ public class MenuController {
 						for (Node n : lookupAll) {
 							n.setVisible(false);
 						}
-						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand; -fx-border-color: #000000; -fx-border-width: 2;");
+						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand;");
 					}
 					else 
 					{
@@ -314,7 +337,9 @@ public class MenuController {
 					}
 				}
 			});
+			colorNumber++;
 		}
+		this.colorNumber=0;
 		for(Series<Number,Number> series : lineChartMoods.getData()){
 			if(this.colorNumber>=constants.Constants.colors.length)						
 				this.colorNumber=0;		
@@ -552,19 +577,18 @@ public class MenuController {
 		XYChart.Series<String,Float> series = new XYChart.Series<>();
 		for (int i = 0; i < values.length; i++) {
 			XYChart.Data<String,Float> waveData = new XYChart.Data<>(list.get(i), values[i]);
-			waveData.nodeProperty().addListener(new ChangeListener<Node>() {
-				@Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, Node newNode) {					
-					if (newNode != null) { 
-						if(colorNumber>=constants.Constants.colors.length)						
-							colorNumber=0;						
-						newNode.setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	"); 	
-						colorNumber++;						
-					}					
-				}
-			});
-			this.colorNumber=colorNumber;
-			series.getData().add(waveData);         
+			series.getData().add(waveData); 
+			System.out.println(colorNumber);
 		}
+		for (int i = 0; i < series.getData().size(); i++) {
+			if(colorNumber>=constants.Constants.colors.length)						
+				colorNumber=0;						
+			series.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	"); 	
+			colorNumber++;	
+		}
+
+
+
 		return series;
 	}
 
