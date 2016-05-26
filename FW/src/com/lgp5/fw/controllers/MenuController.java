@@ -20,12 +20,15 @@ import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -39,6 +42,7 @@ import java.util.*;
 public class MenuController {
 	private int colorNumber=0;
 	@FXML private AnchorPane paneLayoutRoot;
+	@FXML private Text daysText;
 	@FXML private ImageView arrowLabel;
 	@FXML private Pane painelHSA;
 	@FXML private Label historyLabel;
@@ -49,6 +53,7 @@ public class MenuController {
 	@FXML private Label dataLabel;
 	@FXML private Label moodLabel;
 	@FXML private Label settingsLabel;
+	@FXML private Button saveButton;
 	@FXML private GridPane brainWavesPane;
 	@FXML private Label gamma1Data;
 	@FXML private Label gamma2Data;
@@ -63,6 +68,7 @@ public class MenuController {
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
+	@FXML private Slider historyPeriodSlider;
 	@FXML private GridPane radarPane;
 	@FXML private WebView radarBrowser;
 	@FXML private GridPane dataPane;
@@ -110,6 +116,27 @@ public class MenuController {
 	 */
 	@FXML
 	private void initialize() throws MalformedURLException {
+		
+		
+		historyPeriodSlider.setMin(120);
+		historyPeriodSlider.setValue(120);
+		historyPeriodSlider.setMax(1825);
+		historyPeriodSlider.setShowTickLabels(false);
+		historyPeriodSlider.setShowTickMarks(false);
+		historyPeriodSlider.setMajorTickUnit(15);
+		historyPeriodSlider.setMinorTickCount(0);
+		historyPeriodSlider.setBlockIncrement(10);
+		
+		historyPeriodSlider.valueProperty().addListener(new ChangeListener<Number>() {
+		      @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+		        if (newValue == null) {
+		        	daysText.setText("");
+		          return;
+		        }
+		        daysText.setText(Math.round(newValue.intValue()) + "");
+		      }
+		    });
+
 		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
@@ -132,43 +159,6 @@ public class MenuController {
 
 		URL url = getClass().getResource("../views/web/radarChart.html");
 		radarBrowser.getEngine().load(url.toExternalForm());
-
-/*
-		XYChart.Series seriesA = new XYChart.Series();
-		seriesA.getData().add(new XYChart.Data(0, 100));
-		seriesA.getData().add(new XYChart.Data(50, 50));
-		seriesA.getData().add(new XYChart.Data(75, 0));
-		radarGraphA.getData().addAll(seriesA);
-
-		XYChart.Series seriesB = new XYChart.Series();
-		seriesB.getData().add(new XYChart.Data(75, 0));
-		seriesB.getData().add(new XYChart.Data(50, -50));
-		seriesB.getData().add(new XYChart.Data(0, -90));
-		radarGraphB.getData().addAll(seriesB);
-
-		XYChart.Series seriesC = new XYChart.Series();
-		seriesC.getData().add(new XYChart.Data(-20, 0));
-		seriesC.getData().add(new XYChart.Data(-50, -50));
-		seriesC.getData().add(new XYChart.Data(0, -90));
-		radarGraphC.getData().addAll(seriesC);
-
-		XYChart.Series seriesD = new XYChart.Series();
-		seriesD.getData().add(new XYChart.Data(-20, 0));
-		seriesD.getData().add(new XYChart.Data(-50, 50));
-		seriesD.getData().add(new XYChart.Data(0, 100));
-		radarGraphD.getData().addAll(seriesD);
-
-		//look up first series fill
-		Node node = radarGraphA.lookup(".default-color0.chart-series-area-fill");
-		Node node1 = radarGraphB.lookup(".default-color0.chart-series-area-fill");
-		Node node2 = radarGraphC.lookup(".default-color0.chart-series-area-fill");
-		Node node3 = radarGraphD.lookup(".default-color0.chart-series-area-fill");
-		//set the fill to transparent
-		node.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-		node1.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-		node2.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-		node3.setStyle("-fx-fill: rgba(125, 125, 125, 0);");
-*/
 		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
@@ -468,7 +458,7 @@ public class MenuController {
 		if(!painelHSA.isVisible()) {
 			painelHSA.setVisible(true);
 			FadeTransition fadeTransition
-					= new FadeTransition(Duration.millis(100), painelHSA);
+			= new FadeTransition(Duration.millis(100), painelHSA);
 			fadeTransition.setFromValue(0.0);
 			fadeTransition.setToValue(1.0);
 			fadeTransition.play();
@@ -490,9 +480,9 @@ public class MenuController {
 	public void showRadar(MouseEvent event){
 		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,settingsLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,settingsPane});
 	}
-	
+
 	public void showSettings(MouseEvent event){
-		changePane(settingsLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel},settingsPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,settingsPane});
+		changePane(settingsLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,radarLabel},settingsPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,radarPane});
 	}
 
 	public void showData(MouseEvent event){		

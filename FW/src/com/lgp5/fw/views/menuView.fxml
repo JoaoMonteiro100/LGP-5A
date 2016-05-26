@@ -293,7 +293,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="radarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="990.0">
+            <GridPane fx:id="radarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="990.0" visible="false">
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="1000.0" />
@@ -324,13 +324,24 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="settingsPane" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false">
+            <GridPane fx:id="settingsPane" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <CheckBox layoutX="27.0" layoutY="4.0" mnemonicParsing="false" text="History Record (on/off)" textAlignment="CENTER" />
+                        <Text layoutX="515.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Days" />
+                        <Button fx:id="saveButton" layoutX="24.0" layoutY="91.0" mnemonicParsing="false" text="Save" />
+                        <Slider fx:id="historyPeriodSlider" layoutX="27.0" layoutY="48.0" majorTickUnit="1.0" prefHeight="18.0" prefWidth="439.0" />
+                        <Text fx:id="daysText" layoutX="479.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="120" />
+                     </children>
+                  </AnchorPane>
+               </children>
             </GridPane>
          </children>
       </AnchorPane>
