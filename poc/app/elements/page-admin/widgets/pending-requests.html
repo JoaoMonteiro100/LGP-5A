@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
-<dom-module id="doctors-list">
+<dom-module id="pending-requests">
     <template>
         <style is="custom-style">
             section {
@@ -49,21 +49,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <section>
             <firebase-collection
-                    order-by-child="groups/group2"
-                    order-value-type="boolean"
-                    equal-to="true"
-                    location="https://brainlight.firebaseio.com/users"
-                    data="{{users}}">
+                    location="https://brainlight.firebaseio.com/requests"
+                    data="{{requests}}">
             </firebase-collection>
+
             <paper-dialog-scrollable>
-                <paper-listbox on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
-                    <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
+                <paper-listbox on-iron-select="itemSelected" id="requestList" selected="{{myChoice}}">
+                    <template is="dom-repeat" items="[[requests]]" as="req"> <!--  sort="_computeSort"-->
                         <paper-item>
-                            <img src={{online(usr)}} style="width:10px;height:10px;">
+                           <!-- <img src={{online(usr)}} style="width:10px;height:10px;">-->
                           <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
-                            <div id="name">[[usr.name]] [[usr.lastname]]</div>
+                            <div id="name">[[req.name]] [[req.lastname]]</div>
                             <span> - </span>
-                            <div id="mail">[[usr.mail]]</div>
+                            <div id="number">[[req.number]]</div>
                         </paper-item>
                     </template>
                 </paper-listbox>
@@ -76,20 +74,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             'use strict';
 
             Polymer({
-                is: 'doctors-list',
+                is: 'pending-requests',
 
                 properties: {
                     selected: Array,
-                    users: {
+                    requests: {
                         type: Object,
                         notify: true
                     },
                     myChoice: {
                         type: Number,
                         notify: true,
-                        observer: '_onUserSelected'
+                        observer: '_onRequestSelected'
                     },
-                    deletedUserKey: {
+                    deletedRequestKey: {
                         type: Number,
                         notify: true
                     },
@@ -97,54 +95,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type: Number,
                         notify: true
                     }
+                   
                 }
                 ,
-
-                online: function(a) {
-                    if(a.online)
-                        return "../../../images/online.png";
-                    else 
-                        return "../../../images/offline.png";
-                },
-
-                _computeSort: function (a, b) {
-                    if (a.name.toLowerCase() == b.name.toLowerCase()) {
-                        return 0;
-                    }
-
-                    var aLowerCase = a.name.toLowerCase();
-                    var bLowerCase = b.name.toLowerCase();
-
-                    if (aLowerCase >= bLowerCase) {
-                        var indexA = this.users.indexOf(a);
-                        var indexB = this.users.indexOf(b);
-                        var temp = this.users[indexA];
-                        this.users[indexA] = this.users[indexB];
-                        this.users[indexB] = temp;
-                    }
-
-                    return aLowerCase < bLowerCase ? -1 : 1;
-                },
-
-                ready: function () {
-                    var appRef = new Firebase(app.usersLocation);
+                    ready: function () {
+                    var appRef = new Firebase('https://brainlight.firebaseio.com/requests');
                     var self = this;
 
                     appRef.on('child_removed', function (oldChildSnapshot) {
-                        self.deletedUserKey = oldChildSnapshot.key();
+                        self.deletedRequestKey = oldChildSnapshot.key();
                     });
                 },
 
-                _onUserSelected: function () {
-                    var user = this.users[this.myChoice];
-                    this.currentKey = user.__firebaseKey__;
-                    this.fire('selected-user', user);
+                _onRequestSelected: function () {
+                    var request = this.requests[this.myChoice];
+                    this.currentKey = request.__firebaseKey__;
+                    this.fire('selected-request', request);
                 },
 
                 itemSelected: function () {
-                    if (this.deletedUserKey == this.currentKey) {
-                        var user = this.users[this.myChoice];
-                        this.fire('selected-user', user);
+                    if (this.deletedRequestKey == this.currentKey) {
+                        var request = this.requests[this.myChoice];
+                        this.fire('selected-request', request);
                     } else {
                         this.myChoice -= 1;
                     }

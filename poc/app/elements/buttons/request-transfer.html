@@ -76,7 +76,7 @@
             Polymer({
                 is: 'request-transfer',
 
-                properties: {
+                properties: { 
                     newRequest: {
                         type: Object,
                         notify: true
@@ -89,10 +89,11 @@
 
                 setNewRequest: function() {
                     this.newRequest = {
-                        name: this.$.firstname.value,
-                        lastname: this.$.lastname.value,
-                        oldDoctorAssociated: this.$.doctorAssociated.value,
-                        newDoctorAssociated: this.$.doctorAssociated.value, //CHANGE to new doctor 
+                        name: "cenas",// this.$.firstname.value,
+                        lastname: "last",//this.$.lastname.value,
+                        number: "123456", 
+                        oldDoctorAssociated: "old",//this.$.doctorAssociated.value,
+                        newDoctorAssociated: "new", //this.$.doctorAssociated.value,
                     };
 
                     return this.newRequest;
@@ -110,22 +111,15 @@
                     var self = this;
 
                     if(this.$.requestTransferForm.validate()) {
-                        // Create an account for the new user in the database
                         var appRef = new Firebase(app.location);
-                       // var adminMail = this.$.mail.value;
-                        appRef.createRequest({
-                            //email: adminMail,
-                            //password: this.$.pwinput.value
-                        }, function(error, userData) {
-                            if(error) {
-                                alert('Error');
-                            } else {
-                                self.addRequest();
+                         self.addRequest();
                                 self.$.requestTransferForm.reset();
                                 self.$.requestTransferDialog.close();
-                            }
-                        });
                     }
+                },
+
+                itemSelected : function(e) {
+                    this.$.associateDoctor.validate();
                 },
 
                 clickHandler:function(e) {
@@ -140,8 +134,7 @@
                     document.getElementById('requestTransferForm').reset();
                 },
 
-
-                ready: function() {
+                ready: function() { 
                     var self = this;
                     var userdef = false;
                     addEventListener('selected-user', function(user) {
