@@ -15,6 +15,7 @@ import utils.Constants;
 
 public class Neurosky implements Runnable {
 	private HashMap<String, HashMap<String,Object>> dataToSend;
+	private HashMap<String, HashMap<String,Object>> finalData;
 	HeadsetConnection headsetConnection;
 	String deviceID;
 	long waves[];
@@ -22,6 +23,7 @@ public class Neurosky implements Runnable {
 	DataListener dataListener;
 	HeadsetData headsetData;
 	HeadSetDataInterface sendDataInterface;
+	
 
 	public Neurosky(String deviceID, HeadSetDataInterface sendDataInterface) {
 		this.headsetConnection = new HeadsetConnection();
@@ -40,6 +42,16 @@ public class Neurosky implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void disconnect() {
+		try {
+			headsetConnection.closeConnection();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void startReceivingData() {
 		this.run = true;
 		receivedData();
@@ -109,6 +121,7 @@ public class Neurosky implements Runnable {
 					dataToSend.put(Constants.WAVES, wavesMap);
 					if(sendDataInterface != null) {
 						sendDataInterface.onReceiveData(dataToSend);
+						setFinalData(dataToSend);
 						wavesMap.clear();
 					}		
 				}
@@ -131,10 +144,14 @@ public class Neurosky implements Runnable {
 	}
 	@Override
 	public void run() {
-		startReceivingData();
+		startReceivingData();															
 	}
-<<<<<<< HEAD
+	
+	public HashMap<String, HashMap<String,Object>> getFinalData() {
+		return finalData;
+	}
+	
+	public void setFinalData(HashMap<String, HashMap<String,Object>> finalData) {
+		this.finalData = finalData;
+	}
 }
-=======
-}
->>>>>>> refs/remotes/origin/issue18
