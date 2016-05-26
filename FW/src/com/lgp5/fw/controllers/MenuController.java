@@ -21,6 +21,7 @@ import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
@@ -44,6 +45,8 @@ public class MenuController {
 	@FXML private AnchorPane paneLayoutRoot;
 	@FXML private Text daysText;
 	@FXML private ImageView arrowLabel;
+	@FXML private ImageView recordButton;
+	@FXML private ImageView stopButton;
 	@FXML private Pane painelHSA;
 	@FXML private Label historyLabel;
 	@FXML private Label sensorsLabel;
@@ -53,7 +56,6 @@ public class MenuController {
 	@FXML private Label dataLabel;
 	@FXML private Label moodLabel;
 	@FXML private Label settingsLabel;
-	@FXML private Button saveButton;
 	@FXML private GridPane brainWavesPane;
 	@FXML private Label gamma1Data;
 	@FXML private Label gamma2Data;
@@ -93,6 +95,7 @@ public class MenuController {
 	@FXML private LineChart<Number, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
 	@FXML private LineChart<Number, Number> lineChartMoods;
+	@FXML private CheckBox historyCheckBox;
 	Vector<ArrayList> wavesGroup = new Vector<ArrayList>(2);
 	Vector<ArrayList> moodsGroup = new Vector<ArrayList>(2);
 	ArrayList<String> deltaQueue =  new ArrayList<String>();
@@ -116,8 +119,6 @@ public class MenuController {
 	 */
 	@FXML
 	private void initialize() throws MalformedURLException {
-		
-		
 		historyPeriodSlider.setMin(120);
 		historyPeriodSlider.setValue(120);
 		historyPeriodSlider.setMax(1825);
@@ -126,16 +127,16 @@ public class MenuController {
 		historyPeriodSlider.setMajorTickUnit(15);
 		historyPeriodSlider.setMinorTickCount(0);
 		historyPeriodSlider.setBlockIncrement(10);
-		
+
 		historyPeriodSlider.valueProperty().addListener(new ChangeListener<Number>() {
-		      @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-		        if (newValue == null) {
-		        	daysText.setText("");
-		          return;
-		        }
-		        daysText.setText(Math.round(newValue.intValue()) + "");
-		      }
-		    });
+			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+				if (newValue == null) {
+					daysText.setText("");
+					return;
+				}
+				daysText.setText(Math.round(newValue.intValue()) + "");
+			}
+		});
 
 		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
@@ -146,14 +147,15 @@ public class MenuController {
 		xAxisMood.setCategories(moods);
 		float[] values = {35f, 43f, 27f, 12f, 9.2f, 32f, 16f, 20f};
 		float[] values2 = {35f, 43f};
-		XYChart.Series<String,Float> series = createWaveDataSeries(values,brainwaves);
+		XYChart.Series<String,Float> series = createWaveDataSeries(values,brainwaves);		
 		XYChart.Series<String,Float> series2 = createWaveDataSeries(values2,moods);
+		System.out.println(this.colorNumber);
 		barChartWaves.getData().add(series);
 
 		barChartMoods.getData().add(series2);
 		barChartWaves.setLegendVisible(false);
 		barChartMoods.setLegendVisible(false);
-
+		colorNumber=0;
 		createSeriesLineChartWaves(series);
 		createSeriesLineChartMoods(series2);
 
@@ -285,10 +287,10 @@ public class MenuController {
 		}
 		moodsGroup.add(attentionQueue);
 		moodsGroup.add(meditationQueue);
-		lineChartMoods.getData().addAll(series1,series2);
-
+		lineChartMoods.getData().addAll(series1,series2);			
 		for (int i = 0; i < seriesBarChart.getData().size(); i++) {
 			final int tmp = i;
+			final int tmp2 = colorNumber;
 			seriesBarChart.getData().get(i).getNode().setOnMouseClicked(new EventHandler<Event>() {
 				@Override
 				public void handle(Event event) {
@@ -299,6 +301,7 @@ public class MenuController {
 						for (Node n : lookupAll) {
 							n.setVisible(false);
 						}
+						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand; -fx-border-color: #000000; -fx-border-width: 2;");
 					}
 					else 
 					{
@@ -306,21 +309,21 @@ public class MenuController {
 						for (Node n : lookupAll) {
 							n.setVisible(true);
 						}
+						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand; -fx-border-color: #000000; -fx-border-width: 2;");
 						lineChartMoods.getData().get(tmp).nodeProperty().get().setVisible(true);
 					}
 				}
 			});
 		}
-		colorNumber=8;
 		for(Series<Number,Number> series : lineChartMoods.getData()){
-			if(colorNumber>=constants.Constants.colors.length)						
-				colorNumber=0;		
-			Set<Node> lookupAll = lineChartMoods.lookupAll(".chart-line-symbol.series" + colorNumber);
+			if(this.colorNumber>=constants.Constants.colors.length)						
+				this.colorNumber=0;		
+			Set<Node> lookupAll = lineChartMoods.lookupAll(".chart-line-symbol.series" + this.colorNumber);
 			for (Node n : lookupAll) {
-				n.setStyle("-fx-background-color:"+constants.Constants.colors[colorNumber]+";");
+				n.setStyle("-fx-background-color:"+constants.Constants.colors[this.colorNumber]+";");
 			}
-			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[colorNumber]+";");		
-			colorNumber++;	
+			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[this.colorNumber]+";");		
+			this.colorNumber++;	
 		}
 		lineChartMoods.setLegendVisible(false);
 		lineChartMoods.setAnimated(false);
@@ -387,10 +390,10 @@ public class MenuController {
 		wavesGroup.add(lowBetaQueue);		
 		wavesGroup.add(lowGammaQueue);		
 		wavesGroup.add(highGammaQueue);		
-
 		lineChartWaves.getData().addAll(series3,series4,series6,series5,series8,series7,series9,series10);
 		for (int i = 0; i < seriesBarChart.getData().size(); i++) {
 			final int tmp = i;
+			final int tmp2 = colorNumber;
 			seriesBarChart.getData().get(i).getNode().setOnMouseClicked(new EventHandler<Event>() {
 				@Override
 				public void handle(Event event) {
@@ -401,6 +404,7 @@ public class MenuController {
 						for (Node n : lookupAll) {
 							n.setVisible(false);
 						}
+						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand;");
 					}
 					else 
 					{
@@ -408,23 +412,26 @@ public class MenuController {
 						for (Node n : lookupAll) {
 							n.setVisible(true);
 						}
+						System.out.println(seriesBarChart.getData().get(tmp).getNode().getStyle().toString());
+						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand; -fx-border-color: #000000; -fx-border-width: 2;");
 						lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(true);
 					}
 				}
 			});
+			colorNumber++;
 		}
 
 
-		colorNumber=0;
+		this.colorNumber=0;
 		for(Series<Number,Number> series : lineChartWaves.getData()){
-			if(colorNumber>=constants.Constants.colors.length)						
-				colorNumber=0;		
-			Set<Node> lookupAll = lineChartWaves.lookupAll(".chart-line-symbol.series" + colorNumber);
+			if(this.colorNumber>=constants.Constants.colors.length)						
+				this.colorNumber=0;		
+			Set<Node> lookupAll = lineChartWaves.lookupAll(".chart-line-symbol.series" + this.colorNumber);
 			for (Node n : lookupAll) {
-				n.setStyle("-fx-background-color:"+constants.Constants.colors[colorNumber]+";");
+				n.setStyle("-fx-background-color:"+constants.Constants.colors[this.colorNumber]+";");
 			}
-			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[colorNumber]+";");		
-			colorNumber++;	
+			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[this.colorNumber]+";");		
+			this.colorNumber++;	
 		}
 		lineChartWaves.setLegendVisible(false);
 		lineChartWaves.setAnimated(false);
@@ -501,6 +508,22 @@ public class MenuController {
 	public void showHistory(MouseEvent event) {
 		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel,settingsLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane,settingsPane});	
 	}
+	public void showRecordButton(){
+		if(recordButton.isVisible())
+			recordButton.setVisible(false);
+		else recordButton.setVisible(true);
+	}
+	public void changeRecordButton(){
+		if(recordButton.isVisible())
+		{
+			recordButton.setVisible(false);
+			stopButton.setVisible(true);
+		}
+		else {
+			recordButton.setVisible(true);
+			stopButton.setVisible(false);
+		}
+	}
 
 	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
 		for (int i = 0; i < hideL.length; i++) {
@@ -534,11 +557,12 @@ public class MenuController {
 					if (newNode != null) { 
 						if(colorNumber>=constants.Constants.colors.length)						
 							colorNumber=0;						
-						newNode.setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";"); 	
+						newNode.setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	"); 	
 						colorNumber++;						
 					}					
 				}
 			});
+			this.colorNumber=colorNumber;
 			series.getData().add(waveData);         
 		}
 		return series;
