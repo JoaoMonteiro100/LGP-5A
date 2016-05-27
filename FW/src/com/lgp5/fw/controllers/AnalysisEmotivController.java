@@ -35,7 +35,6 @@ public class AnalysisEmotivController {
     @FXML
     private void initialize() {
         waveToAnalyse.getItems().addAll("Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2");
-        wavelength.setDisable(true);
 
         // force the field to be numeric only
         analysisPeriodField.textProperty().addListener((observable, oldValue, newValue) -> {

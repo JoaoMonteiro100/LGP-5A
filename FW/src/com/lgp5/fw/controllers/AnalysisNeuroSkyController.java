@@ -35,9 +35,27 @@ public class AnalysisNeuroSkyController {
     private void initialize() {
         waveToAnalyse.getItems().addAll("Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2");
 
-        Tooltip tp = new Tooltip("at stack tool");
+        wavelength.setDisable(false);
 
-        wavelength.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        Tooltip mousePositionToolTip = new Tooltip("Alo alo");
+        wavelength.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mousePositionToolTip.setText("heyyy");
+                Node node = (Node) event.getSource();
+                mousePositionToolTip.show(node, event.getScreenX() + 50, event.getScreenY());
+            }
+        });
+
+        wavelength.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                mousePositionToolTip.hide();
+            }
+        });
+
+/*
+        wavelength.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 Node node =(Node)t.getSource();
@@ -51,7 +69,7 @@ public class AnalysisNeuroSkyController {
                 tp.hide();
             }
         });
-
+*/
         // force the field to be numeric only
         analysisPeriodField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {

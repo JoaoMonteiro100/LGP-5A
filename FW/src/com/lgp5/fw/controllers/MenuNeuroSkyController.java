@@ -1,8 +1,9 @@
 package com.lgp5.fw.controllers;
-
+/*
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
+*/
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,7 +45,7 @@ public class MenuNeuroSkyController extends MenuController{
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
 	@FXML private WebView radarBrowser;
-	private HeadSetDataInterface headSetDataInterface;
+	//private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
 	@FXML private StackedAreaChart<Float, Float> radarGraphA;
@@ -135,6 +136,7 @@ public class MenuNeuroSkyController extends MenuController{
 
 		URL url = getClass().getResource("../views/web/radarChart.html");
 		radarBrowser.getEngine().load(url.toExternalForm());
+		/*
 		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
@@ -245,7 +247,7 @@ public class MenuNeuroSkyController extends MenuController{
 			}
 		};
 
-		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
+		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();*/
 	}
 	private void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
