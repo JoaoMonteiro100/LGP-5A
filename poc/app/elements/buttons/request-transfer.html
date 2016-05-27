@@ -53,7 +53,7 @@
                 <paper-listbox  class="dropdown-content" on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
                         <paper-item>
-                            <div id="doctorAssociated" required auto-validate>[[usr.name]] [[usr.lastname]]</div>
+                            <div id="associateDoctor" required auto-validate>[[usr.name]] [[usr.lastname]]</div>
                         </paper-item>
                     </template>
                 </paper-listbox>
@@ -89,12 +89,13 @@
 
                 setNewRequest: function() {
                     this.newRequest = {
-                        name: "cenas",// this.$.firstname.value,
-                        lastname: "last",//this.$.lastname.value,
-                        number: "123456", 
-                        mail: "cenas@buecenas.pt",
-                        doctorAssociated: "oldDoc",//this.$.doctorAssociated.value,
-                        reqDoctorAssociated: "newDoc", //this.$.doctorAssociated.value,
+
+                        name: this.user.name,
+                        lastname: this.user.lastname,
+                        number: this.user.number,
+                       // mail: this.user.mail,
+                        doctorAssociated: this.user.doctorAssociated,
+                        reqDoctorAssociated: this.$.associateDoctor.value,
                     };
 
                     return this.newRequest;

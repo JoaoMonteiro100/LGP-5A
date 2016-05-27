@@ -41,6 +41,7 @@
             <form is="iron-form" id="editDoctorForm">
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.name}}" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required auto-validate></paper-input>
+                <gold-email-input id="mail" name="mail" value ="{{user.mail}}" required auto-validate></gold-email-input>
                 <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected" label="Gender">
                     <paper-listbox class="dropdown-content" selected="{{selected}}">
                         <paper-item>Female</paper-item>
@@ -100,6 +101,7 @@
                         userRef.update({
                             name: this.$.firstname.value,
                             lastname: this.$.lastname.value,
+                            mail: this.$.mail.value,
                             gender: this.$.genderdrop.value
                         }, onDoctorUpdated);
                     }
