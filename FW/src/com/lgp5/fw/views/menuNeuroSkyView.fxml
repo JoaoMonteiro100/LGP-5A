@@ -348,6 +348,7 @@
                         <Text layoutX="515.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Days" />
                         <Slider fx:id="historyPeriodSlider" layoutX="27.0" layoutY="48.0" majorTickUnit="1.0" prefHeight="18.0" prefWidth="439.0" />
                         <Text fx:id="daysText" layoutX="479.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="120" />
+                        <Button mnemonicParsing="false" text="Open File" />
                      </children>
                   </AnchorPane>
                </children>
