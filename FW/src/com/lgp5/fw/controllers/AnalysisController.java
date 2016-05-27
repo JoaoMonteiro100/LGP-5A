@@ -31,7 +31,6 @@ public class AnalysisController {
     public AnalysisController() {
     }
 
-
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
@@ -186,5 +185,5 @@ public class AnalysisController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }    
+    }
 }
