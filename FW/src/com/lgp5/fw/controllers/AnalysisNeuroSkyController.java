@@ -5,9 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,8 +35,14 @@ public class AnalysisNeuroSkyController {
     private void initialize() {
         waveToAnalyse.getItems().addAll("Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2");
 
-        Tooltip tp = new Tooltip("OMG this doesn't exist!");
-        Tooltip.install(wavelength, tp);
+        Tooltip tp = new Tooltip("at stack tool");
+        wavelength.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                Node node =(Node)t.getSource();
+                tp.show(node, ((Stage) startAnalysisButton.getScene().getWindow()).getX()+t.getSceneX(), ((Stage) startAnalysisButton.getScene().getWindow()).getY()+t.getSceneY());
+            }
+        });
 
         // force the field to be numeric only
         analysisPeriodField.textProperty().addListener((observable, oldValue, newValue) -> {
