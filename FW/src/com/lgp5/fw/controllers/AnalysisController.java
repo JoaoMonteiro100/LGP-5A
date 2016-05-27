@@ -181,6 +181,7 @@ public class AnalysisController {
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
+            stage.setTitle("BrainLight - Analysis in progress...");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

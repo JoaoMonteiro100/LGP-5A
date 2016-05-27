@@ -424,17 +424,9 @@
             </ImageView>
          </children>
       </HBox>
-      <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="110.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
+      <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="59.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
          <children>
-            <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" onMouseClicked="#launchAnalysisView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" onMouseClicked="#launchAnalysisView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font size="16.0" />
                </font>
