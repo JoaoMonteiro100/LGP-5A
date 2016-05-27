@@ -3,59 +3,27 @@ package com.lgp5.fw.controllers;
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
-import javafx.animation.FadeTransition;
-import javafx.animation.RotateTransition;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
 
-public class MenuNeuroSkyController {
+public class MenuNeuroSkyController extends MenuController{
+	
 	private int colorNumber=0;
-	@FXML private AnchorPane paneLayoutRoot;
-	@FXML private Text daysText;
-	@FXML private ImageView arrowLabel;
-	@FXML private ImageView recordButton;
-	@FXML private ImageView stopButton;
-	@FXML private Pane painelHSA;
-	@FXML private Label historyLabel;
-	@FXML private Label sensorsLabel;
-	@FXML private Label analysisLabel;
-	@FXML private Label radarLabel;
-	@FXML private Label brainWavesLabel;
-	@FXML private Label dataLabel;
-	@FXML private Label moodLabel;
-	@FXML private Label settingsLabel;
-	@FXML private GridPane brainWavesPane;
 	@FXML private Label gamma1Data;
 	@FXML private Label gamma2Data;
 	@FXML private Label alfa1Data;
@@ -69,13 +37,7 @@ public class MenuNeuroSkyController {
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
-	@FXML private Slider historyPeriodSlider;
-	@FXML private GridPane radarPane;
 	@FXML private WebView radarBrowser;
-	@FXML private GridPane dataPane;
-	@FXML private GridPane moodPane;
-	@FXML private GridPane historyPane;
-	@FXML private GridPane settingsPane;
 	private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
@@ -118,38 +80,13 @@ public class MenuNeuroSkyController {
 	 */
 	@FXML
 	private void initialize() throws MalformedURLException {
-		historyPeriodSlider.setMin(120);
-		historyPeriodSlider.setValue(120);
-		historyPeriodSlider.setMax(1825);
-		historyPeriodSlider.setShowTickLabels(false);
-		historyPeriodSlider.setShowTickMarks(false);
-		historyPeriodSlider.setMajorTickUnit(15);
-		historyPeriodSlider.setMinorTickCount(0);
-		historyPeriodSlider.setBlockIncrement(10);
-
-		historyPeriodSlider.valueProperty().addListener(new ChangeListener<Number>() {
-			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-				if (newValue == null) {
-					daysText.setText("");
-					return;
-				}
-				daysText.setText(Math.round(newValue.intValue()) + "");
-			}
-		});
+		settings();
 
 		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
 
-		//Excitement Engagement Frustration Meditation Focus Interest Relaxation Stress
-		/*
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * */
+		
 
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
@@ -304,7 +241,7 @@ public class MenuNeuroSkyController {
 
 		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
 	}
-	public void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
+	private void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
 		XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
@@ -365,7 +302,7 @@ public class MenuNeuroSkyController {
 		xAxisMoodsLine.setUpperBound(50);
 		xAxisMoodsLine.setAutoRanging(false);
 	}
-	public void updateSeriesLineChartMoods(String a,String m)
+	private void updateSeriesLineChartMoods(String a,String m)
 	{
 		moodsGroup.get(0).add(a);					
 		moodsGroup.get(1).add(m);		
@@ -377,7 +314,7 @@ public class MenuNeuroSkyController {
 		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 	}
 
-	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
+	private void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
 		xAxisWavesLine.setLabel("Time");	
 		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
 		XYChart.Series<Number, Number> series4 = new XYChart.Series<>();		
@@ -473,7 +410,7 @@ public class MenuNeuroSkyController {
 		xAxisWavesLine.setAutoRanging(false);
 	}
 
-	public void updateSeriesLineChartWaves(String d,String t,String g1,String g2,String a1,String a2,String b1,String b2)
+	private void updateSeriesLineChartWaves(String d,String t,String g1,String g2,String a1,String a2,String b1,String b2)
 	{
 		queueTime.add((System.currentTimeMillis()/1000)-time);
 		queueTime.remove(0);
@@ -491,115 +428,5 @@ public class MenuNeuroSkyController {
 		}
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
-	}
-
-	public void openMenu(MouseEvent event){
-		if(!painelHSA.isVisible()) {
-			painelHSA.setVisible(true);
-			FadeTransition fadeTransition
-			= new FadeTransition(Duration.millis(100), painelHSA);
-			fadeTransition.setFromValue(0.0);
-			fadeTransition.setToValue(1.0);
-			fadeTransition.play();
-		}
-		else {
-			painelHSA.setVisible(false);
-			FadeTransition fadeTransition = new FadeTransition(Duration.millis(100), painelHSA);
-			fadeTransition.setFromValue(1.0);
-			fadeTransition.setToValue(0.0);
-			fadeTransition.play();
-		}
-
-		RotateTransition rotation = new RotateTransition(Duration.seconds(0.1), arrowLabel);
-		rotation.setCycleCount(1);
-		rotation.setByAngle(180);
-		rotation.play();
-	}
-
-	public void showRadar(MouseEvent event){
-		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,settingsLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,settingsPane});
-	}
-
-	public void showSettings(MouseEvent event){
-		changePane(settingsLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,radarLabel},settingsPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,radarPane});
-	}
-
-	public void showData(MouseEvent event){		
-		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane,settingsPane});
-	}
-
-
-	public void showMood(MouseEvent event){
-		changePane(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane,settingsPane});	
-	}
-
-	public void showBrainWaves(MouseEvent event) {
-		changePane(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel,settingsLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane,settingsPane});	
-	}
-
-	public void showHistory(MouseEvent event) {
-		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel,settingsLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane,settingsPane});	
-	}
-	public void showRecordButton(){
-		if(recordButton.isVisible())
-			recordButton.setVisible(false);
-		else recordButton.setVisible(true);
-	}
-	public void changeRecordButton(){
-		if(recordButton.isVisible())
-		{
-			recordButton.setVisible(false);
-			stopButton.setVisible(true);
-		}
-		else {
-			recordButton.setVisible(true);
-			stopButton.setVisible(false);
-		}
-	}
-
-	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
-		for (int i = 0; i < hideL.length; i++) {
-			hideL[i].setDisable(false);
-		}
-		showL.setDisable(true);
-		try {
-			if(!showP.isVisible()) {
-				for (int i = 0; i < hideP.length; i++) {
-					hideP[i].setVisible(false);
-				}
-				showP.setVisible(true);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void launchSelectDeviceView() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
-			Parent parent = (Parent) loader.load();
-			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 900, 600));
-			stage.setTitle("BrainLight - Select Device");
-			stage.show();
-			//close current stage
-			Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
-			current.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void launchAnalysisView() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
-			Parent parent = (Parent) loader.load();
-			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 462, 378));
-			stage.setTitle("BrainLight - Analysis");
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	}	
 }
