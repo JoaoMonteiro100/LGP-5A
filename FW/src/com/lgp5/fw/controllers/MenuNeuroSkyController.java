@@ -22,7 +22,7 @@ import java.util.*;
 
 
 public class MenuNeuroSkyController extends MenuController{
-	
+
 	private int colorNumber=0;
 	@FXML private Label gamma1Data;
 	@FXML private Label gamma2Data;
@@ -86,7 +86,7 @@ public class MenuNeuroSkyController extends MenuController{
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
 
-		
+
 
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
@@ -428,119 +428,6 @@ public class MenuNeuroSkyController extends MenuController{
 		}
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
-<<<<<<< HEAD
-	}
 
-	public void openMenu(MouseEvent event){
-		if(!painelHSA.isVisible()) {
-			painelHSA.setVisible(true);
-			FadeTransition fadeTransition
-			= new FadeTransition(Duration.millis(100), painelHSA);
-			fadeTransition.setFromValue(0.0);
-			fadeTransition.setToValue(1.0);
-			fadeTransition.play();
-		}
-		else {
-			painelHSA.setVisible(false);
-			FadeTransition fadeTransition = new FadeTransition(Duration.millis(100), painelHSA);
-			fadeTransition.setFromValue(1.0);
-			fadeTransition.setToValue(0.0);
-			fadeTransition.play();
-		}
-
-		RotateTransition rotation = new RotateTransition(Duration.seconds(0.1), arrowLabel);
-		rotation.setCycleCount(1);
-		rotation.setByAngle(180);
-		rotation.play();
-	}
-
-	public void showRadar(MouseEvent event){
-		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,settingsLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,settingsPane});
-	}
-
-	public void showSettings(MouseEvent event){
-		changePane(settingsLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,radarLabel},settingsPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,radarPane});
-	}
-
-	public void showData(MouseEvent event){		
-		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane,settingsPane});
-	}
-
-
-	public void showMood(MouseEvent event){
-		changePane(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane,settingsPane});	
-	}
-
-	public void showBrainWaves(MouseEvent event) {
-		changePane(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel,settingsLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane,settingsPane});	
-	}
-
-	public void showHistory(MouseEvent event) {
-		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel,settingsLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane,settingsPane});	
-	}
-	public void showRecordButton(){
-		if(recordButton.isVisible())
-			recordButton.setVisible(false);
-		else recordButton.setVisible(true);
-	}
-	public void changeRecordButton(){
-		if(recordButton.isVisible())
-		{
-			recordButton.setVisible(false);
-			stopButton.setVisible(true);
-		}
-		else {
-			recordButton.setVisible(true);
-			stopButton.setVisible(false);
-		}
-	}
-
-	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
-		for (int i = 0; i < hideL.length; i++) {
-			hideL[i].setDisable(false);
-		}
-		showL.setDisable(true);
-		try {
-			if(!showP.isVisible()) {
-				for (int i = 0; i < hideP.length; i++) {
-					hideP[i].setVisible(false);
-				}
-				showP.setVisible(true);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void launchSelectDeviceView() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
-			Parent parent = (Parent) loader.load();
-			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 900, 600));
-			stage.setTitle("BrainLight - Select Device");
-			stage.show();
-			//close current stage
-			Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
-			current.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void launchAnalysisView() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisNeuroSkyView.fxml"));
-			Parent parent = (Parent) loader.load();
-			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 462, 378));
-			stage.setTitle("BrainLight - Analysis");
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-=======
 	}	
->>>>>>> e6f52e11b8d63ea60453aff9b93fc79c57ce24a2
 }
