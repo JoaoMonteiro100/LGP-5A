@@ -47,6 +47,8 @@ public class BrainLightFW{
         			@Override
         			public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
         				System.err.println(dataToSend.toString());
+
+        				//thread
         			}
         		};
           
@@ -154,6 +156,9 @@ public class BrainLightFW{
     	}
     	else if (device == 2){
     		
+    		initMerge(2,neuroDevice.getFinalData(),finalDataArray);
+    		doubleQ.addLast(finalDataArray);
+    		
     	}
     }
 
@@ -164,7 +169,7 @@ public class BrainLightFW{
 
     public static void main(String[] args) {
 
-        BrainLightFW fw = new BrainLightFW(1);
+        BrainLightFW fw = new BrainLightFW(2);
 
         fw.receiveDeviceData();
 
