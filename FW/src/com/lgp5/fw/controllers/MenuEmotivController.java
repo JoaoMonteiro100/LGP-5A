@@ -56,12 +56,7 @@ public class MenuEmotivController extends MenuController{
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
 	@FXML private Slider historyPeriodSlider;
-	@FXML private GridPane radarPane;
 	@FXML private WebView radarBrowser;
-	@FXML private GridPane dataPane;
-	@FXML private GridPane moodPane;
-	@FXML private GridPane historyPane;
-	@FXML private GridPane settingsPane;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
 	@FXML private StackedAreaChart<Float, Float> radarGraphA;
