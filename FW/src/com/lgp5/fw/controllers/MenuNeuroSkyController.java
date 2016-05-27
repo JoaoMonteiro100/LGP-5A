@@ -9,13 +9,19 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -429,5 +435,18 @@ public class MenuNeuroSkyController extends MenuController{
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 
-	}	
+	}
+
+	public void launchAnalysisView() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisNeuroSkyView.fxml"));
+			Parent parent = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(parent, 462, 378));
+			stage.setTitle("BrainLight - Analysis");
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

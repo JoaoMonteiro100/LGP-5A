@@ -1,9 +1,5 @@
 package com.lgp5.fw.controllers;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +19,10 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class MenuController {
 	private Desktop desktop = Desktop.getDesktop();
@@ -180,19 +180,6 @@ public class MenuController {
 			//close current stage
 			Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
 			current.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void launchAnalysisView() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
-			Parent parent = (Parent) loader.load();
-			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 462, 378));
-			stage.setTitle("BrainLight - Analysis");
-			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

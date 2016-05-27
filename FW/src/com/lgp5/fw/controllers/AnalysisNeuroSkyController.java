@@ -36,11 +36,19 @@ public class AnalysisNeuroSkyController {
         waveToAnalyse.getItems().addAll("Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2");
 
         Tooltip tp = new Tooltip("at stack tool");
+
         wavelength.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 Node node =(Node)t.getSource();
                 tp.show(node, ((Stage) startAnalysisButton.getScene().getWindow()).getX()+t.getSceneX(), ((Stage) startAnalysisButton.getScene().getWindow()).getY()+t.getSceneY());
+            }
+        });
+
+        wavelength.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                tp.hide();
             }
         });
 
