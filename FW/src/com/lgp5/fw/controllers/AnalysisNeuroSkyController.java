@@ -7,16 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 
-public class AnalysisController {
+public class AnalysisNeuroSkyController {
     @FXML
     private ComboBox<String> waveToAnalyse;
     @FXML
@@ -28,13 +25,16 @@ public class AnalysisController {
     @FXML
     private CheckBox wavelength, wavenumber, angWavenumber, angFrequency, period, amplitude, median, mode, mean, maxFrequency, minFrequency, maxAmplitude;
 
-    public AnalysisController() {
+    public AnalysisNeuroSkyController() {
     }
 
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
         waveToAnalyse.getItems().addAll("Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2");
+
+        Tooltip tp = new Tooltip("OMG this doesn't exist!");
+        Tooltip.install(wavelength, tp);
 
         // force the field to be numeric only
         analysisPeriodField.textProperty().addListener((observable, oldValue, newValue) -> {

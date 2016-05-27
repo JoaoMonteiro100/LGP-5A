@@ -592,7 +592,7 @@ public class MenuNeuroSkyController {
 
 	public void launchAnalysisView() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisNeuroSkyView.fxml"));
 			Parent parent = (Parent) loader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(parent, 462, 378));

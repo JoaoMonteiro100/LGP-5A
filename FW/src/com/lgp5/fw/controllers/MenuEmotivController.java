@@ -5,14 +5,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
 
 
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,7 +28,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -559,7 +556,7 @@ public class MenuEmotivController {
 
 	public void launchAnalysisView() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisEmotivView.fxml"));
 			Parent parent = (Parent) loader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(parent, 462, 378));
