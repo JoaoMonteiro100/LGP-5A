@@ -140,6 +140,17 @@ public class MenuNeuroSkyController {
 		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
+
+		//Excitement Engagement Frustration Meditation Focus Interest Relaxation Stress
+		/*
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * */
+
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
 		xAxisWaves.setCategories(brainwaves);
@@ -562,7 +573,7 @@ public class MenuNeuroSkyController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void launchSelectDeviceView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
