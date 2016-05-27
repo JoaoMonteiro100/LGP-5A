@@ -43,8 +43,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MenuEmotivController extends MenuController{
-	private int colorNumber=0;
-	
+	private int colorNumber=0;	
 	@FXML private Label gamma1Data;
 	@FXML private Label alfa1Data;
 	@FXML private Label beta1Data;
