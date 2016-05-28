@@ -11,129 +11,133 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="app-login">
-  <template>
-    <style>
-:host{
-  display:block
-}
+    <template>
+        <style>
+            :host {
+                display: block
+            }
 
-#button{
-  margin-top: 6px;
-  float: right;
-}
+            #button {
+                margin-top: 6px;
+                float: right;
+            }
 
-#formcont{
-width: 260px;
-margin: auto;
+            #formcont {
+                width: 260px;
+                margin: auto;
 
-}
-#backdiv{
-height: 100%;
-min-width:100%;
-position: absolute;
+            }
 
-}
-#paper{
+            #backdiv {
+                height: 100%;
+                min-width: 100%;
+                position: absolute;
 
-width: 550px;
-height: 180px;
-  background: #F0F0F0;
-  display: inline-flex;
-}
+            }
 
-#cont{
-  width: 530px;
-   height: 190px;
-display: inline-flex;
-   position: absolute;
-   top:0;
-   bottom: 0;
-   left: 0;
-   right: 0;
+            #paper {
 
-   margin: auto;
-}
-#spinner{
-  float:right;
-  margin-top: 12px;
-}
+                width: 550px;
+                height: 180px;
+                background: #F0F0F0;
+                display: inline-flex;
+            }
 
-    </style>
+            #cont {
+                width: 530px;
+                height: 190px;
+                display: inline-flex;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
 
-    <div id="backdiv">
-<div id="cont">
-      <paper-material id ="paper" elevation="3">
-        <img src="../../images/temp.png">
-        <div id="formcont">
-  <form is="iron-form" id="loginform">
-  <paper-input value="{{email::input}}" name="email" label="Email" required></paper-input>
-  <paper-input value="{{password::input}}" name="password" label="Password" type="password" required></paper-input>
-  <paper-spinner id="spinner"></paper-spinner>
-  <paper-button raised id="button" on-tap="_nativeSubmit">Login</paper-button>
+                margin: auto;
+            }
 
-</form>
-</div>
-      </paper-material>
-    </div>
-  </div>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+            #spinner {
+                float: right;
+                margin-top: 12px;
+            }
 
-    Polymer({
-      is: 'app-login',
+        </style>
 
-_nativeSubmit: function(){
-  var params;
-var test = false;
-var parent= this;
-  spinner.active = true;
- // Simulate a slow server response.
- setTimeout(function(test) {
- spinner.active=false;
- if (loginform.validate()) {
- var serializedItems = loginform.serialize();
- for (var name in serializedItems) {
-  var input = document.createElement('input');
-  input.hidden = true;
-  input.name = name;
-  input.value = serializedItems[name];
-  loginform.appendChild(input);
- }
+        <div id="backdiv">
+            <div id="cont">
+                <paper-material id="paper" elevation="3">
+                    <img src="../../images/temp.png">
+                    <div id="formcont">
+                        <form is="iron-form" id="loginform">
+                            <paper-input value="{{email::input}}" name="email" label="Email" required></paper-input>
+                            <paper-input value="{{password::input}}" name="password" label="Password" type="password"
+                                         required></paper-input>
+                            <paper-spinner id="spinner"></paper-spinner>
+                            <paper-button raised id="button" on-tap="_nativeSubmit">Login</paper-button>
 
-}
-}, 1000);
-params = params || {};
-  params.email = this.email;
-  params.password = this.password;
- this.fire('sign-in',{params: params});
-}
-    /*   _nativeSubmit: function() {
-         var params;
-         spinner.active = true;
-   // Simulate a slow server response.
-   setTimeout(function() {
-     spinner.active=false;
-     if (loginform.validate()) {
-       var serializedItems = loginform.serialize();
-       for (var name in serializedItems) {
-         var input = document.createElement('input');
-         input.hidden = true;
-         input.name = name;
-         input.value = serializedItems[name];
-         loginform.appendChild(input);
-       }
+                        </form>
+                    </div>
+                </paper-material>
+            </div>
+        </div>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-       params = params || {};
-             params.email = this.email;
-             params.password = this.password;
-             this.fire('sign-in',{params: params});
-     }
-   }, 1000);
+            Polymer({
+                is: 'app-login',
 
- }*/
-    });
-  })();
-  </script>
+                _nativeSubmit: function () {
+                    var params;
+                    var test = false;
+                    var parent = this;
+                    spinner.active = true;
+                    // Simulate a slow server response.
+                    setTimeout(function (test) {
+                        spinner.active = false;
+                        if (loginform.validate()) {
+                            var serializedItems = loginform.serialize();
+                            for (var name in serializedItems) {
+                                var input = document.createElement('input');
+                                input.hidden = true;
+                                input.name = name;
+                                input.value = serializedItems[name];
+                                loginform.appendChild(input);
+                            }
+
+                        }
+                    }, 1000);
+                    params = params || {};
+                    params.email = this.email;
+                    params.password = this.password;
+                    this.fire('sign-in', {params: params});
+                }
+                /*   _nativeSubmit: function() {
+                 var params;
+                 spinner.active = true;
+                 // Simulate a slow server response.
+                 setTimeout(function() {
+                 spinner.active=false;
+                 if (loginform.validate()) {
+                 var serializedItems = loginform.serialize();
+                 for (var name in serializedItems) {
+                 var input = document.createElement('input');
+                 input.hidden = true;
+                 input.name = name;
+                 input.value = serializedItems[name];
+                 loginform.appendChild(input);
+                 }
+
+                 params = params || {};
+                 params.email = this.email;
+                 params.password = this.password;
+                 this.fire('sign-in',{params: params});
+                 }
+                 }, 1000);
+
+                 }*/
+            });
+        })();
+    </script>
 </dom-module>
