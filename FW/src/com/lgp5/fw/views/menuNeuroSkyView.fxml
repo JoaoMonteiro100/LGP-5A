@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.web.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.WebView?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/fonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.MenuNeuroSkyController">
    <children>
       <AnchorPane fx:id="paneLayoutRoot" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
@@ -426,14 +424,16 @@
       </HBox>
       <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="59.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
          <children>
-            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" onMouseClicked="#launchAnalysisView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
+            <Pane fx:id="analysisWrapper">
+               <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+                  <font>
+                     <Font size="16.0" />
+                  </font>
+                  <padding>
+                     <Insets left="20.0" />
+                  </padding>
+               </Label>
+            </Pane>
          </children>
       </Pane>
    </children>

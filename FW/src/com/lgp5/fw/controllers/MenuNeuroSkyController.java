@@ -4,34 +4,35 @@ import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
 */
-import javafx.application.Platform;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.Vector;
 
 
 public class MenuNeuroSkyController extends MenuController{
 
 	private int colorNumber=0;
 	@FXML private Label gamma1Data;
+	@FXML private Label analysisLabel;
 	@FXML private Label gamma2Data;
 	@FXML private Label alfa1Data;
 	@FXML private Label alfa2Data;
@@ -44,6 +45,7 @@ public class MenuNeuroSkyController extends MenuController{
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
+	@FXML private Pane analysisWrapper;
 	@FXML private WebView radarBrowser;
 	//private HeadSetDataInterface headSetDataInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
@@ -78,6 +80,7 @@ public class MenuNeuroSkyController extends MenuController{
 	ArrayList<String> meditationQueue =  new ArrayList<String>();
 	ArrayList<Number> queueTime = new ArrayList<Number>();
 	private long time;
+	private Tooltip unavailableFeatureTooltip = new Tooltip("This feature is unavailable for NeuroSky Mindset");
 
 	public MenuNeuroSkyController() {
 	}
@@ -93,7 +96,22 @@ public class MenuNeuroSkyController extends MenuController{
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
 
+		analysisLabel.setDisable(true);
 
+		analysisWrapper.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Node node = (Node) event.getSource();
+				unavailableFeatureTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
+			}
+		});
+
+		analysisWrapper.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				unavailableFeatureTooltip.hide();
+			}
+		});
 
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
@@ -437,18 +455,5 @@ public class MenuNeuroSkyController extends MenuController{
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 
-	}
-
-	public void launchAnalysisView() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisNeuroSkyView.fxml"));
-			Parent parent = (Parent) loader.load();
-			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 462, 378));
-			stage.setTitle("BrainLight - Analysis");
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
