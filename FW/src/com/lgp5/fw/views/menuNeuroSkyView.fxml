@@ -425,7 +425,7 @@
       <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="59.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
          <children>
             <Pane fx:id="analysisWrapper">
-               <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+               <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="30.0" prefWidth="193.0" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
                   <font>
                      <Font size="16.0" />
                   </font>

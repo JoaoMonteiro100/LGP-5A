@@ -4,12 +4,15 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -47,6 +50,8 @@ public class MenuController {
 	@FXML private GridPane historyPane;
 	@FXML private GridPane settingsPane;
 	@FXML private Slider historyPeriodSlider;
+	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
+	private Tooltip stopTooltip = new Tooltip("Stop recording");
 	
 	public MenuController(){
 		
@@ -123,6 +128,20 @@ public class MenuController {
 		if(recordButton.isVisible())
 			recordButton.setVisible(false);
 		else recordButton.setVisible(true);
+
+		recordButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Node node = (Node) event.getSource();
+				recordTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
+			}
+		});
+		recordButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				recordTooltip.hide();
+			}
+		});
 	}
 	public void changeRecordButton(){
 		if(recordButton.isVisible())
@@ -134,6 +153,20 @@ public class MenuController {
 			recordButton.setVisible(true);
 			stopButton.setVisible(false);
 		}
+
+		stopButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Node node = (Node) event.getSource();
+				stopTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
+			}
+		});
+		stopButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				stopTooltip.hide();
+			}
+		});
 	}
 
 	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {

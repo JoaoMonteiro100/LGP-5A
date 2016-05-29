@@ -96,8 +96,8 @@ public class MenuNeuroSkyController extends MenuController{
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
 
+		//analysis disabled
 		analysisLabel.setDisable(true);
-
 		analysisWrapper.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -105,7 +105,6 @@ public class MenuNeuroSkyController extends MenuController{
 				unavailableFeatureTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
 			}
 		});
-
 		analysisWrapper.setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent t) {
