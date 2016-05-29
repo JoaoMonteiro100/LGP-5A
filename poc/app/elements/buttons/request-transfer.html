@@ -53,7 +53,7 @@
                         data="{{users}}">
                 </firebase-collection>
                 <div id="doctorAssociated" class="textstyle2">
-                    From Doctor: [[user.doctorAssociated]]
+                    From Doctor: [[doctor.name]] [[doctor.lastname]]
                 </div>
                 <paper-dropdown-menu label="To Doctor" id="associateDoctor">
                     <paper-listbox class="dropdown-content" on-iron-select="itemSelected" id="doctorList"
@@ -91,18 +91,27 @@
                     ishidden: {
                         type: Boolean,
                         value: true
+                    },
+                    doctor: {
+                        type: Object,
+                        notify: true
+                    },
+                    newDoctorKey: {
+                        type: String,
+                        notify: true
+                    },
+                    users: {
+                        type: Array,
+                        notify: true
                     }
                 },
 
                 setNewRequest: function () {
                     this.newRequest = {
-                        name: this.user.name,
-                        lastname: this.user.lastname,
-                        number: this.user.number,
-                        userKey: this.user.__firebaseKey__,
                         // mail: this.user.mail,
+                        userKey: this.user.__firebaseKey__,
                         doctorAssociated: this.user.doctorAssociated,
-                        reqDoctorAssociated: this.$.associateDoctor.value,
+                        reqDoctorAssociated: this.newDoctorKey
                     };
 
                     return this.newRequest;
@@ -129,6 +138,7 @@
 
                 itemSelected: function (e) {
                     this.$.associateDoctor.validate();
+                    this.set('newDoctorKey', this.users[this.myChoice].__firebaseKey__);
                 },
 
                 clickHandler: function (e) {
@@ -145,7 +155,6 @@
 
                 ready: function () {
                     var self = this;
-                    var userdef = false;
                     addEventListener('selected-user', function (user) {
                         self.user = user.detail;
                         self.selected = self.user.gender == "Male" ? 1 : 0;
@@ -153,6 +162,12 @@
                             self.toggle();
                             self.userdef = true;
                         }
+
+                        var doctorRef = new Firebase(app.userURL(self.user.doctorAssociated));
+                        doctorRef.on('value', function(snapshot) {
+                            var doc = snapshot.val();
+                            self.set('doctor', doc);
+                        });
                     });
                 },
 
