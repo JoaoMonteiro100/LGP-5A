@@ -11,9 +11,21 @@ import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 
 public class Main {
     public static void main(String[] args) {
+        Thread t2 = new Thread(new Runnable() {
+            public void run() {
+                HashMap cenas = new HashMap();
+                cenas.put("Leitura","-KIoFDfjh79UaguOX54E");
+                cenas.put("Patient","-KIoFDfjh79UaguOXLA8");
+                cenas.put("Live","false");
+                cenas.put("Important","false");
 
-
-
+                for (int i = 0; i < 1; i++) {
+                    Firebase ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    ref.push().setValue(cenas);
+                }
+            }
+        });
+        t2.start();
         Thread t1 = new Thread(new Runnable() {
             public void run()
             {

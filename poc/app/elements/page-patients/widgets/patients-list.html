@@ -55,7 +55,7 @@ paper-listbox{
           data = "{{users}}"></firebase-collection>
 
   <paper-dialog-scrollable>
-    <paper-listbox on-iron-select="itemSelected" id="patientList" selected="{{myChoice}}">
+    <paper-listbox id="patientList" selected="{{myChoice}}"> <!--on-iron-select="itemSelected"    VER ISTO-->
       <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
         <paper-item>
           <img src={{online(usr)}} style="width:10px;height:10px;">
@@ -85,7 +85,6 @@ paper-listbox{
           },
           myChoice: {
             type: Number,
-            notify: true,
             observer: '_onUserSelected'
           },
           deletedUserKey: {
@@ -98,7 +97,6 @@ paper-listbox{
           }
       }
       ,
-
        online: function(a) {
             if(a.online)
                 return "../../../images/online.png";
@@ -141,6 +139,7 @@ paper-listbox{
       },
 
       itemSelected: function() {
+
         if(this.deletedUserKey == this.currentKey) {
           var user = this.users[this.myChoice];
           this.fire('selected-user', user);
