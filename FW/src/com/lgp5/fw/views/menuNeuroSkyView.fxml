@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
@@ -8,6 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/fonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.MenuNeuroSkyController">
    <children>
       <AnchorPane fx:id="paneLayoutRoot" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
@@ -314,9 +317,16 @@
                   <WebView fx:id="radarBrowser" prefHeight="500.0" prefWidth="900.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
-            <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="969.0" visible="false" AnchorPane.topAnchor="30.0">
                <children>
-                  <LineChart fx:id="lineChartHistory">
+                  <Button alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="34.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#fileChooser" text="Open file from history" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets left="425.0" top="500.0" />
+                     </GridPane.margin></Button>
+                  <LineChart fx:id="lineChartHistory" prefHeight="480.0" prefWidth="432.0">
                      <xAxis>
                         <NumberAxis side="BOTTOM" fx:id="xAxisHistory" />
                      </xAxis>
@@ -346,7 +356,6 @@
                         <Text layoutX="515.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Days" />
                         <Slider fx:id="historyPeriodSlider" layoutX="27.0" layoutY="48.0" majorTickUnit="1.0" prefHeight="18.0" prefWidth="439.0" />
                         <Text fx:id="daysText" layoutX="479.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="120" />
-                        <Button layoutX="34.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#fileChooser" text="Open File" />
                      </children>
                   </AnchorPane>
                </children>
@@ -425,14 +434,16 @@
       <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="59.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
          <children>
             <Pane fx:id="analysisWrapper">
-               <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="30.0" prefWidth="193.0" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-                  <padding>
-                     <Insets left="20.0" />
-                  </padding>
-               </Label>
+               <children>
+                  <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="30.0" prefWidth="193.0" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+               </children>
             </Pane>
          </children>
       </Pane>

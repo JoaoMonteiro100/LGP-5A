@@ -185,10 +185,18 @@ public class MenuController {
 			e.printStackTrace();
 		}
 	}
-	public void fileChooser(MouseEvent event){
+	public void fileChooser(MouseEvent event) throws IOException {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File");
+		fileChooser.setTitle("Open brainwave records file");
 		Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Excel file (*.xlsx)", "*.xlsx"),
+				new FileChooser.ExtensionFilter("Excel 97-2003 file (*.xls)", "*.xls"));
+
+		String path = "\\LGP-5A\\FW\\src\\history";
+		File f = new File(new File(".").getCanonicalPath().concat(path));
+		fileChooser.setInitialDirectory(f);
+
 		File file = fileChooser.showOpenDialog(current);
 		if (file != null) {
 			openFile(file);
