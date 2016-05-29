@@ -57,8 +57,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-listbox on-iron-select="itemSelected" id="requestList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[requests]]" as="req"> <!--  sort="_computeSort"-->
                         <paper-item>
-                           <!-- <img src={{online(usr)}} style="width:10px;height:10px;">-->
-                          <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
+                            <!-- <img src={{online(usr)}} style="width:10px;height:10px;">-->
+                            <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
                             <div id="name">[[req.name]] [[req.lastname]]</div>
                             <span> - </span>
                             <div id="number">[[req.number]]</div>
@@ -95,10 +95,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type: Number,
                         notify: true
                     }
-                   
-                }
-                ,
-                    ready: function () {
+
+                },
+
+                ready: function () {
                     var appRef = new Firebase(app.requestsLocation);
                     var self = this;
 

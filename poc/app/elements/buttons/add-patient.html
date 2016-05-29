@@ -46,10 +46,10 @@
                     data="{{users}}">
                 </firebase-collection>
             <paper-dropdown-menu label="Doctor associated" id="doctorAssociated">
-                <paper-listbox  class="dropdown-content" on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
-                    <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
+                <paper-listbox  class="dropdown-content" selected="{{myChoice}}">
+                    <template is="dom-repeat" items="[[users]]" as="usr">
                         <paper-item>
-                            <div id="doctorAssociated" required auto-validate>[[usr.name]] [[usr.lastname]]</div>
+                            <div required auto-validate>[[usr.name]] [[usr.lastname]]</div>
                         </paper-item>
                     </template>
                 </paper-listbox>
@@ -62,7 +62,7 @@
                     <div class="flexchild">
                         <paper-input name="password" id="pwinput" label="Password" minlength="6" required auto-validate></paper-input>
                     </div>
-                    <paper-icon-button id="genpw" icon="icons:create" on-tap="generatePW" />
+                    <paper-icon-button id="genpw" icon="icons:create" on-tap="generatePW"></paper-icon-button>
                 </div>
                 <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected" label="Gender">
                     <paper-listbox class="dropdown-content">
@@ -93,12 +93,20 @@
                     newPatient: {
                         type: Object,
                         notify: true
+                    },
+                    myChoice: {
+                        type: Number,
+                        notify: true
+                    },
+                    users: {
+                        type: Array,
+                        notify: true
                     }
                 },
 
                 setNewPatient: function() {
                     this.newPatient = {
-                        doctorAssociated: this.$.doctorAssociated.value,
+                        doctorAssociated: this.users[this.myChoice].__firebaseKey__,
                         name: this.$.firstname.value,
                         lastname: this.$.lastname.value,
                         //picture: this.user.google.cachedUserProfile.picture,
@@ -107,7 +115,7 @@
                         groups: {
                             group3: true
                         },
-                        online: false, // (?)
+                        online: false,
                         notes: ""
                     };
 
@@ -154,6 +162,7 @@
                 clickHandler:function(e) {
                     this.$.newPacientDialog.toggle();
                 },
+
                 _reset:function() {
                     document.getElementById('newuserform').reset();
                 },
