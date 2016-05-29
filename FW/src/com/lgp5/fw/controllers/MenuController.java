@@ -10,9 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -43,6 +42,8 @@ public class MenuController {
 	@FXML private Label moodLabel;
 	@FXML private Label settingsLabel;
 	@FXML private Text daysText;
+    @FXML private Text daysLabel;
+    @FXML private Text keepHistoryLabel;
 	@FXML private GridPane brainWavesPane;
 	@FXML private GridPane dataPane;
 	@FXML private GridPane moodPane;
@@ -50,6 +51,9 @@ public class MenuController {
 	@FXML private GridPane historyPane;
 	@FXML private GridPane settingsPane;
 	@FXML private Slider historyPeriodSlider;
+    @FXML private CheckBox keepHistoryCheckBox;
+    @FXML private CheckBox deleteFilesCheckBox;
+    @FXML private Pane historyPeriodWrapper;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
 	
@@ -124,10 +128,14 @@ public class MenuController {
 	public void showHistory(MouseEvent event) {
 		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel,settingsLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane,settingsPane});	
 	}
-	public void showRecordButton(){
+
+	public void setRecordButton(){
 		if(recordButton.isVisible())
 			recordButton.setVisible(false);
-		else recordButton.setVisible(true);
+		else if(stopButton.isVisible())
+            stopButton.setVisible(false);
+        else
+            recordButton.setVisible(true);
 
 		recordButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
@@ -143,6 +151,7 @@ public class MenuController {
 			}
 		});
 	}
+
 	public void changeRecordButton(){
 		if(recordButton.isVisible())
 		{
@@ -168,6 +177,33 @@ public class MenuController {
 			}
 		});
 	}
+
+    public void disableHistoryPeriod() {
+        if (!historyPeriodWrapper.isDisabled()) {
+            historyPeriodWrapper.setDisable(true);
+            daysLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
+            keepHistoryLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
+            daysText.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
+        }
+        else {
+            historyPeriodWrapper.setDisable(false);
+            daysLabel.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
+            keepHistoryLabel.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
+            daysText.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
+        }
+    }
+
+    public void confirmDeletingHistory() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the entire history?\n\n", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            //do stuff
+        }
+        else {
+            alert.close();
+        }
+    }
 
 	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
 		for (int i = 0; i < hideL.length; i++) {

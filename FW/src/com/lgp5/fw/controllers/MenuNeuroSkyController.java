@@ -65,7 +65,7 @@ public class MenuNeuroSkyController extends MenuController{
 	@FXML private LineChart<Number, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
 	@FXML private LineChart<Number, Number> lineChartMoods;
-	@FXML private CheckBox historyCheckBox;
+	@FXML private CheckBox keepHistoryCheckBox;
 	Vector<ArrayList> wavesGroup = new Vector<ArrayList>(2);
 	Vector<ArrayList> moodsGroup = new Vector<ArrayList>(2);
 	ArrayList<String> deltaQueue =  new ArrayList<String>();
