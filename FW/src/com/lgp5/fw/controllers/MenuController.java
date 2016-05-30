@@ -80,6 +80,36 @@ public class MenuController {
 				daysText.setText(Math.round(newValue.intValue()) + "");
 			}
 		});
+
+        //record button tooltip
+		recordButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Node node = (Node) event.getSource();
+				recordTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
+			}
+		});
+		recordButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				recordTooltip.hide();
+			}
+		});
+
+        //stop button tooltip
+        stopButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = (Node) event.getSource();
+                stopTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
+            }
+        });
+        stopButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                stopTooltip.hide();
+            }
+        });
 	}
 	public void openMenu(MouseEvent event){
 		if(!painelHSA.isVisible()) {
@@ -136,20 +166,6 @@ public class MenuController {
             stopButton.setVisible(false);
         else
             recordButton.setVisible(true);
-
-		recordButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				Node node = (Node) event.getSource();
-				recordTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
-			}
-		});
-		recordButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent t) {
-				recordTooltip.hide();
-			}
-		});
 	}
 
 	public void changeRecordButton(){
@@ -162,20 +178,6 @@ public class MenuController {
 			recordButton.setVisible(true);
 			stopButton.setVisible(false);
 		}
-
-		stopButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				Node node = (Node) event.getSource();
-				stopTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
-			}
-		});
-		stopButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent t) {
-				stopTooltip.hide();
-			}
-		});
 	}
 
     public void disableHistoryPeriod() {
