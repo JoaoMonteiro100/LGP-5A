@@ -104,16 +104,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     Name: {{user.name}} {{user.lastname}}
                 </div>
                  <div id="number" class="textstyle2">
-                    number: [[user.number]]
+                    {{existsNumber(user.number)}} [[user.number]]
                 </div>
                 <div id="mail" class="textstyle2">
-                    Mail: [[user.mail]]
+                    {{existsMail(user.mail)}} [[user.mail]]
                 </div>
                 <div id="gender" class="textstyle2">
                     Gender: [[user.gender]]
                 </div>
                 <div id="doctorAssociated" class="textstyle2">
-                    DoctorAssociated: [[user.doctorAssociated]]
+                    {{existsDoctor(user.doctorAssociated)}}   [[doc.name]] [[doc.lastname]]
                 </div>
             </div>
             <div id="profimg">
@@ -152,17 +152,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
            },
 
-           ready: function() {
+           existsNumber: function(a) {
+            if(a>1)
+              return "Number: ";
+            else
+              return "";
+           },
+
+           existsMail: function(a) {
+            if(a)
+              return "Mail: ";
+            else
+              return "";
+           },
+
+            existsDoctor: function(a) {
+            if(a)
+              return "Doctor Associated: ";
+            else
+              return "";
+           },
+
+             ready: function() {
             var self = this;
 
             addEventListener('selected-user', function(user) {
              var ref = new Firebase(app.userURL(user.detail.__firebaseKey__));
+             var ref1;
+             
              ref.on("value",function(snapshot){
                 var user = snapshot.val();
+                ref1 = new Firebase(app.userURL(user.doctorAssociated));
                 self.set('user', user);
                 self.set('hidecont',false);
             });
 
+              ref1.on("value",function(snapshot){
+                var doc = snapshot.val();
+                self.set('doc', doc);
+                self.set('hidecont',false);
+            });
          });
         },
         hideMe: function(one, two) {
