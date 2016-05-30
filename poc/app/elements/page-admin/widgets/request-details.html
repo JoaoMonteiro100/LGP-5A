@@ -126,19 +126,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <div class="container">
                         <div class="flexchild">
                             <div id="name" class="namestyle">
-                                Name: {{request.name}} {{request.lastname}}
+                                Name: {{patient.name}} {{patient.lastname}}
                             </div>
                             <div id="number" class="textstyle2">
-                                Number: [[request.number]]
+                                Number: [[patient.number]]
                             </div>
-                            <div id="mail" class="textstyle2">
-                                E-mail: [[request.mail]]
-                            </div>
+                          <!--  <div id="mail" class="textstyle2">
+                                E-mail: [[patient.mail]]
+                            </div> -->
                             <div id="doctorAssociated" class="namestyle">
-                                From Doctor: [[request.doctorAssociated]]
+                                From Doctor: [[doctorAssociated.name]] [[doctorAssociated.lastname]]
                             </div>
-                            <div id="doctorAssociated" class="namestyle">
-                                To Doctor: [[request.reqDoctorAssociated]]
+                            <div id="reqDoctorAssociated" class="namestyle">
+                                To Doctor: [[reqDoctorAssociated.name]] [[reqDoctorAssociated.lastname]]
                             </div>
                         </div>
                         <div id="profimg">
@@ -177,11 +177,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     var self = this;
 
                     addEventListener('selected-request', function (request) {
-                        alert(JSON.stringify(request));
+                       // alert(JSON.stringify(request));
                         var ref = new Firebase(app.requestURL(request.detail.__firebaseKey__));
+                        var ref1;
+                        var ref2;
+                        var ref3;
+
                         ref.on("value", function (snapshot) {
                             var request = snapshot.val();
+                            ref1 = new Firebase(app.userURL(request.doctorAssociated));
+                            ref2 = new Firebase(app.userURL(request.reqDoctorAssociated));
+                            ref3 = new Firebase(app.userURL(request.userKey));
                             self.set('request', request);
+                            self.set('hidecont', false);
+                        });
+
+                        ref1.on("value", function (snapshot) {
+                            var doctorAssociated = snapshot.val();
+                            self.set('doctorAssociated', doctorAssociated);
+                            self.set('hidecont', false);
+                        });
+
+                        ref2.on("value", function (snapshot) {
+                            var reqDoctorAssociated = snapshot.val();
+                            self.set('reqDoctorAssociated', reqDoctorAssociated);
+                            self.set('hidecont', false);
+                        });
+
+                         ref3.on("value", function (snapshot) {
+                            var patient = snapshot.val();
+                            self.set('patient', patient);
                             self.set('hidecont', false);
                         });
 
