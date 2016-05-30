@@ -59,9 +59,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-item>
                             <!-- <img src={{online(usr)}} style="width:10px;height:10px;">-->
                             <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
-                            <div id="name">[[req.userKey]] [[req.lastname]]</div>
+                            <div id="name"> {{getName(req.userKey)}} </div>
                             <span> - </span>
-                            <div id="number">[[req.number]]</div>
+                            <div id="number">{{getNumber(req.userKey)}}</div>
                         </paper-item>
                     </template>
                 </paper-listbox>
@@ -98,6 +98,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 },
 
+                getName: function(usrKey) {
+                      var ref = new Firebase(app.userURL(usrKey));
+                      var name;
+
+                       ref.on("value",function(snapshot){
+                        var user = snapshot.val();
+                        name = user.name + " " + user.lastname;
+                   });
+                        return name;
+                },
+
+
+                getNumber: function(usrKey) {
+                      var ref = new Firebase(app.userURL(usrKey));
+                      var number;
+
+                       ref.on("value",function(snapshot){
+                        var user = snapshot.val();
+                        number = user.number;
+                   });
+                        return number;
+                },
                 ready: function () {
                     var appRef = new Firebase(app.requestsLocation);
                     var self = this;
