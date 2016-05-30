@@ -81,6 +81,12 @@
                             self.$.acceptDialog.close();
                         }
                     };
+                        var userRef = new Firebase(app.userURL(self.request.userKey));
+
+                        userRef.update({
+                           doctorAssociated: self.request.reqDoctorAssociated
+                        }, onAccept);
+                    
 
                     var requestRef = new Firebase(app.requestURL(self.request.__firebaseKey__));
                     requestRef.remove(onAccept);
@@ -88,10 +94,6 @@
 
                 acceptFormClickHandler: function(e) {
                    this.$.acceptDialog.toggle();
-                },
-
-                changeDoctor: function() { //function to change doctor
-                        
                 },
 
                 ready: function() {
