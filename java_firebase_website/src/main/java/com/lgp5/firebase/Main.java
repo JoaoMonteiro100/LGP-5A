@@ -1,12 +1,15 @@
 package com.lgp5.firebase;
 
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.HashMap;
 
 import com.firebase.client.Firebase;
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
+import java.util.Date;
 
 
 public class Main {
@@ -14,10 +17,12 @@ public class Main {
         Thread t2 = new Thread(new Runnable() {
             public void run() {
                 HashMap cenas = new HashMap();
+                java.util.Date date= new java.util.Date();
                 cenas.put("Leitura","-KIoFDfjh79UaguOX54E");
                 cenas.put("Patient","-KIoFDfjh79UaguOXLA8");
-                cenas.put("Live","false");
-                cenas.put("Important","false");
+                cenas.put("Live",false); //mudar para true
+                cenas.put("Important",false);
+                cenas.put("time",  new SimpleDateFormat("yyyy.MM.dd - HH.mm.ss").format(new Date()));
 
                 for (int i = 0; i < 1; i++) {
                     Firebase ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
