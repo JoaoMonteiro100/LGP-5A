@@ -25,7 +25,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
       <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
-
   </template>
   <script>
   (function() {
@@ -46,6 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  title: 'Patients',
                  component: 'patients-list',
                  buttons:[
+                   { button: 'search-patient' },
                    { button: 'add-patient' }
                  ]
 

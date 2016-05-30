@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <dom-module id="patients-list">
-  <template>
+  <template id="patient-list-template" is="dom-bind">
   <style is="custom-style">
 
 
@@ -50,13 +50,13 @@ paper-listbox{
   <firebase-collection
           order-by-child="groups/group3"
           order-value-type="boolean"
-           equal-to="true"
+          equal-to="true"
           location = "https://brainlight.firebaseio.com/users"
           data = "{{users}}"></firebase-collection>
 
   <paper-dialog-scrollable>
     <paper-listbox id="patientList" selected="{{myChoice}}"> <!--on-iron-select="itemSelected"    VER ISTO-->
-      <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
+      <template is="dom-repeat" items="[[users]]" as="usr" flex filter="{{Filter(filterValue)}}"> <!--  sort="_computeSort"-->
         <paper-item>
           <img src={{online(usr)}} style="width:10px;height:10px;">
           <!--<img src="../../../images/online.png" style="width:10px;height:10px;">-->
@@ -94,9 +94,12 @@ paper-listbox{
           currentKey: {
             type: Number,
             notify: true
+          },
+          filterValue: {
+              type: String,
+              notify: true
           }
-      }
-      ,
+      },
        online: function(a) {
             if(a.online)
                 return "../../../images/online.png";
@@ -130,6 +133,11 @@ paper-listbox{
         appRef.on('child_removed', function(oldChildSnapshot) {
           self.deletedUserKey = oldChildSnapshot.key();
         });
+
+        addEventListener('search', function(val) {
+            var text = val.detail;
+            self.filterValue = text;
+        });
       },
 
       _onUserSelected: function() {
@@ -139,13 +147,26 @@ paper-listbox{
       },
 
       itemSelected: function() {
-
         if(this.deletedUserKey == this.currentKey) {
           var user = this.users[this.myChoice];
           this.fire('selected-user', user);
         } else {
           this.myChoice -= 1;
         }
+      },
+
+
+      Filter: function(val) {
+          return function(user) {
+              if(!user) return false;
+              if(val != null || val != undefined) {
+                  var firstAndLastName = user.name + ' ' + user.lastname;
+                  return (user.name && user.name.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
+                          (user.lastname && user.lastname.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
+                          (user.number && user.number.toString().indexOf(val) != -1) ||
+                          (firstAndLastName && firstAndLastName.toLowerCase().indexOf(val.toLowerCase()) != -1);
+              } else return false;
+          };
       }
     });
   })();
