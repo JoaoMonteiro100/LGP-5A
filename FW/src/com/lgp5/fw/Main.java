@@ -19,6 +19,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("views/selectDeviceView.fxml"));
         primaryStage.setTitle("BrainLight - Select Device");
+        primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.show();
     }

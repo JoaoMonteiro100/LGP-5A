@@ -11,7 +11,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../assets/fonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.MenuNeuroSkyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="990.0" stylesheets="@../assets/fonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.MenuNeuroSkyController">
    <children>
       <AnchorPane fx:id="paneLayoutRoot" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
          <children>
@@ -25,7 +25,7 @@
                   <Image url="@../assets/stop.png" />
                </image>
             </ImageView>
-            <GridPane fx:id="brainWavesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="990.0" visible="false" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="brainWavesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="980.0" visible="false" AnchorPane.topAnchor="30.0">
                <children>
                   <BarChart fx:id="barChartWaves" GridPane.rowIndex="1">
                      <xAxis>
@@ -52,7 +52,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="dataPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="dataPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="990.0" visible="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                <children>
                   <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Gamma 1" GridPane.rowIndex="4">
                      <font>
@@ -277,7 +277,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="moodPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="920.0" visible="false" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="moodPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="980.0" visible="false" AnchorPane.topAnchor="30.0">
                <children>
                   <BarChart fx:id="barChartMoods" GridPane.rowIndex="1">
                      <xAxis>
@@ -304,7 +304,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="radarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="990.0" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="radarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="990.0" AnchorPane.topAnchor="30.0">
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="1000.0" />
@@ -317,7 +317,7 @@
                   <WebView fx:id="radarBrowser" prefHeight="500.0" prefWidth="900.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
-            <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="969.0" visible="false" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="969.0" visible="false" AnchorPane.topAnchor="30.0">
                <children>
                   <Button alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="34.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#fileChooser" text="Open file from history" textAlignment="CENTER">
                      <padding>
@@ -326,7 +326,7 @@
                      <GridPane.margin>
                         <Insets left="425.0" top="500.0" />
                      </GridPane.margin></Button>
-                  <LineChart fx:id="lineChartHistory" prefHeight="480.0" prefWidth="432.0">
+                  <LineChart fx:id="lineChartHistory" maxHeight="480.0" minHeight="480.0" prefHeight="480.0" prefWidth="969.0" GridPane.valignment="TOP">
                      <xAxis>
                         <NumberAxis side="BOTTOM" fx:id="xAxisHistory" />
                      </xAxis>
@@ -372,70 +372,73 @@
                         </Label>
                         <CheckBox fx:id="deleteFilesCheckBox" layoutX="21.0" layoutY="74.0" mnemonicParsing="false" onAction="#disableHistoryPeriod" text="Saved files are never deleted" textAlignment="CENTER" />
 
-                        <Button layoutX="21.0" fx:id="deleteHistoryButton" onAction="#confirmDeletingHistory" layoutY="158.0" mnemonicParsing="false" text="Delete history" />
+                        <Button fx:id="deleteHistoryButton" layoutX="21.0" layoutY="158.0" mnemonicParsing="false" onAction="#confirmDeletingHistory" text="Delete history" />
                      </children>
                   </AnchorPane>
                </children>
             </GridPane>
-            <Text layoutX="20.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NeuroSky" />
+            <Text fill="#4d4d4d" layoutX="20.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NeuroSky Mindset">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font></Text>
          </children>
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="radarLabel" disable="true" onMouseClicked="#showRadar" prefHeight="21.0" prefWidth="96.0" style="-fx-cursor: hand;" text="BrainLight" textFill="#1d1d1b">
+            <Label fx:id="radarLabel" contentDisplay="CENTER" disable="true" onMouseClicked="#showRadar" prefHeight="21.0" prefWidth="56.0" style="-fx-cursor: hand;" text="HOME" textAlignment="CENTER" textFill="#1d1d1b">
                <HBox.margin>
-                  <Insets left="10.0" top="10.0" />
+                  <Insets left="20.0" top="10.0" />
                </HBox.margin>
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="dataLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showData" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="DATA" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="dataLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showData" prefHeight="30.0" prefWidth="46.0" style="-fx-cursor: hand;" text="DATA" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="20.0" top="4.0" />
+                  <Insets left="40.0" top="4.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showBrainWaves" prefHeight="30.0" prefWidth="147.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showBrainWaves" prefHeight="30.0" prefWidth="109.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="20.0" top="4.0" />
+                  <Insets left="50.0" top="4.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="moodLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="MOOD" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="moodLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="53.0" style="-fx-cursor: hand;" text="MOOD" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="30.0" top="4.0" />
+                  <Insets left="50.0" top="4.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="historyLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showHistory" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="historyLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showHistory" prefHeight="30.0" prefWidth="69.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="30.0" top="4.0" />
+                  <Insets left="50.0" top="4.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showSettings" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showSettings" prefHeight="30.0" prefWidth="78.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="30.0" top="4.0" />
+                  <Insets left="50.0" top="4.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="restartLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#launchSelectDeviceView" prefHeight="30.0" prefWidth="96.0" style="-fx-cursor: hand;" text="RESTART" textAlignment="CENTER" textFill="#1d1d1b" HBox.hgrow="NEVER">
+            <Label fx:id="restartLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#launchSelectDeviceView" prefHeight="30.0" prefWidth="70.0" style="-fx-cursor: hand;" text="RESTART" textAlignment="CENTER" textFill="#1d1d1b" HBox.hgrow="NEVER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="170.0" top="4.0" />
+                  <Insets left="200.0" top="4.0" />
                </HBox.margin>
             </Label>
             <ImageView fx:id="arrowLabel" fitHeight="25.0" fitWidth="150.0" onMouseClicked="#openMenu" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">

@@ -14,7 +14,6 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -407,11 +406,24 @@ public class MenuEmotivController extends MenuController{
 
 	public void launchAnalysisView() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisEmotivView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
 			Parent parent = (Parent) loader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(parent, 462, 378));
 			stage.setTitle("BrainLight - Analysis");
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void launchSensorsView() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/sensorsView.fxml"));
+			Parent parent = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(parent, 462, 174));
+			stage.setTitle("BrainLight - Sensors");
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

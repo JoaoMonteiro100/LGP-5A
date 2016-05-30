@@ -70,6 +70,7 @@ public class SelectDeviceController {
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
             stage.setTitle("BrainLight");
+            stage.resizableProperty().setValue(Boolean.FALSE);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,6 +83,7 @@ public class SelectDeviceController {
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
             stage.setTitle("BrainLight");
+            stage.resizableProperty().setValue(Boolean.FALSE);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
