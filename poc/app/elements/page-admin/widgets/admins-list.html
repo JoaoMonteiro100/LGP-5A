@@ -53,17 +53,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     order-value-type="boolean"
                     equal-to="true"
                     location="https://brainlight.firebaseio.com/users"
-                    data="{{users}}"></firebase-collection>
-
+                    data="{{users}}">
+            </firebase-collection>
             <paper-dialog-scrollable>
                 <paper-listbox on-iron-select="itemSelected" id="adminList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
                         <paper-item>
                             <img src={{online(usr)}} style="width:10px;height:10px;">
                           <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
-                            <div id="name">[[usr.name]] [[usr.lastname]]</div>
-                            <span> - </span>
-                            <div id="mail">[[usr.mail]]</div>
+                            <div id="name">
+                                [[usr.name]] [[usr.lastname]]
+                            </div>
+                            <span> 
+                                - 
+                            </span>
+                            <div id="mail">
+                                [[usr.mail]]
+                            </div>
                         </paper-item>
                     </template>
                 </paper-listbox>
@@ -97,8 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type: Number,
                         notify: true
                     }
-                }
-                ,
+                },
 
                 online: function(a) {
                     if(a.online)
@@ -137,7 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 _onUserSelected: function () {
                     var user = this.users[this.myChoice];
-                    this.currentKey = user.__firebaseKey__;
+                   // this.currentKey = user.__firebaseKey__;
                     this.fire('selected-user', user);
                 },
 

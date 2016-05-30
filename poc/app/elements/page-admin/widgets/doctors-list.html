@@ -97,8 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type: Number,
                         notify: true
                     }
-                }
-                ,
+                },
 
                 online: function(a) {
                     if(a.online)
@@ -137,7 +136,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 _onUserSelected: function () {
                     var user = this.users[this.myChoice];
-                    this.currentKey = user.__firebaseKey__;
+                 //   this.currentKey = user.__firebaseKey__;
                     this.fire('selected-user', user);
                 },
 

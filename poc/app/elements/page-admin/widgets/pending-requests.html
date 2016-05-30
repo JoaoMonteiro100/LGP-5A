@@ -52,7 +52,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     location="https://brainlight.firebaseio.com/requests"
                     data="{{requests}}">
             </firebase-collection>
-
             <paper-dialog-scrollable>
                 <paper-listbox on-iron-select="itemSelected" id="requestList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[requests]]" as="req"> <!--  sort="_computeSort"-->

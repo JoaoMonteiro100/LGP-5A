@@ -84,7 +84,24 @@
                         }
                     };
 
-                    var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
+                    var userRef = new Firebase(app.userURL(self.user.__firebaseKey__) + "/groups");
+
+                   userRef.on("value",function(snapshot){
+                        var user = snapshot.val();
+                
+                    if(user.group1){
+                            var groupRef = new Firebase(app.location + "/groups/group1/members/" + self.user.__firebaseKey__);
+                            groupRef.remove(onDeleted);                        
+                        }
+                        else if(user.group2){
+                            var groupRef = new Firebase(app.location + "/groups/group2/members/" + self.user.__firebaseKey__);
+                            groupRef.remove(onDeleted);                        
+                        }
+                        else  if(user.group3){
+                            var groupRef = new Firebase(app.location + "/groups/group3/members/" + self.user.__firebaseKey__);
+                            groupRef.remove(onDeleted);                        
+                        }
+                    });
                     userRef.remove(onDeleted);
                 },
 
