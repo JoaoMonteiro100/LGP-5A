@@ -96,14 +96,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <section>
     <paper-dialog-scrollable>
-
     <div hidden$="[[hidecont]]" class="vertcontainer">
         <div class="container">
             <div class="flexchild">
                 <div id="name" class="namestyle">
                     Name: {{user.name}} {{user.lastname}}
                 </div>
-                 <div id="number" class="textstyle2">
+                <div id="number" class="textstyle2">
                     {{existsNumber(user.number)}} [[user.number]]
                 </div>
                 <div id="mail" class="textstyle2">
@@ -117,15 +116,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
             </div>
             <div id="profimg">
-            <img  src="../../../images/profpic.png" id="profilepic" style="width:120px;height:120px;">
+              <img  src="../../../images/profpic.png" id="profilepic" style="width:120px;height:120px;">
            </div>
        </div>
        <div class="notecontainer" id="notecontainer">
         <h1 class="noteh1">Notes: </h1>
-        <div class="mas" id="note">[[user.notes]]</div>
-    </div>
-</div>       
-</paper-dialog-scrollable>
+        <div class="mas" id="note">
+          [[user.notes]]
+        </div>
+       </div>
+    </div>       
+  </paper-dialog-scrollable>
 </section>
 </template>
 <script>
@@ -149,7 +150,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    type: Boolean,
                    value: true
                }
-
            },
 
            existsNumber: function(a) {
