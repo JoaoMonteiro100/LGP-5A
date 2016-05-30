@@ -17,7 +17,8 @@
     "paper-icon-button": "PolymerElements/paper-icon-button#~1.1.1",
     "polymer": "polymer/polymer#^1.4.0",
     "Chart.js": "^2.1.4",
-    "paper-slider": "PolymerElements/paper-slider#^1.0.11"
+    "paper-slider": "PolymerElements/paper-slider#^1.0.11",
+	"chart-elements": "https://github.com/robdodson/chart-elements.git#^2.0.2"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
