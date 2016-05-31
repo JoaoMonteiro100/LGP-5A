@@ -15,9 +15,11 @@
             :host {
                 display: block;
             }
-            #modal{
+
+            #modal {
                 width: 350px;
             }
+
             .containerdiv {
                 @apply(--layout-horizontal);
                 height: 100%;
@@ -25,29 +27,38 @@
                 padding-right: 0px;
                 font-size: 12px;
             }
-            #genpw{
+
+            #genpw {
                 margin-top: 16px;
             }
+
             .flexchild {
                 @apply(--layout-flex);
             }
-            #genderdrop{
+
+            #genderdrop {
                 @apply(--layout-horizontal);
             }
         </style>
-        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:build" on-click="editFormClickHandler"></paper-icon-button>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:build"
+                           on-click="editFormClickHandler"></paper-icon-button>
         <paper-dialog id="editFormModal" modal>
             <h1>Edit Patient</h1>
             <form is="iron-form" id="editPatientForm">
-                <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.name}}" required auto-validate></paper-input>
-                <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required auto-validate></paper-input>
-                <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected" label="Gender">
+                <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10"
+                             auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.name}}"
+                             required auto-validate></paper-input>
+                <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate
+                             pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required
+                             auto-validate></paper-input>
+                <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected"
+                                     label="Gender">
                     <paper-listbox class="dropdown-content" selected="{{selected}}">
                         <paper-item>Female</paper-item>
                         <paper-item>Male</paper-item>
                     </paper-listbox>
                 </paper-dropdown-menu>
-                <paper-button raised on-tap="_nativeSubmit" >
+                <paper-button raised on-tap="_nativeSubmit">
                     <paper-spinner id="spinner" hidden></paper-spinner>
                     Update
                 </paper-button>
@@ -60,7 +71,7 @@
         </paper-dialog>
     </template>
     <script>
-        (function() {
+        (function () {
             'use strict';
 
             Polymer({
@@ -76,26 +87,27 @@
                         notify: true
                     },
                     ishidden: {
-                type: Boolean,
-                value: true
-            } 
+                        type: Boolean,
+                        value: true
+                    }
                 },
 
-                _nativeSubmit: function(event) {
+                _nativeSubmit: function (event) {
                     var self = this;
 
-                    var onPatientUpdated = function(error) {
-                      if(error) {
-                         alert('An error occurred while updating the user!');
-                      } else {
-                          // Close the modal
-                          self.$.editFormModal.close();
-                          self.user.gender = self.$.genderdrop.value;
-                          self.fire('selected-user', self.user);
-                      }
+                    var onPatientUpdated = function (error) {
+                        if (error) {
+                            alert('An error occurred while updating the user!');
+                        } else {
+                            // Close the modal
+                            self.$.editFormModal.close();
+                            self.user.gender = self.$.genderdrop.value;
+                            self.fire('selected-user', self.user);
+                        }
                     };
 
-                    if(this.$.editPatientForm.validate()) {
+                    if (this.$.editPatientForm.validate()) {
+                        alert(app.userURL(self.user.__firebaseKey__));
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
                         userRef.update({
                             name: this.$.firstname.value,
@@ -105,32 +117,37 @@
                     }
                 },
 
-                editFormClickHandler: function(e) {
+                editFormClickHandler: function (e) {
                     this.$.editFormModal.toggle();
                 },
 
-                ready: function() {
+                ready: function () {
                     var self = this;
                     var userdef = false;
-                    addEventListener('selected-user-patient', function(user) {
-                        self.user = user.detail;
-                        self.selected = self.user.gender == "Male" ? 1 : 0;
-                        if(!self.userdef){
-                            self.toggle();
-                            self.userdef=true;
-                        }
+                    addEventListener('selected-user-patient', function (user) {
+                        var ref = new Firebase(app.userURL(user.detail));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!self.userdef) {
+                                self.toggle();
+                                self.userdef = true;
+                            }
+                        });
                     });
                 },
 
-                _reset:function() {
+                _reset: function () {
                     document.getElementById('editPatientForm').reset();
                 },
-                  compute: function() {
-                return this.ishidden;
-            },
-            toggle: function() {
-                this.ishidden = !this.ishidden;
-            }
+                compute: function () {
+                    return this.ishidden;
+                },
+                toggle: function () {
+                    this.ishidden = !this.ishidden;
+                }
             });
         })();
     </script>

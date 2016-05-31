@@ -15,9 +15,11 @@
             :host {
                 display: block;
             }
-            #modal{
+
+            #modal {
                 width: 350px;
             }
+
             .containerdiv {
                 @apply(--layout-horizontal);
                 height: 100%;
@@ -25,21 +27,25 @@
                 padding-right: 0px;
                 font-size: 12px;
             }
-            #genpw{
+
+            #genpw {
                 margin-top: 16px;
             }
+
             .flexchild {
                 @apply(--layout-flex);
             }
-            #genderdrop{
+
+            #genderdrop {
                 @apply(--layout-horizontal);
             }
         </style>
-        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:delete" on-click="deleteFormClickHandler"></paper-icon-button>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:delete"
+                           on-click="deleteFormClickHandler"></paper-icon-button>
         <paper-dialog id="deleteDialog" modal>
             <h1>Delete Patient</h1>
             <h2>Are you sure you want to delete this patient?</h2>
-            <paper-button raised on-tap="_nativeSubmit" >
+            <paper-button raised on-tap="_nativeSubmit">
                 <paper-spinner id="spinner" hidden></paper-spinner>
                 Delete
             </paper-button>
@@ -50,7 +56,7 @@
         <paper-toast id="toast0" text=""></paper-toast>
     </template>
     <script>
-        (function() {
+        (function () {
             'use strict';
 
             Polymer({
@@ -71,29 +77,29 @@
                     }
                 },
 
-                _nativeSubmit: function(event) {
+                _nativeSubmit: function (event) {
                     var self = this;
 
-                    var onDeleted = function(error) {
-                        if(error) {
+                    var onDeleted = function (error) {
+                        if (error) {
                             alert('An error occurred while deleting the user!');
                         } else {
                             // Close the modal
                             //self.fire('delete-user',self.user);
-                        self.$.toast0.textContent = "User "+self.user.name+" "+self.user.lastname+" deleted!";
-                             self.$.toast0.open();
+                            //self.$.toast0.textContent = "User " + self.user.name + " " + self.user.lastname + " deleted!";
+                            //self.$.toast0.open();
                             self.$.deleteDialog.close();
                         }
                     };
 
                     var userRef = new Firebase(app.userURL(self.user.__firebaseKey__) + "/groups");
 
-                   userRef.on("value",function(snapshot){
+                    userRef.on("value", function (snapshot) {
                         var user = snapshot.val();
-                
-                        if(user.group3){
+
+                        if (user.group3) {
                             var groupRef = new Firebase(app.location + "/groups/group3/members/" + self.user.__firebaseKey__);
-                            groupRef.remove(onDeleted);                        
+                            groupRef.remove(onDeleted);
                         }
                     });
 
@@ -102,28 +108,33 @@
 
                 },
 
-                deleteFormClickHandler: function(e) {
+                deleteFormClickHandler: function (e) {
                     this.$.deleteDialog.toggle();
                 },
 
-                ready: function() {
+                ready: function () {
                     var self = this;
                     var userdef = false;
-                    addEventListener('selected-user-patient', function(user) {
-                        self.user = user.detail;
-                        self.selected = self.user.gender == "Male" ? 1 : 0;
-                        if(!self.userdef){
-                            self.toggle();
-                            self.userdef = true;
-                        }
+                    addEventListener('selected-user-patient', function (user) {
+                        var ref = new Firebase(app.userURL(user.detail));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!userdef) {
+                                self.toggle();
+                                userdef = true;
+                            }
+                        });
                     });
                 },
 
-                compute: function() {
+                compute: function () {
                     return this.ishidden;
                 },
 
-                toggle: function() {
+                toggle: function () {
                     this.ishidden = !this.ishidden;
                 }
             });

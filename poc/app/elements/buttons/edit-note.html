@@ -106,21 +106,31 @@
                     var self = this;
                     var userdef = false;
                     addEventListener('selected-user-doctor', function(user) {
-                        self.user = user.detail;
-                        self.selected = self.user.gender == "Male" ? 1 : 0;
-                        if(!self.userdef){
-                            self.toggle();
-                            self.userdef=true;
-                        }
+                        var ref = new Firebase(app.userURL(user.detail));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!userdef) {
+                                self.toggle();
+                                userdef = true;
+                            }
+                        });
                     });
 
                     addEventListener('selected-user-patient', function(user) {
-                        self.user = user.detail;
-                        self.selected = self.user.gender == "Male" ? 1 : 0;
-                        if(!self.userdef){
-                            self.toggle();
-                            self.userdef=true;
-                        }
+                        var ref = new Firebase(app.userURL(user.detail));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!userdef) {
+                                self.toggle();
+                                userdef = true;
+                            }
+                        });
                     });
                 },
 
