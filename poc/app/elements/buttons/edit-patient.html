@@ -112,7 +112,7 @@
                 ready: function() {
                     var self = this;
                     var userdef = false;
-                    addEventListener('selected-user', function(user) {
+                    addEventListener('selected-user-patient', function(user) {
                         self.user = user.detail;
                         self.selected = self.user.gender == "Male" ? 1 : 0;
                         if(!self.userdef){
