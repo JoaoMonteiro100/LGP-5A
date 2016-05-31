@@ -98,17 +98,16 @@
 
 
 
-// Sign out user
+    // Sign out user
     app.signOut = function () {
         this.$.data.signOut();
     };
 
-// Sign in user
+    // Sign in user
     app.signIn = function (e) {
         this.$.data.signIn(e.detail.params);
         var pages = document.getElementById('pages');
-        pages.selectNext();
+        //pages.selectNext();
     };
-
 
 })(document);

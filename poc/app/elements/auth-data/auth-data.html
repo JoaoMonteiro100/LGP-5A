@@ -11,112 +11,120 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="auth-data">
-  <template>
-  <style is="custom-style">
-#toast {
-  --paper-toast-background-color: red;
-  --paper-toast-color: white;
-}
-</style>
-    <firebase-auth id="auth"
-                     location="{{location}}"
-                     provider="password"
-                     user="{{user}}"
-                     on-error="errorHandler"
-                     on-login="Loggedin"
-                     on-logout="LoogedOut">
+    <template>
+        <style is="custom-style">
+            #toast {
+                --paper-toast-background-color: red;
+                --paper-toast-color: white;
+            }
+        </style>
+        <firebase-auth id="auth"
+                       location="https://brainlight.firebaseio.com/"
+                       provider="password"
+                       user="{{user}}"
+                       on-error="errorHandler"
+                       on-login="loggedIn"
+                       on-logout="LoogedOut">
+        </firebase-auth>
 
-      </firebase-auth>
+        <firebase-document id="fbDoc"
+                           location="{{profileLocation}}"
+                           data="{{profile}}"
+                           on-firebase-value="_firebaseProfileLoaded">
+        </firebase-document>
+        <paper-toast id="toast" class="fit-bottom" text=""></paper-toast>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-      <firebase-document id="fbDoc"
-                         location="{{profileLocation}}"
-                         data="{{profile}}"
-                         on-firebase-value="_firebaseProfileLoaded">
-      </firebase-document>
-      <firebase-element></firebase-element>
-      <paper-toast id="toast" class="fit-bottom" text=""></paper-toast>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+            Polymer({
+                is: 'auth-data',
 
-    Polymer({
-      is: 'auth-data',
+                properties: {
+                    user: {
+                        type: Object,
+                        notify: true
+                    },
 
-      properties: {
-      user:{
-        type: Object,
-        observer: '_userChanges',
-        notify: true
-      },
+                    _firebaseConnecte: {
+                        value: false
+                    },
 
-      _firebaseConnecte:{
-        value: false
-      },
-      profile: {
-        type: Object,
-        notify: true
-      }
-    },
+                    profile: {
+                        type: Object,
+                        notify: true
+                    }
+                },
 
-signIn: function(params){
-        this.$.auth.login(params);
-      },
+                signIn: function (params) {
+                    this.$.auth.login(params);
+                },
 
-      errorHandler: function(e) {
-        //  alert('Error: ' + e.detail.message);
-          this.$.toast.textContent = e.detail.message;
-          this.$.toast.open();
-        },
+                errorHandler: function (e) {
+                    alert('Error: ' + e.detail.message);
+                    //this.$.toast.textContent = e.detail.message;
+                    //this.$.toast.open();
+                },
 
-        LoggedIn:function(e){
-          alert("pintou");
-        },
+                loggedIn: function (e) {
+                    if(localStorage.getItem("user") == null) {
+                        var ref = new Firebase(app.usersLocation);
+                        ref.orderByChild('mail').equalTo(this.user.password.email)
+                                .on('value', function (snapshot) {
+                                    var user = snapshot.val();
+                                    localStorage.setItem('user', JSON.stringify(user));
+                                });
+                    }
+                },
 
-      singOut: function() {
-        var ref = new Firebase(this.location);
-        ref.unauth();
-        this.user=null;
-      },
+                singOut: function () {
+                    var ref = new Firebase(this.location);
+                    ref.unauth();
+                    this.user = null;
+                },
 
-      setDefaultProfile: function() {
-      this.profile = {
-        name: this.user.google.cachedUserProfile.given_name,
-        lastname: this.user.google.cachedUserProfile.family_name,
-        email: '',
-        phone: '',
-        picture: this.user.google.cachedUserProfile.picture,
-        department: '',
-        job: '',
-        office: '',
-        room: '',
-        notification: {
-          message: true,
-          invitation: true,
-          changes: false,
-          login: false,
-          weekly: true,
-          daily: false
-        }
-  };
-    },
-    _firebaseProfileLoaded: function() {
-     this.set('profile', this.profile);
-     if (!this.profile) {
-      this.setDefaultProfile();
-     }
-   },
-   _firebaseTodoLoaded: function() {
-     this._firebaseConnected = true;
+                setDefaultProfile: function () {
+                    this.profile = {
+                        name: this.user.google.cachedUserProfile.given_name,
+                        lastname: this.user.google.cachedUserProfile.family_name,
+                        email: '',
+                        phone: '',
+                        picture: this.user.google.cachedUserProfile.picture,
+                        department: '',
+                        job: '',
+                        office: '',
+                        room: '',
+                        notification: {
+                            message: true,
+                            invitation: true,
+                            changes: false,
+                            login: false,
+                            weekly: true,
+                            daily: false
+                        }
+                    };
+                },
 
-   },
-   _userChanged: function(user) {
-          if (user) {
-            this.profileLocation = [this.location, 'profile', this.user.uid].join('/');
-          }
-        }
+                _firebaseProfileLoaded: function () {
+                    this.set('profile', this.profile);
+                    if (!this.profile) {
+                        this.setDefaultProfile();
+                    }
+                },
 
-    });
-  })();
-  </script>
+                _firebaseTodoLoaded: function () {
+                    this._firebaseConnected = true;
+
+                },
+
+                _userChanged: function (user) {
+                    if (user) {
+                        this.profileLocation = [this.location, 'profile', this.user.uid].join('/');
+                    }
+                }
+
+            });
+        })();
+    </script>
 </dom-module>
