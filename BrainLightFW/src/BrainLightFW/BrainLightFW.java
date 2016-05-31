@@ -53,7 +53,6 @@ public class BrainLightFW{
         		};
           
     		neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
-            neuroDevice.connect();
             }
          
 
@@ -100,7 +99,7 @@ public class BrainLightFW{
                 }/*
                 /*else*/ if (deviceNo == 2) {
                 	Thread neuroThread = new Thread(neuroDevice);
-//                 neuroDevice.connect();
+                	neuroDevice.connect();
                     neuroDevice.run();
                     neuroThread.start();
 
