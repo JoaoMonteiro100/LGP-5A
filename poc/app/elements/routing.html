@@ -33,6 +33,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
 
+    function setFocus(selected){
+      Polymer.dom(document)
+              .querySelector('section[data-route="' + selected + '"] .focus-target')
+              .focus();
+    }
+
 
     // Routes
     page('/login', function() {
@@ -101,6 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // 404
     page('*', function() {
+      alert('aqui');
       app.$.toast.text = 'Can\'t find: ' + window.location.href  + '. Redirected you to Home Page';
       app.$.toast.show();
       page.redirect(app.baseUrl);
@@ -110,6 +117,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page({
       hashbang: true
     });
-
   });
 </script>
