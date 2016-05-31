@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Neurosky_FW">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Neurosky_FW/json.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Neurosky_FW/log4j-1.2.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

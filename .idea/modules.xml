@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Emotiv/Emotiv.iml" filepath="$PROJECT_DIR$/Emotiv/Emotiv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/LGP-5A.iml" filepath="$PROJECT_DIR$/.idea/LGP-5A.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Neurosky_FW/Neurosky_FW.iml" filepath="$PROJECT_DIR$/Neurosky_FW/Neurosky_FW.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Neurosky_Lib/Neurosky_Lib.iml" filepath="$PROJECT_DIR$/Neurosky_Lib/Neurosky_Lib.iml" />
+    </modules>
+  </component>
+</project>
