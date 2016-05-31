@@ -266,6 +266,7 @@
                     var ref = new Firebase("https://brainlight.firebaseio.com/leituras/leitura1");
                     ref.on("child_added", function (snapshot) {
                         app.setChartData(self, snapshot);
+                        self.$.chart.updateChart();
                     });
 
 
