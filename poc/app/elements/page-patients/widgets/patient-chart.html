@@ -246,6 +246,201 @@
                     }
                 },
 
+    buildChartData: function() {
+        this.data = {
+            labels: [],
+            datasets: [
+                {
+                    label: "Low Gamma",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#fcea0f",
+                    pointColor: "#fcea0f",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Mid Gamma",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#f39200",
+                    pointColor: "#f39200",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Low beta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#00a09a",
+                    pointColor: "#00a09a",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "High beta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#2eac66",
+                    pointColor: "#2eac66",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Low Alpha",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#302683",
+                    pointColor: "#302683",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "High Alpha",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#1d70b7",
+                    pointColor: "#1d70b7",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Theta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#45405e",
+                    pointColor: "#45405e",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Delta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#9d9c9c",
+                    pointColor: "#9d9c9c",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                }
+            ]
+        };
+        
+        return this.data;
+    },
+    
+    
+    setChartData: function(self, snapshot) {
+        if (self.data.labels.length > 10) {
+            self.data.labels = self.data.labels.slice(-10);
+            if (self.lowGammaChecked) {
+                self.data.datasets[0].data = self.data.datasets[0].data.slice(-10);
+            } else {
+                self.lowGammaTmp = self.lowGammaTmp.slice(-10);
+            }
+
+            if (self.midGammaChecked) {
+                self.data.datasets[1].data = self.data.datasets[1].data.slice(-10);
+            } else {
+                self.midGammaTmp = self.midGammaTmp.slice(-10);
+            }
+
+            if (self.lowBetaChecked) {
+                self.data.datasets[2].data = self.data.datasets[2].data.slice(-10);
+            } else {
+                self.lowBetaTmp = self.lowBetaTmp.slice(-10);
+            }
+
+            if (self.highBetaChecked) {
+                self.data.datasets[3].data = self.data.datasets[3].data.slice(-10);
+            } else {
+                self.highBetaTmp = self.highBetaTmp.slice(-10);
+            }
+
+            if (self.lowAlphaChecked) {
+                self.data.datasets[4].data = self.data.datasets[4].data.slice(-10);
+            } else {
+                self.lowAlphaTmp = self.lowAlphaTmp.slice(-10);
+            }
+
+            if (self.highAlphaChecked) {
+                self.data.datasets[5].data = self.data.datasets[5].data.slice(-10);
+            } else {
+                self.highAlphaTmp = self.highAlphaTmp.slice(-10);
+            }
+
+            if (self.thetaChecked) {
+                self.data.datasets[6].data = self.data.datasets[6].data.slice(-10);
+            } else {
+                self.thetaTmp = self.thetaTmp.slice(-10);
+            }
+
+            if (self.deltaChecked) {
+                self.data.datasets[7].data = self.data.datasets[7].data.slice(-10);
+            } else {
+                self.deltaTmp = self.deltaTmp.slice(-10);
+            }
+        }
+
+        var data = snapshot.val();
+        if (self.lowGammaChecked) {
+            self.data.datasets[0].data.push(data.low_gamma);
+        } else {
+            self.lowGammaTmp.push(data.low_gamma);
+        }
+
+        if (self.midGammaChecked) {
+            self.data.datasets[1].data.push(data.mid_gamma);
+        } else {
+            self.midGammaTmp.push(data.mid_gamma);
+        }
+
+        if (self.lowBetaChecked) {
+            self.data.datasets[2].data.push(data.low_beta);
+        } else {
+            self.lowBetaTmp.push(data.low_beta);
+        }
+
+        if (self.highBetaChecked) {
+            self.data.datasets[3].data.push(data.high_beta);
+        } else {
+            self.highBetaTmp.push(data.high_beta);
+        }
+
+        if (self.lowAlphaChecked) {
+            self.data.datasets[4].data.push(data.low_alpha);
+        } else {
+            self.lowAlphaTmp.push(data.low_alpha);
+        }
+
+        if (self.highAlphaChecked) {
+            self.data.datasets[5].data.push(data.high_alpha);
+        } else {
+            self.highAlphaTmp.push(data.high_alpha);
+        }
+
+        if (self.thetaChecked) {
+            self.data.datasets[6].data.push(data.theta);
+        } else {
+            self.thetaTmp.push(data.theta);
+        }
+
+        if (self.deltaChecked) {
+            self.data.datasets[7].data.push(data.delta);
+        } else {
+            self.deltaTmp.push(data.delta);
+        }
+
+        self.data.labels.push(data.elapsedTime);
+        self.$.chart.updateChart();
+    },
                 thetaChange: function (e) {
                     if (!this.thetaChecked) {
                         this.thetaTmp = this.data.datasets[6].data;
@@ -379,7 +574,7 @@
                         bezierCurve: false
                     };
 
-                    this.data = app.buildChartData();
+                    this.data = this.buildChartData();
 
                     addEventListener('selected-hist', function (examid) {
                         // Clear the old chart everytime we want to show a new chart
@@ -388,7 +583,7 @@
                         var ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + examid.detail);
                         ref.limitToLast(11).on("child_added", function (snapshot) {
                             if (snapshot.val()) {
-                                app.setChartData(self, snapshot);
+                                self.setChartData(self, snapshot);
                                 self.$.chart.updateChart();
                             }
                         });

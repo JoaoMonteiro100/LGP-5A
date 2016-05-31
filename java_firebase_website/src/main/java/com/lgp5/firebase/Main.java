@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        Thread t2 = new Thread(new Runnable() {
+      /*  Thread t2 = new Thread(new Runnable() {
             public void run() {
                 HashMap cenas = new HashMap();
                 java.util.Date date= new java.util.Date();
@@ -31,7 +31,7 @@ public class Main {
                 }
             }
         });
-        t2.start();
+        t2.start();*/
         Thread t1 = new Thread(new Runnable() {
             public void run()
             {
@@ -45,9 +45,9 @@ public class Main {
                         long tEnd = System.currentTimeMillis();
                         long tDelta = tEnd - tStart;
                         double elapsedSeconds = tDelta / 1000.0;
-
+                        System.out.println("oi");
                         values.put("elapsedTime",elapsedSeconds);
-                        ref.child("leitura1").push().setValue(values);
+                        ref.child("-KIoFDfjh79UaguOX54E").push().setValue(values);
                     }
                 };
                 new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
