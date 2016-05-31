@@ -7,168 +7,180 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <dom-module id="patients-list">
-  <template id="patient-list-template">
-  <style is="custom-style">
+    <template id="patient-list-template">
+        <style is="custom-style">
 
 
-    section {
-  width: 100%;
-  height: 250px;
-  @apply(--layout-vertical);
-}
-section paper-dialog-scrollable {
+            section {
+                width: 100%;
+                height: 250px;
+                @apply(--layout-vertical);
+            }
 
-  @apply(--layout-flex);
-}
-paper-dialog-scrollable::shadow #scrollable {
-   padding:0px;
- }
- paper-item {
-    --paper-item: {
-      cursor: pointer;
-    };
-  }
+            section paper-dialog-scrollable {
 
-#name{
-  padding-left: 10px;
-  padding-right: 10px;
-}
+                @apply(--layout-flex);
+            }
 
-span{
-  padding-right: 10px;
-}
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
 
-paper-listbox{
-  width: 100%;
-}
-  </style>
-<section>
-  <firebase-collection
-          order-by-child="groups/group3"
-          order-value-type="boolean"
-          equal-to="true"
-          location = "https://brainlight.firebaseio.com/users"
-          data = "{{users}}"></firebase-collection>
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
 
-  <paper-dialog-scrollable>
-    <paper-listbox id="patientList" selected="{{myChoice}}"> <!--on-iron-select="itemSelected"    VER ISTO-->
-      <template is="dom-repeat" items="[[users]]" as="usr" flex filter="{{Filter(filterValue)}}"> <!--  sort="_computeSort"-->
-        <paper-item>
-          <img src={{online(usr)}} style="width:10px;height:10px;">
-          <!--<img src="../../../images/online.png" style="width:10px;height:10px;">-->
-          <div id="name">[[usr.name]] [[usr.lastname]]</div>
-          <span> - </span>
-          <div id="nums">[[usr.number]]</div>
-        </paper-item>
-      </template>
-    </paper-listbox>
-  </paper-dialog-scrollable>
-  </section>
-  </app-grid>
-</template>
-  <script>
-  (function() {
-    'use strict';
+            #name {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
 
-    Polymer({
-      is: 'patients-list',
+            span {
+                padding-right: 10px;
+            }
 
-      properties: {
-          selected: Array,
-          users: {
-            type: Object,
-            notify: true
-          },
-          myChoice: {
-            type: Number,
-            observer: '_onUserSelected'
-          },
-          deletedUserKey: {
-            type: Number,
-            notify: true
-          },
-          currentKey: {
-            type: Number,
-            notify: true
-          },
-          filterValue: {
-              type: String,
-              notify: true
-          }
-      },
-       online: function(a) {
-            if(a.online)
-                return "../../../images/online.png";
-            else 
-                return "../../../images/offline.png";
-        },
+            paper-listbox {
+                width: 100%;
+            }
+        </style>
+        <section>
+            <firebase-collection
+                    order-by-child="groups/group3"
+                    order-value-type="boolean"
+                    equal-to="true"
+                    location="https://brainlight.firebaseio.com/users"
+                    data="{{users}}"></firebase-collection>
 
-      _computeSort: function(a, b) {
-        if (a.name.toLowerCase() == b.name.toLowerCase()) {
-          return 0;
-        }
+            <paper-dialog-scrollable>
+                <paper-listbox id="patientList" selected="{{myChoice}}">
+                    <!--on-iron-select="itemSelected"    VER ISTO-->
+                    <template is="dom-repeat" items="[[users]]" as="usr" flex filter="{{Filter(filterValue)}}">
+                        <!--  sort="_computeSort"-->
+                        <paper-item>
+                            <img src={{online(usr)}} style="width:10px;height:10px;">
+                            <!--<img src="../../../images/online.png" style="width:10px;height:10px;">-->
+                            <div id="name">[[usr.name]] [[usr.lastname]]</div>
+                            <span> - </span>
+                            <div id="nums">[[usr.number]]</div>
+                        </paper-item>
+                    </template>
+                </paper-listbox>
+            </paper-dialog-scrollable>
+        </section>
+        </app-grid>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-        var aLowerCase = a.name.toLowerCase();
-        var bLowerCase = b.name.toLowerCase();
+            Polymer({
+                is: 'patients-list',
 
-        if(aLowerCase >= bLowerCase) {
-          var indexA = this.users.indexOf(a);
-          var indexB = this.users.indexOf(b);
-          var temp = this.users[indexA];
-          this.users[indexA] = this.users[indexB];
-          this.users[indexB] = temp;
-        }
+                properties: {
+                    selected: Array,
+                    users: {
+                        type: Object,
+                        notify: true
+                    },
+                    myChoice: {
+                        type: Number,
+                        observer: '_onUserSelected'
+                    },
+                    deletedUserKey: {
+                        type: Number,
+                        notify: true
+                    },
+                    currentKey: {
+                        type: Number,
+                        notify: true
+                    },
+                    filterValue: {
+                        type: String,
+                        notify: true
+                    }
+                },
+                online: function (a) {
+                    if (a.online)
+                        return "../../../images/online.png";
+                    else
+                        return "../../../images/offline.png";
+                },
 
-        return aLowerCase < bLowerCase ? -1 : 1;
-      },
+                _computeSort: function (a, b) {
+                    if (a.name.toLowerCase() == b.name.toLowerCase()) {
+                        return 0;
+                    }
 
-      ready: function() {
-        var appRef = new Firebase(app.usersLocation);
-        var self = this;
+                    var aLowerCase = a.name.toLowerCase();
+                    var bLowerCase = b.name.toLowerCase();
 
-        appRef.on('child_removed', function(oldChildSnapshot) {
-          self.deletedUserKey = oldChildSnapshot.key();
-        });
+                    if (aLowerCase >= bLowerCase) {
+                        var indexA = this.users.indexOf(a);
+                        var indexB = this.users.indexOf(b);
+                        var temp = this.users[indexA];
+                        this.users[indexA] = this.users[indexB];
+                        this.users[indexB] = temp;
+                    }
 
-        addEventListener('search', function(val) {
-            var text = val.detail;
-            self.filterValue = text;
-        });
-      },
+                    return aLowerCase < bLowerCase ? -1 : 1;
+                },
 
-      _onUserSelected: function() {
-        var user = this.users[this.myChoice];
-        this.currentKey = user.__firebaseKey__;
-        this.fire('selected-user', user);
-      },
+                ready: function () {
+                    var appRef = new Firebase(app.usersLocation);
+                    var self = this;
 
-      itemSelected: function() {
-        if(this.deletedUserKey == this.currentKey) {
-          var user = this.users[this.myChoice];
-          this.fire('selected-user', user);
-        } else {
-          this.myChoice -= 1;
-        }
-      },
+                    appRef.on('child_removed', function (oldChildSnapshot) {
+                        self.deletedUserKey = oldChildSnapshot.key();
+                    });
+
+                    addEventListener('search', function (val) {
+                        var text = val.detail;
+                        self.filterValue = text;
+                    });
+
+                    addEventListener('select_null_patient', function() {
+                        self.$.patientList.selected = null;
+                    });
+                },
+
+                _onUserSelected: function () {
+                    if(this.$.patientList.selected != null) {
+                        var user = this.users[this.myChoice];
+                        this.currentKey = user.__firebaseKey__;
+                        this.fire('selected-user-patient', user);
+                        this.fire('select_null_doctor');
+                    }
+                },
+
+                itemSelected: function () {
+                    if (this.deletedUserKey == this.currentKey) {
+                        var user = this.users[this.myChoice];
+                        this.fire('selected-user-patient', user);
+                        this.fire('select_null_doctor');
+                    } else {
+                        this.myChoice -= 1;
+                    }
+                },
 
 
-      Filter: function(val) {
-          return function(user) {
-              if(!user) return false;
-              if(val != null || val != undefined) {
-                  var firstAndLastName = user.name + ' ' + user.lastname;
-                  return (user.name && user.name.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
-                          (user.lastname && user.lastname.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
-                          (user.number && user.number.toString().indexOf(val) != -1) ||
-                          (firstAndLastName && firstAndLastName.toLowerCase().indexOf(val.toLowerCase()) != -1);
-              } else return false;
-          };
-      }
-    });
-  })();
-  </script>
+                Filter: function (val) {
+                    return function (user) {
+                        if (!user) return false;
+                        if (val != null || val != undefined) {
+                            var firstAndLastName = user.name + ' ' + user.lastname;
+                            return (user.name && user.name.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
+                                    (user.lastname && user.lastname.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
+                                    (user.number && user.number.toString().indexOf(val) != -1) ||
+                                    (firstAndLastName && firstAndLastName.toLowerCase().indexOf(val.toLowerCase()) != -1);
+                        } else return false;
+                    };
+                }
+            });
+        })();
+    </script>
 </dom-module>

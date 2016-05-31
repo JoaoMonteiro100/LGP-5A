@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
                         <paper-item>
                             <img src={{online(usr)}} style="width:10px;height:10px;">
-                          <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
+                            <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
                             <div id="name">[[usr.name]] [[usr.lastname]]</div>
                             <span> - </span>
                             <div id="mail">[[usr.mail]]</div>
@@ -99,10 +99,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                 },
 
-                online: function(a) {
-                    if(a.online)
+                online: function (a) {
+                    if (a.online)
                         return "../../../images/online.png";
-                    else 
+                    else
                         return "../../../images/offline.png";
                 },
 
@@ -132,20 +132,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     appRef.on('child_removed', function (oldChildSnapshot) {
                         self.deletedUserKey = oldChildSnapshot.key();
                     });
+
+                    addEventListener('select_null_doctor', function () {
+                        self.$.doctorList.selected = null;
+                    });
                 },
 
                 _onUserSelected: function () {
-                    var user = this.users[this.myChoice];
-                 //   this.currentKey = user.__firebaseKey__;
-                    this.fire('selected-user', user);
-                },
-
-                itemSelected: function () {
-                    if (this.deletedUserKey == this.currentKey) {
-                        var user = this.users[this.myChoice];
-                        this.fire('selected-user', user);
-                    } else {
-                        this.myChoice -= 1;
+                    if(this.$.doctorList.selected != null) {
+                        if (this.deletedUserKey == this.currentKey) {
+                            var user = this.users[this.myChoice];
+                            this.fire('selected-user-doctor', user);
+                            this.fire('select_null_patient');
+                        } else {
+                            var user = this.users[this.myChoice];
+                            alert(JSON.stringify(user));
+                            this.currentKey = user.__firebaseKey__;
+                            this.fire('selected-user-doctor', user);
+                            this.fire('select_null_patient');
+                        }
                     }
                 }
             });

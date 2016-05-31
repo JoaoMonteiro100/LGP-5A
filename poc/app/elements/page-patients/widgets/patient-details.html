@@ -11,180 +11,207 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <dom-module id="patient-details">
-<template>
-    <style is="custom-style">
-        section {
-            width: 100%;
-            height: 250px;
-            @apply(--layout-vertical);
-        }
-        section paper-dialog-scrollable {
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 250px;
+                @apply(--layout-vertical);
+            }
 
-            @apply(--layout-flex);
-        }
-        paper-dialog-scrollable::shadow #scrollable {
-            padding:0px;
-        }
-        paper-item {
-            --paper-item: {
-                cursor: pointer;
-            };
-        }
+            section paper-dialog-scrollable {
 
-        #name{
-            padding-left: 10px;
-            padding-right: 10px;
-        }
+                @apply(--layout-flex);
+            }
 
-        span{
-            padding-right: 10px;
-        }
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
 
-        paper-listbox {
-            width: 100%;
-        }
-        .container {
-          @apply(--layout-horizontal);
-      }
-      .flexchild {
-          @apply(--layout-flex);
-          margin-top: 12px;
-      }
-      .flexchild2 {
-          @apply(--layout-flex);
-      }
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
 
-      .vertcontainer {
-          @apply(--layout-vertical);
-      }
+            #name {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
 
+            span {
+                padding-right: 10px;
+            }
 
+            paper-listbox {
+                width: 100%;
+            }
 
-      #profimg{
-        margin-right: 12px;
-        margin-top: 6px;
-    }
+            .container {
+                @apply(--layout-horizontal);
+            }
 
+            .flexchild {
+                @apply(--layout-flex);
+                margin-top: 12px;
+            }
 
-    .namestyle  {
-        font-weight:bold;color:#000000;letter-spacing:0pt;word-spacing:2pt;font-size:15px;text-align:left;font-family:arial black, sans-serif;line-height:1;
-        margin-bottom: 8px;
-        margin-top: 10px;
-    }
+            .flexchild2 {
+                @apply(--layout-flex);
+            }
 
-    .textstyle2 {
-        color:#696969;letter-spacing:0pt;word-spacing:2pt;font-size:14px;text-align:left;font-family:arial, helvetica, sans-serif;line-height:1;
-        padding-left: 20px;
-        margin-bottom: 6px;
-    }
+            .vertcontainer {
+                @apply(--layout-vertical);
+            }
 
-    .mas {
-        white-space: pre-wrap;
-    }
-    .notecontainer{
-        @apply(--layout-flex);
-        margin-left: 12px;
-        margin-top: 0px;
-    }
-    .noteh1{
-        font-weight:bold;color:#000000;letter-spacing:0pt;word-spacing:2pt;font-size:15px;text-align:left;font-family:arial black, sans-serif;line-height:1;
-        margin-bottom: 6px;
-        margin-top: 0px;
-    }
+            #profimg {
+                margin-right: 12px;
+                margin-top: 6px;
+            }
 
-</style>
+            .namestyle {
+                font-weight: bold;
+                color: #000000;
+                letter-spacing: 0pt;
+                word-spacing: 2pt;
+                font-size: 15px;
+                text-align: left;
+                font-family: arial black, sans-serif;
+                line-height: 1;
+                margin-bottom: 8px;
+                margin-top: 10px;
+            }
 
-<section>
-    <paper-dialog-scrollable>
+            .textstyle2 {
+                color: #696969;
+                letter-spacing: 0pt;
+                word-spacing: 2pt;
+                font-size: 14px;
+                text-align: left;
+                font-family: arial, helvetica, sans-serif;
+                line-height: 1;
+                padding-left: 20px;
+                margin-bottom: 6px;
+            }
 
-    <div hidden$="[[hidecont]]" class="vertcontainer">
-        <div class="container">
-            <div class="flexchild">
-                <div id="name" class="namestyle">
-                    Name: {{user.name}} {{user.lastname}}
+            .mas {
+                white-space: pre-wrap;
+            }
+
+            .notecontainer {
+                @apply(--layout-flex);
+                margin-left: 12px;
+                margin-top: 0px;
+            }
+
+            .noteh1 {
+                font-weight: bold;
+                color: #000000;
+                letter-spacing: 0pt;
+                word-spacing: 2pt;
+                font-size: 15px;
+                text-align: left;
+                font-family: arial black, sans-serif;
+                line-height: 1;
+                margin-bottom: 6px;
+                margin-top: 0px;
+            }
+
+        </style>
+
+        <section>
+            <paper-dialog-scrollable>
+
+                <div hidden$="[[hidecont]]" class="vertcontainer">
+                    <div class="container">
+                        <div class="flexchild">
+                            <div id="name" class="namestyle">
+                                Name: {{user.name}} {{user.lastname}}
+                            </div>
+                            <div id="unumber" class="textstyle2">
+                                Number: [[user.number]]
+                            </div>
+                            <div id="gender" class="textstyle2">
+                                Gender: [[user.gender]]
+                            </div>
+                            <div id="doctorAssociated" class="textstyle2">
+                                Doctor Associated: [[doc.name]] [[doc.lastname]]
+                            </div>
+                        </div>
+                        <div id="profimg">
+                            <img src="../../../images/profpic.png" id="profilepic" style="width:120px;height:120px;">
+                        </div>
+                    </div>
+                    <div class="notecontainer" id="notecontainer">
+                        <h1 class="noteh1">Notes: </h1>
+                        <div class="mas" id="note">[[user.notes]]</div>
+                    </div>
                 </div>
-                <div id="unumber" class="textstyle2">
-                    Number: [[user.number]]
-                </div>
-                <div id="gender" class="textstyle2">
-                    Gender: [[user.gender]]
-                </div>
-                <div id="doctorAssociated" class="textstyle2">
-                    Doctor Associated: [[doc.name]] [[doc.lastname]]
-                </div>
-            </div>
-            <div id="profimg">
-            <img  src="../../../images/profpic.png" id="profilepic" style="width:120px;height:120px;">
-           </div>
-       </div>
-       <div class="notecontainer" id="notecontainer">
-        <h1 class="noteh1">Notes: </h1>
-        <div class="mas" id="note">[[user.notes]]</div>
-    </div>
-</div>       
-</paper-dialog-scrollable>
-</section>
-</template>
-<script>
-    (function() {
-        'use strict';
+            </paper-dialog-scrollable>
+        </section>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-        Polymer({
-            is: 'patient-details',
+            Polymer({
+                is: 'patient-details',
 
-            properties: {
-                user: {
-                    type: Object,
-                    notify: true,
+                properties: {
+                    user: {
+                        type: Object,
+                        notify: true
 
+                    },
+                    doc: {
+                        type: Object,
+                        notify: true
+
+                    },
+                    usrkey: {
+                        type: String,
+                        notify: true
+                    },
+                    hidecont: {
+                        type: Boolean,
+                        value: true
+                    }
                 },
-                doc: {
-                    type: Object,
-                    notify: true,
 
+                ready: function () {
+                    var self = this;
+
+                    addEventListener('selected-user-patient', function (user) {
+                        var ref = new Firebase(app.userURL(user.detail.__firebaseKey__));
+                        var ref1;
+
+                        ref.on("value", function (snapshot) {
+                            var user = snapshot.val();
+                            ref1 = new Firebase(app.userURL(user.doctorAssociated));
+                            self.set('user', user);
+                            self.set('hidecont', false);
+                        });
+
+                        ref1.on("value", function (snapshot) {
+                            var doc = snapshot.val();
+                            self.set('doc', doc);
+                            self.set('hidecont', false);
+                        });
+
+                        self.fire('select_null_doctor');
+                    });
                 },
-                usrkey:{
-                    type: String,
-                    notify: true,
+                hideMe: function (one, two) {
+                    return (!one || two);
                 },
-                hidecont: {
-                   type: Boolean,
-                   value: true
-               }
-           },
+                changeOne: function () {
+                    this.one = !this.one;
+                },
+                changeTwo: function () {
+                    this.two = !this.two;
+                }
 
-           ready: function() {
-            var self = this;
-
-            addEventListener('selected-user', function(user) {
-             var ref = new Firebase(app.userURL(user.detail.__firebaseKey__));
-             var ref1;
-             
-             ref.on("value",function(snapshot){
-                var user = snapshot.val();
-                ref1 = new Firebase(app.userURL(user.doctorAssociated));
-                self.set('user', user);
-                self.set('hidecont',false);
             });
-
-              ref1.on("value",function(snapshot){
-                var doc = snapshot.val();
-                self.set('doc', doc);
-                self.set('hidecont',false);
-            });
-         });
-        },
-        hideMe: function(one, two) {
-          return (!one || two);
-      },
-      changeOne: function() {
-          this.one = !this.one;
-      },
-      changeTwo: function() {
-          this.two = !this.two;
-      }
-
-  });
-    })();
-</script>
+        })();
+    </script>
 </dom-module>
