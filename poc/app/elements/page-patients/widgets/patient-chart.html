@@ -96,32 +96,16 @@
 
 
 		</style>
+		<firebase-collection
+		 data = "{{histinfo}}"></firebase-collection>
 		<section>
 			<div class="container">
 				<div id="info">
 					<paper-dialog-scrollable>
 						
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
-						<h1>xaroca</h1>
+						<h1>Note: </h1>
+					
+						<div>{{histinfo.Note}}</div>
 
 					</paper-dialog-scrollable>
 				</div>
@@ -237,6 +221,10 @@
 						value: true
 					},
 					deltaTmp: {
+						type: Array,
+						notify: true
+					},
+					histinfo:{
 						type: Array,
 						notify: true
 					}
@@ -565,6 +553,17 @@
 								self.$.chart.updateChart();
 							}
 						});
+
+						var ref2 = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+
+					ref2.orderByChild("Leitura").equalTo(examid.detail).on("child_added", function (snapshot) {
+						
+						if(snapshot.val()){
+							console.log(snapshot.val().Note);
+							//alert(JSON.stringify(snapshot.val()[0].Note));
+
+						}
+					});
 
 					});
 

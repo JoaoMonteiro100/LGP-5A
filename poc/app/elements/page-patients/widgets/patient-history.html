@@ -99,11 +99,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready:function(){
         var self = this;
         var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo"); //trolha maximo
-        addEventListener('selected-user', function(user) {
+        addEventListener('selected-user-patient', function(user) {
           ref.on("value",function(snapshot){
              self.history=[];
             snapshot.forEach(function(childSnapshot) {
-             if(childSnapshot.val().Patient == user.detail.__firebaseKey__){
+             if(childSnapshot.val().Patient == user.detail){
               self.push('history', childSnapshot.val());
             }
             });

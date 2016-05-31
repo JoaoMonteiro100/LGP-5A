@@ -22,6 +22,7 @@ public class Main {
                 cenas.put("Patient","-KIoFDfjh79UaguOXLA8");
                 cenas.put("Live",false); //mudar para true
                 cenas.put("Important",false);
+                cenas.put("Note","");
                 cenas.put("time",  new SimpleDateFormat("yyyy.MM.dd - HH.mm.ss").format(new Date()));
 
                 for (int i = 0; i < 1; i++) {
