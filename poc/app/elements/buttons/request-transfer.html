@@ -107,9 +107,11 @@
                 },
 
                 setNewRequest: function () {
+
                     this.newRequest = {
                         // mail: this.user.mail,
-                        userKey: this.user.__firebaseKey__,
+
+                        userKey: this.user,
                         doctorAssociated: this.user.doctorAssociated,
                         reqDoctorAssociated: this.newDoctorKey
                     };
@@ -122,6 +124,7 @@
                     var ref = new Firebase("https://brainlight.firebaseio.com/requests");
                     var request = this.setNewRequest();
                     var requestRef = ref.push();
+                    alert(JSON.stringify(request));
                     requestRef.set(request);
                 },
 

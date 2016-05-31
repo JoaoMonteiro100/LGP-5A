@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="widgets/doctors-list.html">
-<link rel="import" href="widgets/doctor-details.html">
+<link rel="import" href="widgets/admin-details.html">
 <link rel="import" href="../page-patients/widgets/patients-list.html">
 <link rel="import" href="../page-patients/widgets/patient-details.html">
 <link rel="import" href="widgets/admin-profile.html">
@@ -63,11 +63,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                },
                {
                  title: 'Details',
-                 component: 'doctor-details',
+                 component: 'admin-details',
                  buttons:[
-                   { button: 'edit-doctor' },
-                   { button: 'delete-doctor' },
-                   { button: 'edit-note' }
+                   { button: 'edit-admin' },
+                   { button: 'delete-admin' }
                  ]
                }          
              ]

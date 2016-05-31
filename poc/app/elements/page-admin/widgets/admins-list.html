@@ -56,20 +56,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     data="{{users}}">
             </firebase-collection>
             <paper-dialog-scrollable>
-                <paper-listbox on-iron-select="itemSelected" id="adminList" selected="{{myChoice}}">
+                <paper-listbox attr-for-selected="value" id="adminList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
-                        <paper-item>
+                        <paper-item value="{{usr.__firebaseKey__}}">
                             <img src={{online(usr)}} style="width:10px;height:10px;">
-                          <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
-                            <div id="name">
-                                [[usr.name]] [[usr.lastname]]
-                            </div>
-                            <span> 
-                                - 
-                            </span>
-                            <div id="mail">
-                                [[usr.mail]]
-                            </div>
+                            <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
+                            <div id="name">[[usr.name]] [[usr.lastname]]</div>
+                            <span> - </span>
+                            <div id="mail">[[usr.mail]]</div>
                         </paper-item>
                     </template>
                 </paper-listbox>
@@ -105,10 +99,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                 },
 
-                online: function(a) {
-                    if(a.online)
+                online: function (a) {
+                    if (a.online)
                         return "../../../images/online.png";
-                    else 
+                    else
                         return "../../../images/offline.png";
                 },
 
@@ -138,20 +132,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     appRef.on('child_removed', function (oldChildSnapshot) {
                         self.deletedUserKey = oldChildSnapshot.key();
                     });
+
+                    
                 },
 
                 _onUserSelected: function () {
-                    var user = this.users[this.myChoice];
-                   // this.currentKey = user.__firebaseKey__;
-                    this.fire('selected-user', user);
-                },
-
-                itemSelected: function () {
-                    if (this.deletedUserKey == this.currentKey) {
-                        var user = this.users[this.myChoice];
-                        this.fire('selected-user', user);
-                    } else {
-                        this.myChoice -= 1;
+                    if(this.$.adminList.selected != null) {
+                        if (this.deletedUserKey == this.currentKey) {
+                            var admin = this.myChoice;
+                            this.fire('selected-admin', admin);
+                            
+                        } else {
+                            var admin = this.myChoice;
+                            this.currentKey = admin;
+                            this.fire('selected-admin', admin);
+                            
+                        }
                     }
                 }
             });

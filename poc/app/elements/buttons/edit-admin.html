@@ -8,7 +8,7 @@
    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
    -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<dom-module id="edit-doctor">
+<dom-module id="edit-admin">
     <template>
         <style include="shared-styles"></style>
         <style>
@@ -41,7 +41,7 @@
             <form is="iron-form" id="editDoctorForm">
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.name}}" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required auto-validate></paper-input>
-                <!--<gold-email-input id="mail" name="mail" value ="{{user.mail}}" required auto-validate></gold-email-input> only to doctor  -->
+                <gold-email-input id="mail" name="mail" value ="{{user.mail}}" required auto-validate></gold-email-input>
                 <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected" label="Gender">
                     <paper-listbox class="dropdown-content" selected="{{selected}}">
                         <paper-item>Female</paper-item>
@@ -65,7 +65,7 @@
             'use strict';
 
             Polymer({
-                is: 'edit-doctor',
+                is: 'edit-admin',
 
                 properties: {
                     user: {
@@ -80,13 +80,6 @@
                 type: Boolean,
                 value: true
             } 
-                },
-
-                 existsMail: function (a) {
-                    if (a)
-                        return "Mail: ";
-                    else
-                        return "";
                 },
 
                 _nativeSubmit: function(event) {
@@ -108,7 +101,7 @@
                         userRef.update({
                             name: this.$.firstname.value,
                             lastname: this.$.lastname.value,
-                          //  mail: this.$.mail.value,
+                            mail: this.$.mail.value,
                             gender: this.$.genderdrop.value
                         }, onDoctorUpdated);
                     }
@@ -121,12 +114,11 @@
                 ready: function() {
                     var self = this;
                     var userdef = false;
-                    addEventListener('selected-user-doctor', function(user) {
+                    addEventListener('selected-admin', function(user) {
+                    var ref = new Firebase(app.userURL(user.detail));
 
 
-                         var ref = new Firebase(app.userURL(user.detail));
-
-                        ref.on('value', function (snapshot) {
+                    ref.on('value', function (snapshot) {
                             self.user = snapshot.val();
                             self.user.__firebaseKey__ = snapshot.key();
                             self.selected = self.user.gender == "Male" ? 1 : 0;
@@ -135,29 +127,6 @@
                                 self.userdef = true;
                             }
                         });
-                    });
-
-                    addEventListener('selected-user-patient', function(user) {
-
-                         var ref = new Firebase(app.userURL(user.detail));
-
-                        ref.on('value', function (snapshot) {
-                            self.user = snapshot.val();
-                            self.user.__firebaseKey__ = snapshot.key();
-                            self.selected = self.user.gender == "Male" ? 1 : 0;
-                            if (!self.userdef) {
-                                self.toggle();
-                                self.userdef = true;
-                            }
-                        });
-
-                        /*
-                        self.user = user.detail;
-                        self.selected = self.user.gender == "Male" ? 1 : 0;
-                        if(!self.userdef){
-                            self.toggle();
-                            self.userdef=true;
-                        }*/
                     });
                 },
 
