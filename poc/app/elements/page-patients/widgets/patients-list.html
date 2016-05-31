@@ -59,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-dialog-scrollable>
                 <paper-listbox id="patientList" attr-for-selected="value" selected="{{myChoice}}">
                     <!--on-iron-select="itemSelected"    VER ISTO-->
-                    <template is="dom-repeat" items="[[users]]" as="usr" flex filter="{{Filter(filterValue)}}">
+                    <template is="dom-repeat" items="[[users]]" as="usr" flex filter="{{Filter(filterValue)}}" sort="_computeSort">
                         <!--  sort="_computeSort"-->
                         <paper-item value="{{usr.__firebaseKey__}}">
                             <img src={{online(usr)}} style="width:10px;height:10px;">
