@@ -12,7 +12,7 @@ import BrainLightFW.AttributeMerger;
  * Created by cenas on 23/04/16.
  */
 
-public class BrainLightFW{
+public class BrainLightFW {
 
     private Neurosky neuroDevice;
     private EmotivDevice emoDevice;
@@ -46,7 +46,7 @@ public class BrainLightFW{
     			
         			@Override
         			public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
-        				System.err.println(dataToSend.toString());
+        				System.out.println(dataToSend.toString());
 
         				//thread
         			}
@@ -206,7 +206,7 @@ public class BrainLightFW{
 				return;
 			}
 			
-			//criar array de arrays com toda a informação do dispositivo
+			//criar array de arrays com toda a informaï¿½ï¿½o do dispositivo
 			finalInfo = new String [][] { {"AF3","F7","F3","FC5","T7","P7","O1","O2","P8","T8","FC6","F4","F8","AF4"},
 				{"Theta","Alpha","LowBeta","HighBeta","Gamma"},
 				{},
@@ -288,7 +288,7 @@ public class BrainLightFW{
 				{},
 				{"BatteryLevel","PoorSignal"}
 			};
-			
+
 			finalData = new Double[4][];
 			finalData[0]= new Double[1];
 			finalData[1]= new Double[8];
@@ -296,7 +296,7 @@ public class BrainLightFW{
 			finalData[3] = new Double[1];
 			finalData[4] = new Double[0];
 			finalData[5] = new Double[2];
-			
+
 			for (int i = 0;i < finalData.length; i++){
 				for (int k = 0;k < finalData[i].length; k++){
 					if (i == 0)
