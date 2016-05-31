@@ -202,7 +202,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     var self = this;
 
                     addEventListener('selected-user-doctor', function (user) {
-                        var ref = new Firebase(app.userURL(user.detail.__firebaseKey__));
+                        var ref = new Firebase(app.userURL(user.detail));
 
                         ref.on("value", function (snapshot) {
                             var user = snapshot.val();
@@ -212,7 +212,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     });
 
                     addEventListener('selected-user-patient', function (user) {
-                        var ref = new Firebase(app.userURL(user.detail.__firebaseKey__));
+                        var ref = new Firebase(app.userURL(user.detail));
                         var ref1;
 
                         ref.on("value", function (snapshot) {

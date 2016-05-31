@@ -57,11 +57,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     data="{{users}}"></firebase-collection>
 
             <paper-dialog-scrollable>
-                <paper-listbox id="patientList" selected="{{myChoice}}">
+                <paper-listbox id="patientList" attr-for-selected="value" selected="{{myChoice}}">
                     <!--on-iron-select="itemSelected"    VER ISTO-->
                     <template is="dom-repeat" items="[[users]]" as="usr" flex filter="{{Filter(filterValue)}}">
                         <!--  sort="_computeSort"-->
-                        <paper-item>
+                        <paper-item value="{{usr.__firebaseKey__}}">
                             <img src={{online(usr)}} style="width:10px;height:10px;">
                             <!--<img src="../../../images/online.png" style="width:10px;height:10px;">-->
                             <div id="name">[[usr.name]] [[usr.lastname]]</div>
@@ -101,6 +101,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     filterValue: {
                         type: String,
+                        notify: true
+                    },
+                    usersTmp: {
+                        type: Array,
                         notify: true
                     }
                 },
@@ -148,37 +152,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     });
                 },
 
-                _onUserSelected: function () {
+                _onUserSelected: function (e) {
                     if(this.$.patientList.selected != null) {
-                        var user = this.users[this.myChoice];
-                        this.currentKey = user.__firebaseKey__;
+                        var user = this.myChoice;
+                        this.currentKey = user;
                         this.fire('selected-user-patient', user);
                         this.fire('select_null_doctor');
                     }
                 },
 
-                itemSelected: function () {
+                itemSelected: function (e) {
+                    /**console.log(e.target.selected);
                     if (this.deletedUserKey == this.currentKey) {
                         var user = this.users[this.myChoice];
                         this.fire('selected-user-patient', user);
                         this.fire('select_null_doctor');
                     } else {
                         this.myChoice -= 1;
-                    }
+                    }*/
                 },
 
-
                 Filter: function (val) {
+                    var self = this;
+
+
                     return function (user) {
                         if (!user) return false;
                         if (val != null || val != undefined) {
                             var firstAndLastName = user.name + ' ' + user.lastname;
-                            return (user.name && user.name.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
+                            var ev = (user.name && user.name.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
                                     (user.lastname && user.lastname.toLowerCase().indexOf(val.toLowerCase()) != -1) ||
                                     (user.number && user.number.toString().indexOf(val) != -1) ||
                                     (firstAndLastName && firstAndLastName.toLowerCase().indexOf(val.toLowerCase()) != -1);
+
+                            return ev;
                         } else return false;
                     };
+
                 }
             });
         })();

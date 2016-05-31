@@ -56,9 +56,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     data="{{users}}">
             </firebase-collection>
             <paper-dialog-scrollable>
-                <paper-listbox on-iron-select="itemSelected" id="doctorList" selected="{{myChoice}}">
+                <paper-listbox attr-for-selected="value" id="doctorList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
-                        <paper-item>
+                        <paper-item value="{{usr.__firebaseKey__}}">
                             <img src={{online(usr)}} style="width:10px;height:10px;">
                             <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
                             <div id="name">[[usr.name]] [[usr.lastname]]</div>
@@ -141,13 +141,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 _onUserSelected: function () {
                     if(this.$.doctorList.selected != null) {
                         if (this.deletedUserKey == this.currentKey) {
-                            var user = this.users[this.myChoice];
+                            var user = this.myChoice;
                             this.fire('selected-user-doctor', user);
                             this.fire('select_null_patient');
                         } else {
-                            var user = this.users[this.myChoice];
-                            alert(JSON.stringify(user));
-                            this.currentKey = user.__firebaseKey__;
+                            var user = this.myChoice;
+                            this.currentKey = user;
                             this.fire('selected-user-doctor', user);
                             this.fire('select_null_patient');
                         }
