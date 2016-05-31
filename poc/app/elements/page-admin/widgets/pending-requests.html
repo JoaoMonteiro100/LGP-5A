@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     data="{{requests}}">
             </firebase-collection>
             <paper-dialog-scrollable>
-                <paper-listbox on-iron-select="itemSelected" id="requestList" selected="{{myChoice}}">
+                <paper-listbox  id="requestList" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[requests]]" as="req"> <!--  sort="_computeSort"-->
                         <paper-item>
                             <!-- <img src={{online(usr)}} style="width:10px;height:10px;">-->
@@ -130,8 +130,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 _onRequestSelected: function () {
                     var request = this.requests[this.myChoice];
-                    this.currentKey = request.__firebaseKey__;
+                    this.currentKey = request
                     this.fire('selected-request', request);
+                   // alert(JSON.stringify(request));
                 },
 
                 itemSelected: function () {

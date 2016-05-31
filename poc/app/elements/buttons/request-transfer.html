@@ -108,10 +108,28 @@
 
                 setNewRequest: function () {
 
+
+                  /*   var ref = new Firebase(app.userURL(this.user));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                           // self.user.__firebaseKey__ = snapshot.key();
+                          /*  self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!self.userdef) {
+                                self.toggle();
+                                self.userdef = true;
+                            }*/
+                           // alert(user.doctorAssociated);
+                        //});
+                    
+                        /*alert("cenas");
+                        alert(this.user.__firebaseKey__);
+                        alert(this.user.doctorAssociated);
+                        alert(this.newDoctorKey);*/
                     this.newRequest = {
                         // mail: this.user.mail,
 
-                        userKey: this.user,
+                        userKey: this.user.__firebaseKey__,
                         doctorAssociated: this.user.doctorAssociated,
                         reqDoctorAssociated: this.newDoctorKey
                     };
@@ -124,7 +142,7 @@
                     var ref = new Firebase("https://brainlight.firebaseio.com/requests");
                     var request = this.setNewRequest();
                     var requestRef = ref.push();
-                    alert(JSON.stringify(request));
+                  //  alert(JSON.stringify(request));
                     requestRef.set(request);
                 },
 
@@ -158,15 +176,32 @@
 
                 ready: function () {
                     var self = this;
+                                        var userdef = false;
+
                     addEventListener('selected-user-patient', function (user) {
-                        self.user = user.detail;
-                        self.selected = self.user.gender == "Male" ? 1 : 0;
+                        var userRef = new Firebase(app.userURL(user.detail));
+
+                        userRef.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!self.userdef) {
+                                self.toggle();
+                                self.userdef = true;
+                            }
+                        });
+
+                      //  self.user = user.detail;
+                      //  alert(JSON.stringify(self.user.doctorAssociated));
+                     /*   self.selected = self.user.gender == "Male" ? 1 : 0;
                         if (!self.userdef) {
                             self.toggle();
                             self.userdef = true;
-                        }
-
+                        }*/
                         var doctorRef = new Firebase(app.userURL(self.user.doctorAssociated));
+                        //alert("cenas");
+                        //alert(doctorRef);
+                        
                         doctorRef.on('value', function(snapshot) {
                             var doc = snapshot.val();
                             self.set('doctor', doc);
