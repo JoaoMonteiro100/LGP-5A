@@ -52,8 +52,8 @@ public class BrainLightFW{
         			}
         		};
           
-    		neuroDevice = new Neurosky("0013EF004809", sendDataInterface);        
-
+    		neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
+            neuroDevice.connect();
             }
          
 
@@ -87,7 +87,7 @@ public class BrainLightFW{
         Thread receiveDataThread = new Thread("ReceiveDeviceData"){
             public void run() {
 
-                if (deviceNo == 1) {
+                /*if (deviceNo == 1) {
                     Thread emotivThread = new Thread(emoDevice);
                     emoDevice.connectEmotiv();
                     emotivThread.start();
@@ -97,10 +97,10 @@ public class BrainLightFW{
                             getDeviceData(1);
                         }
                     }
-                }
-                else if (deviceNo == 2) {
+                }/*
+                /*else*/ if (deviceNo == 2) {
                 	Thread neuroThread = new Thread(neuroDevice);
-                    neuroDevice.connect();
+//                 neuroDevice.connect();
                     neuroDevice.run();
                     neuroThread.start();
 
@@ -154,12 +154,13 @@ public class BrainLightFW{
 
         }
     	}
+       
     	else if (device == 2){
-    		
     		initMerge(2,neuroDevice.getFinalData(),finalDataArray);
     		doubleQ.addLast(finalDataArray);
     		
-    	}
+    	
+        }
     }
 
     public void stopReceiving(){
