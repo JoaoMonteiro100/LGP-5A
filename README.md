@@ -2,11 +2,11 @@
 
 ## CONTENTS
    
- * [Introduction](##INTRODUCTION)
- * [Client](##CLIENT)
- * [Instructions](##INSTRUCTIONS)
- * [FAQ](##FAQ)
- * [Maintainers](##MAINTAINERS)
+ * [Introduction](#introduction)
+ * [Client](#client)
+ * [Instructions](#instructions)
+ * [FAQ](#faq)
+ * [Maintainers](#maintainers)
 
  
 ---
@@ -63,7 +63,7 @@ A: The ultimate goal of **BrainLight** is to help in studies related with optoge
 
 **Q: Was this done solely by informatics students?**
 
-A: No, the students were part of a fictional "company", made of dozens of students from different areas (informatics, multimedia and design). The informatics students are mentioned [below](##MAINTAINERS); but the final product is also the result of contributions from people of other areas from their company [Dottech](http://dottech.xyz/).
+A: No, the students were part of a fictional "company", made of dozens of students from different areas (informatics, multimedia and design). The informatics students are mentioned [below](#maintainers); but the final product is also the result of contributions from people of other areas from their company [Dottech](http://dottech.xyz/).
 
 
 **Q: Why can't I see all commits since the beginning?**
@@ -73,7 +73,7 @@ A: We chose as a group to use separate repositories for developing the product a
 
 **Q: Who can I contact if I need help?**
 
-A: These solutions belong to INOVA+, but you can either contact the [company](##CLIENT) directly or the [students](##MAINTAINERS) that developed the project.
+A: These solutions belong to INOVA+, but you can either contact the [company](#client) directly or the [students](#maintainers) that developed the project.
 
 
 ---
