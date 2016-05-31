@@ -5,14 +5,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="174.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.SensorsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.SensorsController">
    <children>
-      <ComboBox fx:id="sensorsList" layoutX="127.0" layoutY="57.0" prefHeight="25.0" prefWidth="210.0" />
-      <Label layoutX="145.0" layoutY="27.0" text="Show data from the sensors:">
+      <ComboBox fx:id="sensorsList" layoutX="126.0" layoutY="315.0" prefHeight="25.0" prefWidth="210.0" />
+      <Label layoutX="144.0" layoutY="285.0" text="Show data from the sensors:">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="applySensors" disable="true" layoutX="177.0" layoutY="107.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="109.0" text="Apply choice" />
+      <Button fx:id="applySensors" disable="true" layoutX="176.0" layoutY="365.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="109.0" text="Apply choice" />
    </children>
 </AnchorPane>

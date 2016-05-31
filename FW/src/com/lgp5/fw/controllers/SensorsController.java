@@ -18,7 +18,7 @@ public class SensorsController {
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        sensorsList.getItems().addAll("Frontal lobe", "Parietal lobe", "Occipital lobe", "Temporal lobe", "Limbic lobe", "Mean of all lobes");
+        sensorsList.getItems().addAll("Frontal lobe (red)", "Parietal lobe (blue)", "Temporal lobe (yellow)", "Occipital lobe (green)", "Mean of all lobes");
 
         //if the user first clicks on a checkbox, and then selects a wave
         sensorsList.setOnAction(new EventHandler<ActionEvent>() {
