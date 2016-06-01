@@ -114,16 +114,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bower.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/lgp5/fw/views/web/chart-radar/bower.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -332,15 +322,15 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\GitHub\LGP-5A\FW\src\com\lgp5\fw\views\web" />
-      <recent name="D:\GitHub\LGP-5A\FW\src\com\lgp5\fw\views" />
-      <recent name="D:\GitHub\LGP-5A\FW\src\com\lgp5\fw\controllers" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/com/lgp5/fw/views" />
       <recent name="$PROJECT_DIR$/src/com/lgp5/fw/assets/fonts" />
       <recent name="$PROJECT_DIR$/src/com/lgp5/fw/assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\LGP-5A\FW\src\com\lgp5\fw\views\web" />
+      <recent name="D:\GitHub\LGP-5A\FW\src\com\lgp5\fw\views" />
+      <recent name="D:\GitHub\LGP-5A\FW\src\com\lgp5\fw\controllers" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
