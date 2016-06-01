@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 --paper-toast-color: white;
             }
         </style>
+
         <firebase-auth id="auth"
                        location="https://brainlight.firebaseio.com/"
                        provider="password"
@@ -67,39 +68,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     //this.$.toast.open();
                 },
 
+                ready: function() {
+                    /**
+                     * The user key does exist in the session storage
+                     * Check if the user is logged in the firebase database
+                     */
+                    var firebaseRef = new Firebase(app.location);
+                    var authData = firebaseRef.getAuth();
+
+                    // User is logged in, update the connection state
+                    if (!authData) {
+                        /**
+                         * User is not logged in Firebase database, although the key
+                         * exists in the session storage.
+                         *
+                         * That might means that the session expired in the server side
+                         * In this case we delete the user key from the session storage
+                         */
+                        if(localStorage.getItem('user') != null)
+                            localStorage.removeItem('user');
+                    }
+                },
+
                 loggedIn: function (e) {
-                    var connectionRef = new Firebase(app.connectionState);
-                    connectionRef.on("value", function(snapshot) {
-                        var value = snapshot.val();
+                    // The key 'user' does not exists in the session storage...
+                    if (localStorage.getItem("user") == null) {
+                        // Check if the user is logged in the firebase database
+                        var firebaseRef = new Firebase(app.location);
+                        var authData = firebaseRef.getAuth();
 
-                        // User is connected
-                        if(value) {
-                            if(localStorage.getItem("user") != null) {
-                                var user = JSON.parse(localStorage.getItem("user"));
-                                var userKey = Object.keys(user)[0];
+                        // User is logged in...
+                        if (authData) {
+                            // Search for the user by email and store the user object in the session storage
+                            var ref = new Firebase(app.usersLocation);
+                            ref.orderByChild('mail').equalTo(this.user.password.email)
+                                    .on('value', function (snapshot) {
+                                        var user = snapshot.val();
+                                        if (user != null) {
+                                            localStorage.setItem('user', JSON.stringify(user));
+                                            page.redirect('/dashboard/patients');
+                                        }
+                                    });
 
-                                var userRef = new Firebase(app.userURL(userKey));
-                                userRef.update({
-                                    online: true
-                                });
-
-                                page.redirect('/dashboard/patients');
-                                userRef.onDisconnect().update({ online: false });
-                            }
+                            this.loggedIn();
                         }
-                    });
+                    } else {
+                        /**
+                         * The user key does exist in the session storage
+                         * Check if the user is logged in the firebase database
+                         */
+                        var firebaseRef = new Firebase(app.location);
+                        var authData = firebaseRef.getAuth();
+
+                        // User is logged in, update the connection state
+                        if (authData) {
+                            var connectionRef = new Firebase(app.connectionState);
+                            connectionRef.on("value", function (snapshot) {
+                                var value = snapshot.val();
+
+                                // User is connected
+                                if (value) {
+                                    var user = JSON.parse(localStorage.getItem("user"));
+                                    var userKey = Object.keys(user)[0];
+
+                                    var userRef = new Firebase(app.userURL(userKey));
+                                    userRef.update({
+                                        online: true
+                                    });
 
 
-                    if(localStorage.getItem("user") == null) {
-                        var ref = new Firebase(app.usersLocation);
-                        ref.orderByChild('mail').equalTo(this.user.password.email)
-                                .on('value', function (snapshot) {
-                                    var user = snapshot.val();
-                                    if(user != null) {
-                                        localStorage.setItem('user', JSON.stringify(user));
-                                    }
-                                });
-                        this.loggedIn();
+                                    userRef.onDisconnect().update({online: false});
+                                }
+                            });
+                        }
                     }
                 },
 

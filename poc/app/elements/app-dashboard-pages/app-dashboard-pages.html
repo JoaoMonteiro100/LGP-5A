@@ -13,57 +13,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="app-dashboard-pages">
-<style include="shared-styles"></style>
-   <style>
-     #innerpages {
-       padding: 24px 16px 56px;
-       min-height: 100%;
-       box-sizing: border-box;
-     }
-     @media (min-width: 640px) {
-       #innerpages {
-         padding: 24px 36px 56px;
-       }
-     }
-     </style>
-<template>
-    <iron-pages id="innerpages" attr-for-selected="data-route" cols="{{cols}}" selected="{{params.page}}">
-      <section data-route="home">
-        <app-page-title title="Dashboard" cols='{{cols}}'></app-page-title>
-          <div>oi</div>
-      </section>
+    <style include="shared-styles"></style>
+    <style>
+        #innerpages {
+            padding: 24px 16px 56px;
+            min-height: 100%;
+            box-sizing: border-box;
+        }
 
-      <section data-route="patients">
-        <app-page-title title="Patients" cols='{{cols}}'></app-page-title>
-          <page-patients cols="{{cols}}"></page-patients>
-      </section>
+        @media (min-width: 640px) {
+            #innerpages {
+                padding: 24px 36px 56px;
+            }
+        }
+    </style>
+    <template>
+        <iron-pages id="innerpages" attr-for-selected="data-route" cols="{{cols}}" selected="{{params.page}}">
+            <section data-route="home">
+                <app-page-title title="Dashboard" cols='{{cols}}'></app-page-title>
+                <div>oi</div>
+            </section>
+
+            <section data-route="patients">
+                <app-page-title title="Patients" cols='{{cols}}'></app-page-title>
+                <page-patients cols="{{cols}}"></page-patients>
+            </section>
 
 
-      <section data-route="charts">
-        <app-page-title title="Charts" cols="{{cols}}"></app-page-title>
-        <page-charts cols="{{cols}}"></page-charts>
-      </section>
+            <section data-route="charts">
+                <app-page-title title="Charts" cols="{{cols}}"></app-page-title>
+                <page-charts cols="{{cols}}"></page-charts>
+            </section>
 
-      <section data-route="messages">
-        <app-page-title title="Messages" cols='{{cols}}'></app-page-title>
-          <div>oi</div>
-      </section>
-    </iron-pages>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+            <section data-route="messages">
+                <app-page-title title="Messages" cols='{{cols}}'></app-page-title>
+                <div>oi</div>
+            </section>
+        </iron-pages>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-    Polymer({
-      is: 'app-dashboard-pages',
+            Polymer({
+                is: 'app-dashboard-pages',
 
-      properties: {
-        cols: {
-        type: Object,
-        notify: true
-      }
-      }
-    });
-  })();
-  </script>
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    }
+                }
+            });
+        })();
+    </script>
 </dom-module>
