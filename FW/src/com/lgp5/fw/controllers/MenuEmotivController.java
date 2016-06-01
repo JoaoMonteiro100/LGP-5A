@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.web.WebView;
@@ -56,7 +55,6 @@ public class MenuEmotivController extends MenuController{
 	@FXML private LineChart<Number, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
 	@FXML private LineChart<Number, Number> lineChartMoods;
-	@FXML private CheckBox historyCheckBox;
 	Vector<ArrayList> wavesGroup = new Vector<ArrayList>(2);
 	Vector<ArrayList> moodsGroup = new Vector<ArrayList>(2);
 	ArrayList<String> thetaQueue =  new ArrayList<String>();
@@ -422,7 +420,7 @@ public class MenuEmotivController extends MenuController{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/sensorsView.fxml"));
 			Parent parent = (Parent) loader.load();
 			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 462, 174));
+			stage.setScene(new Scene(parent, 462, 450));
 			stage.setTitle("BrainLight - Sensors");
 			stage.show();
 		} catch (IOException e) {
