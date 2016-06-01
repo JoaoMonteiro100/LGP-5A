@@ -106,7 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                         var user = snapshot.val();
                                         if (user != null) {
                                             localStorage.setItem('user', JSON.stringify(user));
-                                            page.redirect('/dashboard/patients');
+                                            // The '/' will decide whether the current user is an Admin or a Doctor
+                                            page.redirect('/');
                                         }
                                     });
                         }

@@ -58,6 +58,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     // User is a doctor, redirect to the doctor page
                     if(user[userKey].groups.group2) {
                         page.redirect('/dashboard/patients');
+                    } else if(user[userKey].groups.group1) {
+                        page.redirect('/dashboardAdmin/users');
                     }
                 }
             }
@@ -66,12 +68,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         page(app.baseUrl, function () {
-            var user = localStorage.getItem("user");
+            /**var user = localStorage.getItem("user");
             if(user != null) {
                 page.redirect('/dashboard/patients');
             } else {
                 app.route = 'login';
-            }
+            }*/
         });
 
         page('/users', function () {
