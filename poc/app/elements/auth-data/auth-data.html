@@ -82,17 +82,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 userRef.update({
                                     online: true
                                 });
-                            }
-                        } else {
-                            // User is offline
-                            if(localStorage.getItem("user") != null) {
-                                var user = JSON.parse(localStorage.getItem("user"));
-                                var userKey = Object.keys(user)[0];
 
-                                var userRef = new Firebase(app.userURL(userKey));
-                                userRef.update({
-                                    online: false
-                                });
+                                page.redirect('/dashboard/patients');
+                                userRef.onDisconnect().update({ online: false });
                             }
                         }
                     });
@@ -103,7 +95,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         ref.orderByChild('mail').equalTo(this.user.password.email)
                                 .on('value', function (snapshot) {
                                     var user = snapshot.val();
-                                    localStorage.setItem('user', JSON.stringify(user));
+                                    if(user != null) {
+                                        localStorage.setItem('user', JSON.stringify(user));
+                                    }
                                 });
                         this.loggedIn();
                     }
