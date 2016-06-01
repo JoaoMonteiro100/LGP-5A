@@ -68,6 +68,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 },
 
                 loggedIn: function (e) {
+                    var connectionRef = new Firebase(app.connectionState);
+                    connectionRef.on("value", function(snapshot) {
+                        var value = snapshot.val();
+
+                        // User is connected
+                        if(value) {
+                            if(localStorage.getItem("user") != null) {
+                                var user = JSON.parse(localStorage.getItem("user"));
+                                var userKey = Object.keys(user)[0];
+
+                                var userRef = new Firebase(app.userURL(userKey));
+                                userRef.update({
+                                    online: true
+                                });
+                            }
+                        } else {
+                            // User is offline
+                            if(localStorage.getItem("user") != null) {
+                                var user = JSON.parse(localStorage.getItem("user"));
+                                var userKey = Object.keys(user)[0];
+
+                                var userRef = new Firebase(app.userURL(userKey));
+                                userRef.update({
+                                    online: false
+                                });
+                            }
+                        }
+                    });
+
+
                     if(localStorage.getItem("user") == null) {
                         var ref = new Firebase(app.usersLocation);
                         ref.orderByChild('mail').equalTo(this.user.password.email)
@@ -75,6 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     var user = snapshot.val();
                                     localStorage.setItem('user', JSON.stringify(user));
                                 });
+                        this.loggedIn();
                     }
                 },
 

@@ -84,6 +84,7 @@
 
     // Firebase location
     app.location = 'https://brainlight.firebaseio.com';
+    app.connectionState = 'https://brainlight.firebaseio.com/.info/connected';
     app.usersLocation = 'https://brainlight.firebaseio.com/users';
     app.requestsLocation = 'https://brainlight.firebaseio.com/requests';
 
