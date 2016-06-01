@@ -116,7 +116,8 @@ public class MenuEmotivController extends MenuController{
 		colorNumber=0;
 		createSeriesLineChartMoods(series2);
 
-		URL url = getClass().getResource("../views/web/radarChart.html");
+		//URL url = getClass().getResource("../views/web/radarChart.html");
+		URL url = new URL("http://localhost:8080/");
 		radarBrowser.getEngine().load(url.toExternalForm());
 		/*headSetDataInterface = new HeadSetDataInterface() {
 			@Override

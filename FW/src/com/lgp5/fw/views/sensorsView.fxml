@@ -37,7 +37,7 @@
       <Circle fx:id="sensorO2" fill="WHITE" layoutX="249.0" layoutY="244.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="sensorP8" fill="WHITE" layoutX="272.0" layoutY="219.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="sensorDRL" fill="WHITE" layoutX="291.0" layoutY="190.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
-      <CheckBox fx:id="lobeLegendCheckBox" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#setLegend" text="View lobes" />
+      <CheckBox fx:id="lobeLegendCheckBox" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#setLegend" text="Show lobes" />
       <Pane fx:id="lobeLegend" layoutY="37.0" prefHeight="104.0" prefWidth="125.0" visible="false">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" layoutX="14.0" layoutY="8.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #F78D7C;" width="15.0" />
