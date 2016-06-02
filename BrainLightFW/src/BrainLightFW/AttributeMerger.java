@@ -13,10 +13,9 @@ public class AttributeMerger {
 
 	
 	
-	public void initMerge (int device, HashMap<String, HashMap<String,Object>> data)
+	public void initMerge (int device, HashMap<String, HashMap<String,Object>> data, Double[][] finalData)
 	{
 		String[][] finalInfo;
-		Double[][] finalData;
 		
 		if (device == 1) {
 			HashMap<String, HashMap<String, Object>> emotivData;
@@ -38,7 +37,7 @@ public class AttributeMerger {
 			HashMap<String, Object> waves = emotivData.get("Waves");
 			HashMap<String, Object> expressions = emotivData.get("FacialExprenssions");
 			HashMap<String,Object> actions = emotivData.get("Actions");
-			int tam = (finalInfo[0].length * finalInfo[1].length) + 3;
+			int tam = finalInfo[0].length + 3;
 			finalData = new Double[tam][];
 			//definir o tamanho de cada parte do array
 			for (int a = 0; a < tam; a++){
@@ -110,10 +109,7 @@ public class AttributeMerger {
 				}
 			}
 			
-			
-			//???????????
-			//TODO
-			//finalData[2][0]=(double) neuroData.blink;
+		
 			
 			};
 	}
