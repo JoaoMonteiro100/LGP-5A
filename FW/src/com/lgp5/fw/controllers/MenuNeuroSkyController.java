@@ -5,6 +5,7 @@ import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
 */
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -12,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -24,8 +26,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
+
+import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
+import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
+import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
 
 
 public class MenuNeuroSkyController extends MenuController{
@@ -80,6 +87,7 @@ public class MenuNeuroSkyController extends MenuController{
 	ArrayList<String> meditationQueue =  new ArrayList<String>();
 	ArrayList<Number> queueTime = new ArrayList<Number>();
 	private long time;
+	HeadSetDataInterface headSetDataInterface;
 	private Tooltip unavailableFeatureTooltip = new Tooltip("This feature is unavailable for NeuroSky Mindset");
 
 	public MenuNeuroSkyController() {
@@ -128,7 +136,6 @@ public class MenuNeuroSkyController extends MenuController{
 		XYChart.Series<String,Float> series2 = new XYChart.Series<>();
 		series2.getData().add(new XYChart.Data("Attention", 35f));
 		series2.getData().add(new XYChart.Data("Meditation", 35f));
-		System.out.println(this.colorNumber);
 		barChartWaves.getData().add(series);
 		for (int i = 0; i < series.getData().size(); i++) {
 			if(colorNumber>=constants.Constants.colors.length)						
@@ -153,8 +160,7 @@ public class MenuNeuroSkyController extends MenuController{
 
 		//URL url = getClass().getResource("../views/web/radarChart.html");
 		URL url = new URL("http://localhost:8080/");
-		radarBrowser.getEngine().load(url.toExternalForm());
-		/*
+		radarBrowser.getEngine().load(url.toExternalForm());		
 		headSetDataInterface = new HeadSetDataInterface() {
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
@@ -265,7 +271,7 @@ public class MenuNeuroSkyController extends MenuController{
 			}
 		};
 
-		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();*/
+		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
 	}
 	private void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
@@ -408,7 +414,6 @@ public class MenuNeuroSkyController extends MenuController{
 						for (Node n : lookupAll) {
 							n.setVisible(true);
 						}
-						System.out.println(seriesBarChart.getData().get(tmp).getNode().getStyle().toString());
 						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand; -fx-border-color: #000000; -fx-border-width: 2;");
 						lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(true);
 					}

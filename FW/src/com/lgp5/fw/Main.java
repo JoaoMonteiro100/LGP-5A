@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	BrainLightFW fw = new BrainLightFW(2);
+
+	fw.receiveDeviceData();
 
     @Override
     public void start(Stage primaryStage) throws Exception {

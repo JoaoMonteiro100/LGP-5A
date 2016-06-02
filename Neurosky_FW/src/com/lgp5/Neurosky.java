@@ -133,8 +133,4 @@ public class Neurosky implements Runnable {
 	public void run() {
 		startReceivingData();
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/remotes/origin/issue18
