@@ -156,7 +156,7 @@
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font></Text>
-            <GridPane fx:id="dataPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="990.0" visible="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="dataPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="990.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" visible="false">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                </columnConstraints>
@@ -272,6 +272,12 @@
                            </font>
                         </Label>
                         <Label fx:id="signalQualityData" layoutX="701.0" layoutY="86.0" prefHeight="17.0" prefWidth="53.0" text="None" />
+                        <Label fx:id="rawData" layoutX="701.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="617.0" layoutY="106.0" prefHeight="17.0" prefWidth="76.0" text="Raw data">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </children>

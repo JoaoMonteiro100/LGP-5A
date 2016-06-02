@@ -51,231 +51,6 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
-                <GridPane fx:id="dataPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="990.0" visible="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                    <children>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Gamma 1" GridPane.rowIndex="4">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="gamma1Data" layoutX="10.0" layoutY="22.0" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.rowIndex="4">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label fx:id="deltaData" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.rowIndex="1">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Delta" GridPane.rowIndex="1">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </Label>
-                        <Label fx:id="alfa1Data" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.rowIndex="2">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Alfa 1" GridPane.rowIndex="2">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </Label>
-                        <Label fx:id="beta1Data" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.rowIndex="3">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Beta 1" GridPane.rowIndex="3">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </Label>
-                        <Label prefHeight="41.0" prefWidth="257.0" text="BRAINWAVES">
-                            <font>
-                                <Font name="System Bold" size="22.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="20.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label prefHeight="41.0" prefWidth="257.0" text="OTHER INFORMATION" GridPane.columnIndex="3">
-                            <font>
-                                <Font name="System Bold" size="22.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="20.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Theta" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="thetaData" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label fx:id="alfa2Data" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Alfa 2" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Beta 2" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="beta2Data" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Gamma 2" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="gamma2Data" prefHeight="31.0" prefWidth="105.0" text="35 Hz" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Error rate" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="errorRateData" prefHeight="31.0" prefWidth="105.0" text="5%" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Battery" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="batteryLevelData" prefHeight="31.0" prefWidth="105.0" text="5%" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Signal" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="signalQualityData" prefHeight="31.0" prefWidth="105.0" text="Good" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Attention" GridPane.rowIndex="7">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="attentionData" prefHeight="31.0" prefWidth="105.0" text="60" GridPane.rowIndex="7">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="105.0" text="Meditation" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="meditationData" prefHeight="31.0" prefWidth="105.0" text="60" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                            <font>
-                                <Font size="17.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="130.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <Label prefHeight="41.0" prefWidth="257.0" text="EMOTIONS" GridPane.rowIndex="6">
-                            <font>
-                                <Font name="System Bold" size="22.0" />
-                            </font>
-                            <GridPane.margin>
-                                <Insets left="20.0" />
-                            </GridPane.margin>
-                        </Label>
-                    </children>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="284.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="360.0" minWidth="10.0" prefWidth="284.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="70.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="421.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                </GridPane>
                 <GridPane fx:id="moodPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="980.0" visible="false" AnchorPane.topAnchor="30.0">
                     <children>
                         <BarChart fx:id="barChartMoods" GridPane.rowIndex="1">
@@ -380,11 +155,199 @@
                     <font>
                         <Font name="System Bold Italic" size="12.0" />
                     </font></Text>
+                <GridPane fx:id="dataPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="990.0" visible="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <LineChart fx:id="rawDataGraph" layoutX="-4.0" layoutY="253.0" prefHeight="291.0" prefWidth="980.0">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </LineChart>
+                                <Label alignment="CENTER" layoutX="257.0" layoutY="16.0" prefHeight="20.0" prefWidth="102.0" text="BRAINWAVES">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="257.0" layoutY="49.0" prefHeight="17.0" prefWidth="69.0" text="Theta">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="thetaData" layoutX="325.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label layoutX="257.0" layoutY="68.0" prefHeight="17.0" prefWidth="69.0" text="Alfa">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="alfaData" layoutX="325.0" layoutY="68.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label layoutX="257.0" layoutY="87.0" prefHeight="17.0" prefWidth="69.0" text="Low beta">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="highBetaData" layoutX="325.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label layoutX="257.0" layoutY="106.0" prefHeight="17.0" prefWidth="69.0" text="High beta">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lowBetaData" layoutX="325.0" layoutY="87.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label layoutX="31.0" layoutY="233.0" text="RAW DATA">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="257.0" layoutY="124.0" prefHeight="17.0" prefWidth="69.0" text="Gamma">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="gammaData" layoutX="325.0" layoutY="124.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label fx:id="meditationData" layoutX="516.0" layoutY="67.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                                <Label layoutX="432.0" layoutY="48.0" prefHeight="17.0" prefWidth="76.0" text="Attention">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="432.0" layoutY="15.0" prefHeight="20.0" prefWidth="102.0" text="MOODS" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="432.0" layoutY="67.0" prefHeight="17.0" prefWidth="76.0" text="Meditation">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="attentionData" layoutX="516.0" layoutY="48.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                                <Label fx:id="batteryLevelData" layoutX="701.0" layoutY="66.0" prefHeight="17.0" prefWidth="53.0" text="0%" />
+                                <Label fx:id="errorRateData" layoutX="701.0" layoutY="47.0" prefHeight="17.0" prefWidth="53.0" text="0%" />
+                                <Label layoutX="617.0" layoutY="47.0" prefHeight="17.0" prefWidth="76.0" text="Error rate">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="617.0" layoutY="66.0" prefHeight="17.0" prefWidth="76.0" text="Battery">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="617.0" layoutY="14.0" prefHeight="20.0" prefWidth="109.0" text="OTHER INFO" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="617.0" layoutY="86.0" prefHeight="17.0" prefWidth="76.0" text="Signal">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="signalQualityData" layoutX="701.0" layoutY="86.0" prefHeight="17.0" prefWidth="53.0" text="None" />
+                                <Label fx:id="rawData" layoutX="701.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label layoutX="617.0" layoutY="106.0" prefHeight="17.0" prefWidth="76.0" text="Raw data">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </GridPane>
+                <ImageView fx:id="eyesStare" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/eyes/stare.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="eyesBlink" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/eyes/blink.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="eyesLookRight" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/eyes/look-right.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="eyesLookLeft" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/eyes/look-left.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="eyesWinkRight" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/eyes/wink-right.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="eyesWinkLeft" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/eyes/wink-left.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="battery5" fitHeight="37.0" fitWidth="24.0" layoutX="97.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;">
+                    <image>
+                        <Image url="@../assets/battery/5.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="battery4" fitHeight="37.0" fitWidth="24.0" layoutX="97.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                    <image>
+                        <Image url="@../assets/battery/4.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="battery3" fitHeight="37.0" fitWidth="24.0" layoutX="97.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                    <image>
+                        <Image url="@../assets/battery/3.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="battery2" fitHeight="37.0" fitWidth="24.0" layoutX="97.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                    <image>
+                        <Image url="@../assets/battery/2.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="battery1" fitHeight="37.0" fitWidth="24.0" layoutX="97.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                    <image>
+                        <Image url="@../assets/battery/1.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="battery0" fitHeight="37.0" fitWidth="24.0" layoutX="97.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                    <image>
+                        <Image url="@../assets/battery/0.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="signal3" fitHeight="37.0" fitWidth="24.0" layoutX="126.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/signal/3.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="signal2" fitHeight="37.0" fitWidth="24.0" layoutX="126.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/signal/2.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="signal1" fitHeight="37.0" fitWidth="24.0" layoutX="126.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/signal/1.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="signal0" fitHeight="37.0" fitWidth="24.0" layoutX="126.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/signal/0.png" />
+                    </image>
+                </ImageView>
             </children>
         </AnchorPane>
         <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
             <children>
-                <Label fx:id="radarLabel" contentDisplay="CENTER" disable="true" onMouseClicked="#showRadar" prefHeight="21.0" prefWidth="56.0" style="-fx-cursor: hand;" text="HOME" textAlignment="CENTER" textFill="#1d1d1b">
+                <Label fx:id="radarLabel" contentDisplay="CENTER" disable="true" onMouseClicked="#showRadar" prefHeight="21.0" prefWidth="90.0" style="-fx-cursor: hand;" text="HOME" textAlignment="CENTER" textFill="#1d1d1b">
                     <HBox.margin>
                         <Insets left="20.0" top="10.0" />
                     </HBox.margin>
@@ -392,52 +355,60 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label fx:id="dataLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showData" prefHeight="30.0" prefWidth="46.0" style="-fx-cursor: hand;" text="DATA" textAlignment="CENTER" textFill="#1d1d1b">
+                <Label fx:id="dataLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showData" prefHeight="30.0" prefWidth="100.0" style="-fx-cursor: hand;" text="DATA" textAlignment="CENTER" textFill="#1d1d1b">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="40.0" top="4.0" />
+                        <Insets left="25.0" top="4.0" />
                     </HBox.margin>
                 </Label>
-                <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showBrainWaves" prefHeight="30.0" prefWidth="109.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
+                <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showBrainWaves" prefHeight="30.0" prefWidth="158.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="50.0" top="4.0" />
+                        <Insets left="30.0" top="4.0" />
                     </HBox.margin>
                 </Label>
-                <Label fx:id="moodLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="53.0" style="-fx-cursor: hand;" text="MOOD" textAlignment="CENTER" textFill="#1d1d1b">
+                <Label fx:id="moodLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="94.0" style="-fx-cursor: hand;" text="MOOD" textAlignment="CENTER" textFill="#1d1d1b">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="50.0" top="4.0" />
+                        <Insets left="30.0" top="4.0" />
                     </HBox.margin>
                 </Label>
-                <Label fx:id="historyLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showHistory" prefHeight="30.0" prefWidth="69.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="actionsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="14.0" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="119.0" style="-fx-cursor: hand;" text="ACTIONS" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+                <Label fx:id="historyLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showHistory" prefHeight="30.0" prefWidth="119.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="50.0" top="4.0" />
+                        <Insets left="30.0" top="4.0" />
                     </HBox.margin>
                 </Label>
-                <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showSettings" prefHeight="30.0" prefWidth="78.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
+                <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showSettings" prefHeight="30.0" prefWidth="125.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="50.0" top="4.0" />
+                        <Insets left="30.0" top="4.0" />
                     </HBox.margin>
                 </Label>
-                <Label fx:id="restartLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#launchSelectDeviceView" prefHeight="30.0" prefWidth="70.0" style="-fx-cursor: hand;" text="RESTART" textAlignment="CENTER" textFill="#1d1d1b" HBox.hgrow="NEVER">
+                <Label fx:id="restartLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#launchSelectDeviceView" prefHeight="30.0" prefWidth="112.0" style="-fx-cursor: hand;" text="RESTART" textAlignment="CENTER" textFill="#1d1d1b" HBox.hgrow="NEVER">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="200.0" top="4.0" />
+                        <Insets left="130.0" top="4.0" />
                     </HBox.margin>
                 </Label>
                 <ImageView fx:id="arrowLabel" fitHeight="25.0" fitWidth="150.0" onMouseClicked="#openMenu" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
@@ -450,25 +421,25 @@
                 </ImageView>
             </children>
         </HBox>
-      <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="110.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
-         <children>
-            <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" onMouseClicked="#launchSensorsView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-            <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" onMouseClicked="#launchAnalysisView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-         </children>
-      </Pane>
-   </children>
+        <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="110.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
+            <children>
+                <Label fx:id="sensorsLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="16.0" onMouseClicked="#launchSensorsView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="SENSORS" textAlignment="CENTER" textFill="#1d1d1b">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </Label>
+                <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="17.0" layoutY="56.0" onMouseClicked="#launchAnalysisView" prefHeight="30.0" prefWidth="193.0" style="-fx-cursor: hand;" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </Label>
+            </children>
+        </Pane>
+    </children>
 </AnchorPane>
