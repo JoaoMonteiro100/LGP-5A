@@ -1,28 +1,22 @@
+package Analysis;
 import java.util.Arrays;
 import java.util.HashMap;
 
 /**
  * Created by joaom on 26/04/2016.
  */
-class Calculations {
-    private float[][] values;
+public class Calculations {
+    private float[] values;
     private TypesOfCalculations[] calcs;
     private float frequencyMean;
     private HashMap<TypesOfCalculations, Float> result;
     private final float brainwaveSpeed = 25; //phase velocity in m/s and assuming the subject is thinking. SOURCE: http://hypertextbook.com/facts/2002/DavidParizh.shtml
 
-    Calculations(float[][] values, TypesOfCalculations[] calcs) {
+    public Calculations(float[] values, TypesOfCalculations[] calcs) {
+    	
         this.values = values;
         this.calcs = calcs;
         this.result = new HashMap<>();
-
-        //in case any of the values is null, result is null as well
-        for(float[] iter : values) {
-            if (iter.length == 0) {
-                this.result = null;
-                return;
-            }
-        }
 
         frequencyMean();
         calc();
@@ -73,39 +67,51 @@ class Calculations {
             switch(type) {
                 case WAVELENGTH:
                     this.result.put(TypesOfCalculations.WAVELENGTH, calcWaveLength());
+                    break;
 
                 case WAVENUMBER:
                     this.result.put(TypesOfCalculations.WAVENUMBER, calcWaveNumber());
+                    break;
 
                 case ANG_WAVENUMBER:
                     this.result.put(TypesOfCalculations.ANG_WAVENUMBER, calcAngWaveNumber());
+                    break;
 
                 case ANG_FREQUENCY:
                     this.result.put(TypesOfCalculations.ANG_FREQUENCY, calcAngFrequency());
+                    break;
 
                 case AMPLITUDE:
                     this.result.put(TypesOfCalculations.AMPLITUDE, calcPeakToPeakAmplitude());
+                    break;
 
                 case MAX_AMPLITUDE:
                     this.result.put(TypesOfCalculations.MAX_AMPLITUDE, calcMaxAmplitude());
+                    break;
 
                 case PERIOD:
                     this.result.put(TypesOfCalculations.PERIOD, calcPeriod());
+                    break;
 
                 case MAX:
                     this.result.put(TypesOfCalculations.MAX, calcMax());
+                    break;
 
                 case MIN:
                     this.result.put(TypesOfCalculations.MIN, calcMin());
+                    break;
 
                 case MEAN:
                     this.result.put(TypesOfCalculations.MEAN, calcMean());
+                    break;
 
                 case MODE:
                     this.result.put(TypesOfCalculations.MODE, calcMode());
+                    break;
 
                 case MEDIAN:
                     this.result.put(TypesOfCalculations.MEDIAN, calcMedian());
+                    break;
 
                 default:
                     break;
@@ -115,18 +121,23 @@ class Calculations {
 
     private void frequencyMean() {
         float total = 0;
-        for(float[] valueTuple : values) {
-            total += valueTuple[1];
+        for(float value : values) {
+            total += value;
         }
-        this.frequencyMean = total / values.length;
+        if(values.length>0) {
+            this.frequencyMean = total / values.length;
+        }
+        else {
+            this.frequencyMean = 0;
+        }
     }
 
     private float[] sortedFrequencies() {
         float[] frequencies = new float[this.values.length];
         int i = 0;
 
-        for(float[] value : this.values) {
-            frequencies[i] = value[1];
+        for(float value : this.values) {
+            frequencies[i] = value;
             i++;
         }
         Arrays.sort(frequencies);
@@ -159,36 +170,36 @@ class Calculations {
 
             //if it's the first value we just compare it to the next
             if (i == 0) {
-                if (values[i][1] > values[i+1][1]) {
-                    maxCounter += values[i][1];
+                if (values[i] > values[i+1]) {
+                    maxCounter += values[i];
                     peakChange++;
                 }
-                else if (values[i][1] < values[i+1][1]) {
-                    minCounter += values[i][1];
+                else if (values[i]< values[i+1]) {
+                    minCounter += values[i];
                     peakChange++;
                 }
             }
 
             //if it's the last value we just compare it to the previous
             else if (i == this.values.length-1) {
-                if (values[i][1] > values[i-1][1]) {
-                    maxCounter += values[i][1];
+                if (values[i] > values[i-1]) {
+                    maxCounter += values[i];
                     peakChange++;
                 }
-                else if (values[i][1] < values[i-1][1]) {
-                    minCounter += values[i][1];
+                else if (values[i] < values[i-1]) {
+                    minCounter += values[i];
                     peakChange++;
                 }
             }
 
             //if it's any other value we compare it to both the previous and next values
             else {
-                if (values[i][1] > values[i-1][1] && values[i][1] > values[i+1][1]) {
-                    maxCounter += values[i][1];
+                if (values[i] > values[i-1] && values[i] > values[i+1]) {
+                    maxCounter += values[i];
                     peakChange++;
                 }
-                else if (values[i][1] < values[i-1][1] && values[i][1] < values[i+1][1]) {
-                    minCounter += values[i][1];
+                else if (values[i] < values[i-1] && values[i] < values[i+1]) {
+                    minCounter += values[i];
                     peakChange++;
                 }
             }
@@ -213,9 +224,9 @@ class Calculations {
 
     private float calcMax() {
         float max = 0;
-        for(float[] number : this.values) {
-            if(number[1] > max) {
-                max = number[1];
+        for(float number : this.values) {
+            if(number > max) {
+                max = number;
             }
         }
         return max;
@@ -223,9 +234,9 @@ class Calculations {
 
     private float calcMin() {
         float min = 999999;
-        for(float[] number : this.values) {
-            if(number[1] < min) {
-                min = number[1];
+        for(float number : this.values) {
+            if(number < min) {
+                min = number;
             }
         }
         return min;
