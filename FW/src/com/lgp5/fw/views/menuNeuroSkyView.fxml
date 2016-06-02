@@ -271,11 +271,71 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="signalQualityData" layoutX="701.0" layoutY="86.0" prefHeight="17.0" prefWidth="53.0" text="Good" />
+                        <Label fx:id="signalQualityData" layoutX="701.0" layoutY="86.0" prefHeight="17.0" prefWidth="53.0" text="None" />
                      </children>
                   </AnchorPane>
                </children>
             </GridPane>
+            <ImageView fx:id="eyesStare" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/eyes/stare.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="eyesBlink" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../assets/eyes/blink.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="battery5" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;">
+               <image>
+                  <Image url="@../assets/battery/5.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="battery4" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+               <image>
+                  <Image url="@../assets/battery/4.png" />
+               </image>
+            </ImageView>
+             <ImageView fx:id="battery3" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                 <image>
+                     <Image url="@../assets/battery/3.png" />
+                 </image>
+             </ImageView>
+             <ImageView fx:id="battery2" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                 <image>
+                     <Image url="@../assets/battery/2.png" />
+                 </image>
+             </ImageView>
+             <ImageView fx:id="battery1" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                 <image>
+                     <Image url="@../assets/battery/1.png" />
+                 </image>
+             </ImageView>
+             <ImageView fx:id="battery0" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
+                 <image>
+                     <Image url="@../assets/battery/0.png" />
+                 </image>
+             </ImageView>
+            <ImageView fx:id="signal3" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/signal/3.png" />
+               </image>
+            </ImageView>
+             <ImageView fx:id="signal2" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                 <image>
+                     <Image url="@../assets/signal/2.png" />
+                 </image>
+             </ImageView>
+             <ImageView fx:id="signal1" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                 <image>
+                     <Image url="@../assets/signal/1.png" />
+                 </image>
+             </ImageView>
+             <ImageView fx:id="signal0" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                 <image>
+                     <Image url="@../assets/signal/0.png" />
+                 </image>
+             </ImageView>
          </children>
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
