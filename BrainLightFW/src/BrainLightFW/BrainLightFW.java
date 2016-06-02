@@ -1,6 +1,5 @@
 package BrainLightFW;
 import interfaces.HeadSetDataInterface;
-import interfaces.sendInterface;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 //import Analysis.*;
@@ -14,8 +13,7 @@ import Emotiv.Emotiv_SDK.EmotivDevice;
  * Created by cenas on 23/04/16.
  */
 
-public class BrainLightFW{
-
+public class BrainLightFW {
 	private Neurosky neuroDevice;
 	private EmotivDevice emoDevice;
 	private int wirelessSignal;
@@ -25,7 +23,6 @@ public class BrainLightFW{
 	private LinkedList<Double [][]> doubleQ;
 	private boolean running;
 	private int deviceNo;
-	sendInterface sendDataInterface;
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 	public BrainLightFW(int device){
@@ -86,10 +83,10 @@ public class BrainLightFW{
 
 
 	public void receiveDeviceData(){
-		
+
 		Thread receiveDataThread = new Thread("ReceiveDeviceData"){
 			public void run() {
-				
+
 				if (deviceNo == 1) {
 					Thread emotivThread = new Thread(emoDevice);
 					emoDevice.connectEmotiv();
@@ -102,15 +99,11 @@ public class BrainLightFW{
 					}
 				}
 				else if (deviceNo == 2) {
-					
+
 					neuroDevice.connect();
 					neuroDevice.run();
-					Thread neuroThread = new Thread(neuroDevice);					
-					if(sendDataInterface != null) {
-						sendDataInterface.onReceiveData(finalDataArray);
-					}
-					
-					neuroThread.start();
+					//Thread neuroThread = new Thread(neuroDevice);
+					//neuroThread.start();
 
 					while (running) {
 						if (deviceNo == 2) {
@@ -249,7 +242,6 @@ public class BrainLightFW{
 	}
 
 	public static void main(String[] args) {
-		
 		BrainLightFW fw = new BrainLightFW(2);
 
 		fw.receiveDeviceData();
@@ -274,7 +266,7 @@ public class BrainLightFW{
 		System.out.println("END");
 		fw.stopReceiving();
 		fw.deviceDisconnect();
-		
+
 
 	}
 	//done
@@ -387,7 +379,7 @@ public class BrainLightFW{
 			finalData[2]= new Double[1];
 			finalData[3] = new Double[0];
 			finalData[4] = new Double[2];
-			
+
 
 			for (int i = 1;i < finalInfo.length; i++){
 				System.out.print("[");
@@ -431,7 +423,7 @@ public class BrainLightFW{
 	{
 		System.out.println(value);
 		if(value != null)
-		return value;
+			return value;
 		else return -1;
 	}
 
@@ -500,7 +492,6 @@ public class BrainLightFW{
 		return act;
 
 	}
-
 }
 
 

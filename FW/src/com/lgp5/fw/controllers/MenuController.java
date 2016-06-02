@@ -26,7 +26,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MenuController {
+public class MenuController{
 	private Desktop desktop = Desktop.getDesktop();
 	@FXML private AnchorPane paneLayoutRoot;
 	@FXML private ImageView recordButton;

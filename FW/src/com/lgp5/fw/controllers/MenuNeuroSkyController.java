@@ -1,9 +1,5 @@
 package com.lgp5.fw.controllers;
-/*
-import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
-import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
-import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
-*/
+
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -33,6 +29,8 @@ import java.util.Vector;
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
+
+import BrainLightFW.BrainLightFW;
 
 
 public class MenuNeuroSkyController extends MenuController{
@@ -86,8 +84,7 @@ public class MenuNeuroSkyController extends MenuController{
 	ArrayList<String> attentionQueue =  new ArrayList<String>();
 	ArrayList<String> meditationQueue =  new ArrayList<String>();
 	ArrayList<Number> queueTime = new ArrayList<Number>();
-	private long time;
-	HeadSetDataInterface headSetDataInterface;
+	private long time;	
 	private Tooltip unavailableFeatureTooltip = new Tooltip("This feature is unavailable for NeuroSky Mindset");
 
 	public MenuNeuroSkyController() {
@@ -161,9 +158,8 @@ public class MenuNeuroSkyController extends MenuController{
 		//URL url = getClass().getResource("../views/web/radarChart.html");
 		URL url = new URL("http://localhost:8080/");
 		radarBrowser.getEngine().load(url.toExternalForm());		
-		headSetDataInterface = new HeadSetDataInterface() {
-			@Override
-			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
+		
+				/*
 				if(gamma1Data != null) {
 					HashMap<String, Object> values = hashMap.get(Constants.WAVES);
 					String gamma1 = values.get(Constants.LOW_GAMMA).toString();
@@ -267,11 +263,9 @@ public class MenuNeuroSkyController extends MenuController{
 							}								
 						}
 					});
-				}
-			}
-		};
+				}*/
 
-		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
+		//new Thread(new BrainLightFW(2)).start();
 	}
 	private void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
