@@ -15,10 +15,10 @@ public class Main extends Application {
         //Font.loadFont(getClass().getResourceAsStream("/assets/fonts/Roboto-Bold.ttf"), 16);
         //Font.loadFont(getClass().getResourceAsStream("/assets/fonts/Roboto-Light.ttf"), 16);
 
-        Parent root = FXMLLoader.load(getClass().getResource("views/selectDeviceView.fxml"));
-        primaryStage.setTitle("BrainLight - Select Device");
+        Parent root = FXMLLoader.load(getClass().getResource("views/analysis.fxml"));
+        primaryStage.setTitle("BrainStream - Login");
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
-        primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 
