@@ -1,10 +1,6 @@
 package BrainLightFW;
 
 import java.util.HashMap;
-import interfaces.HeadSetDataInterface;
-import j2me.com.NeuroSky.ThinkGear.IO.HeadsetConnection;
-import j2me.com.NeuroSky.ThinkGear.Util.*;
-import com.lgp5.*;
 
 
 public class AttributeMerger {

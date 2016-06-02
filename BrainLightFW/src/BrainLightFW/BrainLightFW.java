@@ -1,15 +1,14 @@
 package BrainLightFW;
-import Emotiv.Emotiv_SDK.*;
-
 import interfaces.HeadSetDataInterface;
 import interfaces.sendInterface;
-import j2me.com.NeuroSky.ThinkGear.IO.*;
-import j2me.com.NeuroSky.ThinkGear.Util.HeadsetData;
-import com.lgp5.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 //import Analysis.*;
 //import Analysis.Calculations;
+
+import com.lgp5.Neurosky;
+
+import Emotiv.Emotiv_SDK.EmotivDevice;
 
 /**
  * Created by cenas on 23/04/16.

@@ -94,7 +94,7 @@ testeinfo.put("WirelessSignal", 0.0);
 //}
 
 //criar array de arrays com toda a informação do dispositivo
-BrainLightFW.finalInfoFinal(1);
+//BrainLightFW.finalInfoFinal(1);
 HashMap<String, Object> waves = testeEmo.get("Waves");
 HashMap<String, Object> expressions = testeEmo.get("FacialExprenssions");
 HashMap<String, Object> actions = testeEmo.get("Actions");
