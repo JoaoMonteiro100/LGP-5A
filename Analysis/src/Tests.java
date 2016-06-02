@@ -1,33 +1,32 @@
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class Tests {
 
-    private final float[][][] values = {
+    private final float[][] values = {
             //always the same value
-            {{0.0f, 20f}, {0.1f, 20f}, {0.2f, 20f}, {0.3f, 20f}, {0.4f, 20f}, {0.5f, 20f}},
+            {20f,  20f,  20f, 20f, 20f, 20f},
             //different values
-            {{0.01f, 0f}, {0.02f, 0f}, {0.03f, 100f}, {0.04f, 100f}},
+            { 0f, 0f, 100f, 100f},
             //different values with decimal result
-            {{0.01f, 1f}, {0.02f, 1f}, {0.03f, 2f}, {0.04f, 2f}},
+            { 1f,1f, 2f,2f},
             //results not ordered by time
-            {{0.03f, 50f}, {0.04f, 0f}, {0.01f, 65f}, {0.02f, 30f}},
+            { 50f,  0f,65f, 30f},
             //1 value only
-            {{0f, 50f}},
+            { 50f},
             //result with 3 decimal units
-            {{0.01f, 0.25f}, {0.02f, 0.26f}},
+            { 0.25f , 0.26f},
             //same values at the same time
-            {{0.00f, 50f}, {0.00f, 50f}},
+            {50f, 50f},
             //different values at the same time
-            {{0.00f, 50f}, {0.00f, 100f}},
+            {50f, 100f},
             //no value
-            {{}},
+            {},
             //value = 0
-            {{0.00f, 0f}, {0.01f, 0f}},
+            { 0f,  0f},
     };
 
     private final TypesOfCalculations[][] types = {
@@ -49,21 +48,25 @@ public class Tests {
     @Test
     public void testMain() {
         Calculations calcs = new Calculations(values[1],types[0]);
+        System.out.println(calcs.getResult().toString());
         assertTrue(calcs.getResult().containsKey(TypesOfCalculations.WAVELENGTH));
         assertNotNull(calcs.getResult().values());
+        
 
         Calculations calcs2 = new Calculations(values[3],types[7]);
         assertTrue(calcs2.getResult().containsKey(TypesOfCalculations.MAX));
         assertNotNull(calcs2.getResult().values());
 
         Calculations calcs3 = new Calculations(values[8],types[12]);
-        assertNull(calcs3.getResult());
+        assertTrue(calcs3.getResult().containsValue(0f));
     }
 
     @Test
     public void whatUnit() {
         assertEquals("Cycles per Meter",Calculations.whatUnit(TypesOfCalculations.WAVENUMBER)[0]);
         assertEquals("Hz",Calculations.whatUnit(TypesOfCalculations.MEAN)[1]);
+        //Calculations omg = new Calculations(new float[]{1,2,3,3}, new TypesOfCalculations[]{TypesOfCalculations.MEAN, TypesOfCalculations.MODE});
+        //System.out.println("ESTOU AQUI" + omg.getResult().toString());
     }
 
     @Test
@@ -135,7 +138,7 @@ public class Tests {
         assertEquals(65,calcs2.getResult().get(TypesOfCalculations.MAX),0);
 
         Calculations calcs3 = new Calculations(values[8],types[7]);
-        assertNull(calcs3.getResult());
+        assertTrue(calcs3.getResult().containsValue(0f));
     }
 
     @Test
@@ -159,7 +162,7 @@ public class Tests {
         assertEquals(0.255,calcs2.getResult().get(TypesOfCalculations.MEAN),0.0001);
 
         Calculations calcs3 = new Calculations(values[8],types[9]);
-        assertNull(calcs3.getResult());
+        assertEquals(0,calcs3.getResult().get(TypesOfCalculations.MEAN),0);
     }
 
     @Test
