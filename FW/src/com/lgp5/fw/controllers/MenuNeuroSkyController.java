@@ -31,8 +31,8 @@ import java.util.Vector;
 public class MenuNeuroSkyController extends MenuController{
 
 	private int colorNumber=0;
-	@FXML private Label gamma1Data;
 	@FXML private Label analysisLabel;
+	@FXML private Label gamma1Data;
 	@FXML private Label gamma2Data;
 	@FXML private Label alfa1Data;
 	@FXML private Label alfa2Data;
