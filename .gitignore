@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+*.classpath
+.project
+FW/out/
+=======
 # Created by https://www.gitignore.io/api/phpstorm
 
 ### PhpStorm ###
@@ -59,3 +64,4 @@ fabric.properties
 .idea/
 *.iml
 *.iws
+>>>>>>> refs/remotes/origin/Dev

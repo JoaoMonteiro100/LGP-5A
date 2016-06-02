@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# LGP-5A
+BrainLight - framework para leitura e análise de sinais biomédicos 
+=======
 # BrainLight
 LGP-5A
 
@@ -42,3 +46,4 @@ TODO
 * José Lima - https://github.com/zlima
 * Luís Natividade - https://github.com/Vacilo
 * Luís Pinto - https://github.com/siualpinto
+>>>>>>> refs/remotes/origin/Dev
