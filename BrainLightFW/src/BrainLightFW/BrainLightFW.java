@@ -306,7 +306,7 @@ public class BrainLightFW {
 			String[][] finalInfo = new String [][] { {"FP1"},
 				{"Delta","Theta","LowAlpha","HighAlpha","LowBeta","HighBeta","LowGamma","MidGamma"},
 				{"Attention","Meditation"},
-				{"PoorSignal"}
+				{"poor_signal"}
 			};
 			return finalInfo;
 		}
@@ -442,13 +442,12 @@ public class BrainLightFW {
 			for (int i = 1;i < finalInfo.length; i++){
 				for (int k = 0;k < finalInfo[i].length; k++){
 					if (i == 1){
-						finalData[i-1][k]= convertVolts((Float)neuroData.get("Waves").get(finalInfo[i][k]));						
-						finalData[i-1][k]= finalData[i-1][k]*10;//Décimo de Volt					
+						finalData[i-1][k]= convertVolts((Float)neuroData.get("Waves").get(finalInfo[i][k]));
+						finalData[i-1][k]= finalData[i-1][k]*10;//Décimo de Volt
 					}
 					else
 					{
-						finalData[i-1][k]=convertToDouble((Integer) neuroData.get("Waves").get(finalInfo[i][k]));					
-						finalData[i-1][k]=finalData[i-1][k]*10;//Décimo de Volt					
+						finalData[i-1][k]=convertToDouble((Integer) neuroData.get("Waves").get(finalInfo[i][k]));			
 					}
 				}
 			}

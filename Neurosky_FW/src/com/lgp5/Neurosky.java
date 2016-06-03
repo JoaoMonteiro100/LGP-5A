@@ -76,7 +76,7 @@ public class Neurosky implements Runnable {
 					wavesMap.put(Constants.BATTERY_LEVEL, valueBytes[0] & 0xFF);
 				break;
 				case (0x02):
-					wavesMap.put(Constants.POOR_SIGNAL, valueBytes[0] & 0xFF);
+					wavesMap.put(Constants.POOR_SIGNAL, valueBytes[0] & 0xFF);				
 				break;
 				case 0x04:
 					wavesMap.put(Constants.ATTENTION, valueBytes[0] & 0xFF);

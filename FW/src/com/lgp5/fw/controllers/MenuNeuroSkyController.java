@@ -134,6 +134,7 @@ public class MenuNeuroSkyController extends MenuController {
 		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
 		String[] moodsArray = {"Attention","Meditation"};
 		brainwaves.addAll(Arrays.asList(waves));
+		moods.addAll(Arrays.asList(moodsArray));
 		xAxisWaves.setCategories(brainwaves);
 		xAxisMood.setCategories(moods);
 		XYChart.Series<String,Float> series = new XYChart.Series<>();
