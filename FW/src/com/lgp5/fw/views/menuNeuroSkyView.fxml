@@ -117,7 +117,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="settingsPane" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="954.0" visible="false" AnchorPane.topAnchor="30.0">
+            <GridPane fx:id="settingsPane" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="954.0" AnchorPane.topAnchor="30.0" visible="false">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -148,6 +148,7 @@
                         <CheckBox fx:id="deleteFilesCheckBox" layoutX="21.0" layoutY="74.0" mnemonicParsing="false" onAction="#disableHistoryPeriod" text="Saved files are never deleted" textAlignment="CENTER" />
 
                         <Button fx:id="deleteHistoryButton" layoutX="21.0" layoutY="158.0" mnemonicParsing="false" onAction="#confirmDeletingHistory" text="Delete history" />
+                        <Button fx:id="resetPreferencesButton" layoutX="118.0" layoutY="158.0" mnemonicParsing="false" onAction="#resetPreferences" text="Reset preferences to default" />
                      </children>
                   </AnchorPane>
                </children>
@@ -249,31 +250,19 @@
                            </font>
                         </Label>
                         <Label fx:id="attentionData" layoutX="516.0" layoutY="48.0" prefHeight="17.0" prefWidth="53.0" text="0" />
-                        <Label fx:id="batteryLevelData" layoutX="701.0" layoutY="66.0" prefHeight="17.0" prefWidth="53.0" text="0%" />
-                        <Label fx:id="errorRateData" layoutX="701.0" layoutY="47.0" prefHeight="17.0" prefWidth="53.0" text="0%" />
-                        <Label layoutX="617.0" layoutY="47.0" prefHeight="17.0" prefWidth="76.0" text="Error rate">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="617.0" layoutY="66.0" prefHeight="17.0" prefWidth="76.0" text="Battery">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="617.0" layoutY="14.0" prefHeight="20.0" prefWidth="109.0" text="OTHER INFO" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="617.0" layoutY="86.0" prefHeight="17.0" prefWidth="76.0" text="Signal">
+                        <Label layoutX="617.0" layoutY="49.0" prefHeight="17.0" prefWidth="76.0" text="Signal">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="signalQualityData" layoutX="701.0" layoutY="86.0" prefHeight="17.0" prefWidth="53.0" text="None" />
-                        <Label fx:id="rawData" layoutX="701.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
-                        <Label layoutX="617.0" layoutY="106.0" prefHeight="17.0" prefWidth="76.0" text="Raw data">
+                        <Label fx:id="signalQualityData" layoutX="701.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="None" />
+                        <Label fx:id="rawData" layoutX="701.0" layoutY="69.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="617.0" layoutY="69.0" prefHeight="17.0" prefWidth="76.0" text="Raw data">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -282,62 +271,22 @@
                   </AnchorPane>
                </children>
             </GridPane>
-            <ImageView fx:id="eyesStare" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/eyes/stare.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="eyesBlink" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../assets/eyes/blink.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="battery5" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;">
-               <image>
-                  <Image url="@../assets/battery/5.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="battery4" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
-               <image>
-                  <Image url="@../assets/battery/4.png" />
-               </image>
-            </ImageView>
-             <ImageView fx:id="battery3" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
-                 <image>
-                     <Image url="@../assets/battery/3.png" />
-                 </image>
-             </ImageView>
-             <ImageView fx:id="battery2" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
-                 <image>
-                     <Image url="@../assets/battery/2.png" />
-                 </image>
-             </ImageView>
-             <ImageView fx:id="battery1" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
-                 <image>
-                     <Image url="@../assets/battery/1.png" />
-                 </image>
-             </ImageView>
-             <ImageView fx:id="battery0" fitHeight="37.0" fitWidth="24.0" layoutX="133.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 90;" visible="false">
-                 <image>
-                     <Image url="@../assets/battery/0.png" />
-                 </image>
-             </ImageView>
-            <ImageView fx:id="signal3" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="signal3" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/signal/3.png" />
                </image>
             </ImageView>
-             <ImageView fx:id="signal2" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+             <ImageView fx:id="signal2" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
                  <image>
                      <Image url="@../assets/signal/2.png" />
                  </image>
              </ImageView>
-             <ImageView fx:id="signal1" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+             <ImageView fx:id="signal1" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
                  <image>
                      <Image url="@../assets/signal/1.png" />
                  </image>
              </ImageView>
-             <ImageView fx:id="signal0" fitHeight="37.0" fitWidth="24.0" layoutX="162.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+             <ImageView fx:id="signal0" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
                  <image>
                      <Image url="@../assets/signal/0.png" />
                  </image>
