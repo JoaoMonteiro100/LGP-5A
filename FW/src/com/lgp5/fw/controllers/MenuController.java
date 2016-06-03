@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -236,7 +237,7 @@ public class MenuController{
         }
     }
 
-    public void resetPreferences() {
+    public void resetPreferences(ActionEvent event) {
         prefs.reset();
         historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
         daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));

@@ -298,10 +298,9 @@ public class MenuNeuroSkyController extends MenuController {
 
 			@Override
 			public void update2(Double[] finalDataArray) {
-				System.out.println(Double.toString(finalDataArray[0]));
 				finalRawDataArray=finalDataArray;
 				updateSeriesLineChartRaw(Double.toString(finalDataArray[0]));
-				Platform.runLater(new Runnable() {
+				Platform.runLater(new Runnable() { 
 					@Override
 					public void run() {	
 						rawData.setText(Double.toString(finalRawDataArray[0]));

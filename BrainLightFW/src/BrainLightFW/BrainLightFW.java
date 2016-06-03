@@ -1,5 +1,7 @@
 package BrainLightFW;
 import interfaces.HeadSetDataInterface;
+
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -64,7 +66,7 @@ public class BrainLightFW {
 					initGetRaw(2,rawData);
 					try {
 						queue2.put(finalRawData);
-						Thread.sleep(1000);
+						//Thread.sleep(1000);
 					} catch (Exception e) {
 						// TODO: handle exception
 					}					
@@ -74,9 +76,8 @@ public class BrainLightFW {
 			neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
 		}
 
-
 	}
-	
+
 
 	//return true if all sensors are ok - emotiv only
 	public boolean getAllSensorsStatusOK(HashMap<String,HashMap<String,Object>> Obj){
@@ -312,22 +313,23 @@ public class BrainLightFW {
 		else return null;
 	}
 	public static void initGetRaw (int device,  HashMap <String,Integer> data)
-    {
-        Double[] finalRaw = new Double[1];
-        
-        if (device == 2){
-            HashMap <String,Integer> neuroData;
-            if (data instanceof HashMap) {
-                neuroData = (HashMap <String,Integer>) data;
-            } else {
-                System.out.println("Wrong type of data for neurosky device");
-                return;
-            }
-                finalRaw[0] = (Double) convertVolts((float)neuroData.get("Raw"));
-                //finalRaw[0] = Double.parseDouble(neuroData.get("Raw").toString());
-        }
-            finalRawData = finalRaw;
-    }
+	{
+		Double[] finalRaw = new Double[1];
+
+		if (device == 2){
+			HashMap <String,Integer> neuroData;
+			if (data instanceof HashMap) {
+				neuroData = (HashMap <String,Integer>) data;
+			} else {
+				System.out.println("Wrong type of data for neurosky device");
+				return;
+			}
+			finalRaw[0] = (Double) convertVolts((float)neuroData.get("Raw"));
+			finalRaw[0] = finalRaw[0]*100000;//Micro de Volt
+			//finalRaw[0] = Double.parseDouble(neuroData.get("Raw").toString());
+		}
+		finalRawData = finalRaw;
+	}
 	public static void initMerge (int device, HashMap<String, HashMap<String,Object>> data)
 	{
 		String[][] finalInfo;
@@ -441,9 +443,12 @@ public class BrainLightFW {
 				for (int k = 0;k < finalInfo[i].length; k++){
 					if (i == 1){
 						finalData[i-1][k]= convertVolts((Float)neuroData.get("Waves").get(finalInfo[i][k]));						
+						finalData[i-1][k]= finalData[i-1][k]*10;//Décimo de Volt					
 					}
 					else
-					{finalData[i-1][k]=convertToDouble((Integer) neuroData.get("Waves").get(finalInfo[i][k]));					
+					{
+						finalData[i-1][k]=convertToDouble((Integer) neuroData.get("Waves").get(finalInfo[i][k]));					
+						finalData[i-1][k]=finalData[i-1][k]*10;//Décimo de Volt					
 					}
 				}
 			}
@@ -531,22 +536,22 @@ public class BrainLightFW {
 		return act;
 
 	}
-	
-	
-	public static void cleanHistory() {
-    String str = (System.getProperty("user.dir")+Integer.MAX_VALUE).replaceAll("BrainLightFW"+Integer.MAX_VALUE, "")+"FW\\src\\history";
-	File dir = new File(str); 
-	try{
-		purgeDirectory(dir);
-	} catch (Exception e){
-		System.err.println("History folder not in correct directory ("+str+")");
-	}
-}
 
-static void purgeDirectory(File dir) {
-    for (File file: dir.listFiles()) {
-        if (file.isDirectory()) purgeDirectory(file);
-        file.delete();
-    }
-}
+
+	public static void cleanHistory() {
+		String str = (System.getProperty("user.dir")+Integer.MAX_VALUE).replaceAll("BrainLightFW"+Integer.MAX_VALUE, "")+"FW\\src\\history";
+		File dir = new File(str); 
+		try{
+			purgeDirectory(dir);
+		} catch (Exception e){
+			System.err.println("History folder not in correct directory ("+str+")");
+		}
+	}
+
+	static void purgeDirectory(File dir) {
+		for (File file: dir.listFiles()) {
+			if (file.isDirectory()) purgeDirectory(file);
+			file.delete();
+		}
+	}
 }

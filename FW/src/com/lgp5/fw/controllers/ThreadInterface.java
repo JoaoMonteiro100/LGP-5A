@@ -28,8 +28,9 @@ public class ThreadInterface implements Runnable{
 	@Override
 	public void run() {
 		try {
-			while(true)
-			{
+			int i=0;
+			while(true)				
+			{				
 				if(queue.peek() !=null){
 					if(updateInterface != null) {
 						updateInterface.update((Double[][]) queue.take());						
@@ -37,10 +38,16 @@ public class ThreadInterface implements Runnable{
 				}
 				if(queue2.peek() !=null){
 					if(updateInterface != null) {
-						updateInterface.update2((Double[]) queue2.take());	
-						
+						if(i==1000){
+							updateInterface.update2((Double[]) queue2.take());
+							i=0;
+						}
+						else
+						{
+							 queue2.take();
+						}
+						i++;
 					}
-
 				}
 			}
 		} catch (InterruptedException e) {
