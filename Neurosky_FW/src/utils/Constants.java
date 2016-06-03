@@ -15,4 +15,5 @@ public class Constants {
 	public static final String BATTERY_LEVEL = "battery_level";
 	public static final String POOR_SIGNAL = "poor_signal";	
 	public static final String WAVES = "Waves";
+	public static final String RAW = "Raw";
 }

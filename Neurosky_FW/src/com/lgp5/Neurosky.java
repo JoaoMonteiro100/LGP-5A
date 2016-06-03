@@ -16,6 +16,7 @@ import utils.Constants;
 public class Neurosky implements Runnable {
 	private HashMap<String, HashMap<String,Object>> dataToSend;
 	private HashMap<String, HashMap<String,Object>> finalData;
+	private HashMap<String, Integer> rawToSend;
 	HeadsetConnection headsetConnection;
 	String deviceID;
 	long waves[];
@@ -32,6 +33,7 @@ public class Neurosky implements Runnable {
 		headsetData = new HeadsetData();
 		this.sendDataInterface = sendDataInterface;
 		dataToSend = new HashMap<>();
+		rawToSend = new HashMap<>();
 	}
 	public void connect() {
 		try {
@@ -64,10 +66,10 @@ public class Neurosky implements Runnable {
 	}
 	private void receivedData() {
 		HashMap<String, Object> wavesMap = new HashMap<>();
-
 		dataListener = new DataListener() {
 			@Override
 			public void dataValueReceived(int extendedCodeLevel, int code, int numBytes, byte[] valueBytes, Object customData) {
+				int k =0;
 				switch (code) 
 				{
 				case (0x7E):
@@ -84,6 +86,18 @@ public class Neurosky implements Runnable {
 					break;
 				case (0x16):
 					wavesMap.put(Constants.BLINK, valueBytes[0] & 0xFF);
+				break;
+				case (0x80):
+					int highlow = (int)(valueBytes[0] & 0xFF);
+					int highlow1 = (int)(valueBytes[1] & 0xFF);
+					// Source: http://developer.neurosky.com/docs/doku.php?id=thinkgear_communications_protocol#packet_structure
+					if(sendDataInterface != null){
+						int raw = (highlow * 256) + highlow1;
+						if( raw > 32768 ) raw -= 65536;	
+						rawToSend.put(Constants.RAW,raw);
+						sendDataInterface.onReceiveRawData(rawToSend);
+						rawToSend.clear();						
+					}
 				break;
 				case 0x83:
 					for (int i = 0; i < 8; i++) {
@@ -118,8 +132,7 @@ public class Neurosky implements Runnable {
 					}
 					break;
 				}
-				
-				
+
 				if(wavesMap.size() == 11) {
 					dataToSend.put(Constants.WAVES, wavesMap);
 					if(sendDataInterface != null) {

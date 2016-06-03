@@ -14,12 +14,14 @@ import Emotiv.Emotiv_SDK.EmotivDevice;
  * Created by cenas on 23/04/16.
  */
 
-public class BrainLightFW implements Runnable{
+public class BrainLightFW {
 	protected BlockingQueue<Double[][]> queue = null;
+	protected BlockingQueue<Double[]> queue2 = null;
 	private Neurosky neuroDevice;
 	private EmotivDevice emoDevice;
 	private int wirelessSignal;
 	public static  Double[][] finalDataArray;
+	public static  Double[] finalRawData;
 	private HashMap<String,HashMap<String,Object>> neuroData;
 	private LinkedList<HashMap<String, HashMap<String, Object>>> sharedQ;
 	private LinkedList<Double [][]> doubleQ;
@@ -27,8 +29,9 @@ public class BrainLightFW implements Runnable{
 	private int deviceNo;
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
-	public BrainLightFW(int device,BlockingQueue<Double[][]> queue){
+	public BrainLightFW(int device,BlockingQueue<Double[][]> queue,BlockingQueue<Double[]> queue2){
 		this.queue = queue;
+		this.queue2 = queue2;
 		sharedQ = new LinkedList<>();
 		wirelessSignal=0;
 		new LinkedList<>();
@@ -49,7 +52,22 @@ public class BrainLightFW implements Runnable{
 				@Override
 				public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
 					initMerge(2, dataToSend);
-					run();	
+					try {
+						queue.put(finalDataArray);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}		
+				}
+
+				@Override
+				public void onReceiveRawData(HashMap<String, Integer> rawData) {
+					initGetRaw(2,rawData);
+					try {
+						queue2.put(finalRawData);
+						Thread.sleep(1000);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}					
 				}
 			};
 
@@ -58,14 +76,7 @@ public class BrainLightFW implements Runnable{
 
 
 	}
-	@Override
-	public void run() {		
-		try {
-			queue.put(finalDataArray);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}		
-	}
+	
 
 	//return true if all sensors are ok - emotiv only
 	public boolean getAllSensorsStatusOK(HashMap<String,HashMap<String,Object>> Obj){
@@ -300,7 +311,23 @@ public class BrainLightFW implements Runnable{
 		}
 		else return null;
 	}
-	//done
+	public static void initGetRaw (int device,  HashMap <String,Integer> data)
+    {
+        Double[] finalRaw = new Double[1];
+        
+        if (device == 2){
+            HashMap <String,Integer> neuroData;
+            if (data instanceof HashMap) {
+                neuroData = (HashMap <String,Integer>) data;
+            } else {
+                System.out.println("Wrong type of data for neurosky device");
+                return;
+            }
+                finalRaw[0] = (Double) convertVolts((float)neuroData.get("Raw"));
+                //finalRaw[0] = Double.parseDouble(neuroData.get("Raw").toString());
+        }
+            finalRawData = finalRaw;
+    }
 	public static void initMerge (int device, HashMap<String, HashMap<String,Object>> data)
 	{
 		String[][] finalInfo;

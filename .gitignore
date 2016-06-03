@@ -75,3 +75,5 @@ FW/out/production/FW/com/lgp5/fw/controllers/SelectDeviceController$1.class
 *.class
 Neurosky_FW/bin/com/lgp5/Neurosky$1.class
 *.class
+*.class
+Neurosky_FW/bin/com/lgp5/Neurosky.class
