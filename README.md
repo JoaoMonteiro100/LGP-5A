@@ -3,6 +3,7 @@
 ## CONTENTS
    
  * [Introduction](#introduction)
+ * [Release notes v.0.5](#release notes v0.5)
  * [Client](#client)
  * [Instructions](#instructions)
  * [FAQ](#faq)
@@ -19,6 +20,40 @@ Biomedical information is becoming increasingly easier to obtain thanks to weara
 We built a **framework capable of reading, analysing and displaying the information from any compatible biomedical device**. At first it’ll work with the EEG systems [Emotiv EPOC](https://emotiv.com/epoc.php) and [Neurosky Mindset](http://neurosky.com/biosensors/eeg-sensor/biosensors/), but it’s expansible so that more devices and functionalities can be easily added in the future.
 
 The framework, **BrainLight**, is be the foundation upon which countless applications that use biosignals can be developed, but it is still an end-user solution since it also has a graphic interface showing all the information it’s receiving and analysing. To validate BrainLight’s usability we also developed a proof of concept that employs the framework’s functionalities, called **BrainStream**. It consists on a web app on which a physician can check the real-time and past signals of a patient, enabling long-distance consultations.
+
+
+---
+ 
+ 
+## RELEASE NOTES v0.5
+
+**Documentação:**
+* Relatório de especificação de requisitos
+  * Nova user story: FW-US13 - Prioridade baixa - "Como Utilizador quero ver análises de filtros simples passa-altas, passa-baixas e de banda."
+* Plano de testes de aceitação
+  * Inclui resultados dos testes realizados para a versão atual.
+* Planeamento
+
+**BrainLight:**
+* User Manual (em desenvolvimento)
+* Interface gráfica completa para o dispositivo NeuroSky Mindset
+* Visualização da informação em tempo real na interface
+* Comunicação funcional entre Neurosky, módulo de gestão e interface
+* Análises funcionais, mas não são aplicadas ao NeuroSky
+  * Necessitam de atualizações devido a novas informações obtidas relativamente às unidades dos dados do Emotiv
+* API funcional, mas desatualizada
+* Aplicação da transformada rápida de Fourier às ondas do Emotiv
+
+**BrainStream:**
+* User Manual (em desenvolvimento)
+* Sistema de autenticação
+* Gestão de utilizadores
+* Updates em tempo real à base de dados
+* Gráficos atualizados em tempo real e com opção de selecionar ondas pretendidas
+* Histórico funcional
+* Estado online/offline de utilizadores funcional
+* Possibilidade de um médico tirar notas e sinalizar leituras
+* Interface do paciente quase completa
 
 
 ---
