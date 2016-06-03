@@ -2,6 +2,7 @@ package com.lgp5.patient.controllers;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
@@ -20,8 +21,10 @@ public class AnalysisController {
     public AnalysisController() {
     }
 
-    public void changeRecordButton(){
-
+    public void handle(MouseEvent Event) {
+        settings.setCursor(Cursor.HAND);
+        messages.setCursor(Cursor.HAND);
+        game.setCursor(Cursor.HAND);
     }
 
     public void analysisColorToWhite(MouseEvent Event) {

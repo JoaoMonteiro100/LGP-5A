@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,10 +30,6 @@ public class SettingsController {
 
 
     public SettingsController() {
-    }
-
-    public void changeRecordButton(){
-
     }
 
     public void analysisColorToWhite(MouseEvent Event) {
@@ -82,7 +79,12 @@ public class SettingsController {
         });
     }
 
-
+    public void handle(MouseEvent Event) {
+        analysis.setCursor(Cursor.HAND);
+        messages.setCursor(Cursor.HAND);
+        game.setCursor(Cursor.HAND);
+        editProfile.setCursor(Cursor.HAND);
+    }
 
     private void lauchAnalysisView() {
         try {
