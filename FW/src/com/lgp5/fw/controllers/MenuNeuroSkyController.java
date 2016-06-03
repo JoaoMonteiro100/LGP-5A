@@ -1,10 +1,7 @@
 package com.lgp5.fw.controllers;
-/*
-import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
-import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
-import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
-*/
 
+
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -12,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -24,12 +22,24 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
+import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
+import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
+
+import BrainLightFW.BrainLightFW;
 
 
-public class MenuNeuroSkyController extends MenuController{
-
+public class MenuNeuroSkyController extends MenuController {
+	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
+	BlockingQueue queue2 = new ArrayBlockingQueue<Double[]>(1);
+	private Double[] finalRawDataArray = new Double[1];
+	BrainLightFW fw;
 	private int colorNumber=0;
 	@FXML private Label analysisLabel;
 	@FXML private Label gamma1Data;
@@ -45,9 +55,11 @@ public class MenuNeuroSkyController extends MenuController{
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
+	@FXML private Label rawData;
 	@FXML private Pane analysisWrapper;
 	@FXML private WebView radarBrowser;
 	//private HeadSetDataInterface headSetDataInterface;
+	private updateInterface updateInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
 	@FXML private StackedAreaChart<Float, Float> radarGraphA;
@@ -58,15 +70,19 @@ public class MenuNeuroSkyController extends MenuController{
 	@FXML private CategoryAxis xAxisMood;
 	@FXML private NumberAxis xAxisWavesLine;
 	@FXML private NumberAxis xAxisMoodsLine;
+	@FXML private NumberAxis xAxisRawLine;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
+	private ObservableList<String> rawwave = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
 	@FXML private NumberAxis xAxisHistory;
 	@FXML private NumberAxis yAxisHistory;
 	@FXML private LineChart<Number, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
 	@FXML private LineChart<Number, Number> lineChartMoods;
+	@FXML private LineChart<Number, Number> lineChartRaw;
 	@FXML private CheckBox keepHistoryCheckBox;
 	Vector<ArrayList> wavesGroup = new Vector<ArrayList>(2);
+	Vector<ArrayList> rawGroup = new Vector<ArrayList>(2);
 	Vector<ArrayList> moodsGroup = new Vector<ArrayList>(2);
 	ArrayList<String> deltaQueue =  new ArrayList<String>();
 	ArrayList<String> thetaQueue =  new ArrayList<String>();
@@ -78,23 +94,22 @@ public class MenuNeuroSkyController extends MenuController{
 	ArrayList<String> highGammaQueue =  new ArrayList<String>();
 	ArrayList<String> attentionQueue =  new ArrayList<String>();
 	ArrayList<String> meditationQueue =  new ArrayList<String>();
+	ArrayList<String> rawQueue =  new ArrayList<String>();
 	ArrayList<Number> queueTime = new ArrayList<Number>();
-	private long time;
+	ArrayList<Number> queueTime2 = new ArrayList<Number>();
+	private long time;	
+	private long time2;	
 	private Tooltip unavailableFeatureTooltip = new Tooltip("This feature is unavailable for NeuroSky Mindset");
 
 	public MenuNeuroSkyController() {
+
 	}
 
 	/**
 	 * Initializes the controller class and sets x axis of the bar chart with the appropriate values
 	 */
 	@FXML
-	private void initialize() throws MalformedURLException {
-		settings();
-
-		time=System.currentTimeMillis()/1000;
-		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
-		String[] moodsArray = {"Attention","Meditation"};
+	private void initialize() throws MalformedURLException {	
 
 		//analysis disabled
 		analysisLabel.setDisable(true);
@@ -111,7 +126,13 @@ public class MenuNeuroSkyController extends MenuController{
 				unavailableFeatureTooltip.hide();
 			}
 		});
+		settings();
 
+		time=System.currentTimeMillis()/1000;
+		time2=System.currentTimeMillis()/1000;
+		/** barChart things **/
+		String[] waves = {"Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"};
+		String[] moodsArray = {"Attention","Meditation"};
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
 		xAxisWaves.setCategories(brainwaves);
@@ -128,7 +149,7 @@ public class MenuNeuroSkyController extends MenuController{
 		XYChart.Series<String,Float> series2 = new XYChart.Series<>();
 		series2.getData().add(new XYChart.Data("Attention", 35f));
 		series2.getData().add(new XYChart.Data("Meditation", 35f));
-		System.out.println(this.colorNumber);
+		XYChart.Series<String,Float> series3 = new XYChart.Series<>();
 		barChartWaves.getData().add(series);
 		for (int i = 0; i < series.getData().size(); i++) {
 			if(colorNumber>=constants.Constants.colors.length)						
@@ -147,37 +168,48 @@ public class MenuNeuroSkyController extends MenuController{
 		barChartWaves.setLegendVisible(false);
 		barChartMoods.setLegendVisible(false);
 		colorNumber=0;
+		/** lineChart things  series e series2 sao series do barChart**/
 		createSeriesLineChartWaves(series);
 		colorNumber=0;
 		createSeriesLineChartMoods(series2);
+		colorNumber=0;
+		createSeriesLineChartRaw();
 
 		//URL url = getClass().getResource("../views/web/radarChart.html");
 		URL url = new URL("http://localhost:8080/");
-		radarBrowser.getEngine().load(url.toExternalForm());
-		/*
-		headSetDataInterface = new HeadSetDataInterface() {
+		radarBrowser.getEngine().load(url.toExternalForm());		
+
+
+		fw = new BrainLightFW(2,queue,queue2);	
+		fw.receiveDeviceData();
+
+
+
+		//System.err.println(finalDataArray[0][0]);
+		//ThreadInterface t = new ThreadInterface(queue, finalDataArray);
+		//t.run();
+
+		updateInterface = new updateInterface() {
 			@Override
-			public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
-				if(gamma1Data != null) {
-					HashMap<String, Object> values = hashMap.get(Constants.WAVES);
-					String gamma1 = values.get(Constants.LOW_GAMMA).toString();
-					String gamma2 = values.get(Constants.MID_GAMMA).toString();
-					String beta1 = values.get(Constants.LOW_BETA).toString();
-					String beta2 = values.get(Constants.HIGH_BETA).toString();
-					String alpha1 = values.get(Constants.LOW_ALPHA).toString();
-					String alpha2 = values.get(Constants.HIGH_ALPHA).toString();
-					String theta = values.get(Constants.THETA).toString();
-					String delta = values.get(Constants.DELTA).toString();
-					String attention = values.get(Constants.ATTENTION).toString();
-					String meditation = values.get(Constants.MEDITATION).toString();
-					String signal = values.get(Constants.POOR_SIGNAL).toString();
+			public void update(Double[][] finalDataArray) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {	
+						if(!finalDataArray[0][0].equals("")){
+							String delta = finalDataArray[0][0].toString();
+							String theta = finalDataArray[0][1].toString();
+							String alpha1 = finalDataArray[0][2].toString();
+							String alpha2 = finalDataArray[0][3].toString();
+							String beta1 = finalDataArray[0][4].toString();
+							String beta2 = finalDataArray[0][5].toString();
+							String gamma1 = finalDataArray[0][6].toString();
+							String gamma2 = finalDataArray[0][7].toString();
+							String attention = finalDataArray[1][0].toString();
+							String meditation = finalDataArray[1][1].toString();
+							String signal = finalDataArray[2][0].toString();
+							updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
+							updateSeriesLineChartMoods(attention,meditation);						
 
-					updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
-					updateSeriesLineChartMoods(attention,meditation);
-
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
 							gamma1Data.setText(gamma1);
 							gamma2Data.setText(gamma2);
 							beta1Data.setText(beta1);
@@ -213,7 +245,7 @@ public class MenuNeuroSkyController extends MenuController{
 									series.getData().get(i).setXValue(queueTime.get(i));
 								}
 								serieNumber++;
-							}
+							}							
 							int serieNumber2=0;
 							for(Series<Number,Number> series : lineChartMoods.getData()){							
 								for(int i=0;i< series.getData().size();i++) 
@@ -257,16 +289,76 @@ public class MenuNeuroSkyController extends MenuController{
 										break;
 									}
 									i++;																	
-								}
-							}								
+								}					
+							}	
 						}
-					});
-				}
+					}
+				});
+
+			}
+
+			@Override
+			public void update2(Double[] finalDataArray) {
+				finalRawDataArray=finalDataArray;
+				updateSeriesLineChartRaw(Double.toString(finalDataArray[0]));
+				Platform.runLater(new Runnable() { 
+					@Override
+					public void run() {	
+						rawData.setText(Double.toString(finalRawDataArray[0]));
+						for(Series<Number,Number> series : lineChartRaw.getData()){
+							for(int i=0;i< series.getData().size();i++) {
+								series.getData().get(i).setYValue(Float.parseFloat((String) rawGroup.get(0).get(i)));
+								series.getData().get(i).setXValue(queueTime2.get(i));
+							}
+						}						
+					}
+				});
 			}
 		};
-
-		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();*/
+		ThreadInterface t = new ThreadInterface(queue,queue2,updateInterface);
+		new Thread(t).start();
 	}
+	private void createSeriesLineChartRaw(){
+		xAxisRawLine.setLabel("Time");
+		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
+		series1.setName("Raw");
+		
+		for (int i = 0; i < 10; i++) {
+			series1.getData().add(new XYChart.Data(0f, 0f));
+			rawQueue.add("0.0");
+			queueTime2.add(0);
+		}
+		rawGroup.add(rawQueue);
+		lineChartRaw.getData().addAll(series1);
+		
+		this.colorNumber=0;
+		for(Series<Number,Number> series : lineChartRaw.getData()){
+			if(this.colorNumber>=constants.Constants.colors.length)						
+				this.colorNumber=0;		
+			Set<Node> lookupAll = lineChartRaw.lookupAll(".chart-line-symbol.series" + this.colorNumber);
+			for (Node n : lookupAll) {
+				n.setStyle("-fx-background-color:"+constants.Constants.colors[this.colorNumber]+";");
+			}
+			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[this.colorNumber]+";");		
+			this.colorNumber++;	
+		}
+
+		lineChartRaw.setLegendVisible(false);
+		lineChartRaw.setAnimated(false);
+
+		xAxisRawLine.setLowerBound(0);
+		xAxisRawLine.setUpperBound(50);
+		xAxisRawLine.setAutoRanging(false);
+	}
+	private void updateSeriesLineChartRaw(String r){
+		queueTime2.add((System.currentTimeMillis()/1000)-time2);
+		queueTime2.remove(0);
+		rawGroup.get(0).add(r);			
+		rawGroup.get(0).remove(0);
+		xAxisRawLine.setLowerBound(Double.parseDouble(queueTime2.get(0).toString()));
+		xAxisRawLine.setUpperBound(Double.parseDouble(queueTime2.get(9).toString()));	
+	}
+
 	private void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
@@ -340,7 +432,7 @@ public class MenuNeuroSkyController extends MenuController{
 		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 	}
 
-	private void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
+	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
 		xAxisWavesLine.setLabel("Time");	
 		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
 		XYChart.Series<Number, Number> series4 = new XYChart.Series<>();		
@@ -408,7 +500,6 @@ public class MenuNeuroSkyController extends MenuController{
 						for (Node n : lookupAll) {
 							n.setVisible(true);
 						}
-						System.out.println(seriesBarChart.getData().get(tmp).getNode().getStyle().toString());
 						seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[tmp2]+";-fx-cursor: hand; -fx-border-color: #000000; -fx-border-width: 2;");
 						lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(true);
 					}
@@ -436,7 +527,7 @@ public class MenuNeuroSkyController extends MenuController{
 		xAxisWavesLine.setAutoRanging(false);
 	}
 
-	private void updateSeriesLineChartWaves(String d,String t,String g1,String g2,String a1,String a2,String b1,String b2)
+	public void updateSeriesLineChartWaves(String d,String t,String g1,String g2,String a1,String a2,String b1,String b2)
 	{
 		queueTime.add((System.currentTimeMillis()/1000)-time);
 		queueTime.remove(0);
@@ -455,5 +546,6 @@ public class MenuNeuroSkyController extends MenuController{
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 
-	}
+	}	
+
 }

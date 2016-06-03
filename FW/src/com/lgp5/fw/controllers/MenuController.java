@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MenuController {
+public class MenuController{
 	private Desktop desktop = Desktop.getDesktop();
 	@FXML private AnchorPane paneLayoutRoot;
 	@FXML private ImageView recordButton;
@@ -56,6 +57,7 @@ public class MenuController {
     @FXML private Pane historyPeriodWrapper;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
+    private SettingsPreferences prefs = new SettingsPreferences();
 	
 	public MenuController(){
 		
@@ -71,6 +73,12 @@ public class MenuController {
 		historyPeriodSlider.setMinorTickCount(0);
 		historyPeriodSlider.setBlockIncrement(10);
 
+        //get values from preferences
+        historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
+        daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
+        deleteFilesCheckBox.setSelected(prefs.getNeverDeletePreference());
+        keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());
+
 		historyPeriodSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 				if (newValue == null) {
@@ -78,8 +86,13 @@ public class MenuController {
 					return;
 				}
 				daysText.setText(Math.round(newValue.intValue()) + "");
+                prefs.setDaysOfHistoryPreference(newValue.intValue());
 			}
 		});
+
+        //put buttons and options according to preferences
+        recordButton.setVisible(keepHistoryCheckBox.isSelected());
+        setDisableEffect(prefs.getNeverDeletePreference());
 
         //record button tooltip
 		recordButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -160,12 +173,18 @@ public class MenuController {
 	}
 
 	public void setRecordButton(){
-		if(recordButton.isVisible())
-			recordButton.setVisible(false);
-		else if(stopButton.isVisible())
+		if(recordButton.isVisible()) {
+            recordButton.setVisible(false);
+            prefs.setRecordHistoryPreference(false);
+        }
+		else if(stopButton.isVisible()) {
             stopButton.setVisible(false);
-        else
+            prefs.setRecordHistoryPreference(false);
+        }
+        else {
             recordButton.setVisible(true);
+            prefs.setRecordHistoryPreference(true);
+        }
 	}
 
 	public void changeRecordButton(){
@@ -180,8 +199,8 @@ public class MenuController {
 		}
 	}
 
-    public void disableHistoryPeriod() {
-        if (!historyPeriodWrapper.isDisabled()) {
+    public void setDisableEffect(Boolean b) {
+        if (b) {
             historyPeriodWrapper.setDisable(true);
             daysLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
             keepHistoryLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
@@ -195,6 +214,17 @@ public class MenuController {
         }
     }
 
+    public void disableHistoryPeriod() {
+        if (!historyPeriodWrapper.isDisabled()) {
+            setDisableEffect(true);
+            prefs.setNeverDeletePreference(true);
+        }
+        else {
+            setDisableEffect(false);
+            prefs.setNeverDeletePreference(false);
+        }
+    }
+
     public void confirmDeletingHistory() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the entire history?\n\n", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
@@ -205,6 +235,16 @@ public class MenuController {
         else {
             alert.close();
         }
+    }
+
+    public void resetPreferences(ActionEvent event) {
+        prefs.reset();
+        historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
+        daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
+        deleteFilesCheckBox.setSelected(prefs.getNeverDeletePreference());
+        keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());
+        recordButton.setVisible(keepHistoryCheckBox.isSelected());
+        setDisableEffect(prefs.getNeverDeletePreference());
     }
 
 	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {

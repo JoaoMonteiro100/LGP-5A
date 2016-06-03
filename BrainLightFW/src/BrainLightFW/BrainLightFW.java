@@ -1,35 +1,39 @@
 package BrainLightFW;
-import Emotiv.Emotiv_SDK.*;
-
 import interfaces.HeadSetDataInterface;
-import interfaces.sendInterface;
-import j2me.com.NeuroSky.ThinkGear.IO.*;
-import j2me.com.NeuroSky.ThinkGear.Util.HeadsetData;
-import com.lgp5.*;
+
+import java.io.File;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 //import Analysis.*;
 //import Analysis.Calculations;
+
+import com.lgp5.Neurosky;
+
+import Emotiv.Emotiv_SDK.EmotivDevice;
 
 /**
  * Created by cenas on 23/04/16.
  */
 
-public class BrainLightFW{
-
+public class BrainLightFW {
+	protected BlockingQueue<Double[][]> queue = null;
+	protected BlockingQueue<Double[]> queue2 = null;
 	private Neurosky neuroDevice;
 	private EmotivDevice emoDevice;
 	private int wirelessSignal;
 	public static  Double[][] finalDataArray;
+	public static  Double[] finalRawData;
 	private HashMap<String,HashMap<String,Object>> neuroData;
 	private LinkedList<HashMap<String, HashMap<String, Object>>> sharedQ;
 	private LinkedList<Double [][]> doubleQ;
 	private boolean running;
 	private int deviceNo;
-	sendInterface sendDataInterface;
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informa√ßao toda TODO
 
-	public BrainLightFW(int device){
+	public BrainLightFW(int device,BlockingQueue<Double[][]> queue,BlockingQueue<Double[]> queue2){
+		this.queue = queue;
+		this.queue2 = queue2;
 		sharedQ = new LinkedList<>();
 		wirelessSignal=0;
 		new LinkedList<>();
@@ -50,17 +54,30 @@ public class BrainLightFW{
 				@Override
 				public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
 					initMerge(2, dataToSend);
-					System.out.println(dataToSend.toString());
+					try {
+						queue.put(finalDataArray);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}		
+				}
 
-					//thread
+				@Override
+				public void onReceiveRawData(HashMap<String, Integer> rawData) {
+					initGetRaw(2,rawData);
+					try {
+						queue2.put(finalRawData);
+						//Thread.sleep(1000);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}					
 				}
 			};
 
 			neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
 		}
 
-
 	}
+
 
 	//return true if all sensors are ok - emotiv only
 	public boolean getAllSensorsStatusOK(HashMap<String,HashMap<String,Object>> Obj){
@@ -87,10 +104,10 @@ public class BrainLightFW{
 
 
 	public void receiveDeviceData(){
-		
+
 		Thread receiveDataThread = new Thread("ReceiveDeviceData"){
 			public void run() {
-				
+
 				if (deviceNo == 1) {
 					Thread emotivThread = new Thread(emoDevice);
 					emoDevice.connectEmotiv();
@@ -103,15 +120,11 @@ public class BrainLightFW{
 					}
 				}
 				else if (deviceNo == 2) {
-					
+
 					neuroDevice.connect();
 					neuroDevice.run();
-					Thread neuroThread = new Thread(neuroDevice);					
-					if(sendDataInterface != null) {
-						sendDataInterface.onReceiveData(finalDataArray);
-					}
-					
-					neuroThread.start();
+					//Thread neuroThread = new Thread(neuroDevice);
+					//neuroThread.start();
 
 					while (running) {
 						if (deviceNo == 2) {
@@ -153,9 +166,9 @@ public class BrainLightFW{
 					ex.printStackTrace();
 				}
 
-				if(getAllSensorsStatusOK((HashMap<String, HashMap<String, Object>>) sharedQ.getFirst())) {
+				if(getAllSensorsStatusOK(sharedQ.getFirst())) {
 					// localQ.addLast(sharedQ.pop());
-					initMerge (1,(HashMap<String, HashMap<String,Object>>)sharedQ.pop());
+					initMerge (1,sharedQ.pop());
 					doubleQ.addLast(finalDataArray);
 					System.out.println(doubleQ.getLast()[5]);
 				}
@@ -250,8 +263,7 @@ public class BrainLightFW{
 	}
 
 	public static void main(String[] args) {
-		
-		BrainLightFW fw = new BrainLightFW(2);
+		/*BrainLightFW fw = new BrainLightFW(2);
 
 		fw.receiveDeviceData();
 
@@ -275,10 +287,49 @@ public class BrainLightFW{
 		System.out.println("END");
 		fw.stopReceiving();
 		fw.deviceDisconnect();
-		
 
+		 */
 	}
-	//done
+
+	public static String[][] finalInfoFinal(int device){
+		if(device == 1){
+			String[][] finalInfo = new String[][] { {"AF3","F7","F3","FC5","T7","P7","O1","O2","P8","T8","FC6","F4","F8","AF4"},
+				{"Theta","Alpha","LowBeta","HighBeta","Gamma"},
+				{},
+				{"LeftWink", "RightWink", "Blink", "EyesOpen","SmileExtension","ClenchExtension","LowerFaceExpression",
+					"LowerFaceExpressionPower","UpperFaceExpression","UperFaceEXpressionPower"},
+				{"Action","ActionPower","LookingLeft","LookingRight","LookingDown","LookingUp"},
+				{"BatteryLevel","WirelessSignal"}
+			};
+			return finalInfo;}
+		else if (device == 2){
+			String[][] finalInfo = new String [][] { {"FP1"},
+				{"Delta","Theta","LowAlpha","HighAlpha","LowBeta","HighBeta","LowGamma","MidGamma"},
+				{"Attention","Meditation"},
+				{"poor_signal"}
+			};
+			return finalInfo;
+		}
+		else return null;
+	}
+	public static void initGetRaw (int device,  HashMap <String,Integer> data)
+	{
+		Double[] finalRaw = new Double[1];
+
+		if (device == 2){
+			HashMap <String,Integer> neuroData;
+			if (data instanceof HashMap) {
+				neuroData = (HashMap <String,Integer>) data;
+			} else {
+				System.out.println("Wrong type of data for neurosky device");
+				return;
+			}
+			finalRaw[0] = (Double) convertVolts((float)neuroData.get("Raw"));
+			finalRaw[0] = finalRaw[0]*100000;//Micro de Volt
+			//finalRaw[0] = Double.parseDouble(neuroData.get("Raw").toString());
+		}
+		finalRawData = finalRaw;
+	}
 	public static void initMerge (int device, HashMap<String, HashMap<String,Object>> data)
 	{
 		String[][] finalInfo;
@@ -382,40 +433,24 @@ public class BrainLightFW{
 				{"BatteryLevel","PoorSignal"}
 			};
 
-			finalData = new Double[5][];
+			finalInfo = finalInfoFinal(2);
+			finalData = new Double[3][];
 			finalData[0]= new Double[8];
 			finalData[1]= new Double[2];
 			finalData[2]= new Double[1];
-			finalData[3] = new Double[0];
-			finalData[4] = new Double[2];
-			
 
 			for (int i = 1;i < finalInfo.length; i++){
-				System.out.print("[");
-				if (i == 4)
-					System.out.print("]");
 				for (int k = 0;k < finalInfo[i].length; k++){
 					if (i == 1){
-						finalData[i-1][k]= convertVolts((Float) neuroData.get("Waves").get(finalInfo[i][k]));
-						if (k == finalInfo[i].length-1){
-							System.out.print(finalData[i-1][k]);
-							System.out.print("]");}
-						else
-							System.out.print(finalData[i-1][k]+ " , ");
+						finalData[i-1][k]= convertVolts((Float)neuroData.get("Waves").get(finalInfo[i][k]));
+						finalData[i-1][k]= finalData[i-1][k]*10;//DÈcimo de Volt
 					}
 					else
-					{finalData[i-1][k]=convertToDouble((Integer) neuroData.get("Waves").get(finalInfo[i][k]));
-					if (k == finalInfo[i].length-1){
-						System.out.print(finalData[i-1][k]);
-						System.out.print("]");}
-					else
-						System.out.print(finalData[i-1][k]+ " , ");
+					{
+						finalData[i-1][k]=convertToDouble((Integer) neuroData.get("Waves").get(finalInfo[i][k]));			
 					}
 				}
-				System.out.println();
 			}
-
-			System.out.println();
 			finalDataArray = finalData;
 		}
 
@@ -430,9 +465,8 @@ public class BrainLightFW{
 	}
 	public static double convertToDouble(Integer value)
 	{
-		System.out.println(value);
 		if(value != null)
-		return value;
+			return value;
 		else return -1;
 	}
 
@@ -502,6 +536,21 @@ public class BrainLightFW{
 
 	}
 
+
+	public static void cleanHistory() {
+		String str = (System.getProperty("user.dir")+Integer.MAX_VALUE).replaceAll("BrainLightFW"+Integer.MAX_VALUE, "")+"FW\\src\\history";
+		File dir = new File(str); 
+		try{
+			purgeDirectory(dir);
+		} catch (Exception e){
+			System.err.println("History folder not in correct directory ("+str+")");
+		}
+	}
+
+	static void purgeDirectory(File dir) {
+		for (File file: dir.listFiles()) {
+			if (file.isDirectory()) purgeDirectory(file);
+			file.delete();
+		}
+	}
 }
-
-

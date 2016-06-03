@@ -65,3 +65,15 @@ fabric.properties
 *.iml
 *.iws
 >>>>>>> refs/remotes/origin/Dev
+*.classpath
+*.class
+Neurosky_FW/bin/com/lgp5/Neurosky$1.class
+*.classpath
+*.class
+FW/out/production/FW/com/lgp5/fw/controllers/SelectDeviceController$1.class
+*.class
+*.class
+Neurosky_FW/bin/com/lgp5/Neurosky$1.class
+*.class
+*.class
+Neurosky_FW/bin/com/lgp5/Neurosky.class

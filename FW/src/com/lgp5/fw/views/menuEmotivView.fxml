@@ -165,7 +165,7 @@
                     <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="rawDataGraph" layoutX="-4.0" layoutY="253.0" prefHeight="291.0" prefWidth="980.0">
+                                <LineChart fx:id="lineChartRaw" layoutX="-4.0" layoutY="253.0" prefHeight="291.0" prefWidth="980.0">
                                     <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                     </xAxis>

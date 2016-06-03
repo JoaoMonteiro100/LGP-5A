@@ -1,6 +1,7 @@
 package com.lgp5.fw;
 
 
+import BrainLightFW.BrainLightFW;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +11,6 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         Font.loadFont(getClass().getResourceAsStream("/assets/fonts/Roboto-Medium.ttf"), 16);
@@ -25,7 +25,7 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {    	
         launch(args);
     }   
    
