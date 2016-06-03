@@ -530,5 +530,23 @@ public class BrainLightFW {
 
 		return act;
 
-	}	
+	}
+	
+	
+	public static void cleanHistory() {
+    String str = (System.getProperty("user.dir")+Integer.MAX_VALUE).replaceAll("BrainLightFW"+Integer.MAX_VALUE, "")+"FW\\src\\history";
+	File dir = new File(str); 
+	try{
+		purgeDirectory(dir);
+	} catch (Exception e){
+		System.err.println("History folder not in correct directory ("+str+")");
+	}
+}
+
+static void purgeDirectory(File dir) {
+    for (File file: dir.listFiles()) {
+        if (file.isDirectory()) purgeDirectory(file);
+        file.delete();
+    }
+}
 }
