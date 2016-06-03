@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
@@ -33,8 +35,10 @@ import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
 import BrainLightFW.BrainLightFW;
 
 
-public class MenuNeuroSkyController extends MenuController{
-
+public class MenuNeuroSkyController extends MenuController {
+	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
+	public static  Double[][] finalDataArray;
+	BrainLightFW fw;
 	private int colorNumber=0;
 	@FXML private Label analysisLabel;
 	@FXML private Label gamma1Data;
@@ -88,13 +92,17 @@ public class MenuNeuroSkyController extends MenuController{
 	private Tooltip unavailableFeatureTooltip = new Tooltip("This feature is unavailable for NeuroSky Mindset");
 
 	public MenuNeuroSkyController() {
+
 	}
+
+	
 
 	/**
 	 * Initializes the controller class and sets x axis of the bar chart with the appropriate values
 	 */
 	@FXML
 	private void initialize() throws MalformedURLException {
+
 		settings();
 
 		time=System.currentTimeMillis()/1000;
@@ -158,115 +166,123 @@ public class MenuNeuroSkyController extends MenuController{
 		//URL url = getClass().getResource("../views/web/radarChart.html");
 		URL url = new URL("http://localhost:8080/");
 		radarBrowser.getEngine().load(url.toExternalForm());		
+
+
+
+
+
+
+		fw = new BrainLightFW(2,queue);	
+		fw.receiveDeviceData();
 		
-				/*
-				if(gamma1Data != null) {
-					HashMap<String, Object> values = hashMap.get(Constants.WAVES);
-					String gamma1 = values.get(Constants.LOW_GAMMA).toString();
-					String gamma2 = values.get(Constants.MID_GAMMA).toString();
-					String beta1 = values.get(Constants.LOW_BETA).toString();
-					String beta2 = values.get(Constants.HIGH_BETA).toString();
-					String alpha1 = values.get(Constants.LOW_ALPHA).toString();
-					String alpha2 = values.get(Constants.HIGH_ALPHA).toString();
-					String theta = values.get(Constants.THETA).toString();
-					String delta = values.get(Constants.DELTA).toString();
-					String attention = values.get(Constants.ATTENTION).toString();
-					String meditation = values.get(Constants.MEDITATION).toString();
-					String signal = values.get(Constants.POOR_SIGNAL).toString();
+		
+		Thread t = new Thread(queue, finalDataArray);
+		t.run();
+		
+//		String gamma1 = values.get(Constants.LOW_GAMMA).toString();
+//		String gamma2 = values.get(Constants.MID_GAMMA).toString();
+//		String beta1 = values.get(Constants.LOW_BETA).toString();
+//		String beta2 = values.get(Constants.HIGH_BETA).toString();
+//		String alpha1 = values.get(Constants.LOW_ALPHA).toString();
+//		String alpha2 = values.get(Constants.HIGH_ALPHA).toString();
+//		String theta = values.get(Constants.THETA).toString();
+//		String delta = values.get(Constants.DELTA).toString();
+//		String attention = values.get(Constants.ATTENTION).toString();
+//		String meditation = values.get(Constants.MEDITATION).toString();
+//		String signal = values.get(Constants.POOR_SIGNAL).toString();
 
-					updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
-					updateSeriesLineChartMoods(attention,meditation);
-
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							gamma1Data.setText(gamma1);
-							gamma2Data.setText(gamma2);
-							beta1Data.setText(beta1);
-							beta2Data.setText(beta2);
-							alfa1Data.setText(alpha1);
-							alfa2Data.setText(alpha2);
-							thetaData.setText(theta);
-							deltaData.setText(delta);
-							attentionData.setText(attention);
-							meditationData.setText(meditation);
-							signalQualityData.setText(signal);
-							for (Series<String, Float> series2 : barChartMoods.getData()) {
-								int j=0;
-								for (Data<String, Float> data2 : series2.getData()) {									
-									switch (j) {
-									case 0:
-										data2.setYValue(Float.parseFloat(attention));
-										break;
-									case 1:
-										data2.setYValue(Float.parseFloat(meditation));
-										break;	
-									default:
-										break;
-									}
-									j++;
-								}
-							}
-							int serieNumber=0;
-							for(Series<Number,Number> series : lineChartWaves.getData()){							
-								for(int i=0;i< series.getData().size();i++) 
-								{									
-									series.getData().get(i).setYValue(Float.parseFloat((String) wavesGroup.get(serieNumber).get(i)));
-									series.getData().get(i).setXValue(queueTime.get(i));
-								}
-								serieNumber++;
-							}
-							int serieNumber2=0;
-							for(Series<Number,Number> series : lineChartMoods.getData()){							
-								for(int i=0;i< series.getData().size();i++) 
-								{									
-									series.getData().get(i).setYValue(Float.parseFloat((String) moodsGroup.get(serieNumber2).get(i)));
-									series.getData().get(i).setXValue(queueTime.get(i));
-								}
-								serieNumber2++;
-							}
-							for (Series<String, Float> series : barChartWaves.getData()) 
-							{
-								int i=0;
-								for (Data<String, Float> data : series.getData()) 
-								{
-									switch (i) {
-									case 0:
-										data.setYValue(Float.parseFloat(delta));
-										break;
-									case 1:
-										data.setYValue(Float.parseFloat(theta));
-										break;
-									case 2:
-										data.setYValue(Float.parseFloat(alpha1));
-										break;
-									case 3:
-										data.setYValue(Float.parseFloat(alpha2));
-										break;
-									case 4:
-										data.setYValue(Float.parseFloat(beta1));
-										break;
-									case 5:
-										data.setYValue(Float.parseFloat(beta2));
-										break;
-									case 6:
-										data.setYValue(Float.parseFloat(gamma1));
-										break;
-									case 7:
-										data.setYValue(Float.parseFloat(gamma2));										
-										break;
-									default:
-										break;
-									}
-									i++;																	
-								}
-							}								
-						}
-					});
-				}*/
-
-		//new Thread(new BrainLightFW(2)).start();
+//		updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
+//		updateSeriesLineChartMoods(attention,meditation);
+		
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+//				gamma1Data.setText(gamma1);
+//				gamma2Data.setText(gamma2);
+//				beta1Data.setText(beta1);
+//				beta2Data.setText(beta2);
+//				alfa1Data.setText(alpha1);
+//				alfa2Data.setText(alpha2);
+//				thetaData.setText(theta);
+//				deltaData.setText(delta);
+//				attentionData.setText(attention);
+//				meditationData.setText(meditation);
+//				signalQualityData.setText(signal);
+//				for (Series<String, Float> series2 : barChartMoods.getData()) {
+//					int j=0;
+//					for (Data<String, Float> data2 : series2.getData()) {									
+//						switch (j) {
+//						case 0:
+//							data2.setYValue(Float.parseFloat(attention));
+//							break;
+//						case 1:
+//							data2.setYValue(Float.parseFloat(meditation));
+//							break;	
+//						default:
+//							break;
+//						}
+//						j++;
+//					}
+//				}
+//				int serieNumber=0;
+//				for(Series<Number,Number> series : lineChartWaves.getData()){							
+//					for(int i=0;i< series.getData().size();i++) 
+//					{									
+//						series.getData().get(i).setYValue(Float.parseFloat((String) wavesGroup.get(serieNumber).get(i)));
+//						series.getData().get(i).setXValue(queueTime.get(i));
+//					}
+//					serieNumber++;
+//				}
+//				int serieNumber2=0;
+//				for(Series<Number,Number> series : lineChartMoods.getData()){							
+//					for(int i=0;i< series.getData().size();i++) 
+//					{									
+//						series.getData().get(i).setYValue(Float.parseFloat((String) moodsGroup.get(serieNumber2).get(i)));
+//						series.getData().get(i).setXValue(queueTime.get(i));
+//					}
+//					serieNumber2++;
+//				}
+//				for (Series<String, Float> series : barChartWaves.getData()) 
+//				{
+//					int i=0;
+//					for (Data<String, Float> data : series.getData()) 
+//					{
+//						switch (i) {
+//						case 0:
+//							data.setYValue(Float.parseFloat(delta));
+//							break;
+//						case 1:
+//							data.setYValue(Float.parseFloat(theta));
+//							break;
+//						case 2:
+//							data.setYValue(Float.parseFloat(alpha1));
+//							break;
+//						case 3:
+//							data.setYValue(Float.parseFloat(alpha2));
+//							break;
+//						case 4:
+//							data.setYValue(Float.parseFloat(beta1));
+//							break;
+//						case 5:
+//							data.setYValue(Float.parseFloat(beta2));
+//							break;
+//						case 6:
+//							data.setYValue(Float.parseFloat(gamma1));
+//							break;
+//						case 7:
+//							data.setYValue(Float.parseFloat(gamma2));										
+//							break;
+//						default:
+//							break;
+//						}
+//						i++;																	
+//					}
+//				}	
+			}
+		});
 	}
+
+
 	private void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
@@ -454,5 +470,5 @@ public class MenuNeuroSkyController extends MenuController{
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 
-	}
+	}	
 }

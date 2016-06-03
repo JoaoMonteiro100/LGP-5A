@@ -1,6 +1,7 @@
 package BrainLightFW;
 import interfaces.HeadSetDataInterface;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 //import Analysis.*;
 //import Analysis.Calculations;
@@ -13,7 +14,8 @@ import Emotiv.Emotiv_SDK.EmotivDevice;
  * Created by cenas on 23/04/16.
  */
 
-public class BrainLightFW {
+public class BrainLightFW implements Runnable{
+	protected BlockingQueue<Double[][]> queue = null;
 	private Neurosky neuroDevice;
 	private EmotivDevice emoDevice;
 	private int wirelessSignal;
@@ -25,7 +27,8 @@ public class BrainLightFW {
 	private int deviceNo;
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
-	public BrainLightFW(int device){
+	public BrainLightFW(int device,BlockingQueue<Double[][]> queue){
+		this.queue = queue;
 		sharedQ = new LinkedList<>();
 		wirelessSignal=0;
 		new LinkedList<>();
@@ -46,8 +49,7 @@ public class BrainLightFW {
 				@Override
 				public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
 					initMerge(2, dataToSend);
-					System.out.println(dataToSend.toString());
-
+					run();					
 					//thread
 				}
 			};
@@ -56,6 +58,14 @@ public class BrainLightFW {
 		}
 
 
+	}
+	@Override
+	public void run() {		
+		try {
+			queue.put(finalDataArray);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
 	}
 
 	//return true if all sensors are ok - emotiv only
@@ -145,9 +155,9 @@ public class BrainLightFW {
 					ex.printStackTrace();
 				}
 
-				if(getAllSensorsStatusOK((HashMap<String, HashMap<String, Object>>) sharedQ.getFirst())) {
+				if(getAllSensorsStatusOK(sharedQ.getFirst())) {
 					// localQ.addLast(sharedQ.pop());
-					initMerge (1,(HashMap<String, HashMap<String,Object>>)sharedQ.pop());
+					initMerge (1,sharedQ.pop());
 					doubleQ.addLast(finalDataArray);
 					System.out.println(doubleQ.getLast()[5]);
 				}
@@ -242,7 +252,7 @@ public class BrainLightFW {
 	}
 
 	public static void main(String[] args) {
-		BrainLightFW fw = new BrainLightFW(2);
+		/*BrainLightFW fw = new BrainLightFW(2);
 
 		fw.receiveDeviceData();
 
@@ -267,7 +277,29 @@ public class BrainLightFW {
 		fw.stopReceiving();
 		fw.deviceDisconnect();
 
-
+		 */
+	}
+	
+	public static String[][] finalInfoFinal(int device){
+	    if(device == 1){
+	        String[][] finalInfo = new String[][] { {"AF3","F7","F3","FC5","T7","P7","O1","O2","P8","T8","FC6","F4","F8","AF4"},
+	            {"Theta","Alpha","LowBeta","HighBeta","Gamma"},
+	            {},
+	            {"LeftWink", "RightWink", "Blink", "EyesOpen","SmileExtension","ClenchExtension","LowerFaceExpression",
+	                "LowerFaceExpressionPower","UpperFaceExpression","UperFaceEXpressionPower"},
+	            {"Action","ActionPower","LookingLeft","LookingRight","LookingDown","LookingUp"},
+	            {"BatteryLevel","WirelessSignal"}
+	        };
+	        return finalInfo;}
+	    else if (device == 2){
+	        String[][] finalInfo = new String [][] { {"FP1"},
+	            {"Delta","Theta","LowAlpha","HighAlpha","LowBeta","HighBeta","LowGamma","MidGamma"},
+	            {"Attention","Meditation"},
+	            {"PoorSignal"}
+	        };
+	        return finalInfo;
+	    }
+	    else return null;
 	}
 	//done
 	public static void initMerge (int device, HashMap<String, HashMap<String,Object>> data)
@@ -373,21 +405,17 @@ public class BrainLightFW {
 				{"BatteryLevel","PoorSignal"}
 			};
 
-			finalData = new Double[5][];
+			finalInfo = finalInfoFinal(2);
+			finalData = new Double[3][];
 			finalData[0]= new Double[8];
 			finalData[1]= new Double[2];
 			finalData[2]= new Double[1];
-			finalData[3] = new Double[0];
-			finalData[4] = new Double[2];
-
 
 			for (int i = 1;i < finalInfo.length; i++){
 				System.out.print("[");
-				if (i == 4)
-					System.out.print("]");
 				for (int k = 0;k < finalInfo[i].length; k++){
 					if (i == 1){
-						finalData[i-1][k]= convertVolts((Float) neuroData.get("Waves").get(finalInfo[i][k]));
+						finalData[i-1][k]= convertVolts((Float)neuroData.get("Waves").get(finalInfo[i][k]));
 						if (k == finalInfo[i].length-1){
 							System.out.print(finalData[i-1][k]);
 							System.out.print("]");}
@@ -421,7 +449,6 @@ public class BrainLightFW {
 	}
 	public static double convertToDouble(Integer value)
 	{
-		System.out.println(value);
 		if(value != null)
 			return value;
 		else return -1;
@@ -491,7 +518,5 @@ public class BrainLightFW {
 
 		return act;
 
-	}
+	}	
 }
-
-
