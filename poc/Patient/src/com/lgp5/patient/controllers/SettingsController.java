@@ -31,7 +31,7 @@ public class SettingsController {
 
     public SettingsController() {
     }
-
+/*
     public void analysisColorToWhite(MouseEvent Event) {
         analysis.setStyle("-fx-background-color: #FEFDFC;");
         messages.setStyle("-fx-background-color: #F6F4F3;");
@@ -61,18 +61,18 @@ public class SettingsController {
         settings.setStyle("-fx-background-color: #F6F4F3;");
         messages.setStyle("-fx-background-color: #F6F4F3;");
         analysis.setStyle("-fx-background-color: #F6F4F3;");
-    }
+    }*/
 
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        editProfile.setOnAction(new EventHandler<ActionEvent>() {
+        analysis.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                     Stage stage;
                             lauchAnalysisView();
                             //get a handle to the stage
-                            stage = (Stage) editProfile.getScene().getWindow();
+                            stage = (Stage) analysis.getScene().getWindow();
                             //close current window
                             stage.close();
             }

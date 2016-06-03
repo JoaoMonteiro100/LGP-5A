@@ -1,10 +1,17 @@
 package com.lgp5.patient.controllers;
 
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.Cursor;
+import java.io.IOException;
 
 
 public class AnalysisController {
@@ -26,7 +33,7 @@ public class AnalysisController {
         messages.setCursor(Cursor.HAND);
         game.setCursor(Cursor.HAND);
     }
-
+/*
     public void analysisColorToWhite(MouseEvent Event) {
         analysis.setStyle("-fx-background-color: #FEFDFC;");
         messages.setStyle("-fx-background-color: #F6F4F3;");
@@ -56,18 +63,18 @@ public class AnalysisController {
         settings.setStyle("-fx-background-color: #F6F4F3;");
         messages.setStyle("-fx-background-color: #F6F4F3;");
         analysis.setStyle("-fx-background-color: #F6F4F3;");
-    }
-/*
+    }*/
+
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        messages.setOnAction(new EventHandler<ActionEvent>() {
+        settings.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                     Stage stage;
-                            launchSelectDeviceView();
+                            launchSettingsView();
                             //get a handle to the stage
-                            stage = (Stage) messages.getScene().getWindow();
+                            stage = (Stage) settings.getScene().getWindow();
                             //close current window
                             stage.close();
             }
@@ -76,17 +83,17 @@ public class AnalysisController {
 
 
 
-    private void launchSelectDeviceView() {
+    private void launchSettingsView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/settings.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
-            stage.setTitle("BrainStream - Select Device");
+            stage.setTitle("BrainStream - Settings");
             stage.resizableProperty().setValue(Boolean.FALSE);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }
