@@ -13,6 +13,8 @@ public class AnalysisController {
     private Button messages;
     @FXML
     private Button settings;
+    @FXML
+    private Button game;
 
 
     public AnalysisController() {
@@ -23,21 +25,34 @@ public class AnalysisController {
     }
 
     public void analysisColorToWhite(MouseEvent Event) {
-        analysis.setStyle("-fx-background-color: #ffffff;");
-        messages.setStyle("-fx-background-color: #EBF4FA;");
-        settings.setStyle("-fx-background-color: #EBF4FA;");
+        analysis.setStyle("-fx-background-color: #FEFDFC;");
+        messages.setStyle("-fx-background-color: #F6F4F3;");
+        settings.setStyle("-fx-background-color: #F6F4F3;");
+        game.setStyle("-fx-background-color: #F6F4F3;");
+
     }
 
     public void messagesColorToWhite(MouseEvent Event) {
-        messages.setStyle("-fx-background-color: #ffffff;");
-        settings.setStyle("-fx-background-color: #EBF4FA;");
-        analysis.setStyle("-fx-background-color: #EBF4FA;");
+        messages.setStyle("-fx-background-color: #FEFDFC;");
+        settings.setStyle("-fx-background-color: #F6F4F3;");
+        analysis.setStyle("-fx-background-color: #F6F4F3;");
+        game.setStyle("-fx-background-color: #F6F4F3;");
+
     }
 
     public void settingsColorToWhite(MouseEvent Event) {
-        settings.setStyle("-fx-background-color: #ffffff;");
-        messages.setStyle("-fx-background-color: #EBF4FA;");
-        analysis.setStyle("-fx-background-color: #EBF4FA;");
+        settings.setStyle("-fx-background-color: #FEFDFC;");
+        messages.setStyle("-fx-background-color: #F6F4F3;");
+        analysis.setStyle("-fx-background-color: #F6F4F3;");
+        game.setStyle("-fx-background-color: #F6F4F3;");
+
+    }
+
+    public void gameColorToWhite(MouseEvent Event) {
+        game.setStyle("-fx-background-color: #FEFDFC;");
+        settings.setStyle("-fx-background-color: #F6F4F3;");
+        messages.setStyle("-fx-background-color: #F6F4F3;");
+        analysis.setStyle("-fx-background-color: #F6F4F3;");
     }
 /*
     // Called after the FXML has been initialized
