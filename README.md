@@ -3,7 +3,7 @@
 ## CONTENTS
    
  * [Introduction](#introduction)
- * [Release notes v.0.5](#release notes v0.5)
+ * [Release notes v.0.5](#releasenotesv0.5)
  * [Client](#client)
  * [Instructions](#instructions)
  * [FAQ](#faq)
@@ -38,7 +38,7 @@ The framework, **BrainLight**, is be the foundation upon which countless applica
 * User Manual (em desenvolvimento)
 * Interface gráfica completa para o dispositivo NeuroSky Mindset
 * Visualização da informação em tempo real na interface
-* Comunicação funcional entre Neurosky, módulo de gestão e interface
+* Comunicação funcional Neurosky -> módulo de gestão -> interface
 * Análises funcionais, mas não são aplicadas ao NeuroSky
   * Necessitam de atualizações devido a novas informações obtidas relativamente às unidades dos dados do Emotiv
 * API funcional, mas desatualizada
