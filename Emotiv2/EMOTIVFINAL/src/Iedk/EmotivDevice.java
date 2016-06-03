@@ -20,12 +20,15 @@ public class EmotivDevice implements Runnable {
 
     DoubleByReference alpha, low_beta, high_beta, gamma, theta;
     private boolean receiveDataBool, onStateChanged, readytocollect;
-    float timestamp, secs, smileExtentStatus, lowerFaceActionStatus, lowerFaceActionStatusPower, uperFaceActionStatus, uperFaceActionStatusPower, clenchExtentStatus;
+    float timestamp, secs, smileExtentStatus, lowerFaceActionStatus, lowerFaceActionStatusPower, uperFaceActionStatus, uperFaceActionStatusPower, clenchExtentStatus, engagementBoredomScore, excitementLongScore, excitementShortScore,
+            frustationScore, meditationScore;
     private int wirelessSignalStatus, nquality;
     Pointer contactQualityP, hData;
     private int EE_CHAN_CMS, EE_CHAN_DRL, EE_CHAN_FP1, EE_CHAN_AF3, EE_CHAN_F7, EE_CHAN_F3, EE_CHAN_FC5, EE_CHAN_T7, EE_CHAN_P7,
             EE_CHAN_O1, EE_CHAN_O2, EE_CHAN_P8, EE_CHAN_T8, EE_CHAN_FC6, EE_CHAN_F4, EE_CHAN_F8, EE_CHAN_AF4, EE_CHAN_FP2, blinkStatus, leftWinkStatus,
-            rightWinkStatus, eyesOpenStatus, lookingDownStatus, lookingUpStatus, lookingLeftStatus, lookingRightStatus;
+            rightWinkStatus, eyesOpenStatus, lookingDownStatus, lookingUpStatus, lookingLeftStatus, lookingRightStatus, isEngActiv,isExcitementActiv,
+            isFrustActiv, isMeditationActiv;
+
     Channel Counter, AF3, F7, F3, FC5, T7, P7, O1, O2, P8, T8, FC6, F4, F8, AF4;
     private double hamming[];
     int minFre, maxFre, nSamples;
@@ -37,7 +40,9 @@ public class EmotivDevice implements Runnable {
     HashMap<String, Object> deviceInfoMap;
     HashMap<String, Object> actionsMap;
     HashMap<String, Object> expressionsMap;
+    HashMap<String, Object> affectivemap;
     HashMap<String, Wave> channelsAverageBandPowers;
+
 
 
     Edk.EE_DataChannels_t targetChannelList[] = {
@@ -117,6 +122,7 @@ public class EmotivDevice implements Runnable {
         lookingUpStatus = 0;
         lookingLeftStatus = 0;
         lookingRightStatus = 0;
+        isEngActiv=0;
         EE_CHAN_F4 = 0;
         EE_CHAN_F8 = 0;
         EE_CHAN_AF4 = 0;
@@ -152,11 +158,15 @@ public class EmotivDevice implements Runnable {
         F8 = new Channel();
         AF4 = new Channel();
 
+       isExcitementActiv=0; isFrustActiv=0; isMeditationActiv=0;
+        engagementBoredomScore=0.0f; excitementLongScore=0.0f; excitementShortScore=0.0f; frustationScore=0.0f; meditationScore=0.0f;
+
 
         deviceInfoMap = new HashMap<>();
         actionsMap = new HashMap<>();
         expressionsMap = new HashMap<>();
         channelsAverageBandPowers = new HashMap<>();
+        affectivemap = new HashMap<>();
 
         f = new int[18];
 
@@ -225,7 +235,7 @@ public class EmotivDevice implements Runnable {
                         //bat status
                         EmoState.INSTANCE.ES_GetBatteryChargeLevel(emotivState, batteryLevelStatus, maxBatteryLevel);
 
-
+                        getAffectiv();
                         getEmotivLookingdDirections();
                         getEmotivFacialExpression();
                         getWaves();
@@ -243,6 +253,43 @@ public class EmotivDevice implements Runnable {
                 sendDataToInterface();
             }
         }
+    }
+
+    private void getAffectiv(){
+
+      isEngActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_ENGAGEMENT_BOREDOM.ToInt());
+
+        if(isEngActiv ==1) {
+
+            engagementBoredomScore = EmoState.INSTANCE.ES_AffectivGetEngagementBoredomScore(emotivState);
+        }
+
+        isExcitementActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_EXCITEMENT.ToInt());
+
+        if(isExcitementActiv ==1) {
+
+            excitementLongScore = EmoState.INSTANCE.ES_AffectivGetExcitementLongTermScore(emotivState);
+            excitementShortScore = EmoState.INSTANCE.ES_AffectivGetExcitementShortTermScore(emotivState);
+        }
+
+        isFrustActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_FRUSTRATION.ToInt());
+
+        if(isFrustActiv ==1) {
+
+            frustationScore = EmoState.INSTANCE.ES_AffectivGetFrustrationScore(emotivState);
+
+        }
+
+
+        isMeditationActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_MEDITATION.ToInt());
+
+        if(isMeditationActiv ==1) {
+
+            meditationScore = EmoState.INSTANCE.ES_AffectivGetMeditationScore(emotivState);
+
+        }
+
+
     }
 
 
@@ -342,10 +389,20 @@ public class EmotivDevice implements Runnable {
         expressionsMap.put("UperFaceExpression", parseExpression(uperFaceActionStatus));
         expressionsMap.put("UperFaceExpressionPower", uperFaceActionStatusPower);
 
-
+        affectivemap.put("EngagementActive",isEngActiv);
+        affectivemap.put("Engagement",engagementBoredomScore);
+        affectivemap.put("ExcitementActive",isExcitementActiv);
+        affectivemap.put("ExcitementLongTime",excitementLongScore);
+        affectivemap.put("ExcitementShortTime",excitementShortScore);
+        affectivemap.put("FrustationActive",isFrustActiv);
+        affectivemap.put("Frustation",frustationScore);
+        affectivemap.put("MeditationActive",isMeditationActiv);
+        affectivemap.put("Meditation",meditationScore);
+        
         data.put("DeviceInfo", deviceInfoMap);
         data.put("Actions", actionsMap);
         data.put("FacialExpressions", expressionsMap);
+        data.put("AffectiveValues",actionsMap);
     }
 
 
@@ -411,6 +468,7 @@ public class EmotivDevice implements Runnable {
         actionsMap.clear();
         deviceInfoMap.clear();
         expressionsMap.clear();
+        affectivemap.clear();
 
         HashMap<String, Object> data = new HashMap<>();
         createDataHash(data);
