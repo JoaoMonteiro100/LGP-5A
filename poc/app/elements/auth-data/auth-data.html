@@ -1,0 +1,195 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="auth-data">
+    <template>
+        <style is="custom-style">
+            #toast {
+                --paper-toast-background-color: red;
+                --paper-toast-color: white;
+            }
+        </style>
+
+        <firebase-auth id="auth"
+                       location="https://brainlight.firebaseio.com/"
+                       provider="password"
+                       user="{{user}}"
+                       on-error="errorHandler"
+                       on-login="loggedIn"
+                       on-logout="LoogedOut">
+        </firebase-auth>
+
+        <firebase-document id="fbDoc"
+                           location="{{profileLocation}}"
+                           data="{{profile}}"
+                           on-firebase-value="_firebaseProfileLoaded">
+        </firebase-document>
+        <paper-toast id="toast" class="fit-bottom" text=""></paper-toast>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'auth-data',
+
+                properties: {
+                    user: {
+                        type: Object,
+                        notify: true
+                    },
+
+                    _firebaseConnecte: {
+                        value: false
+                    },
+
+                    profile: {
+                        type: Object,
+                        notify: true
+                    }
+                },
+
+                signIn: function (params) {
+                    this.$.auth.login(params);
+                },
+
+                errorHandler: function (e) {
+                    alert('Error: ' + e.detail.message);
+                    //this.$.toast.textContent = e.detail.message;
+                    //this.$.toast.open();
+                },
+
+                ready: function() {
+                    /**
+                     * The user key does exist in the session storage
+                     * Check if the user is logged in the firebase database
+                     */
+                    var firebaseRef = new Firebase(app.location);
+                    var authData = firebaseRef.getAuth();
+
+                    // User is logged in, update the connection state
+                    if (!authData) {
+                        /**
+                         * User is not logged in Firebase database, although the key
+                         * exists in the session storage.
+                         *
+                         * That might means that the session expired in the server side
+                         * In this case we delete the user key from the session storage
+                         */
+                        if(localStorage.getItem('user') != null)
+                            localStorage.removeItem('user');
+                    }
+                },
+
+                loggedIn: function (e) {
+                    // The key 'user' does not exists in the session storage...
+                    if (localStorage.getItem("user") == null) {
+                        // Check if the user is logged in the firebase database
+                        var firebaseRef = new Firebase(app.location);
+                        var authData = firebaseRef.getAuth();
+
+                        // User is logged in...
+                        if (authData) {
+                            // Search for the user by email and store the user object in the session storage
+                            var ref = new Firebase(app.usersLocation);
+                            ref.orderByChild('mail').equalTo(this.user.password.email)
+                                    .on('value', function (snapshot) {
+                                        var user = snapshot.val();
+                                        if (user != null) {
+                                            localStorage.setItem('user', JSON.stringify(user));
+                                            // The '/' will decide whether the current user is an Admin or a Doctor
+                                            page.redirect('/');
+                                        }
+                                    });
+                        }
+                    } else {
+                        /**
+                         * The user key does exist in the session storage
+                         * Check if the user is logged in the firebase database
+                         */
+                        var firebaseRef = new Firebase(app.location);
+                        var authData = firebaseRef.getAuth();
+
+                        // User is logged in, update the connection state
+                        if (authData) {
+                            var connectionRef = new Firebase(app.connectionState);
+                            connectionRef.on("value", function (snapshot) {
+                                var value = snapshot.val();
+
+                                // User is connected
+                                if (value) {
+                                    var user = JSON.parse(localStorage.getItem("user"));
+                                    var userKey = Object.keys(user)[0];
+
+                                    var userRef = new Firebase(app.userURL(userKey));
+                                    userRef.update({
+                                        online: true
+                                    });
+
+
+                                    userRef.onDisconnect().update({online: false});
+                                }
+                            });
+                        }
+                    }
+                },
+
+                singOut: function () {
+                    var ref = new Firebase(this.location);
+                    ref.unauth();
+                    this.user = null;
+                },
+
+                setDefaultProfile: function () {
+                    this.profile = {
+                        name: this.user.google.cachedUserProfile.given_name,
+                        lastname: this.user.google.cachedUserProfile.family_name,
+                        email: '',
+                        phone: '',
+                        picture: this.user.google.cachedUserProfile.picture,
+                        department: '',
+                        job: '',
+                        office: '',
+                        room: '',
+                        notification: {
+                            message: true,
+                            invitation: true,
+                            changes: false,
+                            login: false,
+                            weekly: true,
+                            daily: false
+                        }
+                    };
+                },
+
+                _firebaseProfileLoaded: function () {
+                    this.set('profile', this.profile);
+                    if (!this.profile) {
+                        this.setDefaultProfile();
+                    }
+                },
+
+                _firebaseTodoLoaded: function () {
+                    this._firebaseConnected = true;
+
+                },
+
+                _userChanged: function (user) {
+                    if (user) {
+                        this.profileLocation = [this.location, 'profile', this.user.uid].join('/');
+                    }
+                }
+
+            });
+        })();
+    </script>
+</dom-module>

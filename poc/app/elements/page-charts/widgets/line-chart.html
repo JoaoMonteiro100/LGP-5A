@@ -1,0 +1,283 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/chart-elements/chart-elements.html">
+
+
+<dom-module id="line-chart">
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 900px;
+                @apply(--layout-vertical);
+            }
+
+            section paper-dialog-scrollable {
+
+                @apply(--layout-flex);
+            }
+
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
+
+            span {
+                padding-right: 10px;
+            }
+        </style>
+        <section>
+
+            <paper-dialog-scrollable>
+                <div>
+                    <chart-line id="chart" data="[[data]]" options="[[options]]"></chart-line>
+                </div>
+
+                <paper-checkbox id="lowGamma" on-change="thetaChange" checked="{{thetaChecked}}">Theta</paper-checkbox>
+                <paper-checkbox on-change="lowGammaChange" checked="{{lowGammaChecked}}">Low Gamma</paper-checkbox>
+                <paper-checkbox id="midGamma" on-change="midGammaChange" checked="{{midGammaChecked}}">Mid Gamma
+                </paper-checkbox>
+                <paper-checkbox on-change="lowBetaChange" checked="{{lowBetaChecked}}">Low Beta</paper-checkbox>
+                <paper-checkbox on-change="highBetaChange" checked="{{highBetaChecked}}">Low Beta</paper-checkbox>
+                <paper-checkbox on-change="lowAlphaChange" checked="{{lowAlphaChecked}}">Low Alpha</paper-checkbox>
+                <paper-checkbox on-change="highAlphaChange" checked="{{highAlphaChecked}}">High Alpha</paper-checkbox>
+                <paper-checkbox on-change="deltaChange" checked="{{deltaChecked}}">Delta</paper-checkbox>
+
+                <paper-button raised id="button" on-tap="_nativeSubmit">Login</paper-button>
+            </paper-dialog-scrollable>
+        </section>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'line-chart',
+
+                properties: {
+                    data: {
+                        type: Object,
+                        notify: true
+                    },
+                    options: {
+                        type: Object,
+                        notify: true
+                    },
+                    chart: {
+                        type: Object,
+                        notify: true
+                    },
+                    thetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    thetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    midGammaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    midGammaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowGammaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowGammaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowBetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowBetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    highBetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    highBetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowAlphaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowAlphaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    highAlphaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    highAlphaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    deltaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    deltaTmp: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+
+                thetaChange: function (e) {
+                    if (!this.thetaChecked) {
+                        this.thetaTmp = this.data.datasets[6].data;
+                        this.data.datasets[6].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[6].data = this.thetaTmp;
+                        this.thetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                midGammaChange: function (e) {
+                    if (!this.midGammaChecked) {
+                        this.midGammaTmp = this.data.datasets[1].data;
+                        this.data.datasets[1].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[1].data = this.midGammaTmp;
+                        this.midGammaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowGammaChange: function (e) {
+                    if (!this.lowGammaChecked) {
+                        this.lowGammaTmp = this.data.datasets[0].data;
+                        this.data.datasets[0].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[0].data = this.lowGammaTmp;
+                        this.lowGammaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowBetaChange: function (e) {
+                    if (!this.lowBetaChecked) {
+                        this.lowBetaTmp = this.data.datasets[2].data;
+                        this.data.datasets[2].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[2].data = this.lowBetaTmp;
+                        this.lowBetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                highBetaChange: function (e) {
+                    if (!this.highBetaChecked) {
+                        this.highBetaTmp = this.data.datasets[3].data;
+                        this.data.datasets[3].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[3].data = this.highBetaTmp;
+                        this.highBetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowAlphaChange: function (e) {
+                    if (!this.lowAlphaChecked) {
+                        this.lowAlphaTmp = this.data.datasets[4].data;
+                        this.data.datasets[4].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[4].data = this.lowAlphaTmp;
+                        this.lowAlphaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                highAlphaChange: function (e) {
+                    if (!this.highAlphaChecked) {
+                        this.highAlphaTmp = this.data.datasets[5].data;
+                        this.data.datasets[5].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[5].data = this.highAlphaTmp;
+                        this.highAlphaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                deltaChange: function (e) {
+                    if (!this.deltaChecked) {
+                        this.deltaTmp = this.data.datasets[7].data;
+                        this.data.datasets[7].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[7].data = this.deltaTmp;
+                        this.deltaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                ready: function () {
+                    var self = this;
+                    this.thetaTmp = [];
+                    this.midGammaTmp = [];
+                    this.lowGammaTmp = [];
+                    this.lowBetaTmp = [];
+                    this.highBetaTmp = [];
+                    this.lowAlphaTmp = [];
+                    this.highAlphaTmp = [];
+                    this.deltaTmp = [];
+
+
+                    this.$.chart.style.width = '100%';
+                    this.$.chart.style.height = 600 + 'px';
+                    this.$.chart.resize();
+
+                    this.options = {
+                        animation: false
+                    };
+
+                    this.data = this.buildChartData();
+
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leituras/leitura1");
+                    ref.on("child_added", function (snapshot) {
+                        self.setChartData(snapshot);
+                        self.$.chart.updateChart();
+                    });
+
+
+                },
+
+                _nativeSubmit: function () {
+                    this.data.datasets[0].data.push(200);
+                    this.data.labels.push("Time");
+                    this.$.chart.updateChart();
+                }
+            });
+        })();
+    </script>
+</dom-module>
