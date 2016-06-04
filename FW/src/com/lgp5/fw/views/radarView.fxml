@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+  <columnConstraints>
+    <ColumnConstraints />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="125.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="347.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="120.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="274.0" minHeight="10.0" prefHeight="273.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <LineChart fx:id="radarGraph" alternativeRowFillVisible="false" createSymbols="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" prefHeight="274.0" prefWidth="518.0" verticalGridLinesVisible="false" verticalZeroLineVisible="false" GridPane.columnIndex="2" GridPane.rowIndex="2">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="61.0" prefWidth="350.0" text="GAMMA 2" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="61.0" prefWidth="350.0" text="ALFA 2" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Label alignment="CENTER_RIGHT" prefHeight="316.0" prefWidth="202.0" text="THETA" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label prefHeight="321.0" prefWidth="262.0" text="BETA 2" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label alignment="BOTTOM_RIGHT" prefHeight="178.0" prefWidth="128.0" text="DELTA" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label alignment="BOTTOM_LEFT" prefHeight="184.0" prefWidth="333.0" text="GAMMA 1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label alignment="TOP_LEFT" prefHeight="120.0" prefWidth="318.0" text="BETA 1" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label alignment="TOP_RIGHT" prefHeight="142.0" prefWidth="128.0" text="ALFA 1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   </children>
+</GridPane>

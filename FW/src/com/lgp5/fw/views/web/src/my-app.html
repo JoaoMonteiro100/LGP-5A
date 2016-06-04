@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/chart-elements/chart-elements.html">
+<link rel="stylesheet" href="../css/style.css" type="text/css">
+
+<dom-module id="my-app">
+
+  <template>
+
+    <chart-radar id="chart" data="[[data]]"></chart-radar>
+
+  </template>
+
+  <script>
+
+	Polymer({
+		is: 'my-app',
+		properties: {
+		route: Object
+		},
+	  
+		ready: function() {
+			this.data = {
+				labels: ["Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2"],
+				datasets: [
+					{
+						fillColor: "rgba(0,160,154,0.4)",
+						strokeColor: "rgba(46,172,102,1)",
+						pointColor: "rgba(220,220,220,1)",
+						pointStrokeColor: "#2eac66",
+						pointHighlightFill: "#2eac66",
+						pointHighlightStroke: "rgba(46,172,102,1)",
+						data: [65, 59, 75, 81, 56, 55, 40, 50]
+					},
+				]
+			};
+			
+			this.$.chart.style.height = "500px";
+			this.$.chart.style.width = "975px";
+			this.$.chart.style.top = "-250px";
+			this.$.chart.style.left = "22%";
+		}
+	});
+
+  </script>
+
+</dom-module>

@@ -13,7 +13,13 @@ public class Main {
 			
 			@Override
 			public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
-				System.err.println(dataToSend.toString());
+				//System.err.println(dataToSend.toString());
+				
+			}
+
+			@Override
+			public void onReceiveRawData(HashMap<String, Integer> rawData) {
+				// TODO Auto-generated method stub
 				
 			}
 		};
