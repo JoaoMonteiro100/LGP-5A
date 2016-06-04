@@ -1,0 +1,17 @@
+{
+  "name": "polymer-starter-kit",
+  "private": true,
+  "dependencies": {
+    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+    "neon-elements": "PolymerElements/neon-elements#^1.0.0",
+    "page": "visionmedia/page.js#~1.6.4",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.1",
+    "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
+    "polymer": "Polymer/polymer#^1.4.0",
+    "firebase-element": "GoogleWebComponents/firebase-element#^1.0.12",
+    "chart-elements": "https://github.com/robdodson/chart-elements.git#^2.0.2",
+    "gold-email-input": "PolymerElements/gold-email-input#^1.0.7"
+  },
+  "devDependencies": {},
+  "ignore": []
+}

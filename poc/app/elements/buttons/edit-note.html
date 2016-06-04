@@ -1,0 +1,149 @@
+<!--
+   @license
+   Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+   This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+   The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+   The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+   Code distributed by Google as part of the polymer project is also
+   subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+   -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="edit-note">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: block;
+            }
+            #modal{
+                width: 350px;
+            }
+            .containerdiv {
+                @apply(--layout-horizontal);
+                height: 100%;
+                width: 100%;
+                padding-right: 0px;
+                font-size: 12px;
+            }
+            #genpw{
+                margin-top: 16px;
+            }
+            .flexchild {
+                @apply(--layout-flex);
+            }
+            #genderdrop{
+                @apply(--layout-horizontal);
+            }
+        </style>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:note-add" on-click="editFormClickHandler"></paper-icon-button>
+        <paper-dialog id="editNote" modal>
+            <h1>Edit Patient</h1>
+            <form is="iron-form" id="editPatientForm">
+                <paper-textarea id="note" value={{user.notes}} label="{{user.name}} {{user.lastname}} Notes: "></paper-textarea>
+                <paper-button raised on-tap="_nativeSubmit" >
+                    <paper-spinner id="spinner" hidden></paper-spinner>
+                    Update
+                </paper-button>
+                <paper-button raised on-tap="_reset">Reset</paper-button>
+                <div class="output"></div>
+            </form>
+            <div class="buttons">
+                <paper-button id="closeButton" dialog-confirm autofocus>Close</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'edit-note',
+
+                properties: {
+                    user: {
+                        type: Object,
+                        notify: true
+                    },
+                    selected: {
+                        type: Number,
+                        notify: true
+                    },
+                    ishidden: {
+                type: Boolean,
+                value: true
+            } 
+                }
+                ,
+
+                _nativeSubmit: function(event) {
+                    var self = this;
+
+                    var onPatientUpdated = function(error) {
+                      if(error) {
+                         alert('An error occurred while updating note!');
+                      } else {
+                          // Close the modal
+                          self.$.editNote.close();
+                      }
+                    };
+                        var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
+                        userRef.update({
+                            notes: this.$.note.value
+                        }, onPatientUpdated);
+                    
+                },
+
+                editFormClickHandler: function(e) {
+                   /* var button = e.target;
+                    var dialog = document.getElementById('editNote');
+                    if(dialog) {
+                        dialog.open();
+                    }*/
+                    this.$.editNote.toggle();
+                },
+
+                ready: function() {
+                    var self = this;
+                    var userdef = false;
+                    addEventListener('selected-user-doctor', function(user) {
+                        var ref = new Firebase(app.userURL(user.detail));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!userdef) {
+                                self.toggle();
+                                userdef = true;
+                            }
+                        });
+                    });
+
+                    addEventListener('selected-user-patient', function(user) {
+                        var ref = new Firebase(app.userURL(user.detail));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!userdef) {
+                                self.toggle();
+                                userdef = true;
+                            }
+                        });
+                    });
+                },
+
+                _reset:function() {
+                    this.$.note.value="";
+                },
+                  compute: function() {
+                return this.ishidden;
+            },
+            toggle: function() {
+                this.ishidden = !this.ishidden;
+            }
+            });
+        })();
+    </script>
+</dom-module>

@@ -1,0 +1,612 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/chart-elements/chart-elements.html">
+
+
+<dom-module id="patient-chart">
+    <template>
+        <style is="custom-style">
+
+            section {
+                width: 100%;
+                height: 450px;
+                @apply(--layout-vertical);
+            }
+
+            section paper-dialog-scrollable {
+
+                @apply(--layout-flex);
+            }
+
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
+
+            span {
+                padding-right: 10px;
+            }
+
+            #chart::content {
+                max-height: 350px;
+            }
+
+            #grafbutcont {
+                height: 100%;
+            }
+
+            #buttonscontainer {
+
+                margin-left: 15px;
+            }
+
+            #thetacheck {
+                --paper-checkbox-checked-color: #45405e;
+            }
+
+            #lowgammacheck {
+                --paper-checkbox-checked-color: #fcea0f;
+            }
+
+            #midgammacheck {
+                --paper-checkbox-checked-color: #f39200;
+            }
+
+            #lowbetacheck {
+                --paper-checkbox-checked-color: #00a09a;
+            }
+
+            #highbetacheck {
+                --paper-checkbox-checked-color: #2eac66;
+            }
+
+            #lowalphacheck {
+                --paper-checkbox-checked-color: #302683;
+            }
+
+            #highalphacheck {
+                --paper-checkbox-checked-color: #1d70b7;
+            }
+
+            #deltacheck {
+                --paper-checkbox-checked-color: #9d9c9c;
+            }
+
+            .container {
+                height: 100%;
+
+                @apply(--layout-horizontal);
+            }
+
+            .flexchild {
+                @apply(--layout-flex);
+            }
+
+            section paper-dialog-scrollable {
+                height: 100%;
+                @apply(--layout-flex);
+            }
+
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+
+            #info {
+                width: 300px;
+                height: 100%;
+            }
+
+            #info paper-dialog-scrollable {
+                height: 100%;
+                @apply(--layout-flex);
+            }
+
+
+        </style>
+        <firebase-collection
+                data="{{histinfo}}"></firebase-collection>
+        <section>
+            <div id="grafbutcont">
+                <paper-dialog-scrollable>
+                    <div id="grafcontainer">
+                        <chart-line id="chart" data="[[data]]" options="[[options]]"></chart-line>
+                    </div>
+                    <div id="buttonscontainer">
+                        <app-grid sm-cols="2" md-cols='4'>
+                            <paper-checkbox id="thetacheck" on-change="thetaChange" checked="{{thetaChecked}}">
+                                Theta
+                            </paper-checkbox>
+                            <paper-checkbox id="lowgammacheck" on-change="lowGammaChange"
+                                            checked="{{lowGammaChecked}}">Low Gamma
+                            </paper-checkbox>
+                            <paper-checkbox id="midgammacheck" on-change="midGammaChange"
+                                            checked="{{midGammaChecked}}">Mid Gamma
+                            </paper-checkbox>
+                            <paper-checkbox id="lowbetacheck" on-change="lowBetaChange"
+                                            checked="{{lowBetaChecked}}">Low Beta
+                            </paper-checkbox>
+                            <paper-checkbox id="highbetacheck" on-change="highBetaChange"
+                                            checked="{{highBetaChecked}}">Low Beta
+                            </paper-checkbox>
+                            <paper-checkbox id="lowalphacheck" on-change="lowAlphaChange"
+                                            checked="{{lowAlphaChecked}}">Low Alpha
+                            </paper-checkbox>
+                            <paper-checkbox id="highalphacheck" on-change="highAlphaChange"
+                                            checked="{{highAlphaChecked}}">High Alpha
+                            </paper-checkbox>
+                            <paper-checkbox id="deltacheck" on-change="deltaChange" checked="{{deltaChecked}}">
+                                Delta
+                            </paper-checkbox>
+                        </app-grid>
+                    </div>
+                </paper-dialog-scrollable>
+            </div>
+
+        </section>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'patient-chart',
+
+                properties: {
+                    data: {
+                        type: Object,
+                        notify: true
+                    },
+                    options: {
+                        type: Object,
+                        notify: true
+                    },
+                    chart: {
+                        type: Object,
+                        notify: true
+                    },
+                    thetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    thetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    midGammaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    midGammaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowGammaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowGammaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowBetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowBetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    highBetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    highBetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowAlphaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowAlphaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    highAlphaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    highAlphaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    deltaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    deltaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    histinfo: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+
+    buildChartData: function() {
+        this.data = {
+            labels: [],
+            datasets: [
+                {
+                    label: "Low Gamma",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#fcea0f",
+                    pointColor: "#fcea0f",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Mid Gamma",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#f39200",
+                    pointColor: "#f39200",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Low beta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#00a09a",
+                    pointColor: "#00a09a",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "High beta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#2eac66",
+                    pointColor: "#2eac66",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Low Alpha",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#302683",
+                    pointColor: "#302683",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "High Alpha",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#1d70b7",
+                    pointColor: "#1d70b7",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Theta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#45405e",
+                    pointColor: "#45405e",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                },
+                {
+                    label: "Delta",
+                    fillColor: "rgba(0,0,0,0)",
+                    strokeColor: "#9d9c9c",
+                    pointColor: "#9d9c9c",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                }
+            ]
+        };
+        
+        return this.data;
+    },
+    
+    
+    setChartData: function(self, snapshot) {
+        if (self.data.labels.length > 10) {
+            self.data.labels = self.data.labels.slice(-10);
+            if (self.lowGammaChecked) {
+                self.data.datasets[0].data = self.data.datasets[0].data.slice(-10);
+            } else {
+                self.lowGammaTmp = self.lowGammaTmp.slice(-10);
+            }
+
+            if (self.midGammaChecked) {
+                self.data.datasets[1].data = self.data.datasets[1].data.slice(-10);
+            } else {
+                self.midGammaTmp = self.midGammaTmp.slice(-10);
+            }
+
+            if (self.lowBetaChecked) {
+                self.data.datasets[2].data = self.data.datasets[2].data.slice(-10);
+            } else {
+                self.lowBetaTmp = self.lowBetaTmp.slice(-10);
+            }
+
+            if (self.highBetaChecked) {
+                self.data.datasets[3].data = self.data.datasets[3].data.slice(-10);
+            } else {
+                self.highBetaTmp = self.highBetaTmp.slice(-10);
+            }
+
+            if (self.lowAlphaChecked) {
+                self.data.datasets[4].data = self.data.datasets[4].data.slice(-10);
+            } else {
+                self.lowAlphaTmp = self.lowAlphaTmp.slice(-10);
+            }
+
+            if (self.highAlphaChecked) {
+                self.data.datasets[5].data = self.data.datasets[5].data.slice(-10);
+            } else {
+                self.highAlphaTmp = self.highAlphaTmp.slice(-10);
+            }
+
+            if (self.thetaChecked) {
+                self.data.datasets[6].data = self.data.datasets[6].data.slice(-10);
+            } else {
+                self.thetaTmp = self.thetaTmp.slice(-10);
+            }
+
+            if (self.deltaChecked) {
+                self.data.datasets[7].data = self.data.datasets[7].data.slice(-10);
+            } else {
+                self.deltaTmp = self.deltaTmp.slice(-10);
+            }
+        }
+
+        var data = snapshot.val();
+        if (self.lowGammaChecked) {
+            self.data.datasets[0].data.push(data.low_gamma);
+        } else {
+            self.lowGammaTmp.push(data.low_gamma);
+        }
+
+        if (self.midGammaChecked) {
+            self.data.datasets[1].data.push(data.mid_gamma);
+        } else {
+            self.midGammaTmp.push(data.mid_gamma);
+        }
+
+        if (self.lowBetaChecked) {
+            self.data.datasets[2].data.push(data.low_beta);
+        } else {
+            self.lowBetaTmp.push(data.low_beta);
+        }
+
+        if (self.highBetaChecked) {
+            self.data.datasets[3].data.push(data.high_beta);
+        } else {
+            self.highBetaTmp.push(data.high_beta);
+        }
+
+        if (self.lowAlphaChecked) {
+            self.data.datasets[4].data.push(data.low_alpha);
+        } else {
+            self.lowAlphaTmp.push(data.low_alpha);
+        }
+
+        if (self.highAlphaChecked) {
+            self.data.datasets[5].data.push(data.high_alpha);
+        } else {
+            self.highAlphaTmp.push(data.high_alpha);
+        }
+
+        if (self.thetaChecked) {
+            self.data.datasets[6].data.push(data.theta);
+        } else {
+            self.thetaTmp.push(data.theta);
+        }
+
+        if (self.deltaChecked) {
+            self.data.datasets[7].data.push(data.delta);
+        } else {
+            self.deltaTmp.push(data.delta);
+        }
+
+        self.data.labels.push(data.elapsedTime);
+        self.$.chart.updateChart();
+    },
+                thetaChange: function (e) {
+                    if (!this.thetaChecked) {
+                        this.thetaTmp = this.data.datasets[6].data;
+                        this.data.datasets[6].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[6].data = this.thetaTmp;
+                        this.thetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                midGammaChange: function (e) {
+                    if (!this.midGammaChecked) {
+                        this.midGammaTmp = this.data.datasets[1].data;
+                        this.data.datasets[1].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[1].data = this.midGammaTmp;
+                        this.midGammaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowGammaChange: function (e) {
+                    if (!this.lowGammaChecked) {
+                        this.lowGammaTmp = this.data.datasets[0].data;
+                        this.data.datasets[0].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[0].data = this.lowGammaTmp;
+                        this.lowGammaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowBetaChange: function (e) {
+                    if (!this.lowBetaChecked) {
+                        this.lowBetaTmp = this.data.datasets[2].data;
+                        this.data.datasets[2].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[2].data = this.lowBetaTmp;
+                        this.lowBetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                highBetaChange: function (e) {
+                    if (!this.highBetaChecked) {
+                        this.highBetaTmp = this.data.datasets[3].data;
+                        this.data.datasets[3].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[3].data = this.highBetaTmp;
+                        this.highBetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowAlphaChange: function (e) {
+                    if (!this.lowAlphaChecked) {
+                        this.lowAlphaTmp = this.data.datasets[4].data;
+                        this.data.datasets[4].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[4].data = this.lowAlphaTmp;
+                        this.lowAlphaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                highAlphaChange: function (e) {
+                    if (!this.highAlphaChecked) {
+                        this.highAlphaTmp = this.data.datasets[5].data;
+                        this.data.datasets[5].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[5].data = this.highAlphaTmp;
+                        this.highAlphaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                deltaChange: function (e) {
+                    if (!this.deltaChecked) {
+                        this.deltaTmp = this.data.datasets[7].data;
+                        this.data.datasets[7].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[7].data = this.deltaTmp;
+                        this.deltaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                clearData: function () {
+                    document.getElementById("chart").remove();
+                    var chart = this.$.chart = document.createElement('chart-line');
+                    chart.id = 'chart';
+                    chart.style = 'width: 100%; height: 400px;';
+                    chart.data = this.data;
+                    chart.options = this.options;
+                    this.$.grafcontainer.appendChild(chart);
+                    this.data.datasets.forEach(function (entry) {
+                        entry.data = [];
+                    });
+                    this.data.labels = [];
+                },
+
+                ready: function () {
+                    var self = this;
+
+                    this.thetaTmp = [];
+                    this.midGammaTmp = [];
+                    this.lowGammaTmp = [];
+                    this.lowBetaTmp = [];
+                    this.highBetaTmp = [];
+                    this.lowAlphaTmp = [];
+                    this.highAlphaTmp = [];
+                    this.deltaTmp = [];
+
+
+                    this.$.chart.style.width = '100%';
+                    this.$.chart.style.height = 600 + 'px';
+                    this.$.chart.resize();
+
+                    this.options = {
+                        animation: false,
+                        responsive: true,
+                        bezierCurve: false
+                    };
+
+                    this.data = this.buildChartData();
+
+                    addEventListener('selected-hist', function (examid) {
+                        // Clear the old chart everytime we want to show a new chart
+                        self.clearData();
+
+                        var ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + examid.detail);
+                        ref.limitToLast(11).on("child_added", function (snapshot) {
+                            if (snapshot.val()) {
+                                self.setChartData(self, snapshot);
+                                self.$.chart.updateChart();
+                            }
+                        });
+
+                        var ref2 = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+
+                        ref2.orderByChild("Leitura").equalTo(examid.detail).on("child_added", function (snapshot) {
+                            if (snapshot.val()) {
+                                console.log(snapshot.val().Note);
+                                //alert(JSON.stringify(snapshot.val()[0].Note));
+                            }
+                        });
+
+                    });
+
+                },
+
+                _nativeSubmit: function () {
+                    this.data.datasets[0].data.push(200);
+                    this.data.labels.push("Time");
+                    this.$.chart.updateChart();
+                }
+            });
+        })();
+    </script>
+</dom-module>

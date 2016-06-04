@@ -1,0 +1,143 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="app-login">
+    <template>
+        <style>
+            :host {
+                display: block
+            }
+
+            #button {
+                margin-top: 6px;
+                float: right;
+            }
+
+            #formcont {
+                width: 260px;
+                margin: auto;
+
+            }
+
+            #backdiv {
+                height: 100%;
+                min-width: 100%;
+                position: absolute;
+
+            }
+
+            #paper {
+
+                width: 550px;
+                height: 180px;
+                background: #F0F0F0;
+                display: inline-flex;
+            }
+
+            #cont {
+                width: 530px;
+                height: 190px;
+                display: inline-flex;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+
+                margin: auto;
+            }
+
+            #spinner {
+                float: right;
+                margin-top: 12px;
+            }
+
+        </style>
+
+        <div id="backdiv">
+            <div id="cont">
+                <paper-material id="paper" elevation="3">
+                    <img src="../../images/temp.png">
+                    <div id="formcont">
+                        <form is="iron-form" id="loginform">
+                            <paper-input value="{{email::input}}" name="email" label="Email" required></paper-input>
+                            <paper-input value="{{password::input}}" name="password" label="Password" type="password"
+                                         required></paper-input>
+                            <paper-spinner id="spinner"></paper-spinner>
+                            <paper-button raised id="button" on-tap="_nativeSubmit">Login</paper-button>
+
+                        </form>
+                    </div>
+                </paper-material>
+            </div>
+        </div>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'app-login',
+
+                _nativeSubmit: function () {
+                    var params;
+                    var test = false;
+                    var parent = this;
+                    spinner.active = true;
+                    // Simulate a slow server response.
+                    setTimeout(function (test) {
+                        spinner.active = false;
+                        if (loginform.validate()) {
+                            var serializedItems = loginform.serialize();
+                            for (var name in serializedItems) {
+                                var input = document.createElement('input');
+                                input.hidden = true;
+                                input.name = name;
+                                input.value = serializedItems[name];
+                                loginform.appendChild(input);
+                            }
+
+                        }
+                    }, 1000);
+                    params = params || {};
+                    params.email = this.email;
+                    params.password = this.password;
+                    this.fire('sign-in', {params: params});
+                }
+                /*   _nativeSubmit: function() {
+                 var params;
+                 spinner.active = true;
+                 // Simulate a slow server response.
+                 setTimeout(function() {
+                 spinner.active=false;
+                 if (loginform.validate()) {
+                 var serializedItems = loginform.serialize();
+                 for (var name in serializedItems) {
+                 var input = document.createElement('input');
+                 input.hidden = true;
+                 input.name = name;
+                 input.value = serializedItems[name];
+                 loginform.appendChild(input);
+                 }
+
+                 params = params || {};
+                 params.email = this.email;
+                 params.password = this.password;
+                 this.fire('sign-in',{params: params});
+                 }
+                 }, 1000);
+
+                 }*/
+            });
+        })();
+    </script>
+</dom-module>

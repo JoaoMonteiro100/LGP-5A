@@ -1,0 +1,75 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="app-page-title">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        margin-right: -15px;
+        padding-bottom: 12px;
+        @apply(--layout);
+        @apply(--layout-horizontal);
+      }
+      h2 {
+        margin: 0;
+        display: inline-block;
+        font-size: 36px;
+      }
+      paper-icon-button {
+        --iron-icon-height: 24px;
+        --iron-icon-width: 24px;
+        padding: 12px;
+      }
+      paper-icon-button::shadow iron-icon {
+        color: var(--default-icon-color);
+      }
+      paper-icon-button[selected]::shadow iron-icon {
+        color: var(--default-icon-selected)
+      }
+
+      .flexchild {
+     @apply(--layout-flex);
+   }
+    </style>
+
+    <h2>{{title}}</h2>
+    <span class="flexchild"></span>
+    <paper-icon-button icon="view-module" selected$="{{colsview}}" on-click="setColsView"></paper-icon-button>
+    <paper-icon-button icon="view-stream" selected$="{{!colsview}}" on-click="setStreamView"></paper-icon-button>
+  
+  </template>
+
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'app-page-title',
+
+      properties: {
+        cols: {
+          type: Object,
+          notify: true
+        },
+
+      },
+      setColsView:function(){
+         this.cols = {style1:'1', style2:'2',style3:'3'};
+      },
+      setStreamView:function(){
+        this.cols = {style1:'1', style2:'1',style3:'1'};
+      }
+    });
+  })();
+  </script>
+</dom-module>

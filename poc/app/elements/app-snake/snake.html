@@ -1,0 +1,73 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+
+<!-- Insert this code before your </body> tag -->
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/game-snakes/game-snakes.html">
+<link rel="import" href="../../bower_components/game-snakes/controllers/game-snakes-keyboard.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="app-snake">
+
+<template>
+        <game-snakes id="gameSnakes" size="32" height="16" width="24" gap="4" no-walls score="{{Score}}" time={{Speed}}>
+          <game-snakes-keyboard></game-snakes-keyboard>
+        </game-snakes>
+        <paper-slider min="50" max="300" value="{{Time}}"></paper-slider>
+        <paper-button toggles raised on-tap="handleNewGame">New Game</paper-button>
+        <paper-button toggles raised on-tap="handlePause">Pause</paper-button>
+        <paper-button toggles raised on-tap="handleWalls">Walls</paper-button>
+        <paper-button>Score    {{Score}}</paper-button>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'app-snake',
+      properties: {
+        Time: Number,
+        Speed: {
+          type: Number,
+          computed: "computeSpeed(Time)"
+        } 
+      },
+      computeSpeed: function(Time) {
+        return 350-Time;
+      },
+
+      handleNewGame: function() {
+          this.$.gameSnakes.stop();
+          this.$.gameSnakes.play();
+      },
+
+       handlePause: function() {
+        if(this.$.gameSnakes.state == "playing")
+          this.$.gameSnakes.pause();
+        else
+          this.$.gameSnakes.play();
+      },
+
+       handleWalls: function() {
+        if(this.$.gameSnakes.noWalls)
+          this.$.gameSnakes.noWalls = false;
+        else
+          this.$.gameSnakes.noWalls = true;
+      },
+
+      ready: function(){
+        this.Time = 100;
+      }
+
+    });
+  })();
+  </script>
+</dom-module>
