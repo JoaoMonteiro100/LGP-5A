@@ -1,0 +1,125 @@
+![BrainLight logo](http://i.imgur.com/uVyWA6x.png "BrainLight")
+
+## CONTENTS
+   
+ * [Introduction](#introduction)
+ * [Release notes v.0.5](#release notes v0.5)
+ * [Client](#client)
+ * [Instructions](#instructions)
+ * [FAQ](#faq)
+ * [Maintainers](#maintainers)
+
+ 
+---
+ 
+ 
+## INTRODUCTION
+   
+Biomedical information is becoming increasingly easier to obtain thanks to wearable technology and cheaper devices. However, it’s really hard to keep up with all the software that comes with each single equipment because each of them is incompatible with all others.
+
+We built a **framework capable of reading, analysing and displaying the information from any compatible biomedical device**. At first it’ll work with the EEG systems [Emotiv EPOC](https://emotiv.com/epoc.php) and [Neurosky Mindset](http://neurosky.com/biosensors/eeg-sensor/biosensors/), but it’s expansible so that more devices and functionalities can be easily added in the future.
+
+The framework, **BrainLight**, is be the foundation upon which countless applications that use biosignals can be developed, but it is still an end-user solution since it also has a graphic interface showing all the information it’s receiving and analysing. To validate BrainLight’s usability we also developed a proof of concept that employs the framework’s functionalities, called **BrainStream**. It consists on a web app on which a physician can check the real-time and past signals of a patient, enabling long-distance consultations.
+
+
+---
+ 
+ 
+## RELEASE NOTES v0.5
+
+**Documentação:**
+* Relatório de especificação de requisitos
+  * Nova user story: FW-US13 - Prioridade baixa - "Como Utilizador quero ver análises de filtros simples passa-altas, passa-baixas e de banda."
+* Plano de testes de aceitação
+  * Inclui resultados dos testes realizados para a versão atual.
+* Planeamento
+
+**BrainLight:**
+* User Manual (em desenvolvimento)
+* Interface gráfica completa para o dispositivo NeuroSky Mindset
+* Visualização da informação em tempo real na interface
+* Comunicação funcional entre Neurosky, módulo de gestão e interface
+* Análises funcionais, mas não são aplicadas ao NeuroSky
+  * Necessitam de atualizações devido a novas informações obtidas relativamente às unidades dos dados do Emotiv
+* API funcional, mas desatualizada
+* Aplicação da transformada rápida de Fourier às ondas do Emotiv
+
+**BrainStream:**
+* User Manual (em desenvolvimento)
+* Sistema de autenticação
+* Gestão de utilizadores
+* Updates em tempo real à base de dados
+* Gráficos atualizados em tempo real e com opção de selecionar ondas pretendidas
+* Histórico funcional
+* Estado online/offline de utilizadores funcional
+* Possibilidade de um médico tirar notas e sinalizar leituras
+* Interface do paciente quase completa
+
+
+---
+ 
+ 
+## CLIENT
+
+This project was developed for INOVA+, a company specialized in supporting the growth of organisations through innovation, internationalization and access to financing. To learn more about them visit [their website](http://inovamais.eu/en/).
+
+
+---
+ 
+ 
+## INSTRUCTIONS
+   
+**BrainLight** and **BrainStream** are independent projects with few similarities between then. Hence, if you want to know more about their requirements, installation guides, or other specific information please refer to their own user guides:
+* [BrainLight's User Manual](BrainLight/userManual.pdf)
+* [BrainStream's User Manual](BrainStream/userManual.pdf)
+
+Note, however, that both of them are currently only available in Portuguese. If you need English instructions, please contact [João Monteiro](https://github.com/JoaoMonteiro100), team leader and project manager.
+
+
+---
+ 
+ 
+## FAQ
+   
+**Q: Why two separate solutions?**
+
+A: When INOVA+ pitched their idea to the group, their goal was to create a framework that could handle several different devices and display the received information in a graphic interface. Their goal would be to apply that to optogenetics, hence the name **BrainLight**. Besides that, they also wanted a proof of concept that would be built on top of that framework, but let the group come up with ideas of what that solution could be. We ended up deciding on a platform where the data would be collected from the framework and sent via web to the patient's doctor, so it would be a continuous stream of information in real time, hence the name **BrainStream**.
+
+
+**Q: Why did you do this project?**
+
+A: This project was done for the course [LGP](http://lgp.fe.up.pt/), a Living Lab for Professional Skills Development from the Integrated Masters in Informatics and Computing Engineering in the [Faculty of Engineering of the University of Porto](https://sigarra.up.pt/feup/en/WEB_PAGE.INICIAL) in Porto, Portugal. The goal is that companies and students work together to build solutions that may have a lasting impact in society.
+
+
+**Q: What do you hope to achieve with this project?**
+
+A: The ultimate goal of **BrainLight** is to help in studies related with optogenetics by making it easier to incorporate several different kinds of EEG devices, while also giving trustworthy information and analysing it in real time. Even though **BrainStream** was developed just as a proof of concept, it may have lasting effects in the area by enabling easier studies with EEG devices, as well as a better tool of consultation and diagnosis by neurology specialists worldwide.
+
+
+**Q: Was this done solely by informatics students?**
+
+A: No, the students were part of a fictional "company", made of dozens of students from different areas (informatics, multimedia and design). The informatics students are mentioned [below](#maintainers); but the final product is also the result of contributions from people of other areas from their company [Dottech](http://dottech.xyz/).
+
+
+**Q: Why can't I see all commits since the beginning?**
+
+A: We chose as a group to use separate repositories for developing the product and delivering it to the company, just because for this specific project the final product is more important than its different versions over the weeks of development. However, this repository will be updated if there are any new functioning builds.
+
+
+**Q: Who can I contact if I need help?**
+
+A: These solutions belong to INOVA+, but you can either contact the [company](#client) directly or the [students](#maintainers) that developed the project.
+
+
+---
+ 
+ 
+## MAINTAINERS
+
+**Group: LGP-5A**
+* André Pinheiro - https://github.com/pluralism
+* David Silva - https://github.com/PsyGwendok
+* João Monteiro - https://github.com/JoaoMonteiro100
+* José Lima - https://github.com/zlima
+* Luís Natividade - https://github.com/Vacilo
+* Luís Pinto - https://github.com/siualpinto
