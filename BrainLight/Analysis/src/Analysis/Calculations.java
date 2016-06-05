@@ -2,65 +2,77 @@ package Analysis;
 import java.util.Arrays;
 import java.util.HashMap;
 
-/**
- * Created by joaom on 26/04/2016.
- */
 public class Calculations {
     private float[] values;
+    private float[][] valuesXY;
     private TypesOfCalculations[] calcs;
-    private float frequencyMean;
+    private float mean;
     private HashMap<TypesOfCalculations, Float> result;
     private final float brainwaveSpeed = 25; //phase velocity in m/s and assuming the subject is thinking. SOURCE: http://hypertextbook.com/facts/2002/DavidParizh.shtml
 
+    /**
+     * Constructor
+     * @param values Values to be analysed
+     * @param calcs Enums representing the types of calculations desired
+     */
     public Calculations(float[] values, TypesOfCalculations[] calcs) {
     	
         this.values = values;
         this.calcs = calcs;
         this.result = new HashMap<>();
 
-        frequencyMean();
+        mean();
         calc();
     }
 
-    //see in what units each calculation is
-    static String[] whatUnit(TypesOfCalculations type) {
-        String[] meters = new String[]{"Meters", "m"};
-        String[] cyclesPerMeter = new String[]{"Cycles per Meter", "cycles/m"};
-        String[] radiansPerMeter = new String[]{"Radians per Meter", "rad/m"};
-        String[] radiansPerSecond = new String[]{"Radians per Second", "rad/s"};
-        String[] hertz = new String[]{"Hertz", "Hz"};
-        String[] seconds = new String[]{"Seconds", "s"};
+    /**
+     * Constructor
+     * @param valuesXY Values to be analysed (x and y) --> y is used for single-array calculations
+     * @param calcs Enums representing the types of calculations desired
+     */
+    public Calculations(float[][] valuesXY, TypesOfCalculations[] calcs) {
 
-        switch(type) {
-            case WAVELENGTH:
-                return meters;
-
-            case WAVENUMBER:
-                return cyclesPerMeter;
-
-            case ANG_WAVENUMBER:
-                return radiansPerMeter;
-
-            case ANG_FREQUENCY:
-                return radiansPerSecond;
-
-            case PERIOD:
-                return seconds;
-
-            case AMPLITUDE: case MAX_AMPLITUDE: case MAX: case MIN: case MEAN: case MODE: case MEDIAN:
-                return hertz;
-
-            default:
-                return null;
+        //in case valuesXY is null
+        if(valuesXY[0].length == 0 || valuesXY.length == 0) {
+            this.valuesXY = new float[][] {{0,0}};
+            this.values = new float[] {0};
         }
+        else {
+            this.valuesXY = valuesXY;
+            this.values = getYValues(valuesXY);
+
+        }
+
+        this.calcs = calcs;
+        this.result = new HashMap<>();
+
+        mean();
+        calc();
     }
 
-    //get the results of the calculations
-    HashMap<TypesOfCalculations, Float> getResult() {
+    /**
+     * Takes an array of arrays and returns an array made only of the values in the second position of each original sub-array
+     * @return Array with values in index 1 of original sub-arrays
+     */
+    private float[] getYValues(float[][] xyValues) {
+        float[] result = new float[xyValues.length];
+        for(int i = 0; i < xyValues.length; i++) {
+            result[i] = xyValues[i][1];
+        }
+        return result;
+    }
+
+    /**
+     * Get the results of the calculations
+     * @return Result of the calcs made
+     */
+    public HashMap<TypesOfCalculations, Float> getResult() {
         return this.result;
     }
 
-    //see what kind of calculations are needed and for each one call the appropriate functions
+    /**
+     * See what kind of calculations are needed and for each one call the appropriate functions
+     */
     private void calc() {
 
         for(TypesOfCalculations type : this.calcs) {
@@ -113,56 +125,92 @@ public class Calculations {
                     this.result.put(TypesOfCalculations.MEDIAN, calcMedian());
                     break;
 
+                case XFORMAXY:
+                    this.result.put(TypesOfCalculations.XFORMAXY, calcXForMaxY());
+                    break;
+
+                case XFORMINY:
+                    this.result.put(TypesOfCalculations.XFORMINY, calcXForMinY());
+                    break;
+
                 default:
                     break;
             }
         }
     }
 
-    private void frequencyMean() {
+    /**
+     * Calculate the mean of the values given
+     */
+    private void mean() {
         float total = 0;
         for(float value : values) {
             total += value;
         }
         if(values.length>0) {
-            this.frequencyMean = total / values.length;
+            this.mean = total / values.length;
         }
         else {
-            this.frequencyMean = 0;
+            this.mean = 0;
         }
     }
 
-    private float[] sortedFrequencies() {
-        float[] frequencies = new float[this.values.length];
+    /**
+     * Sort values given by ascending order
+     * @return Sorted values
+     */
+    private float[] sortedValues() {
+        float[] sortedValues = new float[this.values.length];
         int i = 0;
 
         for(float value : this.values) {
-            frequencies[i] = value;
+            sortedValues[i] = value;
             i++;
         }
-        Arrays.sort(frequencies);
-        return frequencies;
+
+        Arrays.sort(sortedValues);
+        return sortedValues;
     }
 
+    /**
+     * Calculate the wavelength (if given frequency values)
+     * @return Wavelength
+     */
     private float calcWaveLength() {
-        if (this.frequencyMean != 0)
-            return brainwaveSpeed / this.frequencyMean;
+        if (this.mean != 0)
+            return brainwaveSpeed / this.mean;
         else
             return 0;
     }
 
+    /**
+     * Calculate the wavenumber (if given frequency values)
+     * @return Wavenumber
+     */
     private float calcWaveNumber() {
-        return this.frequencyMean / brainwaveSpeed;
+        return this.mean / brainwaveSpeed;
     }
 
+    /**
+     * Calculate the angular wavenumber (if given frequency values)
+     * @return Angular wavenumber
+     */
     private float calcAngWaveNumber() {
-        return (2 * (float) Math.PI * this.frequencyMean) / brainwaveSpeed;
+        return (2 * (float) Math.PI * this.mean) / brainwaveSpeed;
     }
 
+    /**
+     * Calculate the angular frequency (if given frequency values)
+     * @return Angular frequency
+     */
     private float calcAngFrequency() {
-        return (2 * (float) Math.PI * this.frequencyMean);
+        return (2 * (float) Math.PI * this.mean);
     }
 
+    /**
+     * Calculate the amplitude from peak to peak (relative minimums and maximums)
+     * @return Amplitude
+     */
     private float calcPeakToPeakAmplitude() {
         int maxCounter = 0, minCounter = 0, peakChange = 0;
 
@@ -211,17 +259,29 @@ public class Calculations {
             return 0;
     }
 
+    /**
+     * Calculate the maximum amplitude of the wave
+     * @return Maximum amplitude
+     */
     private float calcMaxAmplitude() {
         return calcMax() - calcMin();
     }
 
+    /**
+     * Calculate the period (if given frequency values)
+     * @return Period
+     */
     private float calcPeriod() {
-        if (this.frequencyMean != 0)
-            return 1 / this.frequencyMean;
+        if (this.mean != 0)
+            return 1 / this.mean;
         else
             return 0;
     }
 
+    /**
+     * Calculate the maximum value
+     * @return Maximum
+     */
     private float calcMax() {
         float max = 0;
         for(float number : this.values) {
@@ -232,6 +292,10 @@ public class Calculations {
         return max;
     }
 
+    /**
+     * Calculate the minimum value
+     * @return Minimum
+     */
     private float calcMin() {
         float min = 999999;
         for(float number : this.values) {
@@ -242,12 +306,20 @@ public class Calculations {
         return min;
     }
 
+    /**
+     * Calculate the mean value
+     * @return Mean
+     */
     private float calcMean() {
-        return this.frequencyMean;
+        return this.mean;
     }
 
+    /**
+     * Calculate the mode value
+     * @return Mode
+     */
     private float calcMode() {
-        float[] frequencies = sortedFrequencies();
+        float[] frequencies = sortedValues();
 
         float maxValue = 0;
         int maxCount = 0;
@@ -267,9 +339,13 @@ public class Calculations {
         return maxValue;
     }
 
+    /**
+     * Calculate the median value
+     * @return Median
+     */
     private float calcMedian() {
 
-        float[] frequencies = sortedFrequencies();
+        float[] frequencies = sortedValues();
 
         int middle = frequencies.length/2;
         if (frequencies.length % 2 == 1) {
@@ -277,5 +353,35 @@ public class Calculations {
         } else {
             return (frequencies[middle-1] + frequencies[middle]) / 2;
         }
+    }
+
+    /**
+     * Returns the x value of the first highest Y value
+     * @return X value
+     */
+    private float calcXForMaxY() {
+        float xForMaxY = 0, maxY = 0;
+        for(float[] point: this.valuesXY) {
+            if(point[1] > maxY) {
+                xForMaxY = point[0];
+                maxY = point[1];
+            }
+        }
+        return xForMaxY;
+    }
+
+    /**
+     * Returns the x value of the first lowest Y value
+     * @return X value
+     */
+    private float calcXForMinY() {
+        float xForMinY = 0, minY = 999999;
+        for(float[] point: this.valuesXY) {
+            if(point[1] < minY) {
+                xForMinY = point[0];
+                minY = point[1];
+            }
+        }
+        return xForMinY;
     }
 }
