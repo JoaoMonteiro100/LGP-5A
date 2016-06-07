@@ -1,7 +1,7 @@
 package com.lgp5.fw.controllers;
 
 
-import MainModule.MainModule;
+//import MainModule.MainModule;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +37,7 @@ public class MenuNeuroSkyController extends MenuController {
 	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
 	BlockingQueue queue2 = new ArrayBlockingQueue<Double[]>(1);
 	private Double[] finalRawDataArray = new Double[1];
-	MainModule fw;
+	//MainModule fw;
 	private int colorNumber=0;
 	@FXML private Label analysisLabel;
 	@FXML private Label gamma1Data;
@@ -178,8 +178,8 @@ public class MenuNeuroSkyController extends MenuController {
 		radarBrowser.getEngine().load(url.toExternalForm());		
 
 
-		fw = new MainModule(2,queue,queue2);
-		fw.receiveDeviceData();
+		//fw = new MainModule(2,queue,queue2);
+		//fw.receiveDeviceData();
 
 
 

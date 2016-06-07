@@ -1,5 +1,4 @@
 package MainModule;
-import interfaces.HeadSetDataInterface;
 
 import java.io.File;
 import java.util.*;
@@ -8,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 //import Analysis.*;
 //import Analysis.Calculations;
 
-//import Emotiv.Emotiv_SDK.EmotivDevice;
 import Emotiv.src.Emotiv.Emotiv_SDK.*;
+import Neurosky.src.interfaces.*;
 
 public class MainModule {
 	protected BlockingQueue<Double[][]> queue = null;
@@ -36,7 +35,7 @@ public class MainModule {
 		running=true;
 		deviceNo = device;
 		if(device == 1){
-			emoDevice = new EmotivDevice();
+			emoDevice = new Iedk.EmotivDevice();
 			emoDevice.setQueue(sharedQ);
 		}
 
