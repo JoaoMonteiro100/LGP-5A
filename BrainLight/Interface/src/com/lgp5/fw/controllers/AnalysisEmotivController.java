@@ -20,13 +20,15 @@ public class AnalysisEmotivController {
     @FXML
     private ComboBox<String> waveToAnalyse;
     @FXML
+    private ComboBox<String> lobeToAnalyse;
+    @FXML
     private Button startAnalysis;
     @FXML
     private TextField analysisPeriodField;
     @FXML
     private Button startAnalysisButton;
     @FXML
-    private CheckBox wavelength, wavenumber, angWavenumber, angFrequency, period, amplitude, median, mode, mean, maxFrequency, minFrequency, maxAmplitude;
+    private CheckBox freqOfMinIntensity, freqOfMaxIntensity, amplitude, median, mode, mean, maxIntensity, minIntensity, maxAmplitude;
 
     public AnalysisEmotivController() {
     }
@@ -34,7 +36,8 @@ public class AnalysisEmotivController {
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        waveToAnalyse.getItems().addAll("Delta", "Theta", "Alfa 1", "Alfa 2", "Beta 1", "Beta 2", "Gamma 1", "Gamma 2");
+        waveToAnalyse.getItems().addAll("Theta", "Alfa", "High Beta", "Low Beta", "Gamma");
+        lobeToAnalyse.getItems().addAll("Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe", "Mean of all lobes (default)");
 
         // force the field to be numeric only
         analysisPeriodField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -47,24 +50,21 @@ public class AnalysisEmotivController {
         waveToAnalyse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(wavelength.isSelected() ||
-                        wavenumber.isSelected() ||
-                        angWavenumber.isSelected() ||
-                        angFrequency.isSelected() ||
-                        period.isSelected() ||
+                if(freqOfMinIntensity.isSelected() ||
+                        freqOfMaxIntensity.isSelected() ||
                         amplitude.isSelected() ||
                         median.isSelected() ||
                         mode.isSelected() ||
                         mean.isSelected() ||
-                        maxFrequency.isSelected() ||
-                        minFrequency.isSelected() ||
+                        maxIntensity.isSelected() ||
+                        minIntensity.isSelected() ||
                         maxAmplitude.isSelected())
                 startAnalysisButton.setDisable(false);
             }
         });
 
         //if the user first selects the wave and then the methods
-        wavelength.setOnAction(new EventHandler<ActionEvent>() {
+        freqOfMinIntensity.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if(waveToAnalyse.getSelectionModel().getSelectedItem()!=null) {
@@ -72,31 +72,7 @@ public class AnalysisEmotivController {
                 }
             }
         });
-        wavenumber.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(waveToAnalyse.getSelectionModel().getSelectedItem()!=null) {
-                    startAnalysisButton.setDisable(false);
-                }
-            }
-        });
-        angWavenumber.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(waveToAnalyse.getSelectionModel().getSelectedItem()!=null) {
-                    startAnalysisButton.setDisable(false);
-                }
-            }
-        });
-        angFrequency.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(waveToAnalyse.getSelectionModel().getSelectedItem()!=null) {
-                    startAnalysisButton.setDisable(false);
-                }
-            }
-        });
-        period.setOnAction(new EventHandler<ActionEvent>() {
+        freqOfMaxIntensity.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if(waveToAnalyse.getSelectionModel().getSelectedItem()!=null) {
@@ -136,7 +112,7 @@ public class AnalysisEmotivController {
                 }
             }
         });
-        maxFrequency.setOnAction(new EventHandler<ActionEvent>() {
+        maxIntensity.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if(waveToAnalyse.getSelectionModel().getSelectedItem()!=null) {
@@ -144,7 +120,7 @@ public class AnalysisEmotivController {
                 }
             }
         });
-        minFrequency.setOnAction(new EventHandler<ActionEvent>() {
+        minIntensity.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if(waveToAnalyse.getSelectionModel().getSelectedItem()!=null) {

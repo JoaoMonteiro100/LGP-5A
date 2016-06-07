@@ -408,7 +408,7 @@ public class MenuEmotivController extends MenuController{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
 			Parent parent = (Parent) loader.load();
 			Stage stage = new Stage();
-			stage.setScene(new Scene(parent, 462, 378));
+			stage.setScene(new Scene(parent, 462, 439));
 			stage.setTitle("BrainLight - Analysis");
 			stage.show();
 		} catch (IOException e) {
