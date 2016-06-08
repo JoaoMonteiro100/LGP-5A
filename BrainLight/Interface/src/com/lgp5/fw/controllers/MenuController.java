@@ -34,23 +34,23 @@ public class MenuController{
 	@FXML private ImageView stopButton;
 	@FXML private ImageView arrowLabel;
 	@FXML private Pane painelHSA;
-	@FXML private Label historyLabel;
-	@FXML private Label sensorsLabel;
-	@FXML private Label analysisLabel;
-	@FXML private Label radarLabel;
-	@FXML private Label brainWavesLabel;
-	@FXML private Label dataLabel;
-	@FXML private Label moodLabel;
-	@FXML private Label settingsLabel;
+	@FXML protected Label historyLabel;
+	@FXML protected Label sensorsLabel;
+	@FXML protected Label analysisLabel;
+	@FXML protected Label radarLabel;
+	@FXML protected Label brainWavesLabel;
+	@FXML protected Label dataLabel;
+	@FXML protected Label moodLabel;
+	@FXML protected Label settingsLabel;
 	@FXML private Text daysText;
     @FXML private Text daysLabel;
     @FXML private Text keepHistoryLabel;
-	@FXML private GridPane brainWavesPane;
-	@FXML private GridPane dataPane;
-	@FXML private GridPane moodPane;
-	@FXML private GridPane radarPane;
-	@FXML private GridPane historyPane;
-	@FXML private GridPane settingsPane;
+	@FXML protected GridPane brainWavesPane;
+	@FXML protected GridPane dataPane;
+	@FXML protected GridPane moodPane;
+	@FXML protected GridPane radarPane;
+	@FXML protected GridPane historyPane;
+	@FXML protected GridPane settingsPane;
 	@FXML private Slider historyPeriodSlider;
     @FXML private CheckBox keepHistoryCheckBox;
     @FXML private CheckBox deleteFilesCheckBox;
@@ -158,7 +158,6 @@ public class MenuController{
 	public void showData(MouseEvent event){		
 		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane,settingsPane});
 	}
-
 
 	public void showMood(MouseEvent event){
 		changePane(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane,settingsPane});	

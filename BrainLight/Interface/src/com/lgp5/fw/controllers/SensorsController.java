@@ -74,8 +74,8 @@ public class SensorsController {
         Tooltip.install(sensorFC6, new Tooltip("Sensor FC6"));
         Tooltip.install(sensorT7, new Tooltip("Sensor T7"));
         Tooltip.install(sensorT8, new Tooltip("Sensor T8"));
-        Tooltip.install(sensorCMS, new Tooltip("Sensor CMS"));
-        Tooltip.install(sensorDRL, new Tooltip("Sensor DRL"));
+        Tooltip.install(sensorCMS, new Tooltip("Reference channel CMS"));
+        Tooltip.install(sensorDRL, new Tooltip("Reference channel DRL"));
         Tooltip.install(sensorP7, new Tooltip("Sensor P7"));
         Tooltip.install(sensorP8, new Tooltip("Sensor P8"));
         Tooltip.install(sensorO1, new Tooltip("Sensor O1"));

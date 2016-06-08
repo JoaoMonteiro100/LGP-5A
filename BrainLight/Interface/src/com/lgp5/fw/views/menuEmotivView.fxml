@@ -78,7 +78,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
-                <GridPane fx:id="radarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="990.0" AnchorPane.topAnchor="30.0">
+                <GridPane fx:id="radarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="990.0" visible="true" AnchorPane.topAnchor="30.0">
                     <columnConstraints>
                         <ColumnConstraints />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="1000.0" />
@@ -263,6 +263,61 @@
                         </AnchorPane>
                     </children>
                 </GridPane>
+                <GridPane fx:id="actionsPane" layoutY="71.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="980.0" visible="false" AnchorPane.topAnchor="71.0">
+                    <children>
+                        <BarChart fx:id="barChartMentalActions" prefHeight="326.0" prefWidth="980.0" GridPane.rowIndex="1">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM" fx:id="xAxisActions" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT" />
+                            </yAxis>
+                        </BarChart>
+                  <AnchorPane prefHeight="216.0" prefWidth="980.0">
+                     <children>
+                        <Label layoutX="433.0" layoutY="174.0" text="Mental Actions">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="423.0" layoutY="-20.0" text="Facial Expressions">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="359.0" layoutY="35.0" prefHeight="17.0" prefWidth="129.0" text="Smile Extension">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="359.0" layoutY="58.0" prefHeight="17.0" prefWidth="129.0" text="Clench Extension">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="359.0" layoutY="81.0" prefHeight="17.0" prefWidth="129.0" text="Lower face expression">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="359.0" layoutY="104.0" prefHeight="17.0" prefWidth="129.0" text="Upper face expression">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label fx:id="clenchValue" layoutX="495.0" layoutY="58.0" prefHeight="17.0" prefWidth="129.0" text="0" />
+                        <Label fx:id="upperFaceExpressionValue" layoutX="495.0" layoutY="104.0" prefHeight="17.0" prefWidth="129.0" text="Expression" />
+                        <Label fx:id="lowerFaceExpressionValue" layoutX="495.0" layoutY="81.0" prefHeight="17.0" prefWidth="129.0" text="Expression" />
+                        <Label fx:id="smileValue" layoutX="495.0" layoutY="35.0" prefHeight="17.0" prefWidth="129.0" text="0" />
+                        <Label fx:id="upperFaceExpressionPower" layoutX="628.0" layoutY="104.0" prefHeight="17.0" prefWidth="129.0" text="0" />
+                        <Label fx:id="lowerFaceExpressionPower" layoutX="628.0" layoutY="81.0" prefHeight="17.0" prefWidth="129.0" text="0" />
+                     </children>
+                  </AnchorPane>
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="256.0" minHeight="10.0" prefHeight="214.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="326.0" minHeight="10.0" prefHeight="266.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                </GridPane>
                 <ImageView fx:id="eyesStare" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../assets/eyes/stare.png" />
@@ -281,6 +336,16 @@
                 <ImageView fx:id="eyesLookLeft" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@../assets/eyes/look-left.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="eyesLookUp" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/eyes/look-up.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="eyesLookDown" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@../assets/eyes/look-down.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="eyesWinkRight" fitHeight="51.0" fitWidth="53.0" layoutX="892.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -379,7 +444,7 @@
                         <Insets left="30.0" top="4.0" />
                     </HBox.margin>
                 </Label>
-            <Label fx:id="actionsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="14.0" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="119.0" style="-fx-cursor: hand;" text="ACTIONS" textAlignment="CENTER" textFill="#1d1d1b">
+            <Label fx:id="actionsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="14.0" onMouseClicked="#showActions" prefHeight="30.0" prefWidth="119.0" style="-fx-cursor: hand;" text="ACTIONS" textAlignment="CENTER" textFill="#1d1d1b">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

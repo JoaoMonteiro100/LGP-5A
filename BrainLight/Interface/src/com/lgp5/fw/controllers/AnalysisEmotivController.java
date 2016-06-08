@@ -36,7 +36,7 @@ public class AnalysisEmotivController {
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        waveToAnalyse.getItems().addAll("Theta", "Alfa", "High Beta", "Low Beta", "Gamma");
+        waveToAnalyse.getItems().addAll("Theta", "Alfa", "Low Beta", "High Beta", "Gamma");
         lobeToAnalyse.getItems().addAll("Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe", "Mean of all lobes (default)");
 
         // force the field to be numeric only

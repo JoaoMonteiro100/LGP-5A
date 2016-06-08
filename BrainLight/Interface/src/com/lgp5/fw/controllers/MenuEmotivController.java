@@ -13,6 +13,9 @@ import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -36,20 +39,20 @@ public class MenuEmotivController extends MenuController{
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
+	@FXML private Label actionsLabel;
+	@FXML private GridPane actionsPane;
 	@FXML private Slider historyPeriodSlider;
 	@FXML private WebView radarBrowser;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
-	@FXML private StackedAreaChart<Float, Float> radarGraphA;
-	@FXML private StackedAreaChart<Float, Float> radarGraphB;
-	@FXML private StackedAreaChart<Float, Float> radarGraphC;
-	@FXML private StackedAreaChart<Float, Float> radarGraphD;
+    @FXML private BarChart<String, Float> barChartMentalActions;
 	@FXML private CategoryAxis xAxisWaves;
 	@FXML private CategoryAxis xAxisMood;
 	@FXML private NumberAxis xAxisWavesLine;
 	@FXML private NumberAxis xAxisMoodsLine;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
+    private ObservableList<String> mentalActions = FXCollections.observableArrayList();
 	@FXML private NumberAxis xAxisHistory;
 	@FXML private NumberAxis yAxisHistory;
 	@FXML private LineChart<Number, Number> lineChartHistory;
@@ -78,22 +81,39 @@ public class MenuEmotivController extends MenuController{
 		settings();
 
 		time=System.currentTimeMillis()/1000;
-		String[] waves = {"Theta", "Alfa","Beta 1", "Beta 2", "Gamma"};
-		String[] moodsArray = {"Attention","Meditation"};
+		String[] waves = {"Theta", "Alfa","Low beta", "High beta", "Gamma"};
+		String[] moodsArray = {"Attention", "Meditation"};
+        String[] actions = {"Neural", "Push", "Pull", "Lift", "Drop", "Left", "Right", "Rotate left", "Rotate right", "Rotate clockwise", "Rotate counter-clockwise", "Rotate forward", "Rotate reverse", "Disappear"};
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
+        mentalActions.addAll(Arrays.asList(actions));
 		xAxisWaves.setCategories(brainwaves);
-		xAxisMood.setCategories(moods);	
+		xAxisMood.setCategories(moods);
 		XYChart.Series<String,Float> series = new XYChart.Series<>();		
 		series.getData().add(new XYChart.Data("Theta", 35f));
-		series.getData().add(new XYChart.Data("Alfa 1", 35f));
-		series.getData().add(new XYChart.Data("Beta 1", 35f));
-		series.getData().add(new XYChart.Data("Beta 2", 35f));
+		series.getData().add(new XYChart.Data("Alfa", 35f));
+		series.getData().add(new XYChart.Data("Low beta", 35f));
+		series.getData().add(new XYChart.Data("High beta", 35f));
 		series.getData().add(new XYChart.Data("Gamma", 35f));
 		XYChart.Series<String,Float> series2 = new XYChart.Series<>();
 		series2.getData().add(new XYChart.Data("Attention", 35f));
 		series2.getData().add(new XYChart.Data("Meditation", 35f));
-		System.out.println(this.colorNumber);
+		//System.out.println(this.colorNumber);
+        XYChart.Series<String,Float> series3 = new XYChart.Series<>();
+        series3.getData().add(new XYChart.Data("Neural", 35f));
+        series3.getData().add(new XYChart.Data("Push", 35f));
+        series3.getData().add(new XYChart.Data("Pull", 35f));
+        series3.getData().add(new XYChart.Data("Lift", 35f));
+        series3.getData().add(new XYChart.Data("Drop", 35f));
+        series3.getData().add(new XYChart.Data("Left", 35f));
+        series3.getData().add(new XYChart.Data("Right", 35f));
+        series3.getData().add(new XYChart.Data("Rot. left", 35f));
+        series3.getData().add(new XYChart.Data("Rot. right", 35f));
+        series3.getData().add(new XYChart.Data("Rot. cw", 35f));
+        series3.getData().add(new XYChart.Data("Rot. ccw", 35f));
+        series3.getData().add(new XYChart.Data("Rotate fw", 35f));
+        series3.getData().add(new XYChart.Data("Rotate rev", 35f));
+        series3.getData().add(new XYChart.Data("Disappear", 35f));
 		barChartWaves.getData().add(series);
 		for (int i = 0; i < series.getData().size(); i++) {
 			if(colorNumber>=constants.Constants.colors.length)						
@@ -109,8 +129,16 @@ public class MenuEmotivController extends MenuController{
 			series2.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	"); 	
 			colorNumber++;	
 		}
+        barChartMentalActions.getData().add(series3);
+        for (int i = 0; i < series3.getData().size(); i++) {
+            if(colorNumber>=constants.Constants.colors.length)
+                colorNumber=0;
+            series3.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]);
+            colorNumber++;
+        }
 		barChartWaves.setLegendVisible(false);
 		barChartMoods.setLegendVisible(false);
+        barChartMentalActions.setLegendVisible(false);
 		colorNumber=0;
 		createSeriesLineChartWaves(series);
 		colorNumber=0;
@@ -228,6 +256,41 @@ public class MenuEmotivController extends MenuController{
 
 		new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();*/
 	}
+
+	public void showActions(MouseEvent event) {
+		changePane(actionsLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel,settingsLabel,historyLabel},actionsPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane,settingsPane, historyPane});
+	}
+
+	@Override
+	public void showRadar(MouseEvent event){
+		changePane(radarLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,settingsLabel,actionsLabel},radarPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,settingsPane,actionsPane});
+	}
+
+	@Override
+	public void showSettings(MouseEvent event){
+		changePane(settingsLabel,new Label[]{moodLabel,brainWavesLabel,dataLabel,historyLabel,radarLabel,actionsLabel},settingsPane,new Pane[]{moodPane,brainWavesPane,dataPane,historyPane,radarPane,actionsPane});
+	}
+
+	@Override
+	public void showData(MouseEvent event){
+		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel,actionsLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane,actionsPane,actionsPane});
+	}
+
+	@Override
+	public void showMood(MouseEvent event){
+		changePane(moodLabel,new Label[]{dataLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel,actionsLabel},moodPane,new Pane[]{dataPane,brainWavesPane,radarPane,historyPane,settingsPane,actionsPane});
+	}
+
+	@Override
+	public void showBrainWaves(MouseEvent event) {
+		changePane(brainWavesLabel,new Label[]{dataLabel,moodLabel,radarLabel,historyLabel,settingsLabel,actionsLabel},brainWavesPane,new Pane[]{dataPane,moodPane,radarPane,historyPane,settingsPane,actionsPane});
+	}
+
+	@Override
+	public void showHistory(MouseEvent event) {
+		changePane(historyLabel,new Label[]{dataLabel,moodLabel,radarLabel,brainWavesLabel,settingsLabel,actionsLabel},historyPane,new Pane[]{dataPane,moodPane,radarPane,brainWavesPane,settingsPane,actionsPane});
+	}
+
 	public void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
