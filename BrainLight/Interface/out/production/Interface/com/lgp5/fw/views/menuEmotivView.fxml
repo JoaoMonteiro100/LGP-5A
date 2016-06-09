@@ -147,6 +147,7 @@
                                 <CheckBox fx:id="deleteFilesCheckBox" layoutX="21.0" layoutY="74.0" mnemonicParsing="false" onAction="#disableHistoryPeriod" text="Saved files are never deleted" textAlignment="CENTER" />
 
                                 <Button fx:id="deleteHistoryButton" layoutX="21.0" layoutY="158.0" mnemonicParsing="false" onAction="#confirmDeletingHistory" text="Delete history" />
+                        <Button fx:id="resetPreferencesButton" layoutX="119.0" layoutY="158.0" mnemonicParsing="false" onAction="#resetPreferences" text="Reset preferences to default" />
                             </children>
                         </AnchorPane>
                     </children>
@@ -307,6 +308,7 @@
                         <Label fx:id="smileValue" layoutX="495.0" layoutY="35.0" prefHeight="17.0" prefWidth="129.0" text="0" />
                         <Label fx:id="upperFaceExpressionPower" layoutX="628.0" layoutY="104.0" prefHeight="17.0" prefWidth="129.0" text="0" />
                         <Label fx:id="lowerFaceExpressionPower" layoutX="628.0" layoutY="81.0" prefHeight="17.0" prefWidth="129.0" text="0" />
+                        <Button fx:id="calibrationButton" layoutX="23.0" layoutY="-20.0" onMouseClicked="#launchCalibrationView" mnemonicParsing="false" prefHeight="30.0" prefWidth="119.0" text="Calibrate sensors" />
                      </children>
                   </AnchorPane>
                     </children>
