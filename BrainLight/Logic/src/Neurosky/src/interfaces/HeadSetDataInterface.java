@@ -1,4 +1,4 @@
-package Neurosky.src.interfaces;
+package interfaces;
 
 import java.util.HashMap;
 

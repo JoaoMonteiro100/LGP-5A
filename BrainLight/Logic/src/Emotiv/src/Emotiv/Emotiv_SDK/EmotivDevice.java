@@ -1,6 +1,5 @@
-package Emotiv.src.Emotiv.Emotiv_SDK;
+package Emotiv.Emotiv_SDK;
 
-import Emotiv.src.Emotiv.Emotiv_SDK.*;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.*;
 

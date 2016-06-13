@@ -1,4 +1,4 @@
-package Neurosky.src.utils;
+package utils;
 
 public class Constants {
 	public static final String DELTA = "Delta";

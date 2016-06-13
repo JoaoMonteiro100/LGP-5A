@@ -1,4 +1,4 @@
-package Neurosky.src.com.lgp5;
+package com.lgp5;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package Emotiv.src.Emotiv.Emotiv_SDK;
+package Emotiv.Emotiv_SDK;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
