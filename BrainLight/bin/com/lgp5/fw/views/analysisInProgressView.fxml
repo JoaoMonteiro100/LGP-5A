@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.AnalysisInProgressController">
+   <children>
+      <Label fx:id="waveBeingAnalysed" layoutX="30.0" layoutY="21.0" prefHeight="19.0" prefWidth="174.0" text="DELTA WAVE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" layoutX="30.0" layoutY="56.0" mnemonicParsing="false" text="Frequency of min intensity (Hz)" />
+      <Label id="wavenumber" layoutX="30.0" layoutY="87.0" mnemonicParsing="false" text="Frequency of max intensity (Hz)" />
+      <Label id="angWavenumber" layoutX="30.0" layoutY="118.0" mnemonicParsing="false" text="Peak-to-peak amplitude (dB)" />
+      <Label id="angFrequency" layoutX="30.0" layoutY="149.0" mnemonicParsing="false" text="Maximum amplitude (dB)" />
+      <Label id="period" layoutX="30.0" layoutY="179.0" mnemonicParsing="false" text="Intensity median (dB)" />
+      <Label id="mean" layoutX="265.0" layoutY="149.0" mnemonicParsing="false" text="Intensity mode (dB)" />
+      <Label id="maxFrequency" layoutX="265.0" layoutY="118.0" mnemonicParsing="false" text="Intensity mean (dB)" />
+      <Label id="minFrequency" layoutX="265.0" layoutY="87.0" mnemonicParsing="false" text="Maximum intensity (dB)" />
+      <Label id="maxAmplitude" layoutX="265.0" layoutY="56.0" mnemonicParsing="false" text="Minimum intensity (dB)" />
+      <Label id="wavelength" fx:id="freqOfMinIntensityValue" layoutX="205.0" layoutY="56.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="freqOfMaxIntensityValue" layoutX="205.0" layoutY="87.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="amplitudeValue" layoutX="205.0" layoutY="118.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="maxAmplitudeValue" layoutX="205.0" layoutY="149.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="medianValue" layoutX="205.0" layoutY="179.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="meanValue" layoutX="417.0" layoutY="118.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="modeValue" layoutX="417.0" layoutY="149.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="maxIntensityValue" layoutX="417.0" layoutY="87.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="wavelength" fx:id="minIntensityValue" layoutX="417.0" layoutY="56.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="31.0" text="--">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lobesBeingAnalysed" alignment="CENTER_RIGHT" layoutX="257.0" layoutY="21.0" prefHeight="19.0" prefWidth="181.0" text="Mean of all lobes">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
