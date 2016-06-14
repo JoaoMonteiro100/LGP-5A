@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="990.0" stylesheets="@../assets/fonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.MenuNeuroSkyController">
+   <children>
+      <AnchorPane fx:id="paneLayoutRoot" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <ImageView fx:id="recordButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#changeRecordButton" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="true">
+               <image>
+                  <Image url="@../assets/record.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="stopButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#changeRecordButton" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="false">
+               <image>
+                  <Image url="@../assets/stop.png" />
+               </image>
+            </ImageView>
+            <GridPane fx:id="brainWavesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="980.0" visible="false" AnchorPane.topAnchor="30.0">
+               <children>
+                  <BarChart fx:id="barChartWaves" GridPane.rowIndex="1">
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" fx:id="xAxisWaves" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
+                  </BarChart>
+                  <LineChart fx:id="lineChartWaves">
+                     <xAxis>
+                        <NumberAxis side="BOTTOM" fx:id="xAxisWavesLine" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
+                  </LineChart>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="moodPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="980.0" visible="false" AnchorPane.topAnchor="30.0">
+               <children>
+                  <BarChart fx:id="barChartMoods" GridPane.rowIndex="1">
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" fx:id="xAxisMood" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
+                  </BarChart>
+                  <LineChart fx:id="lineChartMoods">
+                     <xAxis>
+                        <NumberAxis side="BOTTOM" fx:id="xAxisMoodsLine" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
+                  </LineChart>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="radarPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="990.0" AnchorPane.topAnchor="30.0">
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="1000.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints maxHeight="600.0" minHeight="10.0" prefHeight="600.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <WebView fx:id="radarBrowser" prefHeight="500.0" prefWidth="900.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+            <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="969.0" visible="false" AnchorPane.topAnchor="30.0">
+               <children>
+                  <Button alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="34.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#fileChooser" text="Open file from history" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets left="425.0" top="500.0" />
+                     </GridPane.margin></Button>
+                  <LineChart fx:id="lineChartHistory" maxHeight="480.0" minHeight="480.0" prefHeight="480.0" prefWidth="969.0" GridPane.valignment="TOP">
+                     <xAxis>
+                        <NumberAxis side="BOTTOM" fx:id="xAxisHistory" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis fx:id="yAxisHistory" side="LEFT" />
+                     </yAxis>
+                  </LineChart>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="settingsPane" layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="954.0" AnchorPane.topAnchor="30.0" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <CheckBox fx:id="keepHistoryCheckBox" layoutX="21.0" layoutY="49.0" mnemonicParsing="false" onAction="#setRecordButton" selected="true" text="Option to record history" textAlignment="CENTER" />
+                        <Pane fx:id="historyPeriodWrapper" layoutY="102.0" prefHeight="44.0" prefWidth="802.0">
+                           <children>
+                              <Text fx:id="daysLabel" layoutX="160.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="days" />
+                              <Text fx:id="keepHistoryLabel" fontSmoothingType="LCD" layoutX="21.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Keep history for" />
+                              <Slider fx:id="historyPeriodSlider" layoutX="21.0" layoutY="25.0" majorTickUnit="1.0" minorTickCount="0" prefHeight="18.0" prefWidth="781.0" />
+                              <Text fx:id="daysText" layoutX="127.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="120" textAlignment="CENTER" wrappingWidth="30.302978515625">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Label layoutX="21.0" layoutY="7.0" text="History settings">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="deleteFilesCheckBox" layoutX="21.0" layoutY="74.0" mnemonicParsing="false" onAction="#disableHistoryPeriod" text="Saved files are never deleted" textAlignment="CENTER" />
+
+                        <Button fx:id="deleteHistoryButton" layoutX="21.0" layoutY="158.0" mnemonicParsing="false" onAction="#confirmDeletingHistory" text="Delete history" />
+                        <Button fx:id="resetPreferencesButton" layoutX="118.0" layoutY="158.0" mnemonicParsing="false" onAction="#resetPreferences" text="Reset preferences to default" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+            <Text fill="#4d4d4d" layoutX="20.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NeuroSky Mindset">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font></Text>
+            <GridPane fx:id="dataPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="990.0" visible="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <LineChart fx:id="lineChartRaw" layoutX="-4.0" layoutY="253.0" prefHeight="291.0" prefWidth="980.0">
+                          <xAxis>
+                            <NumberAxis side="BOTTOM" fx:id="xAxisRawLine" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <Label alignment="CENTER" layoutX="257.0" layoutY="16.0" prefHeight="20.0" prefWidth="102.0" text="BRAINWAVES">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="257.0" layoutY="49.0" prefHeight="17.0" prefWidth="69.0" text="Delta">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="deltaData" layoutX="325.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="257.0" layoutY="68.0" prefHeight="17.0" prefWidth="69.0" text="Theta">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="thetaData" layoutX="325.0" layoutY="68.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="257.0" layoutY="87.0" prefHeight="17.0" prefWidth="69.0" text="Alfa 1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="alfa2Data" layoutX="325.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="257.0" layoutY="106.0" prefHeight="17.0" prefWidth="69.0" text="Alfa 2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="alfa1Data" layoutX="325.0" layoutY="87.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="31.0" layoutY="233.0" text="RAW DATA">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="257.0" layoutY="181.0" prefHeight="17.0" prefWidth="69.0" text="Gamma 2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="gamma1Data" layoutX="325.0" layoutY="162.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label fx:id="beta2Data" layoutX="325.0" layoutY="143.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="257.0" layoutY="124.0" prefHeight="17.0" prefWidth="69.0" text="Beta 1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="257.0" layoutY="143.0" prefHeight="17.0" prefWidth="69.0" text="Beta 2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="gamma2Data" layoutX="325.0" layoutY="181.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="257.0" layoutY="162.0" prefHeight="17.0" prefWidth="69.0" text="Gamma 1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="beta1Data" layoutX="325.0" layoutY="124.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label fx:id="meditationData" layoutX="516.0" layoutY="67.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                        <Label layoutX="432.0" layoutY="48.0" prefHeight="17.0" prefWidth="76.0" text="Attention">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="432.0" layoutY="15.0" prefHeight="20.0" prefWidth="102.0" text="MOODS" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="432.0" layoutY="67.0" prefHeight="17.0" prefWidth="76.0" text="Meditation">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="attentionData" layoutX="516.0" layoutY="48.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="617.0" layoutY="14.0" prefHeight="20.0" prefWidth="109.0" text="OTHER INFO" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="617.0" layoutY="49.0" prefHeight="17.0" prefWidth="76.0" text="Signal">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="signalQualityData" layoutX="701.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="None" />
+                        <Label fx:id="rawData" layoutX="701.0" layoutY="69.0" prefHeight="17.0" prefWidth="53.0" text="0 V" />
+                        <Label layoutX="617.0" layoutY="69.0" prefHeight="17.0" prefWidth="76.0" text="Raw data">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+            <ImageView fx:id="signal3" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/signal/3.png" />
+               </image>
+            </ImageView>
+             <ImageView fx:id="signal2" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                 <image>
+                     <Image url="@../assets/signal/2.png" />
+                 </image>
+             </ImageView>
+             <ImageView fx:id="signal1" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                 <image>
+                     <Image url="@../assets/signal/1.png" />
+                 </image>
+             </ImageView>
+             <ImageView fx:id="signal0" fitHeight="37.0" fitWidth="24.0" layoutX="135.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                 <image>
+                     <Image url="@../assets/signal/0.png" />
+                 </image>
+             </ImageView>
+         </children>
+      </AnchorPane>
+      <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="radarLabel" contentDisplay="CENTER" disable="true" onMouseClicked="#showRadar" prefHeight="21.0" prefWidth="56.0" style="-fx-cursor: hand;" text="HOME" textAlignment="CENTER" textFill="#1d1d1b">
+               <HBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="dataLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showData" prefHeight="30.0" prefWidth="46.0" style="-fx-cursor: hand;" text="DATA" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="40.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="brainWavesLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showBrainWaves" prefHeight="30.0" prefWidth="109.0" style="-fx-cursor: hand;" text="BRAIN WAVES" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="moodLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showMood" prefHeight="30.0" prefWidth="53.0" style="-fx-cursor: hand;" text="MOOD" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="historyLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showHistory" prefHeight="30.0" prefWidth="69.0" style="-fx-cursor: hand;" text="HISTORY" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="settingsLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#showSettings" prefHeight="30.0" prefWidth="78.0" style="-fx-cursor: hand;" text="SETTINGS" textAlignment="CENTER" textFill="#1d1d1b">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="restartLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#launchSelectDeviceView" prefHeight="30.0" prefWidth="70.0" style="-fx-cursor: hand;" text="RESTART" textAlignment="CENTER" textFill="#1d1d1b" HBox.hgrow="NEVER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="200.0" top="4.0" />
+               </HBox.margin>
+            </Label>
+            <ImageView fx:id="arrowLabel" fitHeight="25.0" fitWidth="150.0" onMouseClicked="#openMenu" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../assets/fa-angle-down.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="20.0" right="10.0" top="8.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <Pane id="submenu" fx:id="painelHSA" layoutX="782.0" layoutY="40.0" prefHeight="59.0" prefWidth="218.0" style="-fx-background-color: #ececec;" visible="false">
+         <children>
+            <Pane fx:id="analysisWrapper">
+               <children>
+                  <Label fx:id="analysisLabel" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="30.0" prefWidth="193.0" text="ANALYSIS" textAlignment="CENTER" textFill="#1d1d1b">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
