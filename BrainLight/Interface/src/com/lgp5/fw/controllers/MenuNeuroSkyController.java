@@ -27,11 +27,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-/*
-import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
-import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
-import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
-*/
+
 
 public class MenuNeuroSkyController extends MenuController {
 	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
@@ -177,8 +173,8 @@ public class MenuNeuroSkyController extends MenuController {
 		radarBrowser.getEngine().load(url.toExternalForm());		
 
 
-		fw = new MainModule(2,queue,queue2);
-		fw.receiveDeviceData();
+		super.fw = new MainModule(2,queue,queue2);
+		super.fw.receiveDeviceData();
 
 
 

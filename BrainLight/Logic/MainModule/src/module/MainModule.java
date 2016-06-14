@@ -1,3 +1,4 @@
+package module;
 
 
 import java.io.File;
@@ -19,6 +20,7 @@ import Iedk.interfaces.EmotivInterface;
 import interfaces.HeadSetDataInterface;
 
 public class MainModule {
+	private Boolean record;
 	protected BlockingQueue<Double[][]> queue = null;
 	protected BlockingQueue<Double[]> queue2 = null;
 	private Neurosky neuroDevice;
@@ -81,6 +83,8 @@ public class MainModule {
 					initMerge(2, dataToSend);
 					try {
 						queue.put(finalDataArray);
+						if(record){
+						}
 					} catch (Exception e) {
 						// TODO: handle exception
 					}		
@@ -578,5 +582,15 @@ public class MainModule {
 			if (file.isDirectory()) purgeDirectory(file);
 			file.delete();
 		}
+	}
+
+
+	public Boolean getRecord() {
+		return record;
+	}
+
+
+	public void setRecord(Boolean record) {
+		this.record = record;
 	}
 }
