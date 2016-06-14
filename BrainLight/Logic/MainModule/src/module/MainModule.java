@@ -2,6 +2,10 @@ package module;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -17,9 +21,11 @@ import com.lgp5.Neurosky;
 import Iedk.EmotivDevice;
 import Iedk.Wave;
 import Iedk.interfaces.EmotivInterface;
+import history.write.WriteXLS_NeuroSky;
 import interfaces.HeadSetDataInterface;
 
 public class MainModule {
+	private int rows=0;
 	private Boolean record;
 	protected BlockingQueue<Double[][]> queue = null;
 	protected BlockingQueue<Double[]> queue2 = null;
@@ -36,6 +42,7 @@ public class MainModule {
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2){
+		record=false;
 		this.queue = queue;
 		this.queue2 = queue2;
 		sharedQ = new LinkedList<>();
@@ -54,27 +61,28 @@ public class MainModule {
 				@Override
 				public void onReceiveData(HashMap<String, Object> data) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void onReceiveWavesData(HashMap<String, Wave> data) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
-						
-				};
-			
+
+			};
+
 
 			emotivDevice = new EmotivDevice(sendDataInterface);
 		}
-			
-		
+
+
 
 
 		else if(device == 2){
 			HeadSetDataInterface sendDataInterface;
+			WriteXLS_NeuroSky wNeuroSky = new WriteXLS_NeuroSky();
 			//confirmar
 			sendDataInterface = new HeadSetDataInterface(){
 
@@ -83,7 +91,17 @@ public class MainModule {
 					initMerge(2, dataToSend);
 					try {
 						queue.put(finalDataArray);
-						if(record){
+						if(record){	
+							final Object[][] bookData = {
+									{"00:00", finalDataArray[0][0], finalDataArray[0][1],
+										finalDataArray[0][2],finalDataArray[0][3],
+										finalDataArray[0][4],finalDataArray[0][5],
+										finalDataArray[0][6],finalDataArray[0][7],	
+										finalDataArray[1][0],finalDataArray[1][1],
+										finalDataArray[2][0]},
+							};
+							WriteXLS_NeuroSky.writeXLS("teste", bookData,rows);
+							rows++;
 						}
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -95,7 +113,6 @@ public class MainModule {
 					initGetRaw(2,rawData);
 					try {
 						queue2.put(finalRawData);
-						//Thread.sleep(1000);
 					} catch (Exception e) {
 						// TODO: handle exception
 					}					
@@ -473,7 +490,7 @@ public class MainModule {
 				for (int k = 0;k < finalInfo[i].length; k++){
 					if (i == 1){
 						finalData[i-1][k]= convertVolts((Float)neuroData.get("Waves").get(finalInfo[i][k]));
-						finalData[i-1][k]= finalData[i-1][k]*10;//D�cimo de Volt
+						finalData[i-1][k]= finalData[i-1][k]*10;//Decimo de Volt
 					}
 					else
 					{
