@@ -9,15 +9,17 @@ import java.io.FileOutputStream;
  * Created by Vacilo on 22/04/2016.
  */
 public class WriteXLS_NeuroSky {
+    private static XSSFWorkbook wb;
+    private static String fileName;
 
-    public static void writeXLS(String name,Object [] [] bookData,int rows) {
-
+    public static void writeXLS(String name,Object [] [] bookData) {    	
         try {
-
-            XSSFWorkbook wb = new XSSFWorkbook();
-            Sheet sheet = wb.createSheet("NeuroSky");
-            File file=new File(name+".xlsx");
+            File file=new File(name+".xlsx");            
+            Sheet sheet;          
             if(!file.exists()){
+            	wb = new XSSFWorkbook();
+            	fileName=name;
+            	sheet = wb.createSheet(file.getName());  
             	Row row_ = sheet.createRow(0);
 				System.out.println("1ªtime");
                 for(int i = 0; i < 12; i++ ) {
@@ -61,10 +63,20 @@ public class WriteXLS_NeuroSky {
                             break;
                     }
                 }
-            }            
-
+            }else{          
+            	if(!fileName.equals(name)){
+            		wb=new XSSFWorkbook();
+            		fileName=name;
+            	}
+            	if(wb.getNumberOfSheets()!=0)
+            	sheet = wb.getSheetAt(0); 
+            	else{
+            		sheet = wb.createSheet(file.getName());  
+                	Row row_ = sheet.createRow(0);
+            	}
+            }
             for (Object[] aBook : bookData) {
-                Row row = sheet.createRow(++rows);
+                Row row = sheet.createRow(sheet.getPhysicalNumberOfRows());
 
                 int cols = -1; // Nr de colunas
 
@@ -78,9 +90,8 @@ public class WriteXLS_NeuroSky {
                 }
 
             }
-            System.err.println(rows);
             name+= ".xlsx";
-            try (FileOutputStream outputStream = new FileOutputStream(name,true)) {
+            try (FileOutputStream outputStream = new FileOutputStream(name)) {
                 wb.write(outputStream);
                 outputStream.close();
             }

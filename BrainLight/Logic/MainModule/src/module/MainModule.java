@@ -25,7 +25,7 @@ import history.write.WriteXLS_NeuroSky;
 import interfaces.HeadSetDataInterface;
 
 public class MainModule {
-	private int rows=0;
+	private String fileName;
 	private Boolean record;
 	protected BlockingQueue<Double[][]> queue = null;
 	protected BlockingQueue<Double[]> queue2 = null;
@@ -41,7 +41,7 @@ public class MainModule {
 	private int deviceNo;
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
-	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2){
+	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2){		
 		record=false;
 		this.queue = queue;
 		this.queue2 = queue2;
@@ -92,16 +92,23 @@ public class MainModule {
 					try {
 						queue.put(finalDataArray);
 						if(record){	
+							Date dNow = new Date( );					 
+						      SimpleDateFormat ftTime = 
+								      new SimpleDateFormat ("hh:mm:ss");
 							final Object[][] bookData = {
-									{"00:00", finalDataArray[0][0], finalDataArray[0][1],
+									{ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
 										finalDataArray[0][2],finalDataArray[0][3],
 										finalDataArray[0][4],finalDataArray[0][5],
 										finalDataArray[0][6],finalDataArray[0][7],	
 										finalDataArray[1][0],finalDataArray[1][1],
 										finalDataArray[2][0]},
 							};
-							WriteXLS_NeuroSky.writeXLS("teste", bookData,rows);
-							rows++;
+							WriteXLS_NeuroSky.writeXLS(fileName, bookData);
+						}else{
+							Date dNow = new Date( );
+						      SimpleDateFormat ft = 
+						      new SimpleDateFormat ("E_yyyy_MM_dd_'at'_hh_mm_ss");
+						      fileName=ft.format(dNow);
 						}
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -335,7 +342,6 @@ public class MainModule {
 		fw.deviceDisconnect();
 
 		 */
-		System.out.print("asd");
 	}
 
 	public static String[][] finalInfoFinal(int device){
