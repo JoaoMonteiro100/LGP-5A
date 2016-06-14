@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
-<dom-module id="patients-list">
+<dom-module id="patients-list-admin">
     <template id="patient-list-template">
         <style is="custom-style">
             section {
@@ -48,11 +48,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <section>
             <firebase-collection
-                    order-by-child="groups/group3"
-                    order-value-type="boolean"
-                    equal-to="true"
+                    order-by-child="doctorAssociated"
+                    order-value-type="string"
+                    equal-to="{{doctorKey}}"
                     location="https://brainlight.firebaseio.com/users"
-                    data="{{users}}"></firebase-collection>
+                    data="{{users}}" log></firebase-collection>
 
             <paper-dialog-scrollable>
                 <paper-listbox id="patientList" attr-for-selected="value" selected="{{myChoice}}">
@@ -61,7 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               sort="_computeSort">
                         <!--  sort="_computeSort"-->
                         <paper-item value="{{usr.__firebaseKey__}}">
-                            <img src={{online(usr)}} style="width:10px;height:10px;">
+                            <img src={{online(usr)}} style="width:10px; height:10px;">
                             <!--<img src="../../../images/online.png" style="width:10px;height:10px;">-->
                             <div id="name">[[usr.name]] [[usr.lastname]]</div>
                             <span> - </span>
@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             'use strict';
 
             Polymer({
-                is: 'patients-list',
+                is: 'patients-list-admin',
 
                 properties: {
                     selected: Array,
@@ -89,6 +89,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     myChoice: {
                         type: Number,
                         observer: '_onUserSelected'
+                    },
+                    doctorKey: {
+                        type: String,
+                        notify: true
                     },
                     deletedUserKey: {
                         type: Number,
@@ -148,6 +152,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     addEventListener('select_null_patient', function () {
                         self.$.patientList.selected = null;
+                    });
+
+                    addEventListener('update_patient_list', function(user) {
+                        self.doctorKey = user.detail;
                     });
                 },
 

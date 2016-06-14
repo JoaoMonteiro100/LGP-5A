@@ -12,63 +12,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="stylesheet" href="../../styles/custom.css">
 
 <dom-module id="app-dashboard">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
 
-      #container{
-      height: 100%;
-      width:100%;
-      position: absolute;
-      }
+            #container {
+                height: 100%;
+                width: 100%;
+                position: absolute;
+            }
 
 
-    </style>
-    <div id="container">
-      <paper-header-panel>
-        <paper-toolbar class="top-toolbar">
-          <h1><a data-route="dashboard" href="/dashboard" id="coisas" on-tap="onDataRouteClick">BrainStream</a></h1>
+        </style>
+        <div id="container">
+            <paper-header-panel>
+                <paper-toolbar class="top-toolbar">
+                    <h1><a data-route="dashboard" href="/dashboard" id="coisas"
+                           on-tap="onDataRouteClick">BrainStream</a></h1>
 
-      <paper-icon-button icon="menu" class="toggle-drawer" on-tap="toggleDrawer"></paper-icon-button>
-        </paper-toolbar>
+                    <paper-icon-button icon="menu" class="toggle-drawer" on-tap="toggleDrawer"></paper-icon-button>
+                </paper-toolbar>
 
-        <paper-drawer-panel id="paperDrawerPanel">
-          <paper-scroll-header-panel drawer>
-          <app-menu params="{{params}}" route="{{route}}"></app-menu>
-         </paper-scroll-header-panel>
-          <paper-scroll-header-panel main>
-            <app-dashboard-pages params="{{params}}" cols="{{cols}}"></app-dashboard-pages>
-          </paper-scroll-header-panel>
-</paper-drawer-panel>
-  </paper-scroll-header-panel>
+                <paper-drawer-panel id="paperDrawerPanel">
+                    <paper-scroll-header-panel drawer>
+                        <app-menu params="{{params}}" route="{{route}}"></app-menu>
+                    </paper-scroll-header-panel>
+                    <paper-scroll-header-panel main>
+                        <app-dashboard-pages params="{{params}}" cols="{{cols}}"></app-dashboard-pages>
+                    </paper-scroll-header-panel>
+                </paper-drawer-panel>
+                </paper-scroll-header-panel>
 
-    </div>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+        </div>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-    Polymer({
-      is: 'app-dashboard',
-      properties:{
-      cols: {
-      type: Object,
-      notify: true
-    }
-  },
+            Polymer({
+                is: 'app-dashboard',
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    }
+                },
 
-      toggleDrawer: function() {
-        var drawerPanel = document.getElementById('paperDrawerPanel');
-        if (drawerPanel.narrow) {
-          drawerPanel.togglePanel();
-        } else {
-          drawerPanel.classList.toggle('collapsed-menu');
-        }
-      },
+                toggleDrawer: function () {
+                    var drawerPanel = document.getElementById('paperDrawerPanel');
+                    if (drawerPanel.narrow) {
+                        drawerPanel.togglePanel();
+                    } else {
+                        drawerPanel.classList.toggle('collapsed-menu');
+                    }
+                },
 
-    });
-  })();
-  </script>
+            });
+        })();
+    </script>
 </dom-module>

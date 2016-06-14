@@ -56,11 +56,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     data="{{users}}">
             </firebase-collection>
             <paper-dialog-scrollable>
-                <paper-listbox attr-for-selected="value" id="doctorList" selected="{{myChoice}}">
-                    <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
+                <paper-listbox attr-for-selected="value" id="patientList" selected="{{myChoice}}">
+                    <template is="dom-repeat" items="[[users]]" as="usr">
                         <paper-item value="{{usr.__firebaseKey__}}">
                             <img src={{online(usr)}} style="width:10px;height:10px;">
-                            <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
                             <div id="name">[[usr.name]] [[usr.lastname]]</div>
                             <span> - </span>
                             <div id="mail">[[usr.mail]]</div>
@@ -106,25 +105,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         return "../../../images/offline.png";
                 },
 
-                _computeSort: function (a, b) {
-                    if (a.name.toLowerCase() == b.name.toLowerCase()) {
-                        return 0;
-                    }
-
-                    var aLowerCase = a.name.toLowerCase();
-                    var bLowerCase = b.name.toLowerCase();
-
-                    if (aLowerCase >= bLowerCase) {
-                        var indexA = this.users.indexOf(a);
-                        var indexB = this.users.indexOf(b);
-                        var temp = this.users[indexA];
-                        this.users[indexA] = this.users[indexB];
-                        this.users[indexB] = temp;
-                    }
-
-                    return aLowerCase < bLowerCase ? -1 : 1;
-                },
-
                 ready: function () {
                     var appRef = new Firebase(app.usersLocation);
                     var self = this;
@@ -134,20 +114,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     });
 
                     addEventListener('select_null_doctor', function () {
-                        self.$.doctorList.selected = null;
+                        self.$.patientList.selected = null;
                     });
                 },
 
                 _onUserSelected: function () {
-                    if(this.$.doctorList.selected != null) {
+                    if (this.$.patientList.selected != null) {
                         if (this.deletedUserKey == this.currentKey) {
                             var user = this.myChoice;
-                            this.fire('selected-user-doctor', user);
+                            this.fire('update_patient_list', user);
                             this.fire('select_null_patient');
                         } else {
                             var user = this.myChoice;
                             this.currentKey = user;
-                            this.fire('selected-user-doctor', user);
+                            this.fire('update_patient_list', user);
                             this.fire('select_null_patient');
                         }
                     }
