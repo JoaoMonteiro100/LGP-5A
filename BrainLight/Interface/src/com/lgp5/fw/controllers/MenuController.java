@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import module.MainModule;
 
 import java.awt.*;
 import java.io.File;
@@ -55,6 +56,7 @@ public class MenuController{
     @FXML private CheckBox keepHistoryCheckBox;
     @FXML private CheckBox deleteFilesCheckBox;
     @FXML private Pane historyPeriodWrapper;
+    public MainModule fw;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
     private SettingsPreferences prefs = new SettingsPreferences();
@@ -191,10 +193,12 @@ public class MenuController{
 		{
 			recordButton.setVisible(false);
 			stopButton.setVisible(true);
+			fw.setRecord(true);
 		}
 		else {
 			recordButton.setVisible(true);
 			stopButton.setVisible(false);
+			fw.setRecord(false);
 		}
 	}
 
@@ -301,5 +305,8 @@ public class MenuController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void sendToModule(){
+		
 	}
 }

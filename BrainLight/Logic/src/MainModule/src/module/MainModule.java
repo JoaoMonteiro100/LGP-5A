@@ -1,7 +1,9 @@
+package module;
 
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 //import Analysis.*;
@@ -13,6 +15,7 @@ import Emotiv.Emotiv_SDK.EmotivDevice;
 import interfaces.HeadSetDataInterface;
 
 public class MainModule {
+	private Boolean record;
 	protected BlockingQueue<Double[][]> queue = null;
 	protected BlockingQueue<Double[]> queue2 = null;
 	private Neurosky neuroDevice;
@@ -28,6 +31,7 @@ public class MainModule {
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2){
+		setRecord(false);
 		this.queue = queue;
 		this.queue2 = queue2;
 		sharedQ = new LinkedList<>();
@@ -40,8 +44,6 @@ public class MainModule {
 			//emoDevice = new Iedk.EmotivDevice();
 			emoDevice.setQueue(sharedQ);
 		}
-
-
 		else if(device == 2){
 			HeadSetDataInterface sendDataInterface;
 			//confirmar
@@ -52,6 +54,9 @@ public class MainModule {
 					initMerge(2, dataToSend);
 					try {
 						queue.put(finalDataArray);
+						if(record){
+							System.out.println("estou a gravar");
+						}
 					} catch (Exception e) {
 						// TODO: handle exception
 					}		
@@ -68,7 +73,6 @@ public class MainModule {
 					}					
 				}
 			};
-
 			neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
 		}
 
@@ -548,5 +552,15 @@ public class MainModule {
 			if (file.isDirectory()) purgeDirectory(file);
 			file.delete();
 		}
+	}
+
+
+	public Boolean getRecord() {
+		return record;
+	}
+
+
+	public void setRecord(Boolean record) {
+		this.record = record;
 	}
 }
