@@ -248,6 +248,7 @@ public class EmotivDevice implements Runnable {
                     channelsAverageBandPowers.clear();
                     calculateDFT();
                     emotivInterface.onReceiveWavesData(channelsAverageBandPowers);
+                    return;
                 }).start();
 
                 sendDataToInterface();
