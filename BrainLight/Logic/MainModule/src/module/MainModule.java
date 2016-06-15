@@ -42,7 +42,10 @@ public class MainModule {
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2){		
-		record=false;
+		Date dNow = new Date( );
+		SimpleDateFormat ft = new SimpleDateFormat ("E_yyyy_MM_dd_'at'_hh_mm_ss");
+		this.fileName=ft.format(dNow);
+		this.record=false;
 		this.queue = queue;
 		this.queue2 = queue2;
 		sharedQ = new LinkedList<>();
@@ -88,8 +91,8 @@ public class MainModule {
 						queue.put(finalDataArray);
 						if(record){	
 							Date dNow = new Date( );					 
-						      SimpleDateFormat ftTime = 
-								      new SimpleDateFormat ("hh:mm:ss");
+							SimpleDateFormat ftTime = 
+									new SimpleDateFormat ("hh:mm:ss");
 							final Object[][] bookData = {
 									{ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
 										finalDataArray[0][2],finalDataArray[0][3],
@@ -101,9 +104,9 @@ public class MainModule {
 							WriteXLS_NeuroSky.writeXLS(fileName, bookData);
 						}else{
 							Date dNow = new Date( );
-						      SimpleDateFormat ft = 
-						      new SimpleDateFormat ("E_yyyy_MM_dd_'at'_hh_mm_ss");
-						      fileName=ft.format(dNow);
+							SimpleDateFormat ft = 
+									new SimpleDateFormat ("E_yyyy_MM_dd_'at'_hh_mm_ss");
+							fileName=ft.format(dNow);
 						}
 					} catch (Exception e) {
 						// TODO: handle exception
