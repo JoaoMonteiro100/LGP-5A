@@ -1,5 +1,6 @@
 package com.lgp5.fw.controllers;
 
+import history.read.net.codejava.excel.XLSREAD;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
@@ -12,30 +13,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import module.MainModule;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
-import javax.swing.JFileChooser;
-
-import history.read.net.codejava.excel.XLSREAD;
 
 public class MenuController{
 	private String[][] historic;
@@ -287,6 +277,10 @@ public class MenuController{
 				new FileChooser.ExtensionFilter("Excel file (*.xlsx)", "*.xlsx"),
 				new FileChooser.ExtensionFilter("Excel 97-2003 file (*.xls)", "*.xls"));
 		File defaultDirectory = new File("history/");
+		//create a history folder if it hasn't been created yet
+		if (!defaultDirectory.exists()){
+			defaultDirectory.mkdir();
+		}
 		chooser.setInitialDirectory(defaultDirectory);
 		File file = chooser.showOpenDialog(stage);
 		if(file.exists()){

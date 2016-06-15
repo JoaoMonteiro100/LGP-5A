@@ -184,25 +184,25 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="thetaData" layoutX="325.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label fx:id="thetaData" layoutX="325.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
                                 <Label layoutX="257.0" layoutY="68.0" prefHeight="17.0" prefWidth="69.0" text="Alfa">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="alfaData" layoutX="325.0" layoutY="68.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label fx:id="alfaData" layoutX="325.0" layoutY="68.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
                                 <Label layoutX="257.0" layoutY="87.0" prefHeight="17.0" prefWidth="69.0" text="Low beta">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="highBetaData" layoutX="325.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label fx:id="highBetaData" layoutX="325.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
                                 <Label layoutX="257.0" layoutY="106.0" prefHeight="17.0" prefWidth="69.0" text="High beta">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="lowBetaData" layoutX="325.0" layoutY="87.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label fx:id="lowBetaData" layoutX="325.0" layoutY="87.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
                                 <Label layoutX="31.0" layoutY="233.0" text="RAW DATA">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
@@ -213,9 +213,9 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="gammaData" layoutX="325.0" layoutY="124.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
-                                <Label fx:id="meditationData" layoutX="516.0" layoutY="67.0" prefHeight="17.0" prefWidth="53.0" text="0" />
-                                <Label layoutX="432.0" layoutY="48.0" prefHeight="17.0" prefWidth="76.0" text="Attention">
+                                <Label fx:id="gammaData" layoutX="325.0" layoutY="124.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
+                                <Label fx:id="longExcitementData" layoutX="544.0" layoutY="67.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                                <Label layoutX="394.0" layoutY="47.0" prefHeight="17.0" prefWidth="120.0" text="Engagement">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
@@ -225,12 +225,12 @@
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="432.0" layoutY="67.0" prefHeight="17.0" prefWidth="76.0" text="Meditation">
+                                <Label layoutX="394.0" layoutY="67.0" prefHeight="17.0" prefWidth="149.0" text="Excitement (long time)">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="attentionData" layoutX="516.0" layoutY="48.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                                <Label fx:id="engagementData" layoutX="544.0" layoutY="47.0" prefHeight="17.0" prefWidth="53.0" text="0" />
                                 <Label fx:id="batteryLevelData" layoutX="701.0" layoutY="66.0" prefHeight="17.0" prefWidth="53.0" text="0%" />
                                 <Label fx:id="errorRateData" layoutX="701.0" layoutY="47.0" prefHeight="17.0" prefWidth="53.0" text="0%" />
                                 <Label layoutX="617.0" layoutY="47.0" prefHeight="17.0" prefWidth="76.0" text="Error rate">
@@ -254,12 +254,30 @@
                                     </font>
                                 </Label>
                                 <Label fx:id="signalQualityData" layoutX="701.0" layoutY="86.0" prefHeight="17.0" prefWidth="53.0" text="None" />
-                                <Label fx:id="rawData" layoutX="701.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 Hz" />
+                                <Label fx:id="rawData" layoutX="701.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0" />
                                 <Label layoutX="617.0" layoutY="106.0" prefHeight="17.0" prefWidth="76.0" text="Raw data">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
+                        <Label fx:id="shortExcitementData" layoutX="544.0" layoutY="87.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                        <Label layoutX="394.0" layoutY="87.0" prefHeight="17.0" prefWidth="149.0" text="Excitement (short time)">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="meditationData" layoutX="544.0" layoutY="127.0" prefHeight="17.0" prefWidth="53.0" text="0" />
+                        <Label layoutX="394.0" layoutY="107.0" prefHeight="17.0" prefWidth="120.0" text="Frustration">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="394.0" layoutY="127.0" prefHeight="17.0" prefWidth="149.0" text="Meditation">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="frustrationData" layoutX="544.0" layoutY="107.0" prefHeight="17.0" prefWidth="53.0" text="0" />
                             </children>
                         </AnchorPane>
                     </children>
@@ -308,7 +326,7 @@
                         <Label fx:id="smileValue" layoutX="495.0" layoutY="35.0" prefHeight="17.0" prefWidth="129.0" text="0" />
                         <Label fx:id="upperFaceExpressionPower" layoutX="628.0" layoutY="104.0" prefHeight="17.0" prefWidth="129.0" text="0" />
                         <Label fx:id="lowerFaceExpressionPower" layoutX="628.0" layoutY="81.0" prefHeight="17.0" prefWidth="129.0" text="0" />
-                        <Button fx:id="calibrationButton" layoutX="23.0" layoutY="-20.0" onMouseClicked="#launchCalibrationView" mnemonicParsing="false" prefHeight="30.0" prefWidth="119.0" text="Calibrate sensors" />
+                        <Button fx:id="calibrationButton" layoutX="23.0" layoutY="-20.0" mnemonicParsing="false" onMouseClicked="#launchCalibrationView" prefHeight="30.0" prefWidth="119.0" text="Calibrate sensors" />
                      </children>
                   </AnchorPane>
                     </children>

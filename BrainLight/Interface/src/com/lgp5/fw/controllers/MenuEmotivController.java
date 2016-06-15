@@ -84,7 +84,7 @@ public class MenuEmotivController extends MenuController{
 
 		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Theta", "Alfa","Low beta", "High beta", "Gamma"};
-		String[] moodsArray = {"Attention", "Meditation"};
+		String[] moodsArray = {"Engagement", "Excitement (long time)", "Excitement (short time)", "Frustration", "Meditation"};
         String[] actions = {"Neural", "Push", "Pull", "Lift", "Drop", "Left", "Right", "Rotate left", "Rotate right", "Rotate clockwise", "Rotate counter-clockwise", "Rotate forward", "Rotate reverse", "Disappear"};
 		brainwaves.addAll(Arrays.asList(waves));
 		moods.addAll(Arrays.asList(moodsArray));
@@ -98,7 +98,10 @@ public class MenuEmotivController extends MenuController{
 		series.getData().add(new XYChart.Data("High beta", 35f));
 		series.getData().add(new XYChart.Data("Gamma", 35f));
 		XYChart.Series<String,Float> series2 = new XYChart.Series<>();
-		series2.getData().add(new XYChart.Data("Attention", 35f));
+		series2.getData().add(new XYChart.Data("Engagement", 35f));
+		series2.getData().add(new XYChart.Data("Excitement (long time)", 35f));
+		series2.getData().add(new XYChart.Data("Excitement (short time)", 35f));
+		series2.getData().add(new XYChart.Data("Frustration", 35f));
 		series2.getData().add(new XYChart.Data("Meditation", 35f));
 		//System.out.println(this.colorNumber);
         XYChart.Series<String,Float> series3 = new XYChart.Series<>();
