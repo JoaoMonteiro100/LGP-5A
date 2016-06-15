@@ -1,6 +1,5 @@
 package com.lgp5.patient.controllers;
 
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -70,14 +69,27 @@ public class SettingsController {
             @Override
             public void handle(ActionEvent event) {
                     Stage stage;
-                            lauchAnalysisView();
-                            //get a handle to the stage
-                            stage = (Stage) analysis.getScene().getWindow();
-                            //close current window
-                            stage.close();
+                        lauchAnalysisView();
+                        //get a handle to the stage
+                        stage = (Stage) analysis.getScene().getWindow();
+                        //close current window
+                        stage.close();
+            }
+        });
+        game.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage;
+                lauchGameView();
+                //get a handle to the stage
+                stage = (Stage) game.getScene().getWindow();
+                //close current window
+                //stage.close();
             }
         });
     }
+
+
 
     public void handle(MouseEvent Event) {
         analysis.setCursor(Cursor.HAND);
@@ -93,6 +105,20 @@ public class SettingsController {
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
             stage.setTitle("BrainStream - Analysis");
+            stage.resizableProperty().setValue(Boolean.FALSE);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void lauchGameView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/game.fxml"));
+            Parent parent = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.setTitle("BrainStream - Game");
             stage.resizableProperty().setValue(Boolean.FALSE);
             stage.show();
         } catch (IOException e) {
