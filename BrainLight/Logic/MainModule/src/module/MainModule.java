@@ -73,15 +73,23 @@ public class MainModule {
 
 				@Override
 				public void onReceiveData(HashMap<String, Object> data) {
-					System.out.println("data");
-					System.out.println(data.toString());
-
+					initMerge(1, (HashMap<String, Object>)data.clone());
+					try {
+						queue.put(finalDataArray);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 				}
 
 				@Override
 				public void onReceiveWavesData(HashMap<String, Wave> data) {
-					// TODO Auto-generated method stub
-
+					initGetWaves(1,data);
+					try {
+						queue.put(finalWavesArray);
+						//Thread.sleep(1000);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 				}
 
 
