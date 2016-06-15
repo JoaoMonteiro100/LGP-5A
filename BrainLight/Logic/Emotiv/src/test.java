@@ -11,7 +11,7 @@ public class test {
             @Override
             public void onReceiveData(HashMap<String, Object> data) {
                 HashMap<String, Object> s = (HashMap<String, Object>) data.get("FacialExpressions");
-                System.out.println(s.get("Blink"));
+                System.out.println(s.toString());
             }
 
             @Override

@@ -1,28 +1,21 @@
 package module;
 
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Vector;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
-//import Analysis.*;
-//import Analysis.Calculations;
-
-import com.lgp5.Neurosky;
-
 import Iedk.EmotivDevice;
 import Iedk.Wave;
 import Iedk.interfaces.EmotivInterface;
+import com.lgp5.Neurosky;
 import history.write.WriteXLS_NeuroSky;
 import interfaces.HeadSetDataInterface;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
+
+//import Analysis.*;
+//import Analysis.Calculations;
 
 public class MainModule {
 	private Boolean neverDelete;
@@ -35,6 +28,7 @@ public class MainModule {
 	private EmotivDevice emotivDevice;
 	private int wirelessSignal;
 	public static  Double[][] finalDataArray;
+	public static  Double[][] finalWavesArray;
 	public static  Double[] finalRawData;
 	private HashMap<String,HashMap<String,Object>> neuroData;
 	private LinkedList<HashMap<String, HashMap<String, Object>>> sharedQ;

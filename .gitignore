@@ -8,6 +8,7 @@
 *.class
 */.idea/*
 .idea/*
+*/out
 
 # User-specific stuff:
 .idea/workspace.xml

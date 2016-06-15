@@ -5,7 +5,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class Tests {
+public class AnalysisTests {
 
     private final float[][] values = {
             {20f, 20f, 20f, 20f, 20f, 20f},

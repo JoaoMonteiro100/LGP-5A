@@ -4,9 +4,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 
-/**
- * Created by Vacilo on 22/04/2016.
- */
 public class WriteXLS_Emotiv {
 
     public static void writeXLS(String name, Object [] [] bookData) {
