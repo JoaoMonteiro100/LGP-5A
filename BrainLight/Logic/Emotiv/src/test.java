@@ -1,14 +1,10 @@
+import Iedk.EmotivDevice;
 import Iedk.Wave;
 import Iedk.interfaces.EmotivInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import Iedk.EmotivDevice;
-
-/**
- * Created by cenas on 03/06/2016.
- */
 public class test {
     public static void main(String[] args) {
         EmotivInterface emotivInterface = new EmotivInterface() {
