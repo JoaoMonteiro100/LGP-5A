@@ -177,11 +177,6 @@ public class MenuNeuroSkyController extends MenuController {
 		super.fw.receiveDeviceData();
 
 
-
-//		System.err.println(finalDataArray[0][0]);
-//		ThreadInterface t = new ThreadInterface(queue, finalDataArray);
-//		t.run();
-
 		updateInterface = new updateInterface() {
 			@Override
 			public void update(Double[][] finalDataArray) {
@@ -200,6 +195,7 @@ public class MenuNeuroSkyController extends MenuController {
 							String attention = finalDataArray[1][0].toString();
 							String meditation = finalDataArray[1][1].toString();
 							String signal = finalDataArray[2][0].toString();
+							//System.out.println(finalDataArray[3][0]);
 							updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
 							updateSeriesLineChartMoods(attention,meditation);						
 

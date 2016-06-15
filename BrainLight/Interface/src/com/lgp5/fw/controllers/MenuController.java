@@ -276,7 +276,7 @@ public class MenuController{
 				new FileChooser.ExtensionFilter("Excel file (*.xlsx)", "*.xlsx"),
 				new FileChooser.ExtensionFilter("Excel 97-2003 file (*.xls)", "*.xls"));
 
-		String path = "\\LGP-5A\\FW\\src\\history";
+		String path = "\\LGP-5A\\BrainLight";
 		File f = new File(new File(".").getCanonicalPath().concat(path));
 		fileChooser.setInitialDirectory(f);
 

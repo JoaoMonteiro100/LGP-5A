@@ -64,7 +64,8 @@ public class MainModule {
 
 				@Override
 				public void onReceiveData(HashMap<String, Object> data) {
-					// TODO Auto-generated method stub
+					System.out.println("data");
+					System.out.println(data.toString());
 
 				}
 
@@ -168,8 +169,9 @@ public class MainModule {
 				if (deviceNo == 1) {
 					Thread emotivThread = new Thread(emotivDevice);
 					emotivDevice.connectEmotiv();
-					emotivThread.start();
+					/*emotivThread.run();*/
 
+					System.err.println("ola");
 					while (running) {
 						if (deviceNo == 1) {
 							getDeviceData(1);
@@ -341,7 +343,10 @@ public class MainModule {
 		fw.stopReceiving();
 		fw.deviceDisconnect();
 		 */
-		System.out.print("asd");
+		BlockingQueue<Double[][]> queue = null;
+		BlockingQueue<Double[]> queue2 = null;
+		MainModule fw = new MainModule(1,queue,queue2);
+		fw.receiveDeviceData();
 	}
 
 	public static String[][] finalInfoFinal(int device){
@@ -461,9 +466,11 @@ public class MainModule {
 
 			finalInfo = finalInfoFinal(2);
 			finalData = new Double[3][];
+			//finalData = new Double[4][];
 			finalData[0]= new Double[8];
 			finalData[1]= new Double[2];
 			finalData[2]= new Double[1];
+			//finalData[3]= new Double[]{(double) 2};
 
 			for (int i = 1;i < finalInfo.length; i++){
 				for (int k = 0;k < finalInfo[i].length; k++){
