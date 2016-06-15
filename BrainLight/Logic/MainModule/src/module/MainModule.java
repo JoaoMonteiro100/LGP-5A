@@ -73,13 +73,8 @@ public class MainModule {
 
 			};
 
-
 			emotivDevice = new EmotivDevice(sendDataInterface);
 		}
-
-
-
-
 		else if(device == 2){
 			HeadSetDataInterface sendDataInterface;
 			WriteXLS_NeuroSky wNeuroSky = new WriteXLS_NeuroSky();
