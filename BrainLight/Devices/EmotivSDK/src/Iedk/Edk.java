@@ -1,16 +1,14 @@
 package Iedk;
 
+import com.sun.jna.*;
+import com.sun.jna.ptr.FloatByReference;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.NativeLongByReference;
+
 import java.util.List;
 
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.*;
-import com.sun.jna.NativeLong;
-import com.sun.jna.Structure;
-
 public interface Edk extends Library {
-	Edk INSTANCE = (Edk) Native.loadLibrary("edk", Edk.class);
+	Edk INSTANCE = (Edk) Native.loadLibrary("Devices\\EmotivSDK\\edk", Edk.class);
 
 	public enum EE_ExpressivThreshold_t {
 		EXP_SENSITIVITY
