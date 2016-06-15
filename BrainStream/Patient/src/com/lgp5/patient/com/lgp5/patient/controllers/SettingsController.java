@@ -30,37 +30,7 @@ public class SettingsController {
 
     public SettingsController() {
     }
-/*
-    public void analysisColorToWhite(MouseEvent Event) {
-        analysis.setStyle("-fx-background-color: #FEFDFC;");
-        messages.setStyle("-fx-background-color: #F6F4F3;");
-        settings.setStyle("-fx-background-color: #F6F4F3;");
-        game.setStyle("-fx-background-color: #F6F4F3;");
 
-    }
-
-    public void messagesColorToWhite(MouseEvent Event) {
-        messages.setStyle("-fx-background-color: #FEFDFC;");
-        settings.setStyle("-fx-background-color: #F6F4F3;");
-        analysis.setStyle("-fx-background-color: #F6F4F3;");
-        game.setStyle("-fx-background-color: #F6F4F3;");
-
-    }
-
-    public void settingsColorToWhite(MouseEvent Event) {
-        settings.setStyle("-fx-background-color: #FEFDFC;");
-        messages.setStyle("-fx-background-color: #F6F4F3;");
-        analysis.setStyle("-fx-background-color: #F6F4F3;");
-        game.setStyle("-fx-background-color: #F6F4F3;");
-
-    }
-
-    public void gameColorToWhite(MouseEvent Event) {
-        game.setStyle("-fx-background-color: #FEFDFC;");
-        settings.setStyle("-fx-background-color: #F6F4F3;");
-        messages.setStyle("-fx-background-color: #F6F4F3;");
-        analysis.setStyle("-fx-background-color: #F6F4F3;");
-    }*/
 
     // Called after the FXML has been initialized
     @FXML

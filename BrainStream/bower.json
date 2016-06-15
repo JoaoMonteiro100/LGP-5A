@@ -1,4 +1,5 @@
 {
+	"directory": "app/",
   "name": "polymer-starter-kit",
   "private": true,
   "dependencies": {
@@ -13,5 +14,6 @@
     "gold-email-input": "PolymerElements/gold-email-input#^1.0.7"
   },
   "devDependencies": {},
-  "ignore": []
+  "ignore": [],
+  "directory" : "app"
 }

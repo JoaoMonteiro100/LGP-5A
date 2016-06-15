@@ -33,37 +33,6 @@ public class AnalysisController {
         messages.setCursor(Cursor.HAND);
         game.setCursor(Cursor.HAND);
     }
-/*
-    public void analysisColorToWhite(MouseEvent Event) {
-        analysis.setStyle("-fx-background-color: #FEFDFC;");
-        messages.setStyle("-fx-background-color: #F6F4F3;");
-        settings.setStyle("-fx-background-color: #F6F4F3;");
-        game.setStyle("-fx-background-color: #F6F4F3;");
-
-    }
-
-    public void messagesColorToWhite(MouseEvent Event) {
-        messages.setStyle("-fx-background-color: #FEFDFC;");
-        settings.setStyle("-fx-background-color: #F6F4F3;");
-        analysis.setStyle("-fx-background-color: #F6F4F3;");
-        game.setStyle("-fx-background-color: #F6F4F3;");
-
-    }
-
-    public void settingsColorToWhite(MouseEvent Event) {
-        settings.setStyle("-fx-background-color: #FEFDFC;");
-        messages.setStyle("-fx-background-color: #F6F4F3;");
-        analysis.setStyle("-fx-background-color: #F6F4F3;");
-        game.setStyle("-fx-background-color: #F6F4F3;");
-
-    }
-
-    public void gameColorToWhite(MouseEvent Event) {
-        game.setStyle("-fx-background-color: #FEFDFC;");
-        settings.setStyle("-fx-background-color: #F6F4F3;");
-        messages.setStyle("-fx-background-color: #F6F4F3;");
-        analysis.setStyle("-fx-background-color: #F6F4F3;");
-    }*/
 
     // Called after the FXML has been initialized
     @FXML
@@ -79,6 +48,17 @@ public class AnalysisController {
                             stage.close();
             }
         });
+        game.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage;
+                lauchGameView();
+                //get a handle to the stage
+                stage = (Stage) game.getScene().getWindow();
+                //close current window
+                //stage.close();
+            }
+        });
     }
 
 
@@ -90,6 +70,21 @@ public class AnalysisController {
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
             stage.setTitle("BrainStream - Settings");
+            stage.resizableProperty().setValue(Boolean.FALSE);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void lauchGameView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/game.fxml"));
+            Parent parent = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.setTitle("BrainStream - Game");
             stage.resizableProperty().setValue(Boolean.FALSE);
             stage.show();
         } catch (IOException e) {
