@@ -42,7 +42,8 @@ public class MainModule {
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 
-	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2){		
+public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2, int days){
+		deleteOldFiles(days);	
 		Date dNow = new Date( );
 		SimpleDateFormat ft = new SimpleDateFormat ("E_yyyy_MM_dd_'at'_hh_mm_ss");
 		this.fileName=ft.format(dNow);
@@ -570,13 +571,34 @@ public class MainModule {
 	}
 
 
+	public static void deleteOldFiles(int days){
+		String str = (System.getProperty("user.dir")).replaceAll("BrainLight", "")+"\\history";
+		File dir = new File(str); 
+		try{
+			purgeOldFiles(dir,days);
+		} catch (Exception e){
+			System.err.println("History folder not in correct directory ("+str+")");
+		}
+	}
+
 	public static void cleanHistory() {
-		String str = (System.getProperty("user.dir")+Integer.MAX_VALUE).replaceAll("BrainLightFW"+Integer.MAX_VALUE, "")+"FW\\src\\history";
+		String str = (System.getProperty("user.dir")).replaceAll("BrainLight", "")+"\\history";
 		File dir = new File(str); 
 		try{
 			purgeDirectory(dir);
 		} catch (Exception e){
 			System.err.println("History folder not in correct directory ("+str+")");
+		}
+	}
+	
+	static void purgeOldFiles(File dir, int x) {
+		for (File file: dir.listFiles()) {
+			if (file.isDirectory()) purgeDirectory(file);
+			long diff = new Date().getTime() - file.lastModified();
+
+			if (diff > x * 24 * 60 * 60 * 1000) {
+			    file.delete();
+			}
 		}
 	}
 
