@@ -388,6 +388,41 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 		}
 		finalRawData = finalRaw;
 	}
+	
+		public static void initGetWaves (int device,  HashMap <String,Wave> data)
+	{	
+		String[] finalInfo = new String [] { "AF3","F7","F3","FC5","T7","P7",
+			"O1","O2","P8","T8","FC6","F4","F8","AF4"};
+		Double [][] finalData;
+
+		if (device == 1){
+			
+			HashMap <String,Wave> emotivData;
+			if (data instanceof HashMap) {
+				emotivData = (HashMap <String,Wave>) data;
+			} else {
+				System.out.println("Wrong type of data for emotiv device");
+				return;
+			}
+
+			finalData = new Double[14][35];
+		
+			for (int i = 0; i < finalData.length; i++){
+				
+						finalData[i][0]=emotivData.get(finalInfo[i]).getTheta();
+						finalData[i][1]=emotivData.get(finalInfo[i]).getDelta();
+						finalData[i][2]=emotivData.get(finalInfo[i]).getAlpha();
+						finalData[i][3]=emotivData.get(finalInfo[i]).getBeta();
+						finalData[i][4]=(double) emotivData.get(finalInfo[i]).getSignalQuality();
+						for (int k = 0; k < 30; k++)
+						{
+							finalData[i][k+5]=emotivData.get(finalInfo[i]).getFreqVals().get(k);
+						}
+				}
+		finalDataArray = finalData;
+		}
+	}
+	
 	public static void initMerge (int device, HashMap<String, Object> data)
 	{
 		String[][] finalInfo;
