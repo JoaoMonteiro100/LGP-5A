@@ -102,6 +102,7 @@ public class MenuNeuroSkyController extends MenuController {
 	@FXML
 	private void initialize() throws MalformedURLException {	
 
+		settings();
 		//analysis disabled
 		analysisLabel.setDisable(true);
 		analysisWrapper.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -117,7 +118,6 @@ public class MenuNeuroSkyController extends MenuController {
 				unavailableFeatureTooltip.hide();
 			}
 		});
-		settings();
 
 		time=System.currentTimeMillis()/1000;
 		time2=System.currentTimeMillis()/1000;
@@ -170,8 +170,12 @@ public class MenuNeuroSkyController extends MenuController {
 		URL url = new URL("http://localhost:8080/");
 		radarBrowser.getEngine().load(url.toExternalForm());		
 
-
-		super.fw = new MainModule(2,queue,queue2,120);
+		if(prefs.getNeverDeletePreference()){
+			super.fw = new MainModule(2,queue,queue2,true,120);
+        }else{
+        	super.fw = new MainModule(2,queue,queue2,false,120);
+        }
+		
 		super.fw.receiveDeviceData();
 
 

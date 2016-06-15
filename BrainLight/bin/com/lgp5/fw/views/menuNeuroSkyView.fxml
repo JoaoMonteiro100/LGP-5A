@@ -148,7 +148,7 @@
                         <CheckBox fx:id="deleteFilesCheckBox" layoutX="21.0" layoutY="74.0" mnemonicParsing="false" onAction="#disableHistoryPeriod" text="Saved files are never deleted" textAlignment="CENTER" />
 
                         <Button fx:id="deleteHistoryButton" layoutX="21.0" layoutY="158.0" mnemonicParsing="false" onAction="#confirmDeletingHistory" text="Delete history" />
-                        <Button fx:id="resetPreferencesButton" layoutX="118.0" layoutY="158.0" mnemonicParsing="false" onAction="#resetPreferences" text="Reset preferences to default" />
+                        <Button fx:id="resetPreferencesButton" layoutX="21.0" layoutY="200.0" mnemonicParsing="false" onAction="#resetPreferences" text="Reset preferences to default" />
                      </children>
                   </AnchorPane>
                </children>

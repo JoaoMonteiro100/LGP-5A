@@ -25,8 +25,10 @@ import history.write.WriteXLS_NeuroSky;
 import interfaces.HeadSetDataInterface;
 
 public class MainModule {
+	private Boolean neverDelete;
 	private String fileName;
 	private Boolean record;
+	private int days;
 	protected BlockingQueue<Double[][]> queue = null;
 	protected BlockingQueue<Double[]> queue2 = null;
 	private Neurosky neuroDevice;
@@ -42,8 +44,14 @@ public class MainModule {
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 
-public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2, int days){
-		deleteOldFiles(days);	
+	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2,Boolean neverDeleteP,int daysP){
+		neverDelete=neverDeleteP;
+		days=daysP;
+		if(!neverDelete){
+
+			System.out.println("deletes");
+			deleteOldFiles(days);	
+		}
 		Date dNow = new Date( );
 		SimpleDateFormat ft = new SimpleDateFormat ("E_yyyy_MM_dd_'at'_hh_mm_ss");
 		this.fileName=ft.format(dNow);
@@ -344,10 +352,10 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 		fw.stopReceiving();
 		fw.deviceDisconnect();
 		 */
-//		BlockingQueue<Double[][]> queue = null;
-//		BlockingQueue<Double[]> queue2 = null;
-//		MainModule fw = new MainModule(1,queue,queue2);
-//		fw.receiveDeviceData();
+		//		BlockingQueue<Double[][]> queue = null;
+		//		BlockingQueue<Double[]> queue2 = null;
+		//		MainModule fw = new MainModule(1,queue,queue2);
+		//		fw.receiveDeviceData();
 	}
 
 	public static String[][] finalInfoFinal(int device){
@@ -357,7 +365,7 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 				{"LeftWink", "RightWink", "Blink", "EyesOpen","SmileExtension","ClenchExtension","LowerFaceExpression",
 					"LowerFaceExpressionPower","UpperFaceExpression","UperFaceEXpressionPower"},
 				{"EngagementActive","Engagement","ExcitementActive","ExcitementLongTime","ExcitementShortTime","FrustationActive",
-					"Frustation","MeditationActive","Meditation"}
+						"Frustation","MeditationActive","Meditation"}
 			};
 			return finalInfo;}
 		else if (device == 2){
@@ -388,15 +396,15 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 		}
 		finalRawData = finalRaw;
 	}
-	
-		public static void initGetWaves (int device,  HashMap <String,Wave> data)
+
+	public static void initGetWaves (int device,  HashMap <String,Wave> data)
 	{	
 		String[] finalInfo = new String [] { "AF3","F7","F3","FC5","T7","P7",
-			"O1","O2","P8","T8","FC6","F4","F8","AF4"};
+				"O1","O2","P8","T8","FC6","F4","F8","AF4"};
 		Double [][] finalData;
 
 		if (device == 1){
-			
+
 			HashMap <String,Wave> emotivData;
 			if (data instanceof HashMap) {
 				emotivData = (HashMap <String,Wave>) data;
@@ -405,24 +413,24 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 				return;
 			}
 
-		finalData = new Double[14][36];
-		
+			finalData = new Double[14][36];
+
 			for (int i = 0; i < finalData.length; i++){
-				
-						finalData[i][0]=emotivData.get(finalInfo[i]).getTheta();
-						finalData[i][1]=emotivData.get(finalInfo[i]).getDelta();
-						finalData[i][2]=emotivData.get(finalInfo[i]).getAlpha();
-						finalData[i][3]=emotivData.get(finalInfo[i]).getBeta();
-						finalData[i][4]=(double) emotivData.get(finalInfo[i]).getSignalQuality();
-						for (int k = 0; k <= 30; k++)
-						{
-							finalData[i][k+5]=emotivData.get(finalInfo[i]).getFreqVals().get(k);
-						}
+
+				finalData[i][0]=emotivData.get(finalInfo[i]).getTheta();
+				finalData[i][1]=emotivData.get(finalInfo[i]).getDelta();
+				finalData[i][2]=emotivData.get(finalInfo[i]).getAlpha();
+				finalData[i][3]=emotivData.get(finalInfo[i]).getBeta();
+				finalData[i][4]=(double) emotivData.get(finalInfo[i]).getSignalQuality();
+				for (int k = 0; k <= 30; k++)
+				{
+					finalData[i][k+5]=emotivData.get(finalInfo[i]).getFreqVals().get(k);
 				}
-		finalDataArray = finalData;
+			}
+			finalDataArray = finalData;
 		}
 	}
-	
+
 	public static void initMerge (int device, HashMap<String, Object> data)
 	{
 		String[][] finalInfo;
@@ -447,12 +455,12 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 
 			finalData = new Double[4][];
 			//definir o tamanho de cada parte do array
-			
+
 			finalData[0]= new Double[4];
 			finalData[1] = new Double[4];
 			finalData[2] = new Double[10];
 			finalData[3] = new Double[9];
-			
+
 
 			for (int i = 0; i < finalData.length; i++){
 				if (i == 0)
@@ -461,7 +469,7 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 					{
 						finalData[i][k]=(Double)(deviceInfo.get(finalInfo[0][k]));
 					}
-						
+
 				}
 				else if (i == 1)
 				{
@@ -473,11 +481,11 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 				else if (i == 2)
 				{
 					for(int k = 0; k < finalData[i].length; k++){
-				
-					if (k == 8 || k == 6)
-						finalData[i][k]=reverseExpression((String)(expressions.get(finalInfo[2][k])));
-					else 
-						finalData[i][k]=(Double)(expressions.get(finalInfo[2][k]));
+
+						if (k == 8 || k == 6)
+							finalData[i][k]=reverseExpression((String)(expressions.get(finalInfo[2][k])));
+						else 
+							finalData[i][k]=(Double)(expressions.get(finalInfo[2][k]));
 					}
 				}
 				else if (i == 3)
@@ -606,7 +614,7 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 	}
 
 
-public static void deleteOldFiles(int days){
+	public static void deleteOldFiles(int days){
 		String str = (System.getProperty("user.dir")).replaceAll("BrainLight", "")+"\\history";
 		File dir = new File(str); 
 		if(dir.exists()){
@@ -619,7 +627,7 @@ public static void deleteOldFiles(int days){
 	}
 
 	public static void cleanHistory() {
-		String str = (System.getProperty("user.dir")).replaceAll("BrainLight", "")+"\\history";
+		String str = (System.getProperty("user.dir"))+"\\history";
 		File dir = new File(str); 
 		if(dir.exists()){
 			try{
@@ -635,6 +643,7 @@ public static void deleteOldFiles(int days){
 			if (file.isDirectory()) purgeDirectory(file);
 			long diff = new Date().getTime() - file.lastModified();
 
+			//if (diff > x * 24 * 60 * 60 * 1000) {
 			if (diff > x * 60 * 1000) {
 				file.delete();
 			}

@@ -70,7 +70,7 @@ public class MenuController{
     public MainModule fw;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
-    private SettingsPreferences prefs = new SettingsPreferences();
+    protected SettingsPreferences prefs=new SettingsPreferences();
 	
 	public MenuController(){
 		historic=null;
@@ -86,7 +86,7 @@ public class MenuController{
 		historyPeriodSlider.setMajorTickUnit(15);
 		historyPeriodSlider.setMinorTickCount(0);
 		historyPeriodSlider.setBlockIncrement(10);
-
+		
         //get values from preferences
         historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
         daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
@@ -107,7 +107,7 @@ public class MenuController{
         //put buttons and options according to preferences
         recordButton.setVisible(keepHistoryCheckBox.isSelected());
         setDisableEffect(prefs.getNeverDeletePreference());
-
+        
         //record button tooltip
 		recordButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
