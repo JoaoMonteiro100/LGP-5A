@@ -23,7 +23,7 @@ public class Game extends JPanel {
 
     @FXML
     private void initialize() {
-        Game game = new Game();
+        final Game game = new Game();
         try {
             game.start();
             Stage stage;
