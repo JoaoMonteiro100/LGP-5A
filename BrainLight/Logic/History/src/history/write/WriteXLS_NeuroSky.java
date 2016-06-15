@@ -14,8 +14,14 @@ public class WriteXLS_NeuroSky {
 
     public static void writeXLS(String name,Object [] [] bookData) {    	
         try {
-            File file=new File(name+".xlsx");            
-            Sheet sheet;          
+           
+            File fileFolder= new File("history");
+              
+            Sheet sheet;        
+            if(!fileFolder.exists()){
+            	fileFolder.mkdir();
+            }
+            File file=new File("history/"+name+".xlsx");
             if(!file.exists()){
             	wb = new XSSFWorkbook();
             	fileName=name;
@@ -91,7 +97,7 @@ public class WriteXLS_NeuroSky {
 
             }
             name+= ".xlsx";
-            try (FileOutputStream outputStream = new FileOutputStream(name)) {
+            try (FileOutputStream outputStream = new FileOutputStream("history/"+name)) {
                 wb.write(outputStream);
                 outputStream.close();
             }

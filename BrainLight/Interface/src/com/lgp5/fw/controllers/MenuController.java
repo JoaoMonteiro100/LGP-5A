@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,10 +30,16 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
+import javax.swing.JFileChooser;
+
+import history.read.net.codejava.excel.XLSREAD;
+
 public class MenuController{
-	private Desktop desktop = Desktop.getDesktop();
+	private String[][] historic;
+	private Boolean putHistoric;
 	@FXML private AnchorPane paneLayoutRoot;
 	@FXML private ImageView recordButton;
 	@FXML private ImageView stopButton;
@@ -41,6 +49,7 @@ public class MenuController{
 	@FXML protected Label sensorsLabel;
 	@FXML protected Label analysisLabel;
 	@FXML protected Label radarLabel;
+	@FXML protected Button historyButton;
 	@FXML protected Label brainWavesLabel;
 	@FXML protected Label dataLabel;
 	@FXML protected Label moodLabel;
@@ -64,7 +73,8 @@ public class MenuController{
     private SettingsPreferences prefs = new SettingsPreferences();
 	
 	public MenuController(){
-		
+		historic=null;
+		setPutHistoric(false);
 	}
 	public void settings()
 	{
@@ -269,30 +279,23 @@ public class MenuController{
 		}
 	}
 	public void fileChooser(MouseEvent event) throws IOException {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open brainwave records file");
-		Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
-		fileChooser.getExtensionFilters().addAll(
+		Stage stage;
+		stage = (Stage) historyButton.getScene().getWindow();
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Open brainwave records file");
+		chooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Excel file (*.xlsx)", "*.xlsx"),
 				new FileChooser.ExtensionFilter("Excel 97-2003 file (*.xls)", "*.xls"));
-
-		String path = "\\LGP-5A\\BrainLight";
-		File f = new File(new File(".").getCanonicalPath().concat(path));
-		fileChooser.setInitialDirectory(f);
-
-		File file = fileChooser.showOpenDialog(current);
-		if (file != null) {
-			openFile(file);
-		}
+		File defaultDirectory = new File("history/");
+		chooser.setInitialDirectory(defaultDirectory);
+		File file = chooser.showOpenDialog(stage);
+		if(file.exists()){
+			XLSREAD xlsRead = null;
+			historic = xlsRead.read("history/"+file.getName());
+			putHistoric=true;
+		}		
 	}
-
-	private void openFile(File file) {
-		try {
-			desktop.open(file);
-		} catch (IOException ex) {
-
-		}
-	}
+	
 	public void launchSelectDeviceView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
@@ -310,5 +313,17 @@ public class MenuController{
 	}
 	public void sendToModule(){
 		
+	}
+	public String[][] getHistoric() {
+		return historic;
+	}
+	public void setHistoric(String[][] historic) {
+		this.historic = historic;
+	}
+	public Boolean getPutHistoric() {
+		return putHistoric;
+	}
+	public void setPutHistoric(Boolean putHistoric) {
+		this.putHistoric = putHistoric;
 	}
 }

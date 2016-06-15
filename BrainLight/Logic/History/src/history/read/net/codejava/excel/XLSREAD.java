@@ -15,8 +15,6 @@ public class XLSREAD {
         String[][] value = null;
 
         try {
-            fileName+=".xlsx";
-            //System.out.println(fileName);
             FileInputStream inputStream = new FileInputStream(fileName);
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 

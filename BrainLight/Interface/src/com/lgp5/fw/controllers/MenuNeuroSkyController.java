@@ -51,7 +51,6 @@ public class MenuNeuroSkyController extends MenuController {
 	@FXML private Label rawData;
 	@FXML private Pane analysisWrapper;
 	@FXML private WebView radarBrowser;
-	//private HeadSetDataInterface headSetDataInterface;
 	private updateInterface updateInterface;
 	@FXML private BarChart<String, Float> barChartWaves;
 	@FXML private BarChart<String, Float> barChartMoods;
@@ -67,9 +66,9 @@ public class MenuNeuroSkyController extends MenuController {
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
 	private ObservableList<String> rawwave = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
-	@FXML private NumberAxis xAxisHistory;
+	@FXML private CategoryAxis  xAxisHistory;
 	@FXML private NumberAxis yAxisHistory;
-	@FXML private LineChart<Number, Number> lineChartHistory;
+	@FXML private LineChart<String, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
 	@FXML private LineChart<Number, Number> lineChartMoods;
 	@FXML private LineChart<Number, Number> lineChartRaw;
@@ -97,7 +96,6 @@ public class MenuNeuroSkyController extends MenuController {
 	public MenuNeuroSkyController() {
 
 	}
-
 	/**
 	 * Initializes the controller class and sets x axis of the bar chart with the appropriate values
 	 */
@@ -183,6 +181,9 @@ public class MenuNeuroSkyController extends MenuController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {	
+						if(getPutHistoric()){
+							createSeriesLineChartHistoryWaves();							
+						}
 						if(!finalDataArray[0][0].equals("")){
 							String delta = finalDataArray[0][0].toString();
 							String theta = finalDataArray[0][1].toString();
@@ -195,7 +196,6 @@ public class MenuNeuroSkyController extends MenuController {
 							String attention = finalDataArray[1][0].toString();
 							String meditation = finalDataArray[1][1].toString();
 							String signal = finalDataArray[2][0].toString();
-							//System.out.println(finalDataArray[3][0]);
 							updateSeriesLineChartWaves(delta,theta,gamma1,gamma2,alpha1,alpha2,beta1,beta2);
 							updateSeriesLineChartMoods(attention,meditation);						
 
@@ -311,7 +311,7 @@ public class MenuNeuroSkyController extends MenuController {
 		xAxisRawLine.setLabel("Time");
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
 		series1.setName("Raw");
-		
+
 		for (int i = 0; i < 10; i++) {
 			series1.getData().add(new XYChart.Data(0f, 0f));
 			rawQueue.add("0.0");
@@ -319,7 +319,7 @@ public class MenuNeuroSkyController extends MenuController {
 		}
 		rawGroup.add(rawQueue);
 		lineChartRaw.getData().addAll(series1);
-		
+
 		this.colorNumber=0;
 		for(Series<Number,Number> series : lineChartRaw.getData()){
 			if(this.colorNumber>=constants.Constants.colors.length)						
@@ -420,6 +420,56 @@ public class MenuNeuroSkyController extends MenuController {
 		xAxisMoodsLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 	}
+
+	public void createSeriesLineChartHistoryWaves(){
+		String[][] historic=super.getHistoric();
+		xAxisHistory.setLabel("Time");
+		XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+		XYChart.Series<String, Number> series4 = new XYChart.Series<>();		
+		XYChart.Series<String, Number> series5 = new XYChart.Series<>();		
+		XYChart.Series<String, Number> series6 = new XYChart.Series<>();		
+		XYChart.Series<String, Number> series7 = new XYChart.Series<>();		
+		XYChart.Series<String, Number> series8 = new XYChart.Series<>();		
+		XYChart.Series<String, Number> series9 = new XYChart.Series<>();		
+		XYChart.Series<String, Number> series10 = new XYChart.Series<>();		
+		series3.setName("Delta");
+		series4.setName("Theta");
+		series5.setName("highAlpha");
+		series6.setName("lowAlpha");
+		series7.setName("highBeta");
+		series8.setName("lowBeta");
+		series9.setName("lowGamma");
+		series10.setName("highGamma");	
+		if(historic.length!=0){
+			for (int i = 1; i < historic.length; i++) {				
+				series3.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][1])));				
+				series4.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][2])));
+				series5.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][4])));
+				series6.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][3])));
+				series7.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][6])));
+				series8.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][5])));
+				series9.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][7])));
+				series10.getData().add(new Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][8])));	
+			}
+		}
+		
+		this.colorNumber=0;
+		for(Series<String, Number> series : lineChartHistory.getData()){
+			if(this.colorNumber>=constants.Constants.colors.length)						
+				this.colorNumber=0;		
+			Set<Node> lookupAll = lineChartHistory.lookupAll(".chart-line-symbol.series" + this.colorNumber);
+			for (Node n : lookupAll) {
+				n.setStyle("-fx-background-color:"+constants.Constants.colors[this.colorNumber]+";");
+			}
+			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[this.colorNumber]+";");		
+			this.colorNumber++;	
+		}
+		lineChartHistory.getData().addAll(series3,series4,series5,series6,series7,series8,series9,series10);
+		//lineChartHistory.setAnimated(false);
+		super.setPutHistoric(false);
+	}
+
+
 
 	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
 		xAxisWavesLine.setLabel("Time");	
@@ -535,6 +585,5 @@ public class MenuNeuroSkyController extends MenuController {
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 
-	}	
-
+	}
 }
