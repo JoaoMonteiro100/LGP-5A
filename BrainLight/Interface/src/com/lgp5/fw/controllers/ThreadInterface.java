@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 public class ThreadInterface implements Runnable{
 	private updateInterface updateInterface;
 	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(100);
-	BlockingQueue queue2 = new ArrayBlockingQueue<Double[]>(100);
+	BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(100);
 	public String delta = "0.0";
 	public String theta= "0.0";
 	public String alpha1= "0.0";
@@ -39,7 +39,7 @@ public class ThreadInterface implements Runnable{
 				if(queue2.peek() !=null){
 					if(updateInterface != null) {
 						if(i==1000){
-							updateInterface.update2((Double[]) queue2.take());
+							updateInterface.update2((Double[][]) queue2.take());
 							i=0;
 						}
 						else

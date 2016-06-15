@@ -23,13 +23,13 @@ public class MainModule {
 	private Boolean record;
 	private int days;
 	protected BlockingQueue<Double[][]> queue = null;
-	protected BlockingQueue<Double[]> queue2 = null;
+	protected BlockingQueue<Double[][]> queue2 = null;
 	private Neurosky neuroDevice;
 	private EmotivDevice emotivDevice;
 	private int wirelessSignal;
 	public static  Double[][] finalDataArray;
 	public static  Double[][] finalWavesArray;
-	public static  Double[] finalRawData;
+	public static  Double[][] finalRawData;
 	private HashMap<String,HashMap<String,Object>> neuroData;
 	private LinkedList<HashMap<String, HashMap<String, Object>>> sharedQ;
 	private LinkedList<Double [][]> doubleQ;
@@ -38,7 +38,7 @@ public class MainModule {
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 
-	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2,Boolean neverDeleteP,int daysP){
+	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2,Boolean neverDeleteP,int daysP){
 		neverDelete=neverDeleteP;
 		days=daysP;
 		if(!neverDelete){
@@ -79,7 +79,7 @@ public class MainModule {
 				public void onReceiveWavesData(HashMap<String, Wave> data) {
 					initGetWaves(1,data);
 					try {
-						queue.put(finalWavesArray);
+						queue2.put(finalWavesArray);
 						//Thread.sleep(1000);
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -189,17 +189,8 @@ public class MainModule {
 					}
 				}
 				else if (deviceNo == 2) {
-
 					neuroDevice.connect();
 					neuroDevice.run();
-					//Thread neuroThread = new Thread(neuroDevice);
-					//neuroThread.start();
-
-					while (running) {
-						if (deviceNo == 2) {
-							getDeviceData(2);
-						}
-					}
 				}
 			}
 		};
@@ -381,7 +372,7 @@ public class MainModule {
 	}
 	public static void initGetRaw (int device,  HashMap <String,Integer> data)
 	{
-		Double[] finalRaw = new Double[1];
+		Double[][] finalRaw = new Double[100][100];
 
 		if (device == 2){
 			HashMap <String,Integer> neuroData;
@@ -391,8 +382,8 @@ public class MainModule {
 				System.out.println("Wrong type of data for neurosky device");
 				return;
 			}
-			finalRaw[0] = (Double) convertVolts((float)neuroData.get("Raw"));
-			finalRaw[0] = finalRaw[0]*100000;//Micro de Volt
+			finalRaw[0][0] = (Double) convertVolts((float)neuroData.get("Raw"));
+			finalRaw[0][0] = finalRaw[0][0]*100000;//Micro de Volt
 			//finalRaw[0] = Double.parseDouble(neuroData.get("Raw").toString());
 		}
 		finalRawData = finalRaw;

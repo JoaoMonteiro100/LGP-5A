@@ -31,8 +31,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class MenuNeuroSkyController extends MenuController {
 	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
-	BlockingQueue queue2 = new ArrayBlockingQueue<Double[]>(1);
-	private Double[] finalRawDataArray = new Double[1];	
+	BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(1);
+	private Double[][] finalRawDataArray = new Double[100][100];	
 	private int colorNumber=0;
 	@FXML private Label analysisLabel;
 	@FXML private Label gamma1Data;
@@ -291,13 +291,13 @@ public class MenuNeuroSkyController extends MenuController {
 			}
 
 			@Override
-			public void update2(Double[] finalDataArray) {
+			public void update2(Double[][] finalDataArray) {
 				finalRawDataArray=finalDataArray;
-				updateSeriesLineChartRaw(Double.toString(finalDataArray[0]));
+				updateSeriesLineChartRaw(Double.toString(finalDataArray[0][0]));
 				Platform.runLater(new Runnable() { 
 					@Override
 					public void run() {	
-						rawData.setText(Double.toString(finalRawDataArray[0]));
+						rawData.setText(Double.toString(finalRawDataArray[0][0]));
 						for(Series<Number,Number> series : lineChartRaw.getData()){
 							for(int i=0;i< series.getData().size();i++) {
 								series.getData().get(i).setYValue(Float.parseFloat((String) rawGroup.get(0).get(i)));
