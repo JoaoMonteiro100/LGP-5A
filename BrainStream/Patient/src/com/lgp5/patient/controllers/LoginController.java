@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 
@@ -28,8 +29,6 @@ public class LoginController {
     private CheckBox rememberPassword;
 
 
-
-
     public LoginController() {
     }
 
@@ -39,19 +38,22 @@ public class LoginController {
     }
 
 
-
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
         selectLoginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                    Stage stage;
-                            launchSelectDeviceView();
-                            //get a handle to the stage
-                            stage = (Stage) selectLoginButton.getScene().getWindow();
-                            //close current window
-                            stage.close();
+                // Extract username and password
+                String usernameText = username.getText().trim();
+                String passwordText = password.getText().trim();
+
+                Stage stage;
+                launchSelectDeviceView();
+                //get a handle to the stage
+                stage = (Stage) selectLoginButton.getScene().getWindow();
+                //close current window
+                stage.close();
             }
         });
     }
