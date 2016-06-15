@@ -41,6 +41,7 @@ public class MainModule {
 	private int deviceNo;
 	private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
+
 	public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[]> queue2){		
 		Date dNow = new Date( );
 		SimpleDateFormat ft = new SimpleDateFormat ("E_yyyy_MM_dd_'at'_hh_mm_ss");
@@ -76,8 +77,13 @@ public class MainModule {
 
 			};
 
+
 			emotivDevice = new EmotivDevice(sendDataInterface);
 		}
+
+
+
+
 		else if(device == 2){
 			HeadSetDataInterface sendDataInterface;
 			WriteXLS_NeuroSky wNeuroSky = new WriteXLS_NeuroSky();
@@ -86,7 +92,7 @@ public class MainModule {
 
 				@Override
 				public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
-					initMerge(2, dataToSend);
+					initMerge(2, (HashMap<String, Object>) dataToSend.clone());
 					try {
 						queue.put(finalDataArray);
 						if(record){	
@@ -94,7 +100,7 @@ public class MainModule {
 							SimpleDateFormat ftTime = 
 									new SimpleDateFormat ("hh:mm:ss");
 							final Object[][] bookData = {
-									{ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
+									{"00:00", finalDataArray[0][0], finalDataArray[0][1],
 										finalDataArray[0][2],finalDataArray[0][3],
 										finalDataArray[0][4],finalDataArray[0][5],
 										finalDataArray[0][6],finalDataArray[0][7],	
@@ -219,7 +225,7 @@ public class MainModule {
 
 				if(getAllSensorsStatusOK(sharedQ.getFirst())) {
 					// localQ.addLast(sharedQ.pop());
-					initMerge (1,sharedQ.pop());
+					initMerge (1,(HashMap<String,Object>)sharedQ.pop().clone());
 					doubleQ.addLast(finalDataArray);
 					System.out.println(doubleQ.getLast()[5]);
 				}
@@ -229,7 +235,7 @@ public class MainModule {
 		}
 
 		else if (device == 2){
-			initMerge(2,neuroDevice.getFinalData());
+			initMerge(2,((HashMap<String,Object>)neuroDevice.getFinalData().clone()));
 
 			doubleQ.addLast(finalDataArray);
 
@@ -315,20 +321,16 @@ public class MainModule {
 
 	public static void main(String[] args) {
 		/*MainModule fw = new MainModule(2);
-
 		fw.receiveDeviceData();
-
 		Scanner scanner = new Scanner(System.in);
 		String readString = scanner.nextLine();
 		while(readString!=null) {
 			System.out.println(readString);
-
 			if (readString.isEmpty()) {
 				System.out.println("Read Enter Key.");
 				fw.stopReceiving();
 				break;
 			}
-
 			if (scanner.hasNextLine()) {
 				fw.deviceDisconnect();
 			} else {
@@ -338,19 +340,18 @@ public class MainModule {
 		System.out.println("END");
 		fw.stopReceiving();
 		fw.deviceDisconnect();
-
 		 */
+		System.out.print("asd");
 	}
 
 	public static String[][] finalInfoFinal(int device){
 		if(device == 1){
-			String[][] finalInfo = new String[][] { {"AF3","F7","F3","FC5","T7","P7","O1","O2","P8","T8","FC6","F4","F8","AF4"},
-				{"Theta","Alpha","LowBeta","HighBeta","Gamma"},
-				{},
+			String[][] finalInfo = new String[][] { {"BatteryLevel","WirelessSignal","Timestamp","SignalQuality"},
+				{"LookingLeft","LookingRight","LookingDown","LookingUp"},
 				{"LeftWink", "RightWink", "Blink", "EyesOpen","SmileExtension","ClenchExtension","LowerFaceExpression",
 					"LowerFaceExpressionPower","UpperFaceExpression","UperFaceEXpressionPower"},
-				{"Action","ActionPower","LookingLeft","LookingRight","LookingDown","LookingUp"},
-				{"BatteryLevel","WirelessSignal"}
+				{"EngagementActive","Engagement","ExcitementActive","ExcitementLongTime","ExcitementShortTime","FrustationActive",
+					"Frustation","MeditationActive","Meditation"}
 			};
 			return finalInfo;}
 		else if (device == 2){
@@ -381,84 +382,67 @@ public class MainModule {
 		}
 		finalRawData = finalRaw;
 	}
-	public static void initMerge (int device, HashMap<String, HashMap<String,Object>> data)
+	public static void initMerge (int device, HashMap<String, Object> data)
 	{
 		String[][] finalInfo;
 		Double [][] finalData;
 		if (device == 1) {
-			HashMap<String, HashMap<String, Object>> emotivData;
+			HashMap<String, Object> emotivData;
 			if (data instanceof HashMap) {
-				emotivData= (HashMap<String, HashMap<String,Object>>) data;
+				emotivData= (HashMap<String, Object>) data;
 			} else {
 				System.out.println("Wrong type of data for emotiv device");
 				return;
 			}
 
 			//criar array de arrays com toda a informação do dispositivo
-			finalInfo = new String [][] { {"AF3","F7","F3","FC5","T7","P7","O1","O2","P8","T8","FC6","F4","F8","AF4"},
-				{"Theta","Alpha","LowBeta","HighBeta","Gamma"},
-				{},
-				{"LeftWink", "RightWink", "Blink", "EyesOpen","SmileExtension","ClenchExtension","LowerFaceExpression",
-					"LowerFaceExpressionPower","UpperFaceExpression","UperFaceEXpressionPower"},
-				{"Action","ActionPower","LookingLeft","LookingRight","LookingDown","LookingUp"},
-				{"BatteryLevel","WirelessSignal"}
-			};
+			finalInfo = finalInfoFinal(1);
 
 
-			HashMap<String, Object> waves = emotivData.get("Waves");
-			HashMap<String, Object> expressions = emotivData.get("FacialExpressions");
-			HashMap<String, Object> actions = emotivData.get("Actions");
-			HashMap<String, Object> deviceInfo = emotivData.get("DeviceInfo");
-			//			HashMap<String, Object> time = emotivData.get("Time"); TODO
+			HashMap<String, Object> affective = (HashMap<String, Object>) emotivData.get("AffectiveValues");
+			HashMap<String, Object> expressions = (HashMap<String, Object>) emotivData.get("FacialExpressions");
+			HashMap<String, Object> actions = (HashMap<String, Object>) emotivData.get("Actions");
+			HashMap<String, Object> deviceInfo = (HashMap<String, Object>) emotivData.get("DeviceInfo");
 
-			int tam = finalInfo[0].length + 4;
-			finalData = new Double[tam][];
+			finalData = new Double[4][];
 			//definir o tamanho de cada parte do array
-			for (int a = 0; a < tam; a++){
-				if (a == tam-4)
-					finalData[a]= new Double[0];
-				else if (a == tam-3)
-					finalData[a] = new Double[10];
-				else if (a == tam - 2)
-					finalData[a] = new Double[6];
-				else if (a == tam - 1)
-					finalData[a] = new Double[2];
-				else 
-					finalData[a] = new Double[5];
-			}
+			
+			finalData[0]= new Double[4];
+			finalData[1] = new Double[4];
+			finalData[2] = new Double[10];
+			finalData[3] = new Double[9];
+			
 
-			for (int i = 0; i < tam; i++){
-				if (i == tam - 3)
+			for (int i = 0; i < finalData.length; i++){
+				if (i == 0)
 				{
 					for(int k = 0; k < finalData[i].length; k++)
 					{
-						if (k == 8 || k == 6)
-							finalData[i][k]=reverseExpression((String)(expressions.get(finalInfo[3][k])));
-						else 
-							finalData[i][k]=(Double)(expressions.get(finalInfo[3][k]));
+						finalData[i][k]=(Double)(deviceInfo.get(finalInfo[0][k]));
 					}
+						
 				}
-				else if (i == tam - 2)
+				else if (i == 1)
 				{
 					for(int k = 0; k < finalData[i].length; k++)
 					{
-						if (k == 0)
-							finalData[i][k]=reverseAction((String)(actions.get(finalInfo[4][k])));
-						else
-							finalData[i][k]=(Double)(actions.get(finalInfo[4][k]));
+						finalData[i][k]=(Double)(actions.get(finalInfo[1][k]));
 					}
 				}
-				else if (i == tam - 1)
+				else if (i == 2)
 				{
-					for(int k = 0; k < finalData[i].length; k++)
-					{
-						finalData[i][k]=(Double)(deviceInfo.get(finalInfo[5][k]));
+					for(int k = 0; k < finalData[i].length; k++){
+				
+					if (k == 8 || k == 6)
+						finalData[i][k]=reverseExpression((String)(expressions.get(finalInfo[2][k])));
+					else 
+						finalData[i][k]=(Double)(expressions.get(finalInfo[2][k]));
 					}
 				}
-				else 
+				else if (i == 3)
 					for(int k = 0; k < finalData[i].length; k++)
 					{
-						finalData[i][k]=((HashMap<String,Double>) waves.get(finalInfo[0][i])).get(finalInfo[1][k]);
+						finalData[i][k]=(Double) affective.get(finalInfo[3][k]);
 					}
 
 			}
@@ -467,22 +451,13 @@ public class MainModule {
 		}
 
 		else if (device == 2){
-			HashMap<String, HashMap<String,Object>> neuroData;
+			HashMap<String, HashMap<String, Object>> neuroData;
 			if (data instanceof HashMap) {
-				neuroData = (HashMap<String, HashMap<String,Object>>) data;
+				neuroData = (HashMap<String, HashMap<String, Object>>) data.clone();
 			} else {
 				System.out.println("Wrong type of data for neurosky device");
 				return;
 			}
-
-
-			finalInfo = new String [][] { {"FP1"},
-				{"Delta","Theta","LowAlpha","HighAlpha","LowBeta","HighBeta","LowGamma","MidGamma"},
-				{"Attention","Meditation"},
-				{"Blink"},
-				{},
-				{"BatteryLevel","PoorSignal"}
-			};
 
 			finalInfo = finalInfoFinal(2);
 			finalData = new Double[3][];
