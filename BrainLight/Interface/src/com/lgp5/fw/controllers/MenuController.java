@@ -245,7 +245,7 @@ public class MenuController{
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            //do stuff
+            fw.cleanHistory();
         }
         else {
             alert.close();

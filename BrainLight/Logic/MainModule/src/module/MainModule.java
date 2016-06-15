@@ -344,10 +344,10 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 		fw.stopReceiving();
 		fw.deviceDisconnect();
 		 */
-		BlockingQueue<Double[][]> queue = null;
-		BlockingQueue<Double[]> queue2 = null;
-		MainModule fw = new MainModule(1,queue,queue2);
-		fw.receiveDeviceData();
+//		BlockingQueue<Double[][]> queue = null;
+//		BlockingQueue<Double[]> queue2 = null;
+//		MainModule fw = new MainModule(1,queue,queue2);
+//		fw.receiveDeviceData();
 	}
 
 	public static String[][] finalInfoFinal(int device){

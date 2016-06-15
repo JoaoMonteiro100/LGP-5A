@@ -171,7 +171,7 @@ public class MenuNeuroSkyController extends MenuController {
 		radarBrowser.getEngine().load(url.toExternalForm());		
 
 
-		super.fw = new MainModule(2,queue,queue2);
+		super.fw = new MainModule(2,queue,queue2,120);
 		super.fw.receiveDeviceData();
 
 
