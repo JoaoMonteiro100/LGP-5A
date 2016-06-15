@@ -45,8 +45,8 @@ public class MenuController{
 	@FXML protected Label moodLabel;
 	@FXML protected Label settingsLabel;
 	@FXML private Text daysText;
-    @FXML private Text daysLabel;
-    @FXML private Text keepHistoryLabel;
+	@FXML private Text daysLabel;
+	@FXML private Text keepHistoryLabel;
 	@FXML protected GridPane brainWavesPane;
 	@FXML protected GridPane dataPane;
 	@FXML protected GridPane moodPane;
@@ -54,14 +54,14 @@ public class MenuController{
 	@FXML protected GridPane historyPane;
 	@FXML protected GridPane settingsPane;
 	@FXML private Slider historyPeriodSlider;
-    @FXML private CheckBox keepHistoryCheckBox;
-    @FXML private CheckBox deleteFilesCheckBox;
-    @FXML private Pane historyPeriodWrapper;
-    public MainModule fw;
+	@FXML private CheckBox keepHistoryCheckBox;
+	@FXML private CheckBox deleteFilesCheckBox;
+	@FXML private Pane historyPeriodWrapper;
+	public MainModule fw;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
-    protected SettingsPreferences prefs=new SettingsPreferences();
-	
+	protected SettingsPreferences prefs=new SettingsPreferences();
+
 	public MenuController(){
 		historic=null;
 		setPutHistoric(false);
@@ -76,12 +76,12 @@ public class MenuController{
 		historyPeriodSlider.setMajorTickUnit(15);
 		historyPeriodSlider.setMinorTickCount(0);
 		historyPeriodSlider.setBlockIncrement(10);
-		
-        //get values from preferences
-        historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
-        daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
-        deleteFilesCheckBox.setSelected(prefs.getNeverDeletePreference());
-        keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());
+
+		//get values from preferences
+		historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
+		daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
+		deleteFilesCheckBox.setSelected(prefs.getNeverDeletePreference());
+		keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());
 
 		historyPeriodSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -90,15 +90,15 @@ public class MenuController{
 					return;
 				}
 				daysText.setText(Math.round(newValue.intValue()) + "");
-                prefs.setDaysOfHistoryPreference(newValue.intValue());
+				prefs.setDaysOfHistoryPreference(newValue.intValue());
 			}
 		});
 
-        //put buttons and options according to preferences
-        recordButton.setVisible(keepHistoryCheckBox.isSelected());
-        setDisableEffect(prefs.getNeverDeletePreference());
-        
-        //record button tooltip
+		//put buttons and options according to preferences
+		recordButton.setVisible(keepHistoryCheckBox.isSelected());
+		setDisableEffect(prefs.getNeverDeletePreference());
+
+		//record button tooltip
 		recordButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -113,20 +113,20 @@ public class MenuController{
 			}
 		});
 
-        //stop button tooltip
-        stopButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Node node = (Node) event.getSource();
-                stopTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
-            }
-        });
-        stopButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                stopTooltip.hide();
-            }
-        });
+		//stop button tooltip
+		stopButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Node node = (Node) event.getSource();
+				stopTooltip.show(node, event.getScreenX() + 50, event.getScreenY());
+			}
+		});
+		stopButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				stopTooltip.hide();
+			}
+		});
 	}
 	public void openMenu(MouseEvent event){
 		if(!painelHSA.isVisible()) {
@@ -177,17 +177,17 @@ public class MenuController{
 
 	public void setRecordButton(){
 		if(recordButton.isVisible()) {
-            recordButton.setVisible(false);
-            prefs.setRecordHistoryPreference(false);
-        }
+			recordButton.setVisible(false);
+			prefs.setRecordHistoryPreference(false);
+		}
 		else if(stopButton.isVisible()) {
-            stopButton.setVisible(false);
-            prefs.setRecordHistoryPreference(false);
-        }
-        else {
-            recordButton.setVisible(true);
-            prefs.setRecordHistoryPreference(true);
-        }
+			stopButton.setVisible(false);
+			prefs.setRecordHistoryPreference(false);
+		}
+		else {
+			recordButton.setVisible(true);
+			prefs.setRecordHistoryPreference(true);
+		}
 	}
 
 	public void changeRecordButton(){
@@ -204,53 +204,53 @@ public class MenuController{
 		}
 	}
 
-    public void setDisableEffect(Boolean b) {
-        if (b) {
-            historyPeriodWrapper.setDisable(true);
-            daysLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
-            keepHistoryLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
-            daysText.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
-        }
-        else {
-            historyPeriodWrapper.setDisable(false);
-            daysLabel.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
-            keepHistoryLabel.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
-            daysText.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
-        }
-    }
+	public void setDisableEffect(Boolean b) {
+		if (b) {
+			historyPeriodWrapper.setDisable(true);
+			daysLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
+			keepHistoryLabel.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
+			daysText.setFill(javafx.scene.paint.Paint.valueOf("#cccccc"));
+		}
+		else {
+			historyPeriodWrapper.setDisable(false);
+			daysLabel.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
+			keepHistoryLabel.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
+			daysText.setFill(javafx.scene.paint.Paint.valueOf("#000000"));
+		}
+	}
 
-    public void disableHistoryPeriod() {
-        if (!historyPeriodWrapper.isDisabled()) {
-            setDisableEffect(true);
-            prefs.setNeverDeletePreference(true);
-        }
-        else {
-            setDisableEffect(false);
-            prefs.setNeverDeletePreference(false);
-        }
-    }
+	public void disableHistoryPeriod() {
+		if (!historyPeriodWrapper.isDisabled()) {
+			setDisableEffect(true);
+			prefs.setNeverDeletePreference(true);
+		}
+		else {
+			setDisableEffect(false);
+			prefs.setNeverDeletePreference(false);
+		}
+	}
 
-    public void confirmDeletingHistory() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the entire history?\n\n", ButtonType.YES, ButtonType.NO);
-        alert.showAndWait();
+	public void confirmDeletingHistory() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the entire history?\n\n", ButtonType.YES, ButtonType.NO);
+		alert.showAndWait();
 
-        if (alert.getResult() == ButtonType.YES) {
-            fw.cleanHistory();
-        }
-        else {
-            alert.close();
-        }
-    }
+		if (alert.getResult() == ButtonType.YES) {
+			fw.cleanHistory();
+		}
+		else {
+			alert.close();
+		}
+	}
 
-    public void resetPreferences(ActionEvent event) {
-        prefs.reset();
-        historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
-        daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
-        deleteFilesCheckBox.setSelected(prefs.getNeverDeletePreference());
-        keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());
-        recordButton.setVisible(keepHistoryCheckBox.isSelected());
-        setDisableEffect(prefs.getNeverDeletePreference());
-    }
+	public void resetPreferences(ActionEvent event) {
+		prefs.reset();
+		historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
+		daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
+		deleteFilesCheckBox.setSelected(prefs.getNeverDeletePreference());
+		keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());
+		recordButton.setVisible(keepHistoryCheckBox.isSelected());
+		setDisableEffect(prefs.getNeverDeletePreference());
+	}
 
 	public void changePane(Label showL,Label[] hideL,Pane showP,Pane[] hideP) {
 		for (int i = 0; i < hideL.length; i++) {
@@ -283,13 +283,14 @@ public class MenuController{
 		}
 		chooser.setInitialDirectory(defaultDirectory);
 		File file = chooser.showOpenDialog(stage);
-		if(file.exists()){
-			XLSREAD xlsRead = null;
-			historic = xlsRead.read("history/"+file.getName());
-			putHistoric=true;
-		}		
+		if(file!=null)
+			if(file.exists()){
+				XLSREAD xlsRead = null;
+				historic = xlsRead.read("history/"+file.getName());
+				putHistoric=true;
+			}		
 	}
-	
+
 	public void launchSelectDeviceView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
@@ -298,6 +299,7 @@ public class MenuController{
 			stage.setScene(new Scene(parent, 900, 600));
 			stage.setTitle("BrainLight - Select Device");
 			stage.show();
+			fw.deviceDisconnect();
 			//close current stage
 			Stage current = (Stage) paneLayoutRoot.getScene().getWindow();
 			current.close();
@@ -306,7 +308,7 @@ public class MenuController{
 		}
 	}
 	public void sendToModule(){
-		
+
 	}
 	public String[][] getHistoric() {
 		return historic;

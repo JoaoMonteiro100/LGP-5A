@@ -98,7 +98,6 @@ public class MainModule {
 
 		else if(device == 2){
 			HeadSetDataInterface sendDataInterface;
-			WriteXLS_NeuroSky wNeuroSky = new WriteXLS_NeuroSky();
 			//confirmar
 			sendDataInterface = new HeadSetDataInterface(){
 
@@ -645,8 +644,7 @@ public class MainModule {
 			if (file.isDirectory()) purgeDirectory(file);
 			long diff = new Date().getTime() - file.lastModified();
 
-			//if (diff > x * 24 * 60 * 60 * 1000) {
-			if (diff > x * 60 * 1000) {
+			if (diff > x * 24 * 60 * 60 * 1000) {			
 				file.delete();
 			}
 		}
