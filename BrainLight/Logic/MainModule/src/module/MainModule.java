@@ -405,7 +405,7 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 				return;
 			}
 
-			finalData = new Double[14][35];
+		finalData = new Double[14][36];
 		
 			for (int i = 0; i < finalData.length; i++){
 				
@@ -414,7 +414,7 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 						finalData[i][2]=emotivData.get(finalInfo[i]).getAlpha();
 						finalData[i][3]=emotivData.get(finalInfo[i]).getBeta();
 						finalData[i][4]=(double) emotivData.get(finalInfo[i]).getSignalQuality();
-						for (int k = 0; k < 30; k++)
+						for (int k = 0; k <= 30; k++)
 						{
 							finalData[i][k+5]=emotivData.get(finalInfo[i]).getFreqVals().get(k);
 						}
