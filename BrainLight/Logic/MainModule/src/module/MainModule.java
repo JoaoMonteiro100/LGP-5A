@@ -102,7 +102,7 @@ public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Dou
 							SimpleDateFormat ftTime = 
 									new SimpleDateFormat ("hh:mm:ss");
 							final Object[][] bookData = {
-									{"00:00", finalDataArray[0][0], finalDataArray[0][1],
+									{ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
 										finalDataArray[0][2],finalDataArray[0][3],
 										finalDataArray[0][4],finalDataArray[0][5],
 										finalDataArray[0][6],finalDataArray[0][7],	
