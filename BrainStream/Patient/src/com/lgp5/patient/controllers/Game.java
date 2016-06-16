@@ -50,7 +50,7 @@ public class Game extends JPanel {
 
     private void launchSettingsView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/settings.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/settingsView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));

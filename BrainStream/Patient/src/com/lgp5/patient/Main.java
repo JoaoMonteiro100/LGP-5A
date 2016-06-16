@@ -18,7 +18,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("views/loginView.fxml"));
         primaryStage.setTitle("BrainStream - Login");
         primaryStage.resizableProperty().setValue(Boolean.FALSE);
-        primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 
