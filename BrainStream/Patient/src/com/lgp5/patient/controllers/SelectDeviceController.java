@@ -1,5 +1,7 @@
 package com.lgp5.patient.controllers;
 
+import com.firebase.client.*;
+import com.lgp5.patient.utils.UserData;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -31,10 +33,49 @@ public class SelectDeviceController {
         selectDeviceStartButton.setCursor(Cursor.HAND);
     }
 
+
+    private void extractUserID() {
+        Firebase appRef = new Firebase("https://brainlight.firebaseio.com/users");
+        Query queryRef = appRef.orderByChild("mail").equalTo(UserData.EMAIL);
+
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                UserData.KEY = dataSnapshot.getKey();
+                System.out.println(UserData.KEY);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+
+        });
+    }
+
+
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
         selectDeviceComboBox.getItems().addAll("NeuroSky Mindset", "Emotiv Epoc");
+        // The first thing to do is to extract the user ID from firebase
+        extractUserID();
+
 
 
         selectDeviceStartButton.setOnAction(new EventHandler<ActionEvent>() {
