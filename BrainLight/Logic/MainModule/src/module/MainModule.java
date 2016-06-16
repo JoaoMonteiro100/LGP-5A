@@ -275,8 +275,6 @@ public class MainModule {
 
 	public static Float[][] finalFloatArray(Vector<Float[][]> vector){
 		Float[][] finalFloat = new Float[31][2];
-
-		finalFloat = new Float[vector.size()][2];
 		float y = 0;
 		for (int j = 0; j < 31; j++)
 		{
