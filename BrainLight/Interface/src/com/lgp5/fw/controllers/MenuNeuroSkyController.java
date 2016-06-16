@@ -1,6 +1,7 @@
 package com.lgp5.fw.controllers;
 
 
+import history.read.net.codejava.excel.ReadXLS_NeuroSky;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +18,12 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import module.MainModule;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -589,5 +594,28 @@ public class MenuNeuroSkyController extends MenuController {
 		xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));	
 
+	}
+
+	public void fileChooser(MouseEvent event) throws IOException {
+		Stage stage;
+		stage = (Stage) attentionData.getScene().getWindow();
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Open brainwave records file");
+		chooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Excel file (*.xlsx)", "*.xlsx"),
+				new FileChooser.ExtensionFilter("Excel 97-2003 file (*.xls)", "*.xls"));
+		File defaultDirectory = new File("history/");
+		//create a history folder if it hasn't been created yet
+		if (!defaultDirectory.exists()){
+			defaultDirectory.mkdir();
+		}
+		chooser.setInitialDirectory(defaultDirectory);
+		File file = chooser.showOpenDialog(stage);
+		if(file!=null)
+			if(file.exists()){
+				ReadXLS_NeuroSky xlsRead = null;
+				historic = xlsRead.read("history/"+file.getName());
+				putHistoric=true;
+			}
 	}
 }
