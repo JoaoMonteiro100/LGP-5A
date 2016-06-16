@@ -35,7 +35,7 @@ public class MainModule {
     private LinkedList<Double[][]> doubleQ;
     private boolean running;
     private int deviceNo;
-    private boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
+    private static boolean calculate; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 
     public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2, Boolean neverDeleteP, int daysP) {

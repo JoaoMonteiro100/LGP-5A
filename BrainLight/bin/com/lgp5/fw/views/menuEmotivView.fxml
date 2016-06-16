@@ -66,7 +66,7 @@
                                 <NumberAxis side="BOTTOM" fx:id="xAxisMoodsLine" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis side="LEFT" />
+                                <NumberAxis fx:id="yAxisMoodsLine" side="LEFT" />
                             </yAxis>
                         </LineChart>
                     </children>
@@ -179,41 +179,35 @@
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="257.0" layoutY="49.0" prefHeight="17.0" prefWidth="69.0" text="Theta">
+                                <Label layoutX="257.0" layoutY="49.0" prefHeight="17.0" prefWidth="69.0" text="Alpha">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="thetaData" layoutX="325.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
-                                <Label layoutX="257.0" layoutY="68.0" prefHeight="17.0" prefWidth="69.0" text="Alfa">
+                                <Label fx:id="alphaData" layoutX="325.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
+                                <Label layoutX="257.0" layoutY="68.0" prefHeight="17.0" prefWidth="69.0" text="Beta">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="alfaData" layoutX="325.0" layoutY="68.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
-                                <Label layoutX="257.0" layoutY="87.0" prefHeight="17.0" prefWidth="69.0" text="Low beta">
+                                <Label fx:id="betaData" layoutX="325.0" layoutY="68.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
+                                <Label layoutX="257.0" layoutY="87.0" prefHeight="17.0" prefWidth="69.0" text="Delta">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="highBetaData" layoutX="325.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
-                                <Label layoutX="257.0" layoutY="106.0" prefHeight="17.0" prefWidth="69.0" text="High beta">
+                                <Label fx:id="deltaData" layoutX="325.0" layoutY="106.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
+                                <Label layoutX="257.0" layoutY="106.0" prefHeight="17.0" prefWidth="69.0" text="Theta">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="lowBetaData" layoutX="325.0" layoutY="87.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
+                                <Label fx:id="thetaData" layoutX="325.0" layoutY="87.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
                                 <Label layoutX="31.0" layoutY="233.0" text="RAW DATA">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="257.0" layoutY="124.0" prefHeight="17.0" prefWidth="69.0" text="Gamma">
-                                    <font>
-                                        <Font name="System Bold" size="12.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="gammaData" layoutX="325.0" layoutY="124.0" prefHeight="17.0" prefWidth="53.0" text="0 dB" />
                                 <Label fx:id="longExcitementData" layoutX="544.0" layoutY="67.0" prefHeight="17.0" prefWidth="53.0" text="0" />
                                 <Label layoutX="394.0" layoutY="47.0" prefHeight="17.0" prefWidth="120.0" text="Engagement">
                                     <font>

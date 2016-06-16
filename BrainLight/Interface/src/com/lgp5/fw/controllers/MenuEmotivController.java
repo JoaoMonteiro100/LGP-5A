@@ -39,12 +39,15 @@ public class MenuEmotivController extends MenuController{
 	BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(1);
 	private Double[][] finalRawDataArray = new Double[100][100];
 	private int colorNumber=0;
-	@FXML private Label alfa1Data;
-	@FXML private Label beta1Data;
-	@FXML private Label beta2Data;
+	@FXML private Label alphaData;
+	@FXML private Label betaData;
+	@FXML private Label deltaData;
 	@FXML private Label thetaData;
-	@FXML private Label attentionData;
+	@FXML private Label longExcitementData;
+	@FXML private Label engagementData;
+	@FXML private Label shortExcitementData;
 	@FXML private Label meditationData;
+	@FXML private Label frustrationData;
 	@FXML private Label errorRateData;
 	@FXML private Label batteryLevelData;
 	@FXML private Label signalQualityData;
@@ -59,6 +62,7 @@ public class MenuEmotivController extends MenuController{
 	@FXML private CategoryAxis xAxisMood;
 	@FXML private NumberAxis xAxisWavesLine;
 	@FXML private NumberAxis xAxisMoodsLine;
+	@FXML private NumberAxis yAxisMoodsLine;
 	private ObservableList<String> brainwaves = FXCollections.observableArrayList();
 	private ObservableList<String> moods = FXCollections.observableArrayList();
     private ObservableList<String> mentalActions = FXCollections.observableArrayList();
@@ -188,18 +192,23 @@ public class MenuEmotivController extends MenuController{
 								switch (j) {
 									case 0:
 										data2.setYValue(Float.parseFloat(finalDataArray[3][1].toString()));
+										engagementData.setText(finalDataArray[3][1].toString());
 										break;
 									case 1:
 										data2.setYValue(Float.parseFloat(finalDataArray[3][3].toString()));
+										longExcitementData.setText(finalDataArray[3][3].toString());
 										break;
 									case 2:
 										data2.setYValue(Float.parseFloat(finalDataArray[3][4].toString()));
+										shortExcitementData.setText(finalDataArray[3][4].toString());
 										break;
 									case 3:
 										data2.setYValue(Float.parseFloat(finalDataArray[3][6].toString()));
+										frustrationData.setText(finalDataArray[3][6].toString());
 										break;
 									case 4:
 										data2.setYValue(Float.parseFloat(finalDataArray[3][8].toString()));
+										meditationData.setText(finalDataArray[3][8].toString());
 										break;
 									default:
 										break;
@@ -341,17 +350,10 @@ public class MenuEmotivController extends MenuController{
 								i++;
 							}
 						}
-
-						/*for (int i=0;i<finalRawDataArray.length;i++){
-							System.out.println(Arrays.toString(finalRawDataArray[i]));
-						}*/
-						/*rawData.setText(Double.toString(finalRawDataArray[0][0]));
-						for(Series<Number,Number> series : lineChartRaw.getData()){
-							for(int i=0;i< series.getData().size();i++) {
-								series.getData().get(i).setYValue(Float.parseFloat((String) rawGroup.get(0).get(i)));
-								series.getData().get(i).setXValue(queueTime2.get(i));
-							}
-						}*/
+						alphaData.setText(finalDataArray[0][0].toString());
+						betaData.setText(finalDataArray[0][1].toString());
+						deltaData.setText(finalDataArray[0][2].toString());
+						thetaData.setText(finalDataArray[0][3].toString());
 					}
 				});
 			}
@@ -396,6 +398,7 @@ public class MenuEmotivController extends MenuController{
 
 	public void createSeriesLineChartMoods(XYChart.Series<String,Float> seriesBarChart){
 		xAxisMoodsLine.setLabel("Time");
+		yAxisMoodsLine.setLabel("Mood");
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
 		XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
 		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
@@ -406,7 +409,7 @@ public class MenuEmotivController extends MenuController{
 		series3.setName("Excitement (short time)");
 		series4.setName("Frustration");
 		series5.setName("Meditation");
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 100; i++) {
 			series1.getData().add(new XYChart.Data(0f, 0f));
 			series2.getData().add(new XYChart.Data(0f, 0f));
 			series3.getData().add(new XYChart.Data(0f, 0f));
@@ -485,8 +488,9 @@ public class MenuEmotivController extends MenuController{
 		for (int i = 0; i < moodsGroup.size(); i++) {
 			moodsGroup.get(i).remove(0);
 		}
-		/*xAxisMoodsLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
-		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));*/
+		//yAxisMoodsLine.setUpperBound(1.0);
+		xAxisMoodsLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
+		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(99).toString()));
 	}
 
 	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){
