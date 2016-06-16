@@ -3,6 +3,7 @@ package com.lgp5.patient.controllers;
 
 import com.firebase.client.Firebase;
 import com.lgp5.Neurosky;
+import com.lgp5.patient.utils.UserData;
 import interfaces.HeadSetDataInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,6 +54,13 @@ public class AnalysisController {
 
 
     public AnalysisController() {
+        Firebase readingRef = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + UserData.READING_LAST_KEY);
+        Map<String, Object> values = new HashMap<>();
+        values.put("Live", true);
+        values.put("Patient", UserData.KEY);
+        readingRef.updateChildren(values);
+
+
         final long start = System.currentTimeMillis();
         appRef = new Firebase("https://brainlight.firebaseio.com/leituras").push();
         System.out.println(appRef.getKey());
@@ -74,7 +82,7 @@ public class AnalysisController {
             }
         };
 
-        //new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
+        new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
     }
 
 
