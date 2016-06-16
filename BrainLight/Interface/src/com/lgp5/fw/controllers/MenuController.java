@@ -1,5 +1,6 @@
 package com.lgp5.fw.controllers;
 
+import history.read.net.codejava.excel.ReadXLS_NeuroSky;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
@@ -18,10 +19,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import module.MainModule;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MenuController{
@@ -288,8 +291,27 @@ public class MenuController{
 			e.printStackTrace();
 		}
 	}
-	public void sendToModule(){
-
+	public void fileChooser(MouseEvent event) throws IOException {
+		Stage stage;
+		stage = (Stage) historyButton.getScene().getWindow();
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Open brainwave records file");
+		chooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Excel file (*.xlsx)", "*.xlsx"),
+				new FileChooser.ExtensionFilter("Excel 97-2003 file (*.xls)", "*.xls"));
+		File defaultDirectory = new File("history/");
+		//create a history folder if it hasn't been created yet
+		if (!defaultDirectory.exists()){
+			defaultDirectory.mkdir();
+		}
+		chooser.setInitialDirectory(defaultDirectory);
+		File file = chooser.showOpenDialog(stage);
+		if(file!=null)
+			if(file.exists()){
+				ReadXLS_NeuroSky xlsRead = null;
+				historic = xlsRead.read("history/"+file.getName());
+				putHistoric=true;
+			}
 	}
 
 	public String[][] getHistoric() {
