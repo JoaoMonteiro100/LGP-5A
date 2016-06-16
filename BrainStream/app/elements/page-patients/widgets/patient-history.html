@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <!--on-iron-select="itemSelected"    VER ISTO-->
                     <template is="dom-repeat" items="[[history]]" as="hist">  <!--  sort="_computeSort"-->
                         <paper-item>
-                            <div id="name">[[hist.time]]</div>
+                            <div id="name">[[hist.Time]]</div>
                             <img src={{live(hist)}} style="width:10px;height:10px;">
                         </paper-item>
                     </template>
@@ -107,6 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         ref.on("value", function (snapshot) {
                             self.history = [];
                             snapshot.forEach(function (childSnapshot) {
+
                                 if (childSnapshot.val().Patient == user.detail) {
                                     self.push('history', childSnapshot.val());
                                 }

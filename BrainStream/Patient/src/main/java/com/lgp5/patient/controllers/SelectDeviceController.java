@@ -88,10 +88,10 @@ public class SelectDeviceController {
         values.put("Note", "");
         values.put("Leitura", "");
 
-        String time = cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH) + " - " +
-                cal.get(Calendar.HOUR_OF_DAY) + "." + cal.get(Calendar.MINUTE) + "." + cal.get(Calendar.SECOND);
+        String time = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR) + " - " +
+                cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd - HH.mm.ss");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
         Date date = null;
         try {
             date = df.parse(time);
@@ -105,7 +105,6 @@ public class SelectDeviceController {
 
         Firebase newAppRef = appRef.push();
         newAppRef.setValue(values);
-        System.out.println(newAppRef.getKey());
         UserData.READING_LAST_KEY = newAppRef.getKey();
 
     }
