@@ -184,9 +184,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     addEventListener('selected-user-patient', function (user) {
                         var ref = new Firebase(app.userURL(user.detail));
                         var ref1;
+                        var reff = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+
+                         var d = new Date();
+                         var n = d.getTime();
+                   // alert(d.getTime());
+
+                        var readingDate;
+
+                        //readingDate = childSnapshot.val().time;
+                        var test = 1465945200000;
+                        var result;
+                        var days;
+                     //   alert(days);
+
+                    var refInfoDelete;
+                     reff.on("value", function (snapshot) {
+                            snapshot.forEach(function (childSnapshot) {
+                                if(childSnapshot.val().Patient == user.detail){
+                                    //readingDate = childSnapshot.val().time;
+                                    result = n - test;
+                                    days = ((result / (1000*60*60*24)) % 7); //nr de dias 
+                                   // alert(days);
+                                    if(days > user.historicDays){
+                                        readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
+                                       refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+                                        refInfoDelete.remove();
+                                        readingRef.remove();    
+                                    }
+                                }
+                            });
+                        });
+
+
 
                         ref.on("value", function (snapshot) {
                             var user = snapshot.val();
+
                             ref1 = new Firebase(app.userURL(user.doctorAssociated));
                             self.set('user', user);
                             self.set('hidecont', false);
@@ -200,6 +234,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                         self.fire('select_null_doctor');
                     });
+
                 },
                 hideMe: function (one, two) {
                     return (!one || two);
