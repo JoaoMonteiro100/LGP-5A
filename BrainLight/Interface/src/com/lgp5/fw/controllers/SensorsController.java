@@ -10,11 +10,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
 
-public class SensorsController {
+public class SensorsController extends MenuController{
     @FXML private ComboBox<String> sensorsList;
     @FXML private Button applySensors;
     @FXML private CheckBox historyCheckBox;
@@ -53,13 +54,13 @@ public class SensorsController {
         setSensorColor(this.sensorO2, 3);
         setSensorColor(this.sensorP7, 4);
 
-        //enable button only when a choice is made
+        /*//enable button only when a choice is made
         sensorsList.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 applySensors.setDisable(false);
             }
-        });
+        });*/
 
         /**
          * tooltips for each sensor
@@ -111,6 +112,19 @@ public class SensorsController {
                 break;
             default:
                 break;
+        }
+    }
+    public void changeLobe(MouseEvent event){
+        if(sensorsList.getValue().equals("Frontal lobe")){
+            super.setSelectedLobe(0);
+        }else if(sensorsList.getValue().equals("Temporal lobe")){
+            super.setSelectedLobe(1);
+        }else if(sensorsList.getValue().equals("Parietal lobe")){
+            super.setSelectedLobe(2);
+        }else if(sensorsList.getValue().equals("Occipital lobe")){
+            super.setSelectedLobe(3);
+        }else if(sensorsList.getValue().equals("Mean of all lobes (default)")){
+            super.setSelectedLobe(4);
         }
     }
 

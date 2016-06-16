@@ -30,6 +30,10 @@ import java.io.IOException;
 public class MenuController{
 	private String[][] historic;
 	private Boolean putHistoric;
+
+
+
+	private int selectedLobe;//[0->frontal,1->temporal,2->pariental,3->occipital,4->total]
 	@FXML private AnchorPane paneLayoutRoot;
 	@FXML private ImageView recordButton;
 	@FXML private ImageView stopButton;
@@ -65,6 +69,7 @@ public class MenuController{
 	public MenuController(){
 		historic=null;
 		setPutHistoric(false);
+		selectedLobe=4;
 	}
 	public void settings()
 	{
@@ -203,7 +208,6 @@ public class MenuController{
 			fw.setRecord(false);
 		}
 	}
-
 	public void setDisableEffect(Boolean b) {
 		if (b) {
 			historyPeriodWrapper.setDisable(true);
@@ -321,5 +325,12 @@ public class MenuController{
 	}
 	public void setPutHistoric(Boolean putHistoric) {
 		this.putHistoric = putHistoric;
+	}
+	public int getSelectedLobe() {
+		return selectedLobe;
+	}
+
+	public void setSelectedLobe(int selectedLobe) {
+		this.selectedLobe = selectedLobe;
 	}
 }

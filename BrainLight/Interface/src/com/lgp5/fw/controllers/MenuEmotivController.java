@@ -34,6 +34,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class MenuEmotivController extends MenuController{
+
 	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
 	BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(1);
 	private Double[][] finalRawDataArray = new Double[100][100];
@@ -74,8 +75,11 @@ public class MenuEmotivController extends MenuController{
 	ArrayList<String> alphaQueue =  new ArrayList<String>();
 	ArrayList<String> betaQueue =  new ArrayList<String>();
 	ArrayList<String> thetaQueue =  new ArrayList<String>();
-	ArrayList<String> attentionQueue =  new ArrayList<String>();
+	ArrayList<String> frustationQueue =  new ArrayList<String>();
 	ArrayList<String> meditationQueue =  new ArrayList<String>();
+	ArrayList<String> engagementQueue =  new ArrayList<String>();
+	ArrayList<String> excitementLQueue =  new ArrayList<String>();
+	ArrayList<String> excitementSQueue =  new ArrayList<String>();
 	ArrayList<Number> queueTime = new ArrayList<Number>();
 	private long time;
 
@@ -88,7 +92,7 @@ public class MenuEmotivController extends MenuController{
 	@FXML
 	private void initialize() throws MalformedURLException {
 		settings();
-
+		time=System.currentTimeMillis()/1000;
 		String[] waves = {"Alfa", "Beta","Delta", "Theta"};
 		String[] moodsArray = {"Engagement", "Excitement (long time)", "Excitement (short time)", "Frustration", "Meditation"};
         String[] actions = {"Neural", "Push", "Pull", "Lift", "Drop", "Left", "Right", "Rotate left", "Rotate right", "Rotate clockwise", "Rotate counter-clockwise", "Rotate forward", "Rotate reverse", "Disappear"};
@@ -108,7 +112,7 @@ public class MenuEmotivController extends MenuController{
 		series2.getData().add(new XYChart.Data("Excitement (short time)", 35f));
 		series2.getData().add(new XYChart.Data("Frustration", 35f));
 		series2.getData().add(new XYChart.Data("Meditation", 35f));
-		//System.out.println(this.colorNumber);
+
         XYChart.Series<String,Float> series3 = new XYChart.Series<>();
         series3.getData().add(new XYChart.Data("Neural", 35f));
         series3.getData().add(new XYChart.Data("Push", 35f));
@@ -128,7 +132,7 @@ public class MenuEmotivController extends MenuController{
 		for (int i = 0; i < series.getData().size(); i++) {
 			if(colorNumber>=constants.Constants.colors.length)
 				colorNumber=0;
-			series.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";-fx-cursor: hand;-fx-border-color: #000000; -fx-border-width: 2;	");
+			series.getData().get(i).getNode().setStyle("-fx-bar-fill: "+constants.Constants.colors[colorNumber]+";");
 			colorNumber++;
 		}
 		colorNumber=0;
@@ -150,7 +154,7 @@ public class MenuEmotivController extends MenuController{
 		barChartMoods.setLegendVisible(false);
         barChartMentalActions.setLegendVisible(false);
 		colorNumber=0;
-		createSeriesLineChartWaves(series);
+		//createSeriesLineChartWaves(series);
 		colorNumber=0;
 		createSeriesLineChartMoods(series2);
 
@@ -176,6 +180,42 @@ public class MenuEmotivController extends MenuController{
 							System.out.println(Arrays.toString(finalDataArray[i]));
 
 						}*/
+						System.out.println(Arrays.toString(finalDataArray[3]));
+						updateSeriesLineChartMoods(finalDataArray[3][1].toString(),finalDataArray[3][3].toString(),finalDataArray[3][4].toString(),finalDataArray[3][6].toString(),finalDataArray[3][8].toString());
+						for (Series<String, Float> series2 : barChartMoods.getData()) {
+							int j=0;
+							for (XYChart.Data<String, Float> data2 : series2.getData()) {
+								switch (j) {
+									case 0:
+										data2.setYValue(Float.parseFloat(finalDataArray[3][1].toString()));
+										break;
+									case 1:
+										data2.setYValue(Float.parseFloat(finalDataArray[3][3].toString()));
+										break;
+									case 2:
+										data2.setYValue(Float.parseFloat(finalDataArray[3][4].toString()));
+										break;
+									case 3:
+										data2.setYValue(Float.parseFloat(finalDataArray[3][6].toString()));
+										break;
+									case 4:
+										data2.setYValue(Float.parseFloat(finalDataArray[3][8].toString()));
+										break;
+									default:
+										break;
+								}
+								j++;
+							}
+						}
+						int serieNumber2=0;
+						for(Series<Number,Number> series : lineChartMoods.getData()){
+							for(int i=0;i< series.getData().size();i++)
+							{
+								series.getData().get(i).setYValue(Float.parseFloat((String) moodsGroup.get(serieNumber2).get(i)));
+								series.getData().get(i).setXValue(queueTime.get(i));
+							}
+							serieNumber2++;
+						}
 						/*if(getPutHistoric()){
 							createSeriesLineChartHistoryWaves();
 						}*/
@@ -230,15 +270,7 @@ public class MenuEmotivController extends MenuController{
 								}
 								serieNumber++;
 							}
-							int serieNumber2=0;
-							for(Series<Number,Number> series : lineChartMoods.getData()){
-								for(int i=0;i< series.getData().size();i++)
-								{
-									series.getData().get(i).setYValue(Float.parseFloat((String) moodsGroup.get(serieNumber2).get(i)));
-									series.getData().get(i).setXValue(queueTime.get(i));
-								}
-								serieNumber2++;
-							}
+
 							for (Series<String, Float> series : barChartWaves.getData())
 							{
 								int i=0;
@@ -288,6 +320,27 @@ public class MenuEmotivController extends MenuController{
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
+						//System.out.println(getSelectedLobe());
+						for (Series<String, Float> series : barChartWaves.getData()) {
+							int i = 0;
+							for (XYChart.Data<String, Float> data : series.getData()) {
+								switch (i) {
+									case 0:
+										data.setYValue(Float.parseFloat(finalDataArray[0][0].toString()));
+										break;
+									case 1:
+										data.setYValue(Float.parseFloat(finalDataArray[0][1].toString()));
+										break;
+									case 2:
+										data.setYValue(Float.parseFloat(finalDataArray[0][2].toString()));
+										break;
+									case 3:
+										data.setYValue(Float.parseFloat(finalDataArray[0][3].toString()));
+										break;
+								}
+								i++;
+							}
+						}
 
 						/*for (int i=0;i<finalRawDataArray.length;i++){
 							System.out.println(Arrays.toString(finalRawDataArray[i]));
@@ -345,17 +398,34 @@ public class MenuEmotivController extends MenuController{
 		xAxisMoodsLine.setLabel("Time");
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
 		XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
-		series1.setName("Attention");
-		series2.setName("Meditation");
-		for (int i = 0; i < 10; i++) {
+		XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
+		XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
+		XYChart.Series<Number, Number> series5 = new XYChart.Series<>();
+		series1.setName("Engagement");
+		series2.setName("Excitement (long time)");
+		series3.setName("Excitement (short time)");
+		series4.setName("Frustration");
+		series5.setName("Meditation");
+		for (int i = 0; i < 1000; i++) {
 			series1.getData().add(new XYChart.Data(0f, 0f));
 			series2.getData().add(new XYChart.Data(0f, 0f));
-			attentionQueue.add("0.0");
+			series3.getData().add(new XYChart.Data(0f, 0f));
+			series4.getData().add(new XYChart.Data(0f, 0f));
+			series5.getData().add(new XYChart.Data(0f, 0f));
+			engagementQueue.add("0.0");
+			excitementLQueue.add("0.0");
+			excitementSQueue.add("0.0");
+			frustationQueue.add("0.0");
 			meditationQueue.add("0.0");
+			queueTime.add(0);
 		}
-		moodsGroup.add(attentionQueue);
+
+		moodsGroup.add(engagementQueue);
+		moodsGroup.add(excitementLQueue);
+		moodsGroup.add(excitementSQueue);
+		moodsGroup.add(frustationQueue);
 		moodsGroup.add(meditationQueue);
-		lineChartMoods.getData().addAll(series1,series2);
+		lineChartMoods.getData().addAll(series1,series2,series3,series4,series5);
 		for (int i = 0; i < seriesBarChart.getData().size(); i++) {
 			final int tmp = i;
 			final int tmp2 = colorNumber;
@@ -402,16 +472,21 @@ public class MenuEmotivController extends MenuController{
 		xAxisMoodsLine.setUpperBound(50);
 		xAxisMoodsLine.setAutoRanging(false);
 	}
-	public void updateSeriesLineChartMoods(String a,String m)
+	public void updateSeriesLineChartMoods(String e,String el,String es,String f,String m)
 	{
-		moodsGroup.get(0).add(a);
-		moodsGroup.get(1).add(m);
+		queueTime.add((System.currentTimeMillis()/1000)-time);
+		queueTime.remove(0);
+		moodsGroup.get(0).add(e);
+		moodsGroup.get(1).add(el);
+		moodsGroup.get(2).add(es);
+		moodsGroup.get(3).add(f);
+		moodsGroup.get(4).add(m);
 
 		for (int i = 0; i < moodsGroup.size(); i++) {
 			moodsGroup.get(i).remove(0);
 		}
-		xAxisMoodsLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
-		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));
+		/*xAxisMoodsLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
+		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));*/
 	}
 
 	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){

@@ -1,3 +1,4 @@
+package analysis;
 
 import org.junit.Test;
 
