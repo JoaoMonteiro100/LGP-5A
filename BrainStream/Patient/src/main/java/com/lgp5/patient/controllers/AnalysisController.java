@@ -54,16 +54,17 @@ public class AnalysisController {
 
 
     public AnalysisController() {
-        Firebase readingRef = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + UserData.READING_LAST_KEY);
-        Map<String, Object> values = new HashMap<>();
-        values.put("Live", true);
-        values.put("Patient", UserData.KEY);
-        readingRef.updateChildren(values);
-
-
         final long start = System.currentTimeMillis();
         appRef = new Firebase("https://brainlight.firebaseio.com/leituras").push();
         System.out.println(appRef.getKey());
+
+        Firebase readingRef = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + UserData.READING_LAST_KEY);
+        Map<String, Object> values = new HashMap<>();
+        values.put("Live", true);
+        values.put("Leitura", appRef.getKey());
+        readingRef.updateChildren(values);
+
+
         Firebase newAppRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + appRef.getKey());
 
         headSetDataInterface = new HeadSetDataInterface() {

@@ -15,7 +15,10 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,11 +91,23 @@ public class SelectDeviceController {
         String time = cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH) + " - " +
                 cal.get(Calendar.HOUR_OF_DAY) + "." + cal.get(Calendar.MINUTE) + "." + cal.get(Calendar.SECOND);
 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd - HH.mm.ss");
+        Date date = null;
+        try {
+            date = df.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long epoch = date.getTime();
+        
         values.put("Time", time);
+        values.put("Time2",epoch);
 
         Firebase newAppRef = appRef.push();
         newAppRef.setValue(values);
+        System.out.println(newAppRef.getKey());
         UserData.READING_LAST_KEY = newAppRef.getKey();
+
     }
 
 
@@ -114,12 +129,14 @@ public class SelectDeviceController {
                     Stage stage;
                     switch (comboBoxValue) {
                         case "NeuroSky Mindset":
-                            createNewInfoReading(comboBoxValue);
-                            launchNeuroSkyView();
-                            //get a handle to the stage
-                            stage = (Stage) selectDeviceComboBox.getScene().getWindow();
-                            //close current window
-                            stage.close();
+                            if(!UserData.KEY.isEmpty()) {
+                                createNewInfoReading(comboBoxValue);
+                                launchNeuroSkyView();
+                                //get a handle to the stage
+                                stage = (Stage) selectDeviceComboBox.getScene().getWindow();
+                                //close current window
+                                stage.close();
+                            }
                             break;
                         case "Emotiv Epoc":
                             createNewInfoReading(comboBoxValue);
