@@ -63,7 +63,7 @@ public class MenuEmotivController extends MenuController{
     private ObservableList<String> mentalActions = FXCollections.observableArrayList();
 	@FXML private NumberAxis xAxisHistory;
 	@FXML private NumberAxis yAxisHistory;
-	@FXML private LineChart<Number, Number> lineChartHistory;
+	@FXML private LineChart<String, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
 	@FXML private LineChart<Number, Number> lineChartMoods;
 	@FXML private Button calibrationButton;
@@ -174,12 +174,10 @@ public class MenuEmotivController extends MenuController{
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						/*System.out.println(Arrays.toString(finalDataArray));
-						for (int i=0;i<finalDataArray.length;i++){
-							System.out.println(Arrays.toString(finalDataArray[i]));
-
-						}*/
-						System.out.println(Arrays.toString(finalDataArray[3]));
+                        if(getPutHistoric()){
+                            createSeriesLineChartHistoryWaves();
+                        }
+                        System.out.println(Arrays.toString(finalDataArray[3]));
 						updateSeriesLineChartMoods(finalDataArray[3][1].toString(),finalDataArray[3][3].toString(),finalDataArray[3][4].toString(),finalDataArray[3][6].toString(),finalDataArray[3][8].toString());
 						for (Series<String, Float> series2 : barChartMoods.getData()) {
 							int j=0;
@@ -495,28 +493,16 @@ public class MenuEmotivController extends MenuController{
 		XYChart.Series<String, Number> series4 = new XYChart.Series<>();
 		XYChart.Series<String, Number> series5 = new XYChart.Series<>();
 		XYChart.Series<String, Number> series6 = new XYChart.Series<>();
-		XYChart.Series<String, Number> series7 = new XYChart.Series<>();
-		XYChart.Series<String, Number> series8 = new XYChart.Series<>();
-		XYChart.Series<String, Number> series9 = new XYChart.Series<>();
-		XYChart.Series<String, Number> series10 = new XYChart.Series<>();
-		series3.setName("Delta");
-		series4.setName("Theta");
-		series5.setName("highAlpha");
-		series6.setName("lowAlpha");
-		series7.setName("highBeta");
-		series8.setName("lowBeta");
-		series9.setName("lowGamma");
-		series10.setName("highGamma");
+		series3.setName("Alfa");
+		series4.setName("Beta");
+		series5.setName("Delta");
+		series6.setName("Teta");
 		if(historic.length!=0){
 			for (int i = 1; i < historic.length; i++) {
 				series3.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][1])));
 				series4.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][2])));
 				series5.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][4])));
 				series6.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][3])));
-				series7.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][6])));
-				series8.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][5])));
-				series9.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][7])));
-				series10.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][8])));
 			}
 		}
 
@@ -531,7 +517,7 @@ public class MenuEmotivController extends MenuController{
 			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[this.colorNumber]+";");
 			this.colorNumber++;
 		}
-		lineChartHistory.getData().addAll(series3,series4,series5,series6,series7,series8,series9,series10);
+		lineChartHistory.getData().addAll(series3,series4,series5,series6);
 		//lineChartHistory.setAnimated(false);
 		super.setPutHistoric(false);
 	}
