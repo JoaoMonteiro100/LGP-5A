@@ -9,6 +9,7 @@ import history.write.WriteXLS_NeuroSky;
 import interfaces.HeadSetDataInterface;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
@@ -223,8 +224,8 @@ public class MainModule {
 
             for (int i = 0; i < infoArray[1].length; i++) {
                 switch (infoArray[1][i]) {
-				/*
-    			case 0 : types[i] = TypesOfCalculations.WAVELENGTH;
+                /*
+                case 0 : types[i] = TypesOfCalculations.WAVELENGTH;
     			case 1 : types[i] = TypesOfCalculations.WAVENUMBER;
     			case 2 : types[i] = TypesOfCalculations.ANG_WAVENUMBER;
     			case 3 : types[i] = TypesOfCalculations.ANG_FREQUENCY;
@@ -354,137 +355,179 @@ public class MainModule {
             finalData[2] = new Double[4];//medias do lobo Pariental
             finalData[3] = new Double[4];//medias do lobo Oxipital
             finalData[4] = new Double[4];//medias do Total
-            finalData[5] = new Double[16];//qualidade do sensor
-            finalData[6] = new Double[31];//media da eeg
 
-            for(int i=0; i<finalData.length;i++){
-                if(i==0){
-                    //Frontal + Alpha
-                    Double sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)F(.*)")).getAlpha();
-                    }
-                    finalData[0][0] = (sum / 8);
-
-                    //Frontal + Beta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)F(.*)")).getBeta();
-                    }
-                    finalData[0][1] = (sum / 8);
-
-                    //Frontal + Delta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)F(.*)")).getDelta();
-                    }
-                    finalData[0][2] = (sum / 8);
-
-                    //Frontal + Theta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)F(.*)")).getTheta();
-                    }
-                    finalData[0][3] = (sum / 8);
-
-                    //////////////////////////////////
-                    //Temporal + Alpha
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)T(.*)")).getAlpha();
-                    }
-                    finalData[1][0] = (sum / 2);
-
-                    //Temporal + Beta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)T(.*)")).getBeta();
-                    }
-                    finalData[1][1] = (sum / 2);
-
-                    //Temporal + Delta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)T(.*)")).getDelta();
-                    }
-                    finalData[1][2] = (sum / 2);
-
-                    //Temporal + Theta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)T(.*)")).getTheta();
-                    }
-                    finalData[1][3] = (sum / 2);
-                    //////////////////////////////
-
-                    //////////////////////////////////
-                    //Pariental + Alpha
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getAlpha();
-                    }
-                    finalData[2][0] = (sum / 2);
-
-                    //Pariental + Beta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getBeta();
-                    }
-                    finalData[2][1] = (sum / 2);
-
-                    //Pariental + Delta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getDelta();
-                    }
-                    finalData[2][2] = (sum / 2);
-
-                    //Pariental + Theta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getTheta();
-                    }
-                    finalData[2][3] = (sum / 2);
-                    //////////////////////////////
-
-                    //////////////////////////////////
-                    //Oxipital + Alpha
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getAlpha();
-                    }
-                    finalData[2][0] = (sum / 2);
-
-                    //Oxipital + Beta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getBeta();
-                    }
-                    finalData[2][1] = (sum / 2);
-
-                    //Oxipital + Delta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getDelta();
-                    }
-                    finalData[2][2] = (sum / 2);
-
-                    //Oxipital + Theta
-                    sum = 0.0;
-                    for(int k=0; k<finalData.length;k++){
-                        sum+=emotivData.get(finalInfo[k].matches("(.*)P(.*)")).getTheta();
-                    }
-                    finalData[2][3] = (sum / 2);
-                    //////////////////////////////
-                }
+            finalData[5] = new Double[31];//media da eeg do lobo Frontal
+            finalData[6] = new Double[31];//media da eeg do lobo Temporal
+            finalData[7] = new Double[31];//media da eeg do lobo Pariental
+            finalData[8] = new Double[31];//media da eeg do lobo Oxipital
+            finalData[9] = new Double[31];//media da eeg do Total
 
 
-
-
-
-
-
+            //Frontal + Alpha
+            Double sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)F(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getAlpha();
             }
+            finalData[0][0] = (sum / 8);
+
+            //Frontal + Beta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)F(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getBeta();
+            }
+            finalData[0][1] = (sum / 8);
+
+            //Frontal + Delta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)F(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getDelta();
+            }
+            finalData[0][2] = (sum / 8);
+
+            //Frontal + Theta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)F(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getTheta();
+            }
+            finalData[0][3] = (sum / 8);
+
+            //////////////////////////////////
+            //Temporal + Alpha
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)T(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getAlpha();
+            }
+            finalData[1][0] = (sum / 2);
+
+            //Temporal + Beta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)T(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getBeta();
+            }
+            finalData[1][1] = (sum / 2);
+
+            //Temporal + Delta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)T(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getDelta();
+            }
+            finalData[1][2] = (sum / 2);
+
+            //Temporal + Theta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)T(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getTheta();
+            }
+            finalData[1][3] = (sum / 2);
+            //////////////////////////////
+
+            //////////////////////////////////
+            //Pariental + Alpha
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)P(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getAlpha();
+            }
+            finalData[2][0] = (sum / 2);
+
+            //Pariental + Beta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)P(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getBeta();
+            }
+            finalData[2][1] = (sum / 2);
+
+            //Pariental + Delta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)P(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getDelta();
+            }
+            finalData[2][2] = (sum / 2);
+
+            //Pariental + Theta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)P(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getTheta();
+            }
+            finalData[2][3] = (sum / 2);
+            //////////////////////////////
+
+            //////////////////////////////////
+            //Oxipital + Alpha
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)O(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getAlpha();
+            }
+            finalData[3][0] = (sum / 2);
+
+            //Oxipital + Beta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)O(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getBeta();
+            }
+            finalData[3][1] = (sum / 2);
+
+            //Oxipital + Delta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)O(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getDelta();
+            }
+            finalData[3][2] = (sum / 2);
+
+            //Oxipital + Theta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                if (finalInfo[k].matches("(.*)O(.*)"))
+                    sum += emotivData.get(finalInfo[k]).getTheta();
+            }
+            finalData[3][3] = (sum / 2);
+            //////////////////////////////
+
+            //////////////////////////////////
+            //Total + Alpha
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                sum += emotivData.get(finalInfo[k]).getAlpha();
+            }
+            finalData[4][0] = (sum / 14);
+
+            //Total + Beta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                sum += emotivData.get(finalInfo[k]).getBeta();
+            }
+            finalData[4][1] = (sum / 14);
+
+            //Total + Delta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                sum += emotivData.get(finalInfo[k]).getDelta();
+            }
+            finalData[4][2] = (sum / 14);
+
+            //Total + Theta
+            sum = 0.0;
+            for (int k = 0; k < finalData.length; k++) {
+                sum += emotivData.get(finalInfo[k]).getTheta();
+            }
+            finalData[4][3] = (sum / 14);
+            //////////////////////////////
+            
+
 
 
 			/*for (int i = 0; i < finalData.length; i++){
@@ -502,6 +545,7 @@ public class MainModule {
 
             finalWavesArray = finalData;
         }
+
     }
 
     public static void initMerge(int device, HashMap<String, Object> data) {
