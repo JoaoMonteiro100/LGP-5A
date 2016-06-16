@@ -308,7 +308,7 @@ public class MenuNeuroSkyController extends MenuController {
 				});
 			}
 		};
-		ThreadInterface t = new ThreadInterface(queue,queue2,updateInterface);
+		ThreadInterface t = new ThreadInterface(queue,queue2,updateInterface,1);
 		new Thread(t).start();
 	}
 	private void createSeriesLineChartRaw(){

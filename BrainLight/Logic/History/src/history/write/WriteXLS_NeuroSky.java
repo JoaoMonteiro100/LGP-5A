@@ -14,7 +14,6 @@ public class WriteXLS_NeuroSky {
 
     public static void writeXLS(String name,Object [] [] bookData) {    	
         try {
-           
             File fileFolder= new File("history");
               
             Sheet sheet;        

@@ -242,8 +242,6 @@ public class EmotivDevice implements Runnable {
                         getSensorsContactQuality();
                     }
                 }
-
-                System.out.println(blinkStatus);
                 new Thread(() -> {
                     channelsAverageBandPowers.clear();
                     calculateDFT();
@@ -403,7 +401,7 @@ public class EmotivDevice implements Runnable {
         data.put("DeviceInfo", deviceInfoMap);
         data.put("Actions", actionsMap);
         data.put("FacialExpressions", expressionsMap);
-        data.put("AffectiveValues",actionsMap);
+        data.put("AffectiveValues",affectivemap);
     }
 
 
