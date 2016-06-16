@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import module.MainModule;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class MenuEmotivController extends MenuController{
     private ObservableList<String> mentalActions = FXCollections.observableArrayList();
 	@FXML private NumberAxis xAxisHistory;
 	@FXML private NumberAxis yAxisHistory;
-	@FXML private LineChart<String, Number> lineChartHistory;
+	@FXML private LineChart<Number, Number> lineChartHistory;
 	@FXML private LineChart<Number, Number> lineChartWaves;
 	@FXML private LineChart<Number, Number> lineChartMoods;
 	@FXML private Button calibrationButton;
@@ -178,10 +179,12 @@ public class MenuEmotivController extends MenuController{
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-                        if(getPutHistoric()){
-                            createSeriesLineChartHistoryWaves();
-                        }
-                        System.out.println(Arrays.toString(finalDataArray[3]));
+						/*System.out.println(Arrays.toString(finalDataArray));
+						for (int i=0;i<finalDataArray.length;i++){
+							System.out.println(Arrays.toString(finalDataArray[i]));
+
+						}*/
+						System.out.println(Arrays.toString(finalDataArray[3]));
 						updateSeriesLineChartMoods(finalDataArray[3][1].toString(),finalDataArray[3][3].toString(),finalDataArray[3][4].toString(),finalDataArray[3][6].toString(),finalDataArray[3][8].toString());
 						for (Series<String, Float> series2 : barChartMoods.getData()) {
 							int j=0;
@@ -375,7 +378,7 @@ public class MenuEmotivController extends MenuController{
 
 	@Override
 	public void showData(MouseEvent event){
-		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel,actionsLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane,actionsPane,settingsPane,actionsPane});
+		changePane(dataLabel,new Label[]{moodLabel,brainWavesLabel,radarLabel,historyLabel,settingsLabel,actionsLabel},dataPane,new Pane[]{moodPane,brainWavesPane,radarPane,historyPane,actionsPane,actionsPane});
 	}
 
 	@Override
@@ -488,42 +491,6 @@ public class MenuEmotivController extends MenuController{
 		//yAxisMoodsLine.setUpperBound(1.0);
 		xAxisMoodsLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
 		xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(99).toString()));
-	}
-
-	public void createSeriesLineChartHistoryWaves(){
-		String[][] historic=super.getHistoric();
-		xAxisHistory.setLabel("Time");
-		XYChart.Series<String, Number> series3 = new XYChart.Series<>();
-		XYChart.Series<String, Number> series4 = new XYChart.Series<>();
-		XYChart.Series<String, Number> series5 = new XYChart.Series<>();
-		XYChart.Series<String, Number> series6 = new XYChart.Series<>();
-		series3.setName("Alfa");
-		series4.setName("Beta");
-		series5.setName("Delta");
-		series6.setName("Teta");
-		if(historic.length!=0){
-			for (int i = 1; i < historic.length; i++) {
-				series3.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][1])));
-				series4.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][2])));
-				series5.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][4])));
-				series6.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][3])));
-			}
-		}
-
-		this.colorNumber=0;
-		for(Series<String, Number> series : lineChartHistory.getData()){
-			if(this.colorNumber>=constants.Constants.colors.length)
-				this.colorNumber=0;
-			Set<Node> lookupAll = lineChartHistory.lookupAll(".chart-line-symbol.series" + this.colorNumber);
-			for (Node n : lookupAll) {
-				n.setStyle("-fx-background-color:"+constants.Constants.colors[this.colorNumber]+";");
-			}
-			series.nodeProperty().get().setStyle("-fx-stroke: " +constants.Constants.colors[this.colorNumber]+";");
-			this.colorNumber++;
-		}
-		lineChartHistory.getData().addAll(series3,series4,series5,series6);
-		//lineChartHistory.setAnimated(false);
-		super.setPutHistoric(false);
 	}
 
 	public void createSeriesLineChartWaves(XYChart.Series<String,Float> seriesBarChart){

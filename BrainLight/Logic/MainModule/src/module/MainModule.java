@@ -35,7 +35,8 @@ public class MainModule {
     private LinkedList<Double[][]> doubleQ;
     private boolean running;
     private int deviceNo;
-    private static boolean calculate  = true; ; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
+    private static boolean calculate = true;
+    ; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 
     public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2, Boolean neverDeleteP, int daysP) {
@@ -207,147 +208,164 @@ public class MainModule {
         running = false;
     }
 
-   public static void calculate(int[][] infoArray)
-	{
-		Float[][] floatArrayEmotiv;
-		Double[] finalArray;
-		float[][] finalArray1;
-		finalArray = new Double[12];
-		int[][] waveType = new int[3][];
-		Vector<Float[][]> vector = new Vector<Float[][]>();
-		TypesOfCalculations[] types = new TypesOfCalculations[infoArray[1].length];
+    public static void calculate(int[][] infoArray) {
+        Float[][] floatArrayEmotiv;
+        Double[] finalArray;
+        float[][] finalArray1;
+        finalArray = new Double[12];
+        int[][] waveType = new int[3][];
+        Vector<Float[][]> vector = new Vector<Float[][]>();
+        TypesOfCalculations[] types = new TypesOfCalculations[infoArray[1].length];
 
-		Double[][] tempArray;
-		tempArray = new Double[14][36];
-		for (Double[] row: tempArray)
-		    Arrays.fill(row, 0.0);
+        Double[][] tempArray;
+        tempArray = new Double[14][36];
+        for (Double[] row : tempArray)
+            Arrays.fill(row, 0.0);
 
-		while(calculate == true)
-		{
-			Double[][] testArray;
-			testArray = new Double[][] {
-				{1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,34.0,35.0,62.0,12.0,12.0},
-				{43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,34.0,35.0,62.0,12.0,12.0},
-				{1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,34.0,35.0,62.0,12.0,12.0},
-				{43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,34.0,35.0,62.0,12.0,12.0},
-				{1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,34.0,35.0,62.0,12.0,12.0},
-				{43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,34.0,35.0,62.0,12.0,12.0},
-				{1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,34.0,35.0,62.0,12.0,12.0},
-				{43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,34.0,35.0,62.0,12.0,12.0},
-				{1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,34.0,35.0,62.0,12.0,12.0},
-				{43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,34.0,35.0,62.0,12.0,12.0},
-				{1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,34.0,35.0,62.0,12.0,12.0},
-				{43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,34.0,35.0,62.0,12.0,12.0},
-				{1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,34.0,35.0,62.0,12.0,12.0},
-				{43.0,52.0,53.0,9.0,25.0,34.0,35.0,62.0,12.0,12.0,53.0,1.0,2.0,3.0,4.0,1.0,2.0,20.0,6.0,7.0,3.0,5.0,3.0,2.0,3.0,5.0,6.0,8.0,24.0,74.0,73.0,34.0,35.0,62.0,12.0,12.0}};
-			
-				
-				
-			int count = 0;
-			for(long stop=System.nanoTime()+TimeUnit.SECONDS.toNanos(infoArray[2][0]);stop>System.nanoTime();)
-			
-				if(tempArray == finalWavesArray)
-					continue;
-				else
-				{
-					vector.add(averageOfInstance(infoArray[0],finalWavesArray));
-					tempArray=finalWavesArray;
-				}
+        while (calculate == true) {
+            Double[][] testArray;
+            testArray = new Double[][]{
+                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0}};
 
-			for(int i = 0; i < infoArray[1].length;i++)
-			{				
-				switch (infoArray[1][i])
-				{
-				case 0 : types[i] = TypesOfCalculations.WAVELENGTH;
-				break;
-				case 1 : types[i] = TypesOfCalculations.WAVENUMBER;
-				break;
-				case 2 : types[i] = TypesOfCalculations.ANG_WAVENUMBER;
-				break;
-				case 3 : types[i] = TypesOfCalculations.ANG_FREQUENCY;
-				break;
-				case 4 : types[i] = TypesOfCalculations.PERIOD;
-				break;
-				case 5 : types[i] = TypesOfCalculations.AMPLITUDE;
-				break;
-				case 6 : types[i] = TypesOfCalculations.MAX_AMPLITUDE;
-				break;
-				case 7 : types[i] = TypesOfCalculations.MIN;
-				break;
-				case 8 : types[i] = TypesOfCalculations.MAX;
-				break;
-				case 9 : types[i] = TypesOfCalculations.MEAN;
-				break;
-				case 10 : types[i] = TypesOfCalculations.MODE;
-				break;
-				case 11 : types[i] = TypesOfCalculations.MEDIAN;
-				break;
-				case 12: types[i] = TypesOfCalculations.XFORMAXY;
-				break;
-				case 13: types[i] = TypesOfCalculations.XFORMINY;
-				break;
-				default : break;
-				}
-			}
-			floatArrayEmotiv = finalFloatArray(vector);
-			int width = floatArrayEmotiv.length;
-			int height = floatArrayEmotiv[0].length;
-			float[][] floatmatrix = new float[width][height];
-			   for (int w = 0; width > w; w++) {
-			       for (int h = 0; height > h; h++) {
-			           floatmatrix[w][h] = (float) floatArrayEmotiv[w][h];
-			       }
-			   }
-			   System.out.println(Arrays.deepToString(floatmatrix));
-			   Calculations Calc = new Calculations(floatmatrix, types);
-			   System.out.println(Calc.getResult());
-		}
 
-	}   
+            int count = 0;
+            for (long stop = System.nanoTime() + TimeUnit.SECONDS.toNanos(infoArray[2][0]); stop > System.nanoTime(); )
 
-	public Float media (Float[] indexArray)
-	{
-		int x = 0;
-		for (int i = 0; i < indexArray.length; i++)
-			x += indexArray[i];
-		return (float) (x/indexArray.length);
-	}
+                if (tempArray == finalWavesArray)
+                    continue;
+                else {
+                    vector.add(averageOfInstance(infoArray[0], finalWavesArray));
+                    tempArray = finalWavesArray;
+                }
 
-	public static Float[][] finalFloatArray(Vector<Float[][]> vector){
-		Float[][] finalFloat = new Float[31][2];
+            for (int i = 0; i < infoArray[1].length; i++) {
+                switch (infoArray[1][i]) {
+                    case 0:
+                        types[i] = TypesOfCalculations.WAVELENGTH;
+                        break;
+                    case 1:
+                        types[i] = TypesOfCalculations.WAVENUMBER;
+                        break;
+                    case 2:
+                        types[i] = TypesOfCalculations.ANG_WAVENUMBER;
+                        break;
+                    case 3:
+                        types[i] = TypesOfCalculations.ANG_FREQUENCY;
+                        break;
+                    case 4:
+                        types[i] = TypesOfCalculations.PERIOD;
+                        break;
+                    case 5:
+                        types[i] = TypesOfCalculations.AMPLITUDE;
+                        break;
+                    case 6:
+                        types[i] = TypesOfCalculations.MAX_AMPLITUDE;
+                        break;
+                    case 7:
+                        types[i] = TypesOfCalculations.MIN;
+                        break;
+                    case 8:
+                        types[i] = TypesOfCalculations.MAX;
+                        break;
+                    case 9:
+                        types[i] = TypesOfCalculations.MEAN;
+                        break;
+                    case 10:
+                        types[i] = TypesOfCalculations.MODE;
+                        break;
+                    case 11:
+                        types[i] = TypesOfCalculations.MEDIAN;
+                        break;
+                    case 12:
+                        types[i] = TypesOfCalculations.XFORMAXY;
+                        break;
+                    case 13:
+                        types[i] = TypesOfCalculations.XFORMINY;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            floatArrayEmotiv = finalFloatArray(vector);
+            int width = floatArrayEmotiv.length;
+            int height = floatArrayEmotiv[0].length;
+            float[][] floatmatrix = new float[width][height];
+            for (int w = 0; width > w; w++) {
+                for (int h = 0; height > h; h++) {
+                    floatmatrix[w][h] = (float) floatArrayEmotiv[w][h];
+                }
+            }
+            System.out.println(Arrays.deepToString(floatmatrix));
+            Calculations Calc = new Calculations(floatmatrix, types);
+            System.out.println(Calc.getResult());
+        }
 
-		float y = 0;
-		for (int j = 0; j < 31; j++)
-		{
-			for(int i = 0; i < vector.size(); i++)
-			{
-				y+=(vector.get(i)[j][1])/vector.size();
-			}
-			
-			
-			finalFloat[j][0] = (float)j;
-			finalFloat[j][1] = y;
-			y = 0;
-		}
-		return finalFloat;
-	}
+    }
 
-	public static Float[][] averageOfInstance(int[] sensorIdentifiers, Double[][] finalArray)
-	{
-		Float[][] dataToAnalyse = new Float[31][2];
-		
-		for (Float[] row: dataToAnalyse)
-		    Arrays.fill(row, 0f);
+    public Float media(Float[] indexArray) {
+        int x = 0;
+        for (int i = 0; i < indexArray.length; i++)
+            x += indexArray[i];
+        return (float) (x / indexArray.length);
+    }
 
-		for(int sensor: sensorIdentifiers) {
-			for(int i = 0; i < finalArray[sensor].length - 5; i++) {
-				dataToAnalyse[i][0] = (float) i;
-				dataToAnalyse[i][1] += (finalArray[sensor][5+i].floatValue() / sensorIdentifiers.length);
-			}
-		}
-		
-		return dataToAnalyse;
-	}
+    public static Float[][] finalFloatArray(Vector<Float[][]> vector) {
+        Float[][] finalFloat = new Float[31][2];
+
+        float y = 0;
+        for (int j = 0; j < 31; j++) {
+            for (int i = 0; i < vector.size(); i++) {
+                y += (vector.get(i)[j][1]) / vector.size();
+            }
+
+
+            finalFloat[j][0] = (float) j;
+            finalFloat[j][1] = y;
+            y = 0;
+        }
+        return finalFloat;
+    }
+
+    public static Float[][] averageOfInstance(int[] sensorIdentifiers, Double[][] finalArray) {
+        Float[][] dataToAnalyse = new Float[31][2];
+
+        for (Float[] row : dataToAnalyse)
+            Arrays.fill(row, 0f);
+
+        for (int sensor : sensorIdentifiers) {
+            for (int i = 5; i < finalArray[sensor].length ; i++) {
+                dataToAnalyse[i][0] = (float) i;
+                dataToAnalyse[i][1] += (finalArray[sensor][i].floatValue() / sensorIdentifiers.length);
+            }
+        }
+        return dataToAnalyse;
+    }
+
+    public static Double[] averageOfInstanceDouble(int[] sensorIdentifiers, Double[][] finalArray) {
+        Double[] dataToAnalyse = new Double[31];
+
+        for (int sensor : sensorIdentifiers) {
+            for (int i = 5; i < finalArray[sensor].length; i++) {
+                dataToAnalyse[i] += (finalArray[sensor][i].doubleValue() / sensorIdentifiers.length);
+                System.out.println(i);
+            }
+        }
+
+        return dataToAnalyse;
+    }
 
 
     public static void main(String[] args) {
@@ -420,6 +438,7 @@ public class MainModule {
         String[] finalInfo = new String[]{"AF3", "F7", "F3", "FC5", "T7", "P7",
                 "O1", "O2", "P8", "T8", "FC6", "F4", "F8", "AF4"};
         Double[][] finalData;
+        Double[][] finalData2;
 
         if (device == 1) {
 
@@ -431,14 +450,13 @@ public class MainModule {
                 return;
             }
 
-            //finalData = new Double[14][36];
-            finalData = new Double[6][];
-            finalData[0] = new Double[4];
-            finalData[1] = new Double[4];
-            finalData[2] = new Double[4];
-            finalData[3] = new Double[4];
-            finalData[4] = new Double[4];
-            finalData[5] = new Double[31];
+            finalData2 = new Double[14][36];
+            finalData = new Double[5][];
+            finalData[0] = new Double[35];
+            finalData[1] = new Double[35];
+            finalData[2] = new Double[35];
+            finalData[3] = new Double[35];
+            finalData[4] = new Double[35];
             Double sum = 0.0;
 
             for (int k = 0; k < finalData.length; k++) {
@@ -563,20 +581,42 @@ public class MainModule {
                 sum += emotivData.get(finalInfo[k]).getTheta();
             }
             finalData[4][3] = (sum / 14);
+            int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};
+            int[] temporal = {4, 9};
+            int[] parietal = {5, 8};
+            int[] occipital = {6, 7};
+            int[] total = {0, 1, 2, 3,4,5,6,7,8,9, 10, 11, 12, 13};
 
-			/*for (int i = 0; i < finalData.length; i++){
-                //System.out.println(i);
-				finalData[i][0]=emotivData.get(finalInfo[i]).getTheta();
-				finalData[i][1]=emotivData.get(finalInfo[i]).getDelta();
-				finalData[i][2]=emotivData.get(finalInfo[i]).getAlpha();
-				finalData[i][3]=emotivData.get(finalInfo[i]).getBeta();
-				finalData[i][4]=(double) emotivData.get(finalInfo[i]).getSignalQuality();
-				for (int k = 0; k <= 30; k++)
-				{
-					finalData[i][k+5]=emotivData.get(finalInfo[i]).getFreqVals().get(k);
-				}
-			}*/
-
+            for (int i = 0; i < finalData2.length; i++) {
+                finalData2[i][0] = emotivData.get(finalInfo[i]).getTheta();
+                finalData2[i][1] = emotivData.get(finalInfo[i]).getDelta();
+                finalData2[i][2] = emotivData.get(finalInfo[i]).getAlpha();
+                finalData2[i][3] = emotivData.get(finalInfo[i]).getBeta();
+                finalData2[i][4] = (double) emotivData.get(finalInfo[i]).getSignalQuality();
+                for (int k = 0; k <= 30; k++) {
+                    finalData2[i][k + 5] = emotivData.get(finalInfo[i]).getFreqVals().get(k);
+                }
+            }
+            Double[][] finalWavesArray2 = finalData2;
+            Double[] finalData3 = averageOfInstanceDouble(frontal, finalWavesArray2);
+            Double[] finalData4 = averageOfInstanceDouble(temporal, finalWavesArray2);
+            Double[] finalData5 = averageOfInstanceDouble(parietal, finalWavesArray2);
+            Double[] finalData6 = averageOfInstanceDouble(occipital, finalWavesArray2);
+            Double[] finalData7 = averageOfInstanceDouble(total, finalWavesArray2);
+            for (int j = 0; j < 6; j++) {
+                for (int i = 0; i < 31; i++) {
+                    if(j==5)
+                        finalData[j][i]=finalData3[j];
+                    if(j==6)
+                        finalData[j][i]=finalData4[j];
+                    if(j==7)
+                        finalData[j][i]=finalData5[j];
+                    if(j==8)
+                        finalData[j][i]=finalData6[j];
+                    if(j==8)
+                        finalData[j][i]=finalData6[j];
+                }
+            }
             finalWavesArray = finalData;
         }
     }
