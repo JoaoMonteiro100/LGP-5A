@@ -1,10 +1,10 @@
-
+import Iedk.Channel;
+import Iedk.Wave;
+import module.MainModule;
 
 import java.util.HashMap;
 import java.util.Vector;
 
-import Iedk.Channel;
-import Iedk.Wave;
 public class TestsModule {
 ////////////////////////////////////////////////////EMOTIV TEST/////////////////////////////////////////////////
 	

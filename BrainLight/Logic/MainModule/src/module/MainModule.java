@@ -35,7 +35,7 @@ public class MainModule {
     private LinkedList<Double[][]> doubleQ;
     private boolean running;
     private int deviceNo;
-    private boolean calculate  = true; ; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
+    private static boolean calculate  = true; ; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 
     public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2, Boolean neverDeleteP, int daysP) {
@@ -246,12 +246,12 @@ public class MainModule {
 			int count = 0;
 			for(long stop=System.nanoTime()+TimeUnit.SECONDS.toNanos(infoArray[2][0]);stop>System.nanoTime();)
 			
-				if(tempArray == testArray)
+				if(tempArray == finalWavesArray)
 					continue;
 				else
 				{
-					vector.add(averageOfInstance(infoArray[0],testArray));
-					tempArray=testArray;
+					vector.add(averageOfInstance(infoArray[0],finalWavesArray));
+					tempArray=finalWavesArray;
 				}
 
 			for(int i = 0; i < infoArray[1].length;i++)
