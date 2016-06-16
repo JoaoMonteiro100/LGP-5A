@@ -51,6 +51,9 @@
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate
                              pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required
                              auto-validate></paper-input>
+               <paper-input id="historicDays" name="historicDays" label="Historic Days" char-counter maxlength="4"
+                             auto-validate pattern="^(0|[1-9][0-9]*)$" error-message="numbers only!" value="{{user.historicDays}}"
+                             required auto-validate></paper-input>
                 <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected"
                                      label="Gender">
                     <paper-listbox class="dropdown-content" selected="{{selected}}">
@@ -107,11 +110,18 @@
                     };
 
                     if (this.$.editPatientForm.validate()) {
-                        alert(app.userURL(self.user.__firebaseKey__));
+                        //alert(app.userURL(self.user.__firebaseKey__));
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
+
+                        if(this.$.historicDays.value < 120) //4 months
+                            this.$.historicDays.value = 120;
+                        else if(this.$.historicDays.value > 1825) //5 years
+                            this.$.historicDays.value = 1825;
+
                         userRef.update({
                             name: this.$.firstname.value,
                             lastname: this.$.lastname.value,
+                            historicDays: this.$.historicDays.value,
                             gender: this.$.genderdrop.value
                         }, onPatientUpdated);
                     }
