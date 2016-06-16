@@ -7,7 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 
-public class XLSREAD {
+public class ReadXLS_Emotiv {
 
     public static String[][] read(String fileName) {
         XSSFRow row;

@@ -1,6 +1,6 @@
 package com.lgp5.fw.controllers;
 
-import history.read.net.codejava.excel.XLSREAD;
+import history.read.net.codejava.excel.ReadXLS_NeuroSky;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
@@ -285,7 +285,7 @@ public class MenuController{
 		File file = chooser.showOpenDialog(stage);
 		if(file!=null)
 			if(file.exists()){
-				XLSREAD xlsRead = null;
+				ReadXLS_NeuroSky xlsRead = null;
 				historic = xlsRead.read("history/"+file.getName());
 				putHistoric=true;
 			}		
