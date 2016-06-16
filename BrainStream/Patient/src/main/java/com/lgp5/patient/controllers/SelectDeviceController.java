@@ -15,8 +15,6 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,7 +115,7 @@ public class SelectDeviceController {
                     switch (comboBoxValue) {
                         case "NeuroSky Mindset":
                             createNewInfoReading(comboBoxValue);
-                            //launchNeuroSkyView();
+                            launchNeuroSkyView();
                             //get a handle to the stage
                             stage = (Stage) selectDeviceComboBox.getScene().getWindow();
                             //close current window
@@ -142,7 +140,7 @@ public class SelectDeviceController {
 
     private void launchNeuroSkyView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuNeuroSkyView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
@@ -153,6 +151,8 @@ public class SelectDeviceController {
             e.printStackTrace();
         }
     }
+
+
     private void launchEmotivView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuEmotivView.fxml"));

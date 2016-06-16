@@ -4,7 +4,6 @@ package com.lgp5.patient.controllers;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.core.Platform;
 import com.lgp5.patient.utils.UserData;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

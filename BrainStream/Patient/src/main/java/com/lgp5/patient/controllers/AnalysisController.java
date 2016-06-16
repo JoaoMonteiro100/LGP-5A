@@ -1,6 +1,9 @@
 package com.lgp5.patient.controllers;
 
 
+import com.firebase.client.Firebase;
+import com.lgp5.Neurosky;
+import interfaces.HeadSetDataInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,12 +19,10 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import utils.Constants;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -47,9 +48,35 @@ public class AnalysisController {
     ArrayList<String> attentionQueue =  new ArrayList<String>();
     ArrayList<String> meditationQueue =  new ArrayList<String>();
     ArrayList<Number> queueTime = new ArrayList<Number>();
+    private HeadSetDataInterface headSetDataInterface;
+    private Firebase appRef;
+
 
     public AnalysisController() {
+        final long start = System.currentTimeMillis();
+        appRef = new Firebase("https://brainlight.firebaseio.com/leituras").push();
+        System.out.println(appRef.getKey());
+        Firebase newAppRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + appRef.getKey());
+
+        headSetDataInterface = new HeadSetDataInterface() {
+            @Override
+            public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
+                double end = System.currentTimeMillis();
+                double diff = end - start;
+                HashMap<String, Object> data = hashMap.get(Constants.WAVES);
+                data.put("elapsedTime", diff);
+                newAppRef.push().setValue(data);
+            }
+
+            @Override
+            public void onReceiveRawData(HashMap<String, Integer> hashMap) {
+
+            }
+        };
+
+        //new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
     }
+
 
     public void handle(MouseEvent Event) {
         settings.setCursor(Cursor.HAND);
@@ -71,6 +98,7 @@ public class AnalysisController {
                 stage.close();
             }
         });
+
         game.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

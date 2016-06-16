@@ -6,4 +6,5 @@ public class UserData {
     public static String EMAIL = "";
     public static String KEY = "";
     public static String READING_LAST_KEY = "";
+    public static String DEVICE = "";
 }
