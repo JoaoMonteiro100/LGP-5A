@@ -5,6 +5,7 @@ import com.firebase.client.Firebase;
 import com.lgp5.Neurosky;
 import com.lgp5.patient.utils.UserData;
 import interfaces.HeadSetDataInterface;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,12 +21,14 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import module.MainModule;
 import utils.Constants;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 
 public class AnalysisController {
@@ -33,6 +36,7 @@ public class AnalysisController {
     @FXML private Button messages;
     @FXML private Button settings;
     @FXML private Button game;
+    private updateInterface updateInterface;
     @FXML private Button analyseSignalsButton;
     BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
     BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(1);
@@ -63,9 +67,38 @@ public class AnalysisController {
         values.put("Live", true);
         values.put("Leitura", appRef.getKey());
         readingRef.updateChildren(values);
+/*
+        BlockingQueue<Double[][]> queue = null;
+        BlockingQueue<Double[][]> queue2 = null;
 
+        MainModule fw = new MainModule(2,queue,queue2,false,120);
+        fw.receiveDeviceData();
+
+        updateInterface = new updateInterface() {
+            @Override
+            public void update(Double[][] finalDataArray) {
+                Thread cenas = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("vida loka");
+                    }
+
+                });
+            }
+
+            @Override
+            public void update2(Double[][] finalDataArray) {
+
+            }
+        };
+        ThreadInterface t = new ThreadInterface(queue,queue2,updateInterface,2);
+        new Thread(t).start();
+*/
 
         Firebase newAppRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + appRef.getKey());
+
+
+
 
         headSetDataInterface = new HeadSetDataInterface() {
             @Override
