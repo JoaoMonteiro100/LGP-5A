@@ -15,6 +15,11 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SelectDeviceController {
@@ -69,6 +74,30 @@ public class SelectDeviceController {
     }
 
 
+    private void createNewInfoReading(String device) {
+        Firebase appRef = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+        Calendar cal = Calendar.getInstance();
+
+
+        Map<String, Object> values = new HashMap<>();
+        values.put("Device", device.equals("NeuroSky Mindset") ? "neurosky" : "emotiv");
+        values.put("Important", false);
+        values.put("Live", false);
+        values.put("Patient", UserData.KEY);
+        values.put("Note", "");
+        values.put("Leitura", "");
+
+        String time = cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH) + " - " +
+                cal.get(Calendar.HOUR_OF_DAY) + "." + cal.get(Calendar.MINUTE) + "." + cal.get(Calendar.SECOND);
+
+        values.put("Time", time);
+
+        Firebase newAppRef = appRef.push();
+        newAppRef.setValue(values);
+        UserData.READING_LAST_KEY = newAppRef.getKey();
+    }
+
+
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
@@ -87,14 +116,16 @@ public class SelectDeviceController {
                     Stage stage;
                     switch (comboBoxValue) {
                         case "NeuroSky Mindset":
-                            launchNeuroSkyView();
+                            createNewInfoReading(comboBoxValue);
+                            //launchNeuroSkyView();
                             //get a handle to the stage
                             stage = (Stage) selectDeviceComboBox.getScene().getWindow();
                             //close current window
                             stage.close();
                             break;
                         case "Emotiv Epoc":
-                            launchEmotivView();
+                            createNewInfoReading(comboBoxValue);
+                            //launchEmotivView();
                             //get a handle to the stage
                             stage = (Stage) selectDeviceComboBox.getScene().getWindow();
                             //close current window
