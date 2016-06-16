@@ -56,7 +56,6 @@ crashlytics-build.properties
 fabric.properties
 
 # Package Files #
-*.jar
 *.war
 *.ear
 

@@ -194,7 +194,8 @@ public class AnalysisController {
         xAxisMoodsLine.setUpperBound(50);
         xAxisMoodsLine.setAutoRanging(false);
     }
-    private void updateSeriesLineChartMoods(String a,String m)
+
+    private void updateSeriesLineChartMoods(String a, String m)
     {
         moodsGroup.get(0).add(a);
         moodsGroup.get(1).add(m);
