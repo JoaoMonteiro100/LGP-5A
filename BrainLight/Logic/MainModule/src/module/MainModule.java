@@ -580,6 +580,7 @@ public class MainModule {
             for (int k = 0; k < finalData.length; k++) {
                 sum += emotivData.get(finalInfo[k]).getTheta();
             }
+            /*
             finalData[4][3] = (sum / 14);
             int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};
             int[] temporal = {4, 9};
@@ -597,6 +598,7 @@ public class MainModule {
                     finalData2[i][k + 5] = emotivData.get(finalInfo[i]).getFreqVals().get(k);
                 }
             }
+
             Double[][] finalWavesArray2 = finalData2;
             Double[] finalData3 = averageOfInstanceDouble(frontal, finalWavesArray2);
             Double[] finalData4 = averageOfInstanceDouble(temporal, finalWavesArray2);
@@ -616,7 +618,7 @@ public class MainModule {
                     if(j==8)
                         finalData[j][i]=finalData6[j];
                 }
-            }
+            }*/
             finalWavesArray = finalData;
         }
     }
