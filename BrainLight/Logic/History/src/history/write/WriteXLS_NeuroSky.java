@@ -5,14 +5,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 
-/**
- * Created by Vacilo on 22/04/2016.
- */
 public class WriteXLS_NeuroSky {
     private static XSSFWorkbook wb;
     private static String fileName;
 
-    public static void writeXLS(String name,Object [] [] bookData) {    	
+    public static void writeXLS(String name, Object [] [] bookData) {
         try {
             File fileFolder= new File("history");
               
@@ -26,7 +23,6 @@ public class WriteXLS_NeuroSky {
             	fileName=name;
             	sheet = wb.createSheet(file.getName());  
             	Row row_ = sheet.createRow(0);
-				System.out.println("1ªtime");
                 for(int i = 0; i < 12; i++ ) {
                     Cell cell = row_.createCell(i);
                     switch(i) {
