@@ -93,7 +93,7 @@
                 </GridPane>
                 <GridPane fx:id="historyPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="969.0" visible="false" AnchorPane.topAnchor="30.0">
                     <children>
-                        <Button fx:id="openFileFromHistoryButton" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="34.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#fileChooser" text="Open file from history" textAlignment="CENTER">
+                        <Button fx:id="historyButton" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="34.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#fileChooser" text="Open file from history" textAlignment="CENTER">
                             <padding>
                                 <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
                             </padding>

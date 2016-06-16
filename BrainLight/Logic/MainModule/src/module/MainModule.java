@@ -7,6 +7,7 @@ import Iedk.interfaces.EmotivInterface;
 import analysis.Calculations;
 import analysis.TypesOfCalculations;
 import com.lgp5.Neurosky;
+import history.write.WriteXLS_Emotiv;
 import history.write.WriteXLS_NeuroSky;
 import interfaces.HeadSetDataInterface;
 
@@ -80,68 +81,89 @@ public class MainModule {
                     initGetWaves(1, data);
                     try {
                         queue2.put(finalWavesArray);
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
-                }
-
-
-            };
-
-
-            emotivDevice = new EmotivDevice(sendDataInterface);
-        } else if (device == 2) {
-            HeadSetDataInterface sendDataInterface;
-            //confirmar
-            sendDataInterface = new HeadSetDataInterface() {
-
-                @Override
-                public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
-                    initMerge(2, (HashMap<String, Object>) dataToSend.clone());
-                    try {
-                        queue.put(finalDataArray);
                         if (record) {
                             Date dNow = new Date();
                             SimpleDateFormat ftTime =
                                     new SimpleDateFormat("hh:mm:ss");
                             final Object[][] bookData = {
-                                    {ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
-                                            finalDataArray[0][2], finalDataArray[0][3],
-                                            finalDataArray[0][4], finalDataArray[0][5],
-                                            finalDataArray[0][6], finalDataArray[0][7],
-                                            finalDataArray[1][0], finalDataArray[1][1],
-                                            finalDataArray[2][0]},
-                            };
-                            WriteXLS_NeuroSky.writeXLS(fileName, bookData);
-                        } else {
-                            Date dNow = new Date();
-                            SimpleDateFormat ft =
-                                    new SimpleDateFormat("E_yyyy_MM_dd_'at'_hh_mm_ss");
-                            fileName = ft.format(dNow);
+                                    {ftTime.format(dNow), finalWavesArray[0][0], finalWavesArray[0][1],
+                                            finalWavesArray[0][2], finalWavesArray[0][3]},
+                                    };
+                            WriteXLS_Emotiv.writeXLS(fileName, bookData);
+                            }else{
+                                Date dNow = new Date();
+                                SimpleDateFormat ft =
+                                        new SimpleDateFormat("E_yyyy_MM_dd_'at'_hh_mm_ss");
+                                fileName = ft.format(dNow);
+                            }
                         }
-                    } catch (Exception e) {
-                        // TODO: handle exception
+                        catch(Exception e){
+                            // TODO: handle exception
+                        }
                     }
+
+
                 }
 
-                @Override
-                public void onReceiveRawData(HashMap<String, Integer> rawData) {
-                    initGetRaw(2, rawData);
-                    try {
-                        queue2.put(finalRawData);
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
-                }
-            };
+                ;
 
-            neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
+
+                emotivDevice=new
+
+                EmotivDevice(sendDataInterface);
+            }else if (device == 2) {
+                HeadSetDataInterface sendDataInterface;
+                //confirmar
+                sendDataInterface = new HeadSetDataInterface() {
+
+                    @Override
+                    public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
+                        initMerge(2, (HashMap<String, Object>) dataToSend.clone());
+                        try {
+                            queue.put(finalDataArray);
+                            if (record) {
+                                Date dNow = new Date();
+                                SimpleDateFormat ftTime =
+                                        new SimpleDateFormat("hh:mm:ss");
+                                final Object[][] bookData = {
+                                        {ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
+                                                finalDataArray[0][2], finalDataArray[0][3],
+                                                finalDataArray[0][4], finalDataArray[0][5],
+                                                finalDataArray[0][6], finalDataArray[0][7],
+                                                finalDataArray[1][0], finalDataArray[1][1],
+                                                finalDataArray[2][0]},
+                                };
+                                WriteXLS_NeuroSky.writeXLS(fileName, bookData);
+                            } else {
+                                Date dNow = new Date();
+                                SimpleDateFormat ft =
+                                        new SimpleDateFormat("E_yyyy_MM_dd_'at'_hh_mm_ss");
+                                fileName = ft.format(dNow);
+                            }
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+                    }
+
+                    @Override
+                    public void onReceiveRawData(HashMap<String, Integer> rawData) {
+                        initGetRaw(2, rawData);
+                        try {
+                            queue2.put(finalRawData);
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+                    }
+                };
+
+                neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
+            }
+
         }
 
-    }
 
+        //return true if all sensors are ok - emotiv only
 
-    //return true if all sensors are ok - emotiv only
     public boolean getAllSensorsStatusOK(HashMap<String, HashMap<String, Object>> Obj) {
 
         if (deviceNo == 1) {
@@ -346,7 +368,7 @@ public class MainModule {
             Arrays.fill(row, 0f);
 
         for (int sensor : sensorIdentifiers) {
-            for (int i = 5; i < finalArray[sensor].length ; i++) {
+            for (int i = 5; i < finalArray[sensor].length; i++) {
                 dataToAnalyse[i][0] = (float) i;
                 dataToAnalyse[i][1] += (finalArray[sensor][i].floatValue() / sensorIdentifiers.length);
             }

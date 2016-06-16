@@ -1,6 +1,6 @@
 package com.lgp5.fw.controllers;
 
-import history.read.net.codejava.excel.ReadXLS_NeuroSky;
+import history.read.net.codejava.excel.ReadXLS;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
@@ -61,8 +61,6 @@ public class MenuController{
 	@FXML private CheckBox keepHistoryCheckBox;
 	@FXML private CheckBox deleteFilesCheckBox;
 	@FXML private Pane historyPeriodWrapper;
-	@FXML
-    protected Button openFileFromHistoryButton;
 	public MainModule fw;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
@@ -308,7 +306,7 @@ public class MenuController{
 		File file = chooser.showOpenDialog(stage);
 		if(file!=null)
 			if(file.exists()){
-				ReadXLS_NeuroSky xlsRead = null;
+				ReadXLS xlsRead = null;
 				historic = xlsRead.read("history/"+file.getName());
 				putHistoric=true;
 			}

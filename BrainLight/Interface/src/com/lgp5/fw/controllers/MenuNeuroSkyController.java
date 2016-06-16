@@ -1,7 +1,7 @@
 package com.lgp5.fw.controllers;
 
 
-import history.read.net.codejava.excel.ReadXLS_NeuroSky;
+import history.read.net.codejava.excel.ReadXLS;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -613,7 +613,7 @@ public class MenuNeuroSkyController extends MenuController {
 		File file = chooser.showOpenDialog(stage);
 		if(file!=null)
 			if(file.exists()){
-				ReadXLS_NeuroSky xlsRead = null;
+				ReadXLS xlsRead = null;
 				historic = xlsRead.read("history/"+file.getName());
 				putHistoric=true;
 			}

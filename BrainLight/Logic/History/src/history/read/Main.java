@@ -1,12 +1,12 @@
 package history.read;
 
-import history.read.net.codejava.excel.ReadXLS_NeuroSky;
+import history.read.net.codejava.excel.ReadXLS;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ReadXLS_NeuroSky xlsRead = null;
+        ReadXLS xlsRead = null;
         String[][] excel = xlsRead.read("history/Qua_2016_06_15_at_04_11_17.xlsx"); //cenas = name of excel file
 
         //tests
