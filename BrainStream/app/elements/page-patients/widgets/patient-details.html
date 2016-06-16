@@ -225,10 +225,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     days = ((result * 0.0000000115741)); //nr de dias 
                                   
                                     if(days > userHistoricDays){
-                                        alert("cenas");
+                                      //  alert("cenas");
                                         readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
                                        refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
-                                        alert(readingRef);
+                                       // alert(readingRef);
                                         refInfoDelete.remove();
                                         readingRef.remove();    
                                     }
