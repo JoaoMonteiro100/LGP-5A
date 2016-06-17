@@ -55,6 +55,7 @@
                 </paper-listbox>
             </paper-dropdown-menu>
             <form is="iron-form" id="newuserform">
+                <paper-checkbox id="enableAnalysis">Enable analysis</paper-checkbox>
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="unumber" name="unumber" label="Number" auto-validate pattern="[0-9]*" error-message="numbers only!" required auto-validate></paper-input>
@@ -107,6 +108,7 @@
                 setNewPatient: function() {
                     this.newPatient = {
                         doctorAssociated: this.users[this.myChoice].__firebaseKey__,
+                        enableAnalysis: this.$.enableAnalysis.checked,
                         name: this.$.firstname.value,
                         lastname: this.$.lastname.value,
                         //picture: this.user.google.cachedUserProfile.picture,

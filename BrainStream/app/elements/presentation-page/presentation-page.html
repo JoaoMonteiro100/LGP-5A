@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="widgets/line-chart.html">
+<dom-module id="presentation-page">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host::shadow .widget {
+                height: auto !important;
+            / / todo: remove important min-height: 460 px;
+            }
+
+             #container{
+      height: 100%;
+      width:100%;
+      position: absolute;
+      }
+
+        </style>
+    <div id="container">
+      <paper-header-panel>
+        <paper-toolbar class="top-toolbar">
+          <h1><a data-route="dashboard" href="/dashboard" id="coisas" on-tap="onDataRouteClick">BrainStream</a></h1>
+        </paper-toolbar>
+
+  </paper-scroll-header-panel>
+
+    </div>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'presentation-page',
+
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    },
+                }
+            });
+        })();
+    </script>
+</dom-module>
