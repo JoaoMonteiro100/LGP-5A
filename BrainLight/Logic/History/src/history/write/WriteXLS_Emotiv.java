@@ -73,30 +73,18 @@ public class WriteXLS_Emotiv {
                             cell.setCellValue("Looking Right");
                             break;
                         case 15:
-                            cell.setCellValue("Push");
-                            break;
-                        case 16:
-                            cell.setCellValue("Pull");
-                            break;
-                        case 17:
-                            cell.setCellValue("Lift");
-                            break;
-                        case 18:
-                            cell.setCellValue("Drop");
-                            break;
-                        case 19:
                             cell.setCellValue("Engagement");
                             break;
-                        case 20:
+                        case 16:
                             cell.setCellValue("Excitement Long Time");
                             break;
-                        case 21:
+                        case 18:
                             cell.setCellValue("Excitement Short Time");
                             break;
-                        case 22:
+                        case 19:
                             cell.setCellValue("Frustration");
                             break;
-                        case 23:
+                        case 20:
                             cell.setCellValue("Meditation");
                             break;
                     }

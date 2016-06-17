@@ -6,16 +6,24 @@ import java.util.concurrent.BlockingQueue;
 
 public class ThreadInterface implements Runnable {
     private updateInterface updateInterface;
+    private SensorInterface sensorInterface;
     BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(100);
     BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(100);
     private int device;
+    private Boolean sensor;
 
+    public ThreadInterface(BlockingQueue queue, SensorInterface t) {
+        this.queue = queue;
+        sensorInterface = t;
+        sensor = true;
+    }
 
     public ThreadInterface(BlockingQueue queue, BlockingQueue queue2, updateInterface updateInterface, int device) {
         this.queue = queue;
         this.queue2 = queue2;
         this.updateInterface = updateInterface;
         this.device = device;
+        sensor = false;
     }
 
     @Override
@@ -23,32 +31,41 @@ public class ThreadInterface implements Runnable {
         try {
             int i = 0;
             while (true) {
-                if (queue.peek() != null) {
-                    if (updateInterface != null) {
-                        updateInterface.update((Double[][]) queue.take());
-                    }
-                }
-                if (device == 1) {
-                    if (queue2.peek() != null) {
+                if (!sensor) {
+                    if (queue.peek() != null) {
                         if (updateInterface != null) {
-                            if (i == 1000) {
-                                updateInterface.update2((Double[][]) queue2.take());
-                                i = 0;
-                            } else {
-                                queue2.take();
-                            }
-                            i++;
+                            updateInterface.update((Double[][]) queue.take());
                         }
                     }
-                }
-                else if(device == 2){
-                    if (queue2.peek() != null) {
-                        if (updateInterface != null) {
-                            updateInterface.update2((Double[][]) queue2.take());
+                    if (device == 1) {
+                        if (queue2.peek() != null) {
+                            if (updateInterface != null) {
+                                if (i == 1000) {
+                                    updateInterface.update2((Double[][]) queue2.take());
+
+                                    i = 0;
+                                } else {
+                                    queue2.take();
+                                }
+                                i++;
+                            }
+                        }
+                    } else if (device == 2) {
+                        if (queue2.peek() != null) {
+                            if (updateInterface != null) {
+                                updateInterface.update2((Double[][]) queue2.take());
+                            }
+                        }
+                    }
+                } else if (sensor) {
+                    if (queue.peek() != null) {
+                        if (sensorInterface != null) {
+                            sensorInterface.update((Double[][]) queue.take());
                         }
                     }
                 }
             }
+
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

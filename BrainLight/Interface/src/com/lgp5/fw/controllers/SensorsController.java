@@ -1,6 +1,7 @@
 package com.lgp5.fw.controllers;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,8 +16,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import module.MainModule;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-public class SensorsController{
+
+public class SensorsController {
+    BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
     @FXML
     private ComboBox<String> sensorsList;
     @FXML
@@ -62,22 +67,70 @@ public class SensorsController{
     @FXML
     private ImageView brain;
     MainModule fw;
+    private SensorInterface sensorInterface;
     private Image blankBrain = new Image("/com/lgp5/fw/assets/brain-blank.png");
     private Image lobesBrain = new Image("/com/lgp5/fw/assets/brain-lobes.png");
 
-    public SensorsController(MainModule fw) {
+    public SensorsController(MainModule fw,BlockingQueue queue) {
         this.fw = fw;
+        this.queue=queue;
     }
 
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
         sensorsList.getItems().addAll("Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe", "Mean of all lobes (default)");
-        setSensorColor(this.sensorAF3, 0);
+        final Circle[] finalInfo = new Circle[]{sensorAF3, sensorF7, sensorF3, sensorFC5, sensorT7, sensorP7,
+                sensorO1, sensorO2, sensorP8, sensorT8, sensorFC6, sensorF4, sensorF8, sensorAF4};
+       /* setSensorColor(this.sensorAF3, 0);
         setSensorColor(this.sensorF7, 1);
         setSensorColor(this.sensorCMS, 2);
         setSensorColor(this.sensorO2, 3);
-        setSensorColor(this.sensorP7, 4);
+        setSensorColor(this.sensorP7, 4);*/
+        sensorInterface = new SensorInterface() {
+            @Override
+            public void update(Double[][] finalDataArray) {
+                //System.out.println(finalDataArray[1].toString());
+                for (int i = 0; i < finalDataArray[1].length; i++) {
+                    setSensorColor(finalInfo[i], finalDataArray[1][i].intValue());
+                }
+            }
+        };
+        ThreadInterface t = new ThreadInterface(queue, sensorInterface);
+        Thread thread = new Thread(t);
+        thread.setDaemon(true);
+        thread.start();
+        //updateInterface.update2();
+     /*   updateInterface = new updateInterface() {
+            @Override
+            public void update(Double[][] finalDataArray) {
+                System.out.println("ola");
+            }
+
+            @Override
+            public void update2(Double[][] finalDataArray) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < finalDataArray.length; i++) {
+                            System.out.println(finalDataArray[1][i]);
+                        }
+                    }
+                });
+            }
+        };
+        ThreadInterface t = new ThreadInterface(queue, queue2, updateInterface, 2);
+        Thread thread = new Thread(t);
+        thread.setDaemon(true);
+        thread.start();*/
+        /*Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < super.finalDataArray.length; i++) {
+                    System.out.println(finalDataArray[1][i]);
+                }
+            }
+        });*/
 
         /*//enable button only when a choice is made
         sensorsList.setOnAction(new EventHandler<ActionEvent>() {
@@ -168,4 +221,5 @@ public class SensorsController{
             brain.setImage(blankBrain);
         }
     }
+
 }

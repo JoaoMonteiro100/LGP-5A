@@ -14,7 +14,7 @@
     <children>
         <AnchorPane fx:id="paneLayoutRoot" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
             <children>
-                <ImageView fx:id="recordButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#changeRecordButton" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="true">
+                <ImageView fx:id="recordButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#fileChooser" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="true">
                     <image>
                         <Image url="@../assets/record.png" />
                     </image>

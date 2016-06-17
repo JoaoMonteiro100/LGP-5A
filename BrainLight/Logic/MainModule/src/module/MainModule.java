@@ -105,9 +105,7 @@ public class MainModule {
             };
 
 
-            emotivDevice = new
-
-                    EmotivDevice(sendDataInterface);
+            emotivDevice = new  EmotivDevice(sendDataInterface);
         } else if (device == 2) {
             HeadSetDataInterface sendDataInterface;
             //confirmar
@@ -467,9 +465,10 @@ public class MainModule {
                 return;
             }
 
-            finalData2 = new Double[14][36];
-            finalData = new Double[1][];
+            //finalData2 = new Double[14][36];
+            finalData = new Double[2][];
             finalData[0] = new Double[35];//Lobo escolhido ou todos com 4 ondas + 31 eeg's
+            finalData[1] = new Double[14];// 1 signal Quality per Sensor
             Double sum = 0.0;
             switch (selectedLobe) {
                 case 0:/*Lobo Frontal*/
@@ -582,7 +581,7 @@ public class MainModule {
                         try {
                             sum += emotivData.get(finalInfo[k]).getAlpha();
                         } catch (Exception e) {
-                            System.out.println(e.getStackTrace());
+                            //System.out.println(e.getStackTrace());
                         }
                     }
                     finalData[0][0] = (sum / 14);
@@ -591,7 +590,7 @@ public class MainModule {
                         try {
                             sum += emotivData.get(finalInfo[k]).getBeta();
                         } catch (Exception e) {
-                            System.out.println(e.getStackTrace());
+                            //System.out.println(e.getStackTrace());
                         }
                     }
                     finalData[0][1] = (sum / 14);
@@ -600,7 +599,7 @@ public class MainModule {
                         try {
                             sum += emotivData.get(finalInfo[k]).getDelta();
                         } catch (Exception e) {
-                            System.out.println(e.getStackTrace());
+                           // System.out.println(e.getStackTrace());
                         }
                     }
                     finalData[0][2] = (sum / 14);
@@ -609,11 +608,15 @@ public class MainModule {
                         try {
                             sum += emotivData.get(finalInfo[k]).getTheta();
                         } catch (Exception e) {
-                            System.out.println(e.getStackTrace());
+                            //System.out.println(e.getStackTrace());
                         }
                     }
                     finalData[0][3] = (sum / 14);
                     break;
+            }
+            for (int k = 0; k < finalInfo.length; k++) {
+                //System.out.println(k+" "+emotivData.get(finalInfo[k]).getSignalQuality());
+                    finalData[1][k] = (double) emotivData.get(finalInfo[k]).getSignalQuality();
             }
             /*
             int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};

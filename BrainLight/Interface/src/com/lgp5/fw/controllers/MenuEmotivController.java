@@ -251,6 +251,7 @@ public class MenuEmotivController extends MenuController {
                         showBatteryLevel(finalDataArray[0][0].intValue());
                         showWirelessSignal(finalDataArray[0][1].intValue());
                         showExpressionsAndActions(finalDataArray[1], finalDataArray[2]);
+
                         // showActions(finalDataArray[0][1].intValue());
                      /*   //show(finalDataArray[0][1].intValue());
                         System.out.println(finalDataArray[1][0]);
@@ -318,6 +319,7 @@ public class MenuEmotivController extends MenuController {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
+
                         //System.out.println(getSelectedLobe());
                         for (Series<String, Float> series : barChartWaves.getData()) {
                             int i = 0;
@@ -756,7 +758,7 @@ public class MenuEmotivController extends MenuController {
     public void launchSensorsView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/sensorsView.fxml"));
-            loader.setController(new SensorsController(fw));
+            loader.setController(new SensorsController(fw,queue2));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent, 462, 450));
