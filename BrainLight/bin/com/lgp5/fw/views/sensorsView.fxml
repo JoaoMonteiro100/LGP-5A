@@ -7,15 +7,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.SensorsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ComboBox fx:id="sensorsList" layoutX="126.0" layoutY="330.0" prefHeight="25.0" prefWidth="210.0" />
+      <ComboBox fx:id="sensorsList" layoutX="126.0" layoutY="330.0" prefHeight="25.0" prefWidth="210.0">
+      <value>
+         <String fx:value="Mean of all lobes (default)" />
+      </value>
+      </ComboBox>
       <Label layoutX="144.0" layoutY="300.0" text="Show data from the sensors:">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="applySensors" disable="true" layoutX="177.0" layoutY="380.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="109.0" text="Apply choice" />
+      <Button fx:id="applySensors" layoutX="177.0" layoutY="380.0" mnemonicParsing="false" onMouseClicked="#changeLobe" prefHeight="39.0" prefWidth="109.0" text="Apply choice" />
       <ImageView fx:id="brain" fitHeight="215.0" fitWidth="193.0" layoutX="138.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/brain-blank.png" />

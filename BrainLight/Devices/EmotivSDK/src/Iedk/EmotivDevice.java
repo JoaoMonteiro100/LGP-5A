@@ -258,18 +258,18 @@ public class EmotivDevice implements Runnable {
 
       isEngActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_ENGAGEMENT_BOREDOM.ToInt());
 
-        if(isEngActiv ==1) {
+       // if(isEngActiv ==1) {
 
             engagementBoredomScore = EmoState.INSTANCE.ES_AffectivGetEngagementBoredomScore(emotivState);
-        }
+        //}
 
         isExcitementActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_EXCITEMENT.ToInt());
 
-        if(isExcitementActiv ==1) {
+       // if(isExcitementActiv ==1) {
 
             excitementLongScore = EmoState.INSTANCE.ES_AffectivGetExcitementLongTermScore(emotivState);
             excitementShortScore = EmoState.INSTANCE.ES_AffectivGetExcitementShortTermScore(emotivState);
-        }
+        //}
 
         isFrustActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_FRUSTRATION.ToInt());
 

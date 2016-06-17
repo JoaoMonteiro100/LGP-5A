@@ -26,14 +26,14 @@ import module.MainModule;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-public class MenuController{
+public class MenuController {
 	protected String[][] historic;
 	protected Boolean putHistoric;
-
-
-
-	private int selectedLobe;//[0->frontal,1->temporal,2->pariental,3->occipital,4->total]
+	BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
+	BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(1);
 	@FXML private AnchorPane paneLayoutRoot;
 	@FXML private ImageView recordButton;
 	@FXML private ImageView stopButton;
@@ -61,17 +61,23 @@ public class MenuController{
 	@FXML private CheckBox keepHistoryCheckBox;
 	@FXML private CheckBox deleteFilesCheckBox;
 	@FXML private Pane historyPeriodWrapper;
-	public MainModule fw;
+	protected MainModule fw;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
 	protected SettingsPreferences prefs=new SettingsPreferences();
-
 	public MenuController(){
+
+	}
+	public MenuController(int device){
+		if(prefs.getNeverDeletePreference()){
+			fw = new MainModule(device,queue,queue2,true,prefs.getDaysOfHistoryPreference());
+		}else{
+			fw = new MainModule(device,queue,queue2,false,prefs.getDaysOfHistoryPreference());
+		}
 		historic=null;
 		setPutHistoric(false);
-		selectedLobe=4;
 	}
-	public void settings()
+	protected void settings()
 	{
 		historyPeriodSlider.setMin(120);
 		historyPeriodSlider.setValue(120);
@@ -86,7 +92,7 @@ public class MenuController{
 		historyPeriodSlider.adjustValue(prefs.getDaysOfHistoryPreference());
 		daysText.setText(Integer.toString(prefs.getDaysOfHistoryPreference()));
 		deleteFilesCheckBox.setSelected(prefs.getNeverDeletePreference());
-		keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());
+		keepHistoryCheckBox.setSelected(prefs.getRecordHistoryPreference());;
 
 		historyPeriodSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -323,12 +329,5 @@ public class MenuController{
 	}
 	public void setPutHistoric(Boolean putHistoric) {
 		this.putHistoric = putHistoric;
-	}
-	public int getSelectedLobe() {
-		return selectedLobe;
-	}
-
-	public void setSelectedLobe(int selectedLobe) {
-		this.selectedLobe = selectedLobe;
 	}
 }

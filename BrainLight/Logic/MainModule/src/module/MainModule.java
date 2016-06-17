@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainModule {
+    private int selectedLobe;//[0->frontal,1->temporal,2->pariental,3->occipital,4->total]
     private Boolean neverDelete;
     private String fileName;
     private Boolean record;
@@ -41,6 +42,7 @@ public class MainModule {
 
 
     public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2, Boolean neverDeleteP, int daysP) {
+        selectedLobe = 4;
         neverDelete = neverDeleteP;
         days = daysP;
         if (!neverDelete) {
@@ -88,84 +90,77 @@ public class MainModule {
                             final Object[][] bookData = {
                                     {ftTime.format(dNow), finalWavesArray[0][0], finalWavesArray[0][1],
                                             finalWavesArray[0][2], finalWavesArray[0][3]},
-                                    };
+                            };
                             WriteXLS_Emotiv.writeXLS(fileName, bookData);
-                            }else{
-                                Date dNow = new Date();
-                                SimpleDateFormat ft =
-                                        new SimpleDateFormat("E_yyyy_MM_dd_'at'_hh_mm_ss");
-                                fileName = ft.format(dNow);
-                            }
+                        } else {
+                            Date dNow = new Date();
+                            SimpleDateFormat ft =
+                                    new SimpleDateFormat("E_yyyy_MM_dd_'at'_hh_mm_ss");
+                            fileName = ft.format(dNow);
                         }
-                        catch(Exception e){
-                            // TODO: handle exception
-                        }
+                    } catch (Exception e) {
+                        // TODO: handle exception
                     }
+                }
+            };
 
 
+            emotivDevice = new
+
+                    EmotivDevice(sendDataInterface);
+        } else if (device == 2) {
+            HeadSetDataInterface sendDataInterface;
+            //confirmar
+            sendDataInterface = new HeadSetDataInterface() {
+
+                @Override
+                public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
+                    initMerge(2, (HashMap<String, Object>) dataToSend.clone());
+                    try {
+                        queue.put(finalDataArray);
+                        if (record) {
+                            Date dNow = new Date();
+                            SimpleDateFormat ftTime =
+                                    new SimpleDateFormat("hh:mm:ss");
+                            final Object[][] bookData = {
+                                    {ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
+                                            finalDataArray[0][2], finalDataArray[0][3],
+                                            finalDataArray[0][4], finalDataArray[0][5],
+                                            finalDataArray[0][6], finalDataArray[0][7],
+                                            finalDataArray[1][0], finalDataArray[1][1],
+                                            finalDataArray[2][0]},
+                            };
+                            WriteXLS_NeuroSky.writeXLS(fileName, bookData);
+                        } else {
+                            Date dNow = new Date();
+                            SimpleDateFormat ft =
+                                    new SimpleDateFormat("E_yyyy_MM_dd_'at'_hh_mm_ss");
+                            fileName = ft.format(dNow);
+                        }
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
                 }
 
-                ;
-
-
-                emotivDevice=new
-
-                EmotivDevice(sendDataInterface);
-            }else if (device == 2) {
-                HeadSetDataInterface sendDataInterface;
-                //confirmar
-                sendDataInterface = new HeadSetDataInterface() {
-
-                    @Override
-                    public void onReceiveData(HashMap<String, HashMap<String, Object>> dataToSend) {
-                        initMerge(2, (HashMap<String, Object>) dataToSend.clone());
-                        try {
-                            queue.put(finalDataArray);
-                            if (record) {
-                                Date dNow = new Date();
-                                SimpleDateFormat ftTime =
-                                        new SimpleDateFormat("hh:mm:ss");
-                                final Object[][] bookData = {
-                                        {ftTime.format(dNow), finalDataArray[0][0], finalDataArray[0][1],
-                                                finalDataArray[0][2], finalDataArray[0][3],
-                                                finalDataArray[0][4], finalDataArray[0][5],
-                                                finalDataArray[0][6], finalDataArray[0][7],
-                                                finalDataArray[1][0], finalDataArray[1][1],
-                                                finalDataArray[2][0]},
-                                };
-                                WriteXLS_NeuroSky.writeXLS(fileName, bookData);
-                            } else {
-                                Date dNow = new Date();
-                                SimpleDateFormat ft =
-                                        new SimpleDateFormat("E_yyyy_MM_dd_'at'_hh_mm_ss");
-                                fileName = ft.format(dNow);
-                            }
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                        }
+                @Override
+                public void onReceiveRawData(HashMap<String, Integer> rawData) {
+                    initGetRaw(2, rawData);
+                    try {
+                        queue2.put(finalRawData);
+                    } catch (Exception e) {
+                        // TODO: handle exception
                     }
+                }
+            };
 
-                    @Override
-                    public void onReceiveRawData(HashMap<String, Integer> rawData) {
-                        initGetRaw(2, rawData);
-                        try {
-                            queue2.put(finalRawData);
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                        }
-                    }
-                };
-
-                neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
-            }
-
+            neuroDevice = new Neurosky("0013EF004809", sendDataInterface);
         }
 
+    }
 
-        //return true if all sensors are ok - emotiv only
+    //return true if all sensors are ok - emotiv only
 
     public boolean getAllSensorsStatusOK(HashMap<String, HashMap<String, Object>> Obj) {
-
         if (deviceNo == 1) {
 
             Iterator iterator = Obj.get("ChannelQuality").entrySet().iterator();
@@ -195,14 +190,13 @@ public class MainModule {
                     Thread emotivThread = new Thread(emotivDevice);
                     emotivDevice.connectEmotiv();
                     emotivThread.run();
-                    /*while (running) {
-                        if (deviceNo == 1) {
-							getDeviceData(1);
-						}
-					}*/
                 } else if (deviceNo == 2) {
-                    neuroDevice.connect();
-                    neuroDevice.run();
+                    try {
+                        neuroDevice.connect();
+                        neuroDevice.run();
+                    } catch (Exception e) {
+                        System.out.println("O NeuroSky não está conectado");
+                    }
                 }
             }
         };
@@ -459,6 +453,7 @@ public class MainModule {
     public void initGetWaves(int device, HashMap<String, Wave> data) {
         String[] finalInfo = new String[]{"AF3", "F7", "F3", "FC5", "T7", "P7",
                 "O1", "O2", "P8", "T8", "FC6", "F4", "F8", "AF4"};
+
         Double[][] finalData;
         Double[][] finalData2;
 
@@ -473,137 +468,154 @@ public class MainModule {
             }
 
             finalData2 = new Double[14][36];
-            finalData = new Double[5][];
-            finalData[0] = new Double[35];
-            finalData[1] = new Double[35];
-            finalData[2] = new Double[35];
-            finalData[3] = new Double[35];
-            finalData[4] = new Double[35];
+            finalData = new Double[1][];
+            finalData[0] = new Double[35];//Lobo escolhido ou todos com 4 ondas + 31 eeg's
             Double sum = 0.0;
+            switch (selectedLobe) {
+                case 0:/*Lobo Frontal*/
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)F(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getAlpha();
+                    }
+                    finalData[0][0] = (sum / 8);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)F(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getBeta();
+                    }
+                    finalData[0][1] = (sum / 8);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)F(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getDelta();
+                    }
+                    finalData[0][2] = (sum / 8);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)F(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getTheta();
+                    }
+                    finalData[0][3] = (sum / 8);
+                    break;
 
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)F(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getAlpha();
-            }
-            finalData[0][0] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)F(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getBeta();
-            }
-            finalData[0][1] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)F(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getDelta();
-            }
-            finalData[0][2] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)F(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getTheta();
-            }
-            finalData[0][3] = (sum / 8);
+                case 1:/*Lobo Temporal*/
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)T(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getAlpha();
+                    }
+                    finalData[0][0] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)T(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getBeta();
+                    }
+                    finalData[0][1] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)T(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getDelta();
+                    }
+                    finalData[0][2] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)T(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getTheta();
+                    }
+                    finalData[0][3] = (sum / 2);
+                    break;
 
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)T(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getAlpha();
-            }
-            finalData[1][0] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)T(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getBeta();
-            }
-            finalData[1][1] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)T(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getDelta();
-            }
-            finalData[1][2] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)T(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getTheta();
-            }
-            finalData[1][3] = (sum / 8);
+                case 2:/*Lobo Parietal*/
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)P(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getAlpha();
+                    }
+                    finalData[0][0] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)P(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getBeta();
+                    }
+                    finalData[0][1] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)P(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getDelta();
+                    }
+                    finalData[0][2] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)P(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getTheta();
+                    }
+                    finalData[0][3] = (sum / 2);
+                    break;
 
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)P(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getAlpha();
-            }
-            finalData[2][0] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)P(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getBeta();
-            }
-            finalData[2][1] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)P(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getDelta();
-            }
-            finalData[2][2] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)P(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getTheta();
-            }
-            finalData[2][3] = (sum / 8);
+                case 3:/*Lobo Occipital*/
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)O(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getAlpha();
+                    }
+                    finalData[0][0] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)O(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getBeta();
+                    }
+                    finalData[0][1] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)O(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getDelta();
+                    }
+                    finalData[0][2] = (sum / 2);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        if (finalInfo[k].matches("(.*)O(.*)"))
+                            sum += emotivData.get(finalInfo[k]).getTheta();
+                    }
+                    finalData[0][3] = (sum / 2);
+                    break;
 
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)O(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getAlpha();
-            }
-            finalData[3][0] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)O(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getBeta();
-            }
-            finalData[3][1] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)O(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getDelta();
-            }
-            finalData[3][2] = (sum / 8);
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                if (finalInfo[k].matches("(.*)O(.*)"))
-                    sum += emotivData.get(finalInfo[k]).getTheta();
-            }
-            finalData[3][3] = (sum / 8);
-
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                sum += emotivData.get(finalInfo[k]).getAlpha();
-            }
-            finalData[4][0] = (sum / 14);
-
-            //Total + Beta
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                sum += emotivData.get(finalInfo[k]).getBeta();
-            }
-            finalData[4][1] = (sum / 14);
-
-            //Total + Delta
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                sum += emotivData.get(finalInfo[k]).getDelta();
-            }
-            finalData[4][2] = (sum / 14);
-
-            //Total + Theta
-            sum = 0.0;
-            for (int k = 0; k < finalData.length; k++) {
-                sum += emotivData.get(finalInfo[k]).getTheta();
+                case 4:/*Todos os lobos*/
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        try {
+                            sum += emotivData.get(finalInfo[k]).getAlpha();
+                        } catch (Exception e) {
+                            System.out.println(e.getStackTrace());
+                        }
+                    }
+                    finalData[0][0] = (sum / 14);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        try {
+                            sum += emotivData.get(finalInfo[k]).getBeta();
+                        } catch (Exception e) {
+                            System.out.println(e.getStackTrace());
+                        }
+                    }
+                    finalData[0][1] = (sum / 14);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        try {
+                            sum += emotivData.get(finalInfo[k]).getDelta();
+                        } catch (Exception e) {
+                            System.out.println(e.getStackTrace());
+                        }
+                    }
+                    finalData[0][2] = (sum / 14);
+                    sum = 0.0;
+                    for (int k = 0; k < finalInfo.length; k++) {
+                        try {
+                            sum += emotivData.get(finalInfo[k]).getTheta();
+                        } catch (Exception e) {
+                            System.out.println(e.getStackTrace());
+                        }
+                    }
+                    finalData[0][3] = (sum / 14);
+                    break;
             }
             /*
-            finalData[4][3] = (sum / 14);
             int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};
             int[] temporal = {4, 9};
             int[] parietal = {5, 8};
@@ -673,8 +685,6 @@ public class MainModule {
             finalData[1] = new Double[4];
             finalData[2] = new Double[10];
             finalData[3] = new Double[9];
-
-
             for (int i = 0; i < finalData.length; i++) {
                 if (i == 0) {
                     for (int k = 0; k < finalData[i].length; k++) {
@@ -707,7 +717,6 @@ public class MainModule {
                     }
 
             }
-
             finalDataArray = finalData;
         } else if (device == 2) {
             HashMap<String, HashMap<String, Object>> neuroData;
@@ -873,5 +882,13 @@ public class MainModule {
 
     public void setRecord(Boolean record) {
         this.record = record;
+    }
+
+    public int getSelectedLobe() {
+        return selectedLobe;
+    }
+
+    public void setSelectedLobe(int selectedLobe) {
+        this.selectedLobe = selectedLobe;
     }
 }

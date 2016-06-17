@@ -13,35 +13,60 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import module.MainModule;
 
 
-public class SensorsController extends MenuController{
-    @FXML private ComboBox<String> sensorsList;
-    @FXML private Button applySensors;
-    @FXML private CheckBox historyCheckBox;
-    @FXML private Circle sensorAF3;
-    @FXML private Circle sensorAF4;
-    @FXML private Circle sensorF3;
-    @FXML private Circle sensorF4;
-    @FXML private Circle sensorF7;
-    @FXML private Circle sensorF8;
-    @FXML private Circle sensorFC5;
-    @FXML private Circle sensorFC6;
-    @FXML private Circle sensorT7;
-    @FXML private Circle sensorT8;
-    @FXML private Circle sensorCMS;
-    @FXML private Circle sensorDRL;
-    @FXML private Circle sensorP7;
-    @FXML private Circle sensorP8;
-    @FXML private Circle sensorO1;
-    @FXML private Circle sensorO2;
-    @FXML private CheckBox lobeLegendCheckBox;
-    @FXML private Pane lobeLegend;
-    @FXML private ImageView brain;
+public class SensorsController{
+    @FXML
+    private ComboBox<String> sensorsList;
+    @FXML
+    private Button applySensors;
+    @FXML
+    private CheckBox historyCheckBox;
+    @FXML
+    private Circle sensorAF3;
+    @FXML
+    private Circle sensorAF4;
+    @FXML
+    private Circle sensorF3;
+    @FXML
+    private Circle sensorF4;
+    @FXML
+    private Circle sensorF7;
+    @FXML
+    private Circle sensorF8;
+    @FXML
+    private Circle sensorFC5;
+    @FXML
+    private Circle sensorFC6;
+    @FXML
+    private Circle sensorT7;
+    @FXML
+    private Circle sensorT8;
+    @FXML
+    private Circle sensorCMS;
+    @FXML
+    private Circle sensorDRL;
+    @FXML
+    private Circle sensorP7;
+    @FXML
+    private Circle sensorP8;
+    @FXML
+    private Circle sensorO1;
+    @FXML
+    private Circle sensorO2;
+    @FXML
+    private CheckBox lobeLegendCheckBox;
+    @FXML
+    private Pane lobeLegend;
+    @FXML
+    private ImageView brain;
+    MainModule fw;
     private Image blankBrain = new Image("/com/lgp5/fw/assets/brain-blank.png");
     private Image lobesBrain = new Image("/com/lgp5/fw/assets/brain-lobes.png");
 
-    public SensorsController() {
+    public SensorsController(MainModule fw) {
+        this.fw = fw;
     }
 
     // Called after the FXML has been initialized
@@ -85,11 +110,12 @@ public class SensorsController extends MenuController{
 
     /**
      * Changes the colors of the sensors according to the strength of their signal
+     *
      * @param sensor what to change the color of
-     * @param value strength of the signal, which will determine the color
+     * @param value  strength of the signal, which will determine the color
      */
     private void setSensorColor(Circle sensor, int value) {
-        switch(value) {
+        switch (value) {
             //black
             case 0:
                 sensor.setStyle("-fx-fill:#000000;");
@@ -114,17 +140,18 @@ public class SensorsController extends MenuController{
                 break;
         }
     }
-    public void changeLobe(MouseEvent event){
-        if(sensorsList.getValue().equals("Frontal lobe")){
-            super.setSelectedLobe(0);
-        }else if(sensorsList.getValue().equals("Temporal lobe")){
-            super.setSelectedLobe(1);
-        }else if(sensorsList.getValue().equals("Parietal lobe")){
-            super.setSelectedLobe(2);
-        }else if(sensorsList.getValue().equals("Occipital lobe")){
-            super.setSelectedLobe(3);
-        }else if(sensorsList.getValue().equals("Mean of all lobes (default)")){
-            super.setSelectedLobe(4);
+
+    public void changeLobe(MouseEvent event) {
+        if (sensorsList.getValue().equals("Frontal lobe")) {
+            fw.setSelectedLobe(0);
+        } else if (sensorsList.getValue().equals("Temporal lobe")) {
+            fw.setSelectedLobe(1);
+        } else if (sensorsList.getValue().equals("Parietal lobe")) {
+            fw.setSelectedLobe(2);
+        } else if (sensorsList.getValue().equals("Occipital lobe")) {
+            fw.setSelectedLobe(3);
+        } else if (sensorsList.getValue().equals("Mean of all lobes (default)")) {
+            fw.setSelectedLobe(4);
         }
     }
 
@@ -135,10 +162,9 @@ public class SensorsController extends MenuController{
     private void setLegend() {
         lobeLegend.setVisible(!lobeLegend.isVisible());
 
-        if(lobeLegend.isVisible()) {
+        if (lobeLegend.isVisible()) {
             brain.setImage(lobesBrain);
-        }
-        else {
+        } else {
             brain.setImage(blankBrain);
         }
     }

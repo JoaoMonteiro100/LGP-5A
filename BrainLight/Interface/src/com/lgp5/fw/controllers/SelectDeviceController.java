@@ -63,6 +63,7 @@ public class SelectDeviceController {
     }
 
 
+
     private void launchNeuroSkyView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuNeuroSkyView.fxml"));
