@@ -84,14 +84,14 @@
                         }
                     };
 
-                    var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
-                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    var readingRef = new Firebase("https://brainlight2.firebaseio.com/leituras/" + self.reading);
+                    var ref = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
                     var refInfoDelete;
 
                        ref.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 if (childSnapshot.val().Leitura == self.reading) {
-                                        refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+                                        refInfoDelete = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo/" + childSnapshot.key());
                                 }
                             });
                         });

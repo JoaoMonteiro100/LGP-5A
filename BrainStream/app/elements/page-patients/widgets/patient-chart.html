@@ -580,7 +580,7 @@
                         // Clear the old chart everytime we want to show a new chart
                         self.clearData();
 
-                        var ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + examid.detail);
+                        var ref = new Firebase("https://brainlight2.firebaseio.com/leituras/" + examid.detail);
                         ref.limitToLast(11).on("child_added", function (snapshot) {
                             if (snapshot.val()) {
                                 self.setChartData(self, snapshot);
@@ -588,7 +588,7 @@
                             }
                         });
 
-                        var ref2 = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                        var ref2 = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
 
                         ref2.orderByChild("Leitura").equalTo(examid.detail).on("child_added", function (snapshot) {
                             if (snapshot.val()) {

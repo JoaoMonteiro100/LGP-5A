@@ -83,11 +83,11 @@
     app.cols = {style1: '1', style2: '2', style3: '3'};
 
     // Firebase location
-    app.location = 'https://brainlight.firebaseio.com';
-    app.connectionState = 'https://brainlight.firebaseio.com/.info/connected';
-    app.usersLocation = 'https://brainlight.firebaseio.com/users';
-    app.requestsLocation = 'https://brainlight.firebaseio.com/requests';
-    app.readingLocation = 'https://brainlight.firebaseio.com/leiturasinfo';
+    app.location = 'https://brainlight2.firebaseio.com';
+    app.connectionState = 'https://brainlight2.firebaseio.com/.info/connected';
+    app.usersLocation = 'https://brainlight2.firebaseio.com/users';
+    app.requestsLocation = 'https://brainlight2.firebaseio.com/requests';
+    app.readingLocation = 'https://brainlight2.firebaseio.com/leiturasinfo';
 
     app.userURL = function(userID) {
         return app.location + "/users/" + userID;

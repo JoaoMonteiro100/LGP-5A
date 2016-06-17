@@ -49,7 +49,7 @@
                         order-by-child="groups/group2"
                         order-value-type="boolean"
                         equal-to="true"
-                        location="https://brainlight.firebaseio.com/users"
+                        location="https://brainlight2.firebaseio.com/users"
                         data="{{users}}">
                 </firebase-collection>
                 <div id="doctorAssociated" class="textstyle2">
@@ -139,7 +139,7 @@
 
 
                 addRequest: function () {
-                    var ref = new Firebase("https://brainlight.firebaseio.com/requests");
+                    var ref = new Firebase("https://brainlight2.firebaseio.com/requests");
                     var request = this.setNewRequest();
                     var requestRef = ref.push();
                   //  alert(JSON.stringify(request));

@@ -20,19 +20,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
 
         <firebase-auth id="auth"
-                       location="https://brainlight.firebaseio.com/"
+                       location="https://brainlight2.firebaseio.com/"
                        provider="password"
                        user="{{user}}"
                        on-error="errorHandler"
                        on-login="loggedIn"
                        on-logout="LoogedOut">
         </firebase-auth>
-
-        <firebase-document id="fbDoc"
-                           location="{{profileLocation}}"
-                           data="{{profile}}"
-                           on-firebase-value="_firebaseProfileLoaded">
-        </firebase-document>
         <paper-toast id="toast" class="fit-bottom" text=""></paper-toast>
     </template>
     <script>
@@ -134,10 +128,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     userRef.update({
                                         online: true
                                     });
-
-
-                                    userRef.onDisconnect().update({online: false});
                                 }
+
+
+                                userRef.onDisconnect().update({online: false});
                             });
                         }
                     }

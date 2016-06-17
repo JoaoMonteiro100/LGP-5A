@@ -184,7 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     addEventListener('selected-user-patient', function (user) {
                         var ref = new Firebase(app.userURL(user.detail));
                         var ref1;
-                        var reff = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                        var reff = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
 
                          var d = new Date();
                          var n = d.getTime();
@@ -226,8 +226,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                   
                                     if(days > userHistoricDays){
                                       //  alert("cenas");
-                                        readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
-                                       refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+                                        readingRef = new Firebase("https://brainlight2.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
+                                       refInfoDelete = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo/" + childSnapshot.key());
                                        // alert(readingRef);
                                         refInfoDelete.remove();
                                         readingRef.remove();    

@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <section>
             <firebase-collection
-                    location="https://brainlight.firebaseio.com/leiturasinfo"
+                    location="https://brainlight2.firebaseio.com/leiturasinfo"
                     data="{{hisotry}}"></firebase-collection>
             <paper-dialog-scrollable>
                 <paper-listbox id="patientList" selected="{{myChoice}}">
@@ -102,7 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 ,
                 ready: function () {
                     var self = this;
-                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo"); //trolha maximo
+                    var ref = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo"); //trolha maximo
                     addEventListener('selected-user-patient', function (user) {
                         ref.on("value", function (snapshot) {
                             self.history = [];
