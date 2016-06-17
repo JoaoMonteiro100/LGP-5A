@@ -1,4 +1,5 @@
 package history.write;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -23,9 +24,8 @@ public class WriteXLS_Emotiv {
                 fileName = name;
                 sheet = wb.createSheet(file.getName());
                 Row row_ = sheet.createRow(0);
-                for (int i = 0; i < 24; i++) {
+                for (int i = 0; i < 20; i++) {
                     Cell cell = row_.createCell(i);
-
                     switch (i) {
                         case 0:
                             cell.setCellValue("Time");
@@ -78,13 +78,13 @@ public class WriteXLS_Emotiv {
                         case 16:
                             cell.setCellValue("Excitement Long Time");
                             break;
-                        case 18:
+                        case 17:
                             cell.setCellValue("Excitement Short Time");
                             break;
-                        case 19:
+                        case 18:
                             cell.setCellValue("Frustration");
                             break;
-                        case 20:
+                        case 19:
                             cell.setCellValue("Meditation");
                             break;
                     }
@@ -120,6 +120,7 @@ public class WriteXLS_Emotiv {
             try (FileOutputStream outputStream = new FileOutputStream("history/"+name)) {
                 wb.write(outputStream);
                 outputStream.close();
+                System.out.println("olasdasdlpqwekopq");
             }
 
 

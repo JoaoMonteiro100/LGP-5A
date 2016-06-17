@@ -1,4 +1,5 @@
 package history.write;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -9,23 +10,23 @@ public class WriteXLS_NeuroSky {
     private static XSSFWorkbook wb;
     private static String fileName;
 
-    public static void writeXLS(String name, Object [] [] bookData) {
+    public static void writeXLS(String name, Object[][] bookData) {
         try {
-            File fileFolder= new File("history");
-              
-            Sheet sheet;        
-            if(!fileFolder.exists()){
-            	fileFolder.mkdir();
+            File fileFolder = new File("history");
+
+            Sheet sheet;
+            if (!fileFolder.exists()) {
+                fileFolder.mkdir();
             }
-            File file=new File("history/"+name+".xlsx");
-            if(!file.exists()){
-            	wb = new XSSFWorkbook();
-            	fileName=name;
-            	sheet = wb.createSheet(file.getName());  
-            	Row row_ = sheet.createRow(0);
-                for(int i = 0; i < 12; i++ ) {
+            File file = new File("history/" + name + ".xlsx");
+            if (!file.exists()) {
+                wb = new XSSFWorkbook();
+                fileName = name;
+                sheet = wb.createSheet(file.getName());
+                Row row_ = sheet.createRow(0);
+                for (int i = 0; i < 12; i++) {
                     Cell cell = row_.createCell(i);
-                    switch(i) {
+                    switch (i) {
                         case 0:
                             cell.setCellValue("Time");
                             break;
@@ -64,17 +65,17 @@ public class WriteXLS_NeuroSky {
                             break;
                     }
                 }
-            }else{          
-            	if(!fileName.equals(name)){
-            		wb=new XSSFWorkbook();
-            		fileName=name;
-            	}
-            	if(wb.getNumberOfSheets()!=0)
-            	sheet = wb.getSheetAt(0); 
-            	else{
-            		sheet = wb.createSheet(file.getName());  
-                	Row row_ = sheet.createRow(0);
-            	}
+            } else {
+                if (!fileName.equals(name)) {
+                    wb = new XSSFWorkbook();
+                    fileName = name;
+                }
+                if (wb.getNumberOfSheets() != 0)
+                    sheet = wb.getSheetAt(0);
+                else {
+                    sheet = wb.createSheet(file.getName());
+                    Row row_ = sheet.createRow(0);
+                }
             }
             for (Object[] aBook : bookData) {
                 Row row = sheet.createRow(sheet.getPhysicalNumberOfRows());
@@ -91,14 +92,14 @@ public class WriteXLS_NeuroSky {
                 }
 
             }
-            name+= ".xlsx";
-            try (FileOutputStream outputStream = new FileOutputStream("history/"+name)) {
+            name += ".xlsx";
+            try (FileOutputStream outputStream = new FileOutputStream("history/" + name)) {
                 wb.write(outputStream);
                 outputStream.close();
             }
 
 
-        } catch(Exception ioe) {
+        } catch (Exception ioe) {
             ioe.printStackTrace();
         }
     }

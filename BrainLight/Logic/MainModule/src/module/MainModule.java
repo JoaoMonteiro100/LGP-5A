@@ -87,9 +87,16 @@ public class MainModule {
                             Date dNow = new Date();
                             SimpleDateFormat ftTime =
                                     new SimpleDateFormat("hh:mm:ss");
+                            //System.out.println("ola");
+
                             final Object[][] bookData = {
                                     {ftTime.format(dNow), finalWavesArray[0][0], finalWavesArray[0][1],
-                                            finalWavesArray[0][2], finalWavesArray[0][3]},
+                                            finalWavesArray[0][2], finalWavesArray[0][3],finalDataArray[2][2],
+                                            finalDataArray[2][0],finalDataArray[2][1],finalDataArray[2][3],
+                                            finalDataArray[2][4],finalDataArray[2][5],finalDataArray[1][2],
+                                            finalDataArray[1][3],finalDataArray[1][0],finalDataArray[1][1],
+                                            finalDataArray[3][1],finalDataArray[3][3],finalDataArray[3][4],
+                                            finalDataArray[3][6],finalDataArray[3][8]},
                             };
                             WriteXLS_Emotiv.writeXLS(fileName, bookData);
                         } else {

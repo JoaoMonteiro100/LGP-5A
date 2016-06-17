@@ -79,8 +79,8 @@ public class EmotivDevice implements Runnable {
         if (Edk.INSTANCE.EE_EngineConnect("Emotiv Systems-5") != EdkErrorCode.EDK_OK.ToInt()) {
             System.out.println("Emotiv start up failed");
             return;
-        } else
-            System.out.println("Emotiv connected");
+        } /*else
+            System.out.println("Emotiv connected");*/
     }
 
     public void emotivDeviceDisconnect() {
@@ -180,12 +180,10 @@ public class EmotivDevice implements Runnable {
     private boolean eventTypeCheck(int eventType) {
         switch (eventType) {
             case 0x0010:
-                System.out.println("User added");
                 Edk.INSTANCE.EE_DataAcquisitionEnable(userID.getValue(), true);
                 readytocollect = true;
                 break;
             case 0x0020:
-                System.out.println("User removed");
                 readytocollect = false;        //just single connection
                 break;
             case 0x0040:
