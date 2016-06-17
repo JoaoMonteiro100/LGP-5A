@@ -45,6 +45,7 @@
         <paper-dialog id="editFormModal" modal>
             <h1>Edit Patient</h1>
             <form is="iron-form" id="editPatientForm">
+                <paper-checkbox id="enableAnalysis" checked="{{user.enableAnalysis}}">Enable analysis</paper-checkbox>
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10"
                              auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.name}}"
                              required auto-validate></paper-input>
@@ -119,6 +120,7 @@
                             this.$.historicDays.value = 1825;
 
                         userRef.update({
+                            enableAnalysis: this.$.enableAnalysis.checked,
                             name: this.$.firstname.value,
                             lastname: this.$.lastname.value,
                             historicDays: this.$.historicDays.value,
