@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="widgets/line-chart.html">
+<dom-module id="presentation-page">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host::shadow .widget {
+                height: auto !important;
+            / / todo: remove important min-height: 460 px;
+            }
+        </style>
+    <div> hello</div>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'presentation-page',
+
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    },
+                }
+            });
+        })();
+    </script>
+</dom-module>
