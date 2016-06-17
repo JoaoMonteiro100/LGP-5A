@@ -8,8 +8,23 @@
                 height: auto !important;
             / / todo: remove important min-height: 460 px;
             }
+
+             #container{
+      height: 100%;
+      width:100%;
+      position: absolute;
+      }
+
         </style>
-    <div> hello</div>
+    <div id="container">
+      <paper-header-panel>
+        <paper-toolbar class="top-toolbar">
+          <h1><a data-route="dashboard" href="/dashboard" id="coisas" on-tap="onDataRouteClick">BrainStream</a></h1>
+        </paper-toolbar>
+
+  </paper-scroll-header-panel>
+
+    </div>
     </template>
     <script>
         (function () {
