@@ -210,12 +210,6 @@ public class MenuNeuroSkyController extends MenuController {
         URL url = new URL("http://localhost:8080/");
         radarBrowser.getEngine().load(url.toExternalForm());
 
-		/*if(prefs.getNeverDeletePreference()){
-            super.fw = new MainModule(2,queue,queue2,true,120);
-        }else{
-        	super.fw = new MainModule(2,queue,queue2,false,120);
-        }*/
-
         super.fw.receiveDeviceData();
 
 
