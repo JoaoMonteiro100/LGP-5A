@@ -755,6 +755,7 @@ public class MenuEmotivController extends MenuController {
     public void launchCalibrationView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/calibrationView.fxml"));
+            loader.setController(new AnalysisEmotivController(fw,queue2));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent, 462, 226));

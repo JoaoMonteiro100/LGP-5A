@@ -1,9 +1,6 @@
 package com.lgp5.fw.controllers;
 
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -82,15 +79,9 @@ public class SensorsController {
         sensorsList.getItems().addAll("Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe", "Mean of all lobes (default)");
         final Circle[] finalInfo = new Circle[]{sensorAF3, sensorF7, sensorF3, sensorFC5, sensorT7, sensorP7,
                 sensorO1, sensorO2, sensorP8, sensorT8, sensorFC6, sensorF4, sensorF8, sensorAF4};
-       /* setSensorColor(this.sensorAF3, 0);
-        setSensorColor(this.sensorF7, 1);
-        setSensorColor(this.sensorCMS, 2);
-        setSensorColor(this.sensorO2, 3);
-        setSensorColor(this.sensorP7, 4);*/
         sensorInterface = new SensorInterface() {
             @Override
             public void update(Double[][] finalDataArray) {
-                //System.out.println(finalDataArray[1].toString());
                 for (int i = 0; i < finalDataArray[1].length; i++) {
                     setSensorColor(finalInfo[i], finalDataArray[1][i].intValue());
                 }

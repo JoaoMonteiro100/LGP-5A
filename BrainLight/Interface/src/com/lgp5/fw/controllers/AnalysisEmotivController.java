@@ -12,11 +12,16 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import module.MainModule;
 
 import java.io.IOException;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 
 public class AnalysisEmotivController {
+    MainModule fw;
+    BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
     @FXML
     private ComboBox<String> waveToAnalyse;
     @FXML
@@ -30,7 +35,9 @@ public class AnalysisEmotivController {
     @FXML
     private CheckBox freqOfMinIntensity, freqOfMaxIntensity, amplitude, median, mode, mean, maxIntensity, minIntensity, maxAmplitude;
 
-    public AnalysisEmotivController() {
+    public AnalysisEmotivController(MainModule fw, BlockingQueue queue) {
+        this.fw = fw;
+        this.queue=queue;
     }
 
     // Called after the FXML has been initialized
