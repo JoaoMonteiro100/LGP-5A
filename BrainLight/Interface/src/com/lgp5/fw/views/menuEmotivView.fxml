@@ -31,7 +31,7 @@
                                 <CategoryAxis side="BOTTOM" fx:id="xAxisWaves" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis side="LEFT" />
+                                <NumberAxis fx:id="yAxisWaves" side="LEFT" />
                             </yAxis>
                         </BarChart>
                         <LineChart fx:id="lineChartWaves">

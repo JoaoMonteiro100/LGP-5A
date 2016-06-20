@@ -107,6 +107,7 @@ public class MenuEmotivController extends MenuController {
     private BarChart<String, Float> barChartMentalActions;
     @FXML
     private CategoryAxis xAxisWaves;
+    @FXML    private NumberAxis yAxisWaves;
     @FXML
     private CategoryAxis xAxisMood;
     @FXML
@@ -164,6 +165,7 @@ public class MenuEmotivController extends MenuController {
         moods.addAll(Arrays.asList(moodsArray));
         mentalActions.addAll(Arrays.asList(actions));
         xAxisWaves.setCategories(brainwaves);
+        yAxisWaves.setLabel("Power");
         xAxisMood.setCategories(moods);
         XYChart.Series<String, Float> series = new XYChart.Series<>();
         series.getData().add(new XYChart.Data("Alfa", 35f));
@@ -645,10 +647,8 @@ public class MenuEmotivController extends MenuController {
         yAxisWavesLine.setLabel("Magnitude(dB)");
         XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
 
-        series1.setName("Average");
-
         for (int i = 0; i < 31; i++) {
-            series1.getData().add(new XYChart.Data(i, 0f));
+            series1.getData().add(new XYChart.Data(i+1, 0f));
         }
         wavesGroup.add(thetaQueue);
         lineChartWaves.getData().addAll(series1);
@@ -664,10 +664,10 @@ public class MenuEmotivController extends MenuController {
             series.nodeProperty().get().setStyle("-fx-stroke: " + constants.Constants.colors[this.colorNumber] + ";");
             this.colorNumber++;
         }
-        lineChartWaves.setLegendVisible(true);
-        lineChartWaves.setAnimated(false);
+        lineChartWaves.setLegendVisible(false);
+        lineChartWaves.setAnimated(true);
 
-        xAxisWavesLine.setLowerBound(0);
+        xAxisWavesLine.setLowerBound(1);
         xAxisWavesLine.setUpperBound(31);
         xAxisWavesLine.setAutoRanging(false);
     }
