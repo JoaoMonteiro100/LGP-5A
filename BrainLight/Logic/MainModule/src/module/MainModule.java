@@ -492,6 +492,7 @@ public class MainModule {
             finalData[1] = new Double[14];// 1 signal Quality per Sensor
             finalData[2] = new Double[31];// all 31 average frequency
             Double sum = 0.0;
+            Double[] finalData3;
             switch (selectedLobe) {
                 case 0:/*Lobo Frontal*/
                     for (int k = 0; k < finalInfo.length; k++) {
@@ -517,6 +518,11 @@ public class MainModule {
                             sum += emotivData.get(finalInfo[k]).getTheta();
                     }
                     finalData[0][3] = (sum / 8);
+                    int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};
+                    finalData3 = averageOfInstanceDouble(frontal, allData);
+                    for (int j = 0; j < finalData3.length; j++) {
+                        finalData[2][j]=finalData3[j];
+                    }
                     break;
 
                 case 1:/*Lobo Temporal*/
@@ -543,6 +549,11 @@ public class MainModule {
                             sum += emotivData.get(finalInfo[k]).getTheta();
                     }
                     finalData[0][3] = (sum / 2);
+                    int[] temporal = {4, 9};
+                    finalData3 = averageOfInstanceDouble(temporal, allData);
+                    for (int j = 0; j < finalData3.length; j++) {
+                        finalData[2][j]=finalData3[j];
+                    }
                     break;
 
                 case 2:/*Lobo Parietal*/
@@ -569,6 +580,11 @@ public class MainModule {
                             sum += emotivData.get(finalInfo[k]).getTheta();
                     }
                     finalData[0][3] = (sum / 2);
+                    int[] parietal = {5, 8};
+                    finalData3 = averageOfInstanceDouble(parietal, allData);
+                    for (int j = 0; j < finalData3.length; j++) {
+                        finalData[2][j]=finalData3[j];
+                    }
                     break;
 
                 case 3:/*Lobo Occipital*/
@@ -595,6 +611,11 @@ public class MainModule {
                             sum += emotivData.get(finalInfo[k]).getTheta();
                     }
                     finalData[0][3] = (sum / 2);
+                    int[] occipital = {6, 7};
+                    finalData3 = averageOfInstanceDouble(occipital, allData);
+                    for (int j = 0; j < finalData3.length; j++) {
+                        finalData[2][j]=finalData3[j];
+                    }
                     break;
 
                 case 4:/*Todos os lobos*/
@@ -636,7 +657,7 @@ public class MainModule {
                     finalData[0][3] = (sum / 14);
 
                     int[] total = {0, 1, 2, 3,4,5,6,7,8,9, 10, 11, 12, 13};
-                    Double[] finalData3 = averageOfInstanceDouble(total, allData);
+                    finalData3 = averageOfInstanceDouble(total, allData);
                     for (int j = 0; j < finalData3.length; j++) {
                         finalData[2][j]=finalData3[j];
                     }

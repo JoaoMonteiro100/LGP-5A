@@ -15,16 +15,6 @@
    <children>
       <AnchorPane fx:id="paneLayoutRoot" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
          <children>
-            <ImageView fx:id="recordButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#changeRecordButton" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="true">
-               <image>
-                  <Image url="@../assets/record.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="stopButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#changeRecordButton" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="false">
-               <image>
-                  <Image url="@../assets/stop.png" />
-               </image>
-            </ImageView>
             <GridPane fx:id="brainWavesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="980.0" visible="false" AnchorPane.topAnchor="30.0">
                <children>
                   <BarChart fx:id="barChartWaves" GridPane.rowIndex="1">
@@ -292,6 +282,16 @@
                      <Image url="@../assets/signal/0.png" />
                  </image>
              </ImageView>
+            <ImageView fx:id="recordButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#changeRecordButton" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="true">
+               <image>
+                  <Image url="@../assets/record.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="stopButton" fitHeight="31.0" fitWidth="32.0" layoutX="952.0" layoutY="-1.0" onMouseClicked="#changeRecordButton" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="false">
+               <image>
+                  <Image url="@../assets/stop.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <HBox layoutY="3.0" prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(#ffffff, #999999 80%);" AnchorPane.topAnchor="0.0">
