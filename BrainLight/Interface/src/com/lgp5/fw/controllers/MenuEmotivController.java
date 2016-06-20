@@ -21,19 +21,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import module.MainModule;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.atomic.DoubleAccumulator;
 
 public class MenuEmotivController extends MenuController {
     /*BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
@@ -518,7 +513,7 @@ public class MenuEmotivController extends MenuController {
         series3.setName("Alpha");
         series4.setName("Beta");
         series5.setName("Delta");
-        series6.setName("THeta");
+        series6.setName("Theta");
         if (historic.length != 0) {
             for (int i = 1; i < historic.length; i++) {
                 series3.getData().add(new XYChart.Data<String, Number>(historic[i][0], Float.parseFloat(historic[i][1])));

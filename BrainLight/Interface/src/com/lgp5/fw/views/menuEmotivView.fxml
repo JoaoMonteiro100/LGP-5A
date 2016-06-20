@@ -108,6 +108,14 @@
                                 <NumberAxis fx:id="yAxisHistory" side="LEFT" />
                             </yAxis>
                         </LineChart>
+                  <ProgressIndicator fx:id="loadingDialog" prefHeight="300.0" prefWidth="100.0" visible="false">
+                     <padding>
+                        <Insets bottom="150.0" left="150.0" right="150.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets left="300.0" top="100.0" />
+                     </GridPane.margin>
+                  </ProgressIndicator>
                     </children>
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

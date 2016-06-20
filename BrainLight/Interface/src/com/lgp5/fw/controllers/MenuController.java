@@ -5,6 +5,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutionException;
 
 public class MenuController {
 	protected String[][] historic;
@@ -61,6 +63,7 @@ public class MenuController {
 	@FXML private CheckBox keepHistoryCheckBox;
 	@FXML private CheckBox deleteFilesCheckBox;
 	@FXML private Pane historyPeriodWrapper;
+	@FXML private ProgressIndicator loadingDialog;
 	protected MainModule fw;
 	private Tooltip recordTooltip = new Tooltip("Start recording brainwave signals");
 	private Tooltip stopTooltip = new Tooltip("Stop recording");
@@ -313,8 +316,31 @@ public class MenuController {
 		if(file!=null)
 			if(file.exists()){
 				ReadXLS xlsRead = null;
-				historic = xlsRead.read("history/"+file.getName());
-				putHistoric=true;
+
+				// Boolean as generic parameter since you want to return it
+				Task<Boolean> task = new Task<Boolean>() {
+					@Override public Boolean call() {
+						historic = xlsRead.read("history/"+file.getName());
+						putHistoric=true;
+						return putHistoric;
+					}
+				};
+
+				task.setOnRunning((e) -> loadingDialog.setVisible(true));
+				task.setOnSucceeded((e) -> {
+					loadingDialog.setVisible(false);
+					try {
+						Boolean returnValue = task.get();
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					} catch (ExecutionException e1) {
+						e1.printStackTrace();
+					}
+				});
+				task.setOnFailed((e) -> {
+					// eventual error handling by catching exceptions from task.get()
+				});
+				new Thread(task).start();
 			}
 	}
 
