@@ -111,6 +111,7 @@ public class MenuEmotivController extends MenuController {
     private CategoryAxis xAxisMood;
     @FXML
     private NumberAxis xAxisWavesLine;
+    @FXML private NumberAxis yAxisWavesLine;
     @FXML
     private NumberAxis xAxisMoodsLine;
     @FXML
@@ -217,7 +218,7 @@ public class MenuEmotivController extends MenuController {
         barChartMoods.setLegendVisible(false);
         barChartMentalActions.setLegendVisible(false);
         colorNumber = 0;
-        //createSeriesLineChartWaves(series);
+        createSeriesLineChartFrequencies();
         colorNumber = 0;
         createSeriesLineChartMoods(series2);
 
@@ -314,8 +315,13 @@ public class MenuEmotivController extends MenuController {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-
-                        //System.out.println(getSelectedLobe());
+                       for (Series<Number, Number> series : lineChartWaves.getData()) {
+                            for (int i = 0; i < series.getData().size(); i++) {
+                                //System.out.println(series.getData().size());
+                               series.getData().get(i).setYValue(Float.parseFloat(finalDataArray[2][i].toString()));
+                                //System.out.println(finalDataArray[2][i]);
+                            }
+                        }
                         for (Series<String, Float> series : barChartWaves.getData()) {
                             int i = 0;
                             for (XYChart.Data<String, Float> data : series.getData()) {
@@ -634,59 +640,18 @@ public class MenuEmotivController extends MenuController {
         xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(49).toString()));
     }
 
-    public void createSeriesLineChartWaves(XYChart.Series<String, Float> seriesBarChart) {
-        xAxisWavesLine.setLabel("Freq(Hz)");
-        XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
-        XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
-        XYChart.Series<Number, Number> series5 = new XYChart.Series<>();
-        XYChart.Series<Number, Number> series6 = new XYChart.Series<>();
+    public void createSeriesLineChartFrequencies() {
+        xAxisWavesLine.setLabel("Frequency(Hz)");
+        yAxisWavesLine.setLabel("Magnitude(dB)");
+        XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
 
-        series3.setName("Alpha");
-        series4.setName("Beta");
-        series5.setName("Thelta");
-        series6.setName("Theta");
+        series1.setName("Average");
 
-        for (int i = 0; i < 10; i++) {
-            series3.getData().add(new XYChart.Data(0f, 0f));
-            series4.getData().add(new XYChart.Data(0f, 0f));
-            series5.getData().add(new XYChart.Data(0f, 0f));
-            series6.getData().add(new XYChart.Data(0f, 0f));
-            thetaQueue.add("0.0");
-            alphaQueue.add("0.0");
-            deltaQueue.add("0.0");
-            betaQueue.add("0.0");
-            queueTime.add(0);
+        for (int i = 0; i < 31; i++) {
+            series1.getData().add(new XYChart.Data(i, 0f));
         }
-        wavesGroup.add(alphaQueue);
-        wavesGroup.add(betaQueue);
-        wavesGroup.add(deltaQueue);
         wavesGroup.add(thetaQueue);
-        lineChartWaves.getData().addAll(series3, series4, series5, series6);
-        for (int i = 0; i < seriesBarChart.getData().size(); i++) {
-            final int tmp = i;
-            final int tmp2 = colorNumber;
-            seriesBarChart.getData().get(i).getNode().setOnMouseClicked(new EventHandler<Event>() {
-                @Override
-                public void handle(Event event) {
-                    if (lineChartWaves.getData().get(tmp).nodeProperty().get().isVisible()) {
-                        lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(false);
-                        Set<Node> lookupAll = lineChartWaves.lookupAll(".chart-line-symbol.series" + tmp);
-                        for (Node n : lookupAll) {
-                            n.setVisible(false);
-                        }
-                        seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: " + constants.Constants.colors[tmp2] + ";-fx-cursor: hand;");
-                    } else {
-                        Set<Node> lookupAll = lineChartWaves.lookupAll(".chart-line-symbol.series" + tmp);
-                        for (Node n : lookupAll) {
-                            n.setVisible(true);
-                        }
-                        seriesBarChart.getData().get(tmp).getNode().setStyle("-fx-bar-fill: " + constants.Constants.colors[tmp2] + ";-fx-cursor: hand; -fx-border-color: #000000; -fx-border-width: 2;");
-                        lineChartWaves.getData().get(tmp).nodeProperty().get().setVisible(true);
-                    }
-                }
-            });
-            colorNumber++;
-        }
+        lineChartWaves.getData().addAll(series1);
 
         this.colorNumber = 0;
         for (Series<Number, Number> series : lineChartWaves.getData()) {
@@ -699,31 +664,12 @@ public class MenuEmotivController extends MenuController {
             series.nodeProperty().get().setStyle("-fx-stroke: " + constants.Constants.colors[this.colorNumber] + ";");
             this.colorNumber++;
         }
-        lineChartWaves.setLegendVisible(false);
+        lineChartWaves.setLegendVisible(true);
         lineChartWaves.setAnimated(false);
 
         xAxisWavesLine.setLowerBound(0);
-        xAxisWavesLine.setUpperBound(50);
+        xAxisWavesLine.setUpperBound(31);
         xAxisWavesLine.setAutoRanging(false);
-    }
-
-    public void updateSeriesLineChartWaves(String d, String t, String g1, String g2, String a1, String a2, String b1, String b2) {
-        queueTime.add((System.currentTimeMillis() / 1000) - time);
-        queueTime.remove(0);
-        wavesGroup.get(0).add(d);
-        wavesGroup.get(1).add(t);
-        wavesGroup.get(2).add(a2);
-        wavesGroup.get(3).add(a1);
-        wavesGroup.get(4).add(b2);
-        wavesGroup.get(5).add(b1);
-        wavesGroup.get(6).add(g1);
-        wavesGroup.get(7).add(g2);
-
-        for (int i = 0; i < wavesGroup.size(); i++) {
-            wavesGroup.get(i).remove(0);
-        }
-        xAxisWavesLine.setLowerBound(Double.parseDouble(queueTime.get(0).toString()));
-        xAxisWavesLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));
     }
 
     public void launchAnalysisView() {

@@ -79,7 +79,7 @@ public class EmotivDevice implements Runnable {
         if (Edk.INSTANCE.EE_EngineConnect("Emotiv Systems-5") != EdkErrorCode.EDK_OK.ToInt()) {
             System.out.println("Emotiv start up failed");
             return;
-        } /*else
+        }/* else
             System.out.println("Emotiv connected");*/
     }
 
@@ -158,7 +158,7 @@ public class EmotivDevice implements Runnable {
         F8 = new Channel();
         AF4 = new Channel();
 
-       isExcitementActiv=0; isFrustActiv=0; isMeditationActiv=0;
+        isExcitementActiv=0; isFrustActiv=0; isMeditationActiv=0;
         engagementBoredomScore=0.0f; excitementLongScore=0.0f; excitementShortScore=0.0f; frustationScore=0.0f; meditationScore=0.0f;
 
 
@@ -180,10 +180,12 @@ public class EmotivDevice implements Runnable {
     private boolean eventTypeCheck(int eventType) {
         switch (eventType) {
             case 0x0010:
+                //  System.out.println("User added");
                 Edk.INSTANCE.EE_DataAcquisitionEnable(userID.getValue(), true);
                 readytocollect = true;
                 break;
             case 0x0020:
+                // System.out.println("User removed");
                 readytocollect = false;        //just single connection
                 break;
             case 0x0040:
@@ -216,18 +218,15 @@ public class EmotivDevice implements Runnable {
 
             //new event to handle
             if (state == EdkErrorCode.EDK_OK.ToInt()) {
-
                 int eventType = Edk.INSTANCE.EE_EmoEngineEventGetType(emotivEvent);
                 Edk.INSTANCE.EE_EmoEngineEventGetUserId(emotivEvent, userID);
                 newData = eventTypeCheck(eventType);
 
-                if (newData) {
-
+                if (eventType == Edk.EE_Event_t.EE_EmoStateUpdated.ToInt()) {
                     timestamp = EmoState.INSTANCE.ES_GetTimeFromStart(emotivState);
                     emotivHeadsetOn = EmoState.INSTANCE.ES_GetHeadsetOn(emotivState);
 
                     if (emotivHeadsetOn == 1) {
-
                         //wireless status
                         wirelessSignalStatus = EmoState.INSTANCE.ES_GetWirelessSignalStatus(emotivState);
                         //bat status
@@ -239,35 +238,33 @@ public class EmotivDevice implements Runnable {
                         getWaves();
                         getSensorsContactQuality();
                     }
-                }
-                new Thread(() -> {
+
                     channelsAverageBandPowers.clear();
                     calculateDFT();
                     emotivInterface.onReceiveWavesData(channelsAverageBandPowers);
-                    return;
-                }).start();
 
-                sendDataToInterface();
+                    sendDataToInterface();
+                }
             }
         }
     }
 
     private void getAffectiv(){
 
-      isEngActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_ENGAGEMENT_BOREDOM.ToInt());
+        isEngActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_ENGAGEMENT_BOREDOM.ToInt());
 
-       // if(isEngActiv ==1) {
+        if(isEngActiv ==1) {
 
             engagementBoredomScore = EmoState.INSTANCE.ES_AffectivGetEngagementBoredomScore(emotivState);
-        //}
+        }
 
         isExcitementActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_EXCITEMENT.ToInt());
 
-       // if(isExcitementActiv ==1) {
+        if(isExcitementActiv ==1) {
 
             excitementLongScore = EmoState.INSTANCE.ES_AffectivGetExcitementLongTermScore(emotivState);
             excitementShortScore = EmoState.INSTANCE.ES_AffectivGetExcitementShortTermScore(emotivState);
-        //}
+        }
 
         isFrustActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_FRUSTRATION.ToInt());
 
@@ -395,7 +392,7 @@ public class EmotivDevice implements Runnable {
         affectivemap.put("Frustation",frustationScore);
         affectivemap.put("MeditationActive",isMeditationActiv);
         affectivemap.put("Meditation",meditationScore);
-        
+
         data.put("DeviceInfo", deviceInfoMap);
         data.put("Actions", actionsMap);
         data.put("FacialExpressions", expressionsMap);
@@ -413,28 +410,28 @@ public class EmotivDevice implements Runnable {
         } else if (act == 4) {
             actionstr = "Pull";
         } else if (act == 8) {
-            actionstr = new String("Lift");
+            actionstr = "Lift";
         } else if (act == 16) {
-            actionstr = new String("Drop");
+            actionstr = "Drop";
         } else if (act == 32) {
-            actionstr = new String("Left");
+            actionstr = "Left";
         } else if (act == 64) {
-            actionstr = new String("Right");
+            actionstr = "Right";
         } else if (act == 128) {
-            actionstr = new String("RotateLeft");
+            actionstr = "RotateLeft";
         } else if (act == 256) {
-            actionstr = new String("RotateRight");
+            actionstr = "RotateRight";
         } else if (act == 512) {
-            actionstr = new String("RotateClockwise");
+            actionstr = "RotateClockwise";
         } else if (act == 1024) {
-            actionstr = new String("RotateCounter-Clockwise");
+            actionstr = "RotateCounter-Clockwise";
         } else if (act == 2048) {
-            actionstr = new String("RotateForward");
+            actionstr = "RotateForward";
         } else if (act == 4095) {
-            actionstr = new String("RotateReverse");
+            actionstr = "RotateReverse";
         } else if (act == 8192) {
-            actionstr = new String("Disappear");
-        } else actionstr = new String("error");
+            actionstr = "Disappear";
+        } else actionstr = "error";
 
         return actionstr;
     }
@@ -444,17 +441,17 @@ public class EmotivDevice implements Runnable {
         String expstr;
 
         if (exp == 128) {
-            expstr = new String("Smile");
+            expstr = "Smile";
         } else if (exp == 256) {
-            expstr = new String("Clench");
+            expstr = "Clench";
         } else if (exp == 1024) {
-            expstr = new String("SmirkLeft");
+            expstr = "SmirkLeft";
         } else if (exp == 512) {
-            expstr = new String("Laught");
+            expstr = "Laught";
         } else if (exp == 32) {
-            expstr = new String("RaiseBrow");
+            expstr = "RaiseBrow";
         } else if (exp == 64) {
-            expstr = new String("FurrowBrow");
+            expstr = "FurrowBrow";
         } else expstr = "error";
 
         return expstr;
@@ -482,7 +479,7 @@ public class EmotivDevice implements Runnable {
             for (int sampleIdx = 0; sampleIdx < (int) nSamplesTaken.getValue(); sampleIdx++) {
                 for (int i = 0; i < targetChannelList.length; i++) {
 
-                    Edk.INSTANCE.EE_DataGet(hData, targetChannelList[i].getType(), data, nSamplesTaken.getValue());//mudar aqui
+                    Edk.INSTANCE.EE_DataGet(hData, targetChannelList[i].getType(), data, nSamplesTaken.getValue()); //mudar aqui
                     switch (i) {
                         case 0: {
                             Counter.sample[sampleIdx] = data[sampleIdx];
@@ -637,6 +634,7 @@ public class EmotivDevice implements Runnable {
         DFT(P8, N);
         DFT(T8, N);
 
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -663,19 +661,19 @@ public class EmotivDevice implements Runnable {
 
         //System.out.println("-----Magnitude after Hamming-----");
         /**for (int u = minFre; u <= maxFre; u++) {
-            // System.out.println(u + " Hz: " + AF3.magnitude[u] + "      Cos:" + AF3.fourierCos[u] + "     Sin:" + AF3.fourierSin[u]);
-            //  System.out.println(" Delta 1-3hz: " + AF3.delta + "    Theta 4-7 hz: " + AF3.theta + "    Alpha 8--13hz: " + AF3.alpha + "    Beta 14-30 hz: " + AF3.beta + "    Meditation: " + AF3.meditation);
-            // System.out.print( "  Delta: " + (AF3.delta + F7.delta + F3.delta+ T7.delta + P7.delta + O1.delta + O2.delta + P8.delta + T8.delta + FC6.delta + F4.delta +
-            //        F8.delta + AF4.delta + FC5.delta) / 14.0);
-            // System.out.print( "  Theta: " + (AF3.theta + F7.theta + F3.theta+ T7.theta + P7.theta + O1.theta + O2.theta + P8.theta + T8.theta + FC6.theta + F4.theta +
-            //         F8.theta + AF4.theta + FC5.theta) / 14.0);
-            //  System.out.println( "Alpha: " + (AF3.alpha + F7.alpha + F3.alpha+ T7.alpha + P7.alpha + O1.alpha + O2.alpha + P8.alpha + T8.alpha + FC6.alpha + F4.alpha +
-            //         F8.alpha + AF4.alpha + FC5.alpha) / 14.0);
+         // System.out.println(u + " Hz: " + AF3.magnitude[u] + "      Cos:" + AF3.fourierCos[u] + "     Sin:" + AF3.fourierSin[u]);
+         //  System.out.println(" Delta 1-3hz: " + AF3.delta + "    Theta 4-7 hz: " + AF3.theta + "    Alpha 8--13hz: " + AF3.alpha + "    Beta 14-30 hz: " + AF3.beta + "    Meditation: " + AF3.meditation);
+         // System.out.print( "  Delta: " + (AF3.delta + F7.delta + F3.delta+ T7.delta + P7.delta + O1.delta + O2.delta + P8.delta + T8.delta + FC6.delta + F4.delta +
+         //        F8.delta + AF4.delta + FC5.delta) / 14.0);
+         // System.out.print( "  Theta: " + (AF3.theta + F7.theta + F3.theta+ T7.theta + P7.theta + O1.theta + O2.theta + P8.theta + T8.theta + FC6.theta + F4.theta +
+         //         F8.theta + AF4.theta + FC5.theta) / 14.0);
+         //  System.out.println( "Alpha: " + (AF3.alpha + F7.alpha + F3.alpha+ T7.alpha + P7.alpha + O1.alpha + O2.alpha + P8.alpha + T8.alpha + FC6.alpha + F4.alpha +
+         //         F8.alpha + AF4.alpha + FC5.alpha) / 14.0);
 
 
-            calc = 20 * Math.log10(Math.abs(AF3.magnitude[u]));
-            System.out.println(calc);
-        }*/
+         calc = 20 * Math.log10(Math.abs(AF3.magnitude[u]));
+         System.out.println(calc);
+         }*/
     }
 
 
@@ -686,16 +684,16 @@ public class EmotivDevice implements Runnable {
 
         //EEG_CQ_NO_SIGNAL, EEG_CQ_VERY_BAD, EEG_CQ_POOR, EEG_CQ_FAIR, EEG_CQ_GOOD
         /**if (f[0] == 0) {
-            System.out.println("NO_SIGNAL");
-        } else if (f[0] == 1) {
-            System.out.println("VERY_BAD_SIG");
-        } else if (f[0] == 2) {
-            System.out.println("POOR_SIG");
-        } else if (f[0] == 3) {
-            System.out.println("FAIR_SIG");
-        } else if (f[0] == 4) {
-            System.out.println("GOOD_SIG");
-        }*/
+         System.out.println("NO_SIGNAL");
+         } else if (f[0] == 1) {
+         System.out.println("VERY_BAD_SIG");
+         } else if (f[0] == 2) {
+         System.out.println("POOR_SIG");
+         } else if (f[0] == 3) {
+         System.out.println("FAIR_SIG");
+         } else if (f[0] == 4) {
+         System.out.println("GOOD_SIG");
+         }*/
 
         EE_CHAN_CMS = f[0];
         EE_CHAN_DRL = f[1];
