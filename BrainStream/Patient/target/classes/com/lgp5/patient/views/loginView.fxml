@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.patient.controllers.LoginController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="310.0" layoutX="145.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/logo.png" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <TextField fx:id="username" alignment="CENTER" focusTraversable="false" layoutX="212.0" layoutY="187.0" prefHeight="25.0" prefWidth="175.0" promptText="Username" />
+      <PasswordField fx:id="password" alignment="CENTER" focusTraversable="false" layoutX="212.0" layoutY="225.0" prefHeight="25.0" prefWidth="175.0" promptText="Password" />
+      <Button fx:id="selectLoginButton" layoutX="213.0" layoutY="266.0" mnemonicParsing="false" onMouseEntered="#handle" prefHeight="30.0" prefWidth="175.0" style="-fx-background-color: #FFFFFF;" text="Login" textAlignment="CENTER">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <CheckBox fx:id="rememberPassword" alignment="CENTER" layoutX="232.0" layoutY="320.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseEntered="#handle" text="Remember Password" underline="true" />
+   </children>
+</AnchorPane>

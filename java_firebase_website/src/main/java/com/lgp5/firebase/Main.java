@@ -1,15 +1,11 @@
 package com.lgp5.firebase;
 
-
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.HashMap;
 
 import com.firebase.client.Firebase;
 import com.lgp5.api.neurosky.Neurosky_FW.Neurosky;
 import com.lgp5.api.neurosky.Neurosky_FW.utils.Constants;
 import com.lgp5.api.neurosky.Neurosky_FW.interfaces.HeadSetDataInterface;
-import java.util.Date;
 
 
 public class Main {
@@ -38,7 +34,6 @@ public class Main {
               final long tStart = System.currentTimeMillis();
                 final Firebase ref = new Firebase("https://brainlight.firebaseio.com/leituras");
                 HeadSetDataInterface headSetDataInterface = new HeadSetDataInterface() {
-
                     @Override
                     public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
                         HashMap<String, Object> values = hashMap.get(Constants.WAVES);
@@ -51,11 +46,7 @@ public class Main {
                     }
                 };
                 new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();
-
-
-
             }});
         t1.start();
-
     }
 }

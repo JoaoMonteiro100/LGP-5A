@@ -26,7 +26,7 @@ public class EmotivDevice implements Runnable {
     Pointer contactQualityP, hData;
     private int EE_CHAN_CMS, EE_CHAN_DRL, EE_CHAN_FP1, EE_CHAN_AF3, EE_CHAN_F7, EE_CHAN_F3, EE_CHAN_FC5, EE_CHAN_T7, EE_CHAN_P7,
             EE_CHAN_O1, EE_CHAN_O2, EE_CHAN_P8, EE_CHAN_T8, EE_CHAN_FC6, EE_CHAN_F4, EE_CHAN_F8, EE_CHAN_AF4, EE_CHAN_FP2, blinkStatus, leftWinkStatus,
-            rightWinkStatus, eyesOpenStatus, lookingDownStatus, lookingUpStatus, lookingLeftStatus, lookingRightStatus, isEngActiv, isExcitementActiv,
+            rightWinkStatus, eyesOpenStatus, lookingDownStatus, lookingUpStatus, lookingLeftStatus, lookingRightStatus, isEngActiv,isExcitementActiv,
             isFrustActiv, isMeditationActiv;
 
     Channel Counter, AF3, F7, F3, FC5, T7, P7, O1, O2, P8, T8, FC6, F4, F8, AF4;
@@ -42,6 +42,7 @@ public class EmotivDevice implements Runnable {
     HashMap<String, Object> expressionsMap;
     HashMap<String, Object> affectivemap;
     HashMap<String, Wave> channelsAverageBandPowers;
+
 
 
     Edk.EE_DataChannels_t targetChannelList[] = {
@@ -78,8 +79,8 @@ public class EmotivDevice implements Runnable {
         if (Edk.INSTANCE.EE_EngineConnect("Emotiv Systems-5") != EdkErrorCode.EDK_OK.ToInt()) {
             System.out.println("Emotiv start up failed");
             return;
-        } else
-            System.out.println("Emotiv connected");
+        }/* else
+            System.out.println("Emotiv connected");*/
     }
 
     public void emotivDeviceDisconnect() {
@@ -121,7 +122,7 @@ public class EmotivDevice implements Runnable {
         lookingUpStatus = 0;
         lookingLeftStatus = 0;
         lookingRightStatus = 0;
-        isEngActiv = 0;
+        isEngActiv=0;
         EE_CHAN_F4 = 0;
         EE_CHAN_F8 = 0;
         EE_CHAN_AF4 = 0;
@@ -157,14 +158,8 @@ public class EmotivDevice implements Runnable {
         F8 = new Channel();
         AF4 = new Channel();
 
-        isExcitementActiv = 0;
-        isFrustActiv = 0;
-        isMeditationActiv = 0;
-        engagementBoredomScore = 0.0f;
-        excitementLongScore = 0.0f;
-        excitementShortScore = 0.0f;
-        frustationScore = 0.0f;
-        meditationScore = 0.0f;
+        isExcitementActiv=0; isFrustActiv=0; isMeditationActiv=0;
+        engagementBoredomScore=0.0f; excitementLongScore=0.0f; excitementShortScore=0.0f; frustationScore=0.0f; meditationScore=0.0f;
 
 
         deviceInfoMap = new HashMap<>();
@@ -185,12 +180,12 @@ public class EmotivDevice implements Runnable {
     private boolean eventTypeCheck(int eventType) {
         switch (eventType) {
             case 0x0010:
-                System.out.println("User added");
+                //  System.out.println("User added");
                 Edk.INSTANCE.EE_DataAcquisitionEnable(userID.getValue(), true);
                 readytocollect = true;
                 break;
             case 0x0020:
-                System.out.println("User removed");
+                // System.out.println("User removed");
                 readytocollect = false;        //just single connection
                 break;
             case 0x0040:
@@ -223,18 +218,15 @@ public class EmotivDevice implements Runnable {
 
             //new event to handle
             if (state == EdkErrorCode.EDK_OK.ToInt()) {
-
                 int eventType = Edk.INSTANCE.EE_EmoEngineEventGetType(emotivEvent);
                 Edk.INSTANCE.EE_EmoEngineEventGetUserId(emotivEvent, userID);
                 newData = eventTypeCheck(eventType);
 
-                if (newData) {
-
+                if (eventType == Edk.EE_Event_t.EE_EmoStateUpdated.ToInt()) {
                     timestamp = EmoState.INSTANCE.ES_GetTimeFromStart(emotivState);
                     emotivHeadsetOn = EmoState.INSTANCE.ES_GetHeadsetOn(emotivState);
 
                     if (emotivHeadsetOn == 1) {
-
                         //wireless status
                         wirelessSignalStatus = EmoState.INSTANCE.ES_GetWirelessSignalStatus(emotivState);
                         //bat status
@@ -246,47 +238,52 @@ public class EmotivDevice implements Runnable {
                         getWaves();
                         getSensorsContactQuality();
                     }
-                }
 
-                System.out.println(blinkStatus);
-                new Thread(() -> {
                     channelsAverageBandPowers.clear();
                     calculateDFT();
                     emotivInterface.onReceiveWavesData(channelsAverageBandPowers);
-                }).start();
 
-                sendDataToInterface();
+                    sendDataToInterface();
+                }
             }
         }
     }
 
-    private void getAffectiv() {
+    private void getAffectiv(){
 
         isEngActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_ENGAGEMENT_BOREDOM.ToInt());
 
-        if (isEngActiv == 1) {
+        if(isEngActiv ==1) {
+
             engagementBoredomScore = EmoState.INSTANCE.ES_AffectivGetEngagementBoredomScore(emotivState);
         }
 
         isExcitementActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_EXCITEMENT.ToInt());
 
-        if (isExcitementActiv == 1) {
+        if(isExcitementActiv ==1) {
+
             excitementLongScore = EmoState.INSTANCE.ES_AffectivGetExcitementLongTermScore(emotivState);
             excitementShortScore = EmoState.INSTANCE.ES_AffectivGetExcitementShortTermScore(emotivState);
         }
 
         isFrustActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_FRUSTRATION.ToInt());
 
-        if (isFrustActiv == 1) {
+        if(isFrustActiv ==1) {
+
             frustationScore = EmoState.INSTANCE.ES_AffectivGetFrustrationScore(emotivState);
+
         }
 
 
         isMeditationActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_MEDITATION.ToInt());
 
-        if (isMeditationActiv == 1) {
+        if(isMeditationActiv ==1) {
+
             meditationScore = EmoState.INSTANCE.ES_AffectivGetMeditationScore(emotivState);
+
         }
+
+
     }
 
 
@@ -374,6 +371,7 @@ public class EmotivDevice implements Runnable {
         actionsMap.put("LookingUp", lookingUpStatus);
 
 
+
         expressionsMap.put("LeftWink", leftWinkStatus);
         expressionsMap.put("RightWink", rightWinkStatus);
         expressionsMap.put("Blink", blinkStatus);
@@ -385,20 +383,20 @@ public class EmotivDevice implements Runnable {
         expressionsMap.put("UperFaceExpression", parseExpression(uperFaceActionStatus));
         expressionsMap.put("UperFaceExpressionPower", uperFaceActionStatusPower);
 
-        affectivemap.put("EngagementActive", isEngActiv);
-        affectivemap.put("Engagement", engagementBoredomScore);
-        affectivemap.put("ExcitementActive", isExcitementActiv);
-        affectivemap.put("ExcitementLongTime", excitementLongScore);
-        affectivemap.put("ExcitementShortTime", excitementShortScore);
-        affectivemap.put("FrustationActive", isFrustActiv);
-        affectivemap.put("Frustation", frustationScore);
-        affectivemap.put("MeditationActive", isMeditationActiv);
-        affectivemap.put("Meditation", meditationScore);
+        affectivemap.put("EngagementActive",isEngActiv);
+        affectivemap.put("Engagement",engagementBoredomScore);
+        affectivemap.put("ExcitementActive",isExcitementActiv);
+        affectivemap.put("ExcitementLongTime",excitementLongScore);
+        affectivemap.put("ExcitementShortTime",excitementShortScore);
+        affectivemap.put("FrustationActive",isFrustActiv);
+        affectivemap.put("Frustation",frustationScore);
+        affectivemap.put("MeditationActive",isMeditationActiv);
+        affectivemap.put("Meditation",meditationScore);
 
         data.put("DeviceInfo", deviceInfoMap);
         data.put("Actions", actionsMap);
         data.put("FacialExpressions", expressionsMap);
-        data.put("AffectiveValues", actionsMap);
+        data.put("AffectiveValues",affectivemap);
     }
 
 
@@ -412,7 +410,7 @@ public class EmotivDevice implements Runnable {
         } else if (act == 4) {
             actionstr = "Pull";
         } else if (act == 8) {
-            actionstr = new String("Lift");
+            actionstr = "Lift";
         } else if (act == 16) {
             actionstr = "Drop";
         } else if (act == 32) {
@@ -481,7 +479,7 @@ public class EmotivDevice implements Runnable {
             for (int sampleIdx = 0; sampleIdx < (int) nSamplesTaken.getValue(); sampleIdx++) {
                 for (int i = 0; i < targetChannelList.length; i++) {
 
-                    Edk.INSTANCE.EE_DataGet(hData, targetChannelList[i].getType(), data, nSamplesTaken.getValue());//mudar aqui
+                    Edk.INSTANCE.EE_DataGet(hData, targetChannelList[i].getType(), data, nSamplesTaken.getValue()); //mudar aqui
                     switch (i) {
                         case 0: {
                             Counter.sample[sampleIdx] = data[sampleIdx];
@@ -567,8 +565,6 @@ public class EmotivDevice implements Runnable {
         }
     }
 
-
-
     private void DFT(Channel channel, int N) {
         // Calculate hamming window
         for (int i = 0; i < 128; i++)
@@ -637,6 +633,7 @@ public class EmotivDevice implements Runnable {
         DFT(O2, N);
         DFT(P8, N);
         DFT(T8, N);
+
 
         try {
             Thread.sleep(1000);

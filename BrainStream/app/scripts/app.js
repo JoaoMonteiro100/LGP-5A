@@ -89,7 +89,8 @@
     app.requestsLocation = 'https://brainlight.firebaseio.com/requests';
 
     app.userURL = function(userID) {
-        return app.location + "/users/" + userID;
+        //return app.location + "/users/" + userID;
+        return app.location + "/users/user";
     };
 
     app.requestURL = function(requestID) {
