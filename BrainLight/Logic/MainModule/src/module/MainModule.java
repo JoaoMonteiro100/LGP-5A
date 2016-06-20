@@ -377,11 +377,11 @@ public class MainModule {
 
     public static Double[] averageOfInstanceDouble(int[] sensorIdentifiers, Double[][] finalArray) {
         Double[] dataToAnalyse = new Double[31];
-
+       for(int j=0;j<dataToAnalyse.length;j++)
+            dataToAnalyse[j]=0.0;
         for (int sensor : sensorIdentifiers) {
-            for (int i = 5; i < finalArray[sensor].length; i++) {
-                dataToAnalyse[i] += (finalArray[sensor][i].doubleValue() / sensorIdentifiers.length);
-                System.out.println(i);
+            for (int i = 5; i < 36; i++) {
+                dataToAnalyse[i-5] += (finalArray[sensor][i] / sensorIdentifiers.length);
             }
         }
 
@@ -460,7 +460,7 @@ public class MainModule {
                 "O1", "O2", "P8", "T8", "FC6", "F4", "F8", "AF4"};
 
         Double[][] finalData;
-        Double[][] finalData2;
+        Double[][] allData;
 
         if (device == 1) {
 
@@ -472,10 +472,25 @@ public class MainModule {
                 return;
             }
 
-            //finalData2 = new Double[14][36];
-            finalData = new Double[2][];
-            finalData[0] = new Double[35];//Lobo escolhido ou todos com 4 ondas + 31 eeg's
+            allData = new Double[14][36];
+            for (int i = 0; i < allData.length; i++) {
+                try {
+                    allData[i][0] = emotivData.get(finalInfo[i]).getTheta();
+                    allData[i][1] = emotivData.get(finalInfo[i]).getDelta();
+                    allData[i][2] = emotivData.get(finalInfo[i]).getAlpha();
+                    allData[i][3] = emotivData.get(finalInfo[i]).getBeta();
+                    allData[i][4] = (double) emotivData.get(finalInfo[i]).getSignalQuality();
+                    for (int k = 0; k < 31; k++) {
+                        allData[i][k + 5] = emotivData.get(finalInfo[i]).getFreqVals().get(k);
+                    }
+                }catch (Exception e){
+
+                }
+            }
+            finalData = new Double[3][];
+            finalData[0] = new Double[4];// 4 waves
             finalData[1] = new Double[14];// 1 signal Quality per Sensor
+            finalData[2] = new Double[31];// all 31 average frequency
             Double sum = 0.0;
             switch (selectedLobe) {
                 case 0:/*Lobo Frontal*/
@@ -619,6 +634,12 @@ public class MainModule {
                         }
                     }
                     finalData[0][3] = (sum / 14);
+
+                    int[] total = {0, 1, 2, 3,4,5,6,7,8,9, 10, 11, 12, 13};
+                    Double[] finalData3 = averageOfInstanceDouble(total, allData);
+                    for (int j = 0; j < finalData3.length; j++) {
+                        finalData[2][j]=finalData3[j];
+                    }
                     break;
             }
             for (int k = 0; k < finalInfo.length; k++) {

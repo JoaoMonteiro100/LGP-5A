@@ -221,6 +221,7 @@ public class MenuNeuroSkyController extends MenuController {
                     public void run() {
                         if (getPutHistoric()) {
                             createSeriesLineChartHistoryWaves();
+
                         }
                         if (!finalDataArray[0][0].equals("")) {
                             String delta = finalDataArray[0][0].toString();
@@ -237,7 +238,9 @@ public class MenuNeuroSkyController extends MenuController {
                             updateSeriesLineChartWaves(delta, theta, gamma1, gamma2, alpha1, alpha2, beta1, beta2);
                             updateSeriesLineChartMoods(attention, meditation);
 
-                            gamma1Data.setText(gamma1);
+                            gamma1Data.setText(String.valueOf(Math.floor(finalDataArray[0][6] * 100) / 100) + "dB");
+
+                            //alphaData.setText(String.valueOf(Math.floor(finalDataArray[0][0] * 100) / 100) + "dB");
                             gamma2Data.setText(gamma2);
                             beta1Data.setText(beta1);
                             beta2Data.setText(beta2);
@@ -456,7 +459,7 @@ public class MenuNeuroSkyController extends MenuController {
         xAxisMoodsLine.setUpperBound(Double.parseDouble(queueTime.get(9).toString()));
     }
 
-    public void createSeriesLineChartHistoryWaves() {
+    private void createSeriesLineChartHistoryWaves() {
         String[][] historic = super.getHistoric();
         xAxisHistory.setLabel("Time");
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
@@ -505,7 +508,7 @@ public class MenuNeuroSkyController extends MenuController {
     }
 
 
-    public void createSeriesLineChartWaves(XYChart.Series<String, Float> seriesBarChart) {
+    private void createSeriesLineChartWaves(XYChart.Series<String, Float> seriesBarChart) {
         xAxisWavesLine.setLabel("Time");
         XYChart.Series<Number, Number> series3 = new XYChart.Series<>();
         XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
@@ -597,7 +600,7 @@ public class MenuNeuroSkyController extends MenuController {
         xAxisWavesLine.setAutoRanging(false);
     }
 
-    public void updateSeriesLineChartWaves(String d, String t, String g1, String g2, String a1, String a2, String b1, String b2) {
+    private void updateSeriesLineChartWaves(String d, String t, String g1, String g2, String a1, String a2, String b1, String b2) {
         queueTime.add((System.currentTimeMillis() / 1000) - time);
         queueTime.remove(0);
         wavesGroup.get(0).add(d);

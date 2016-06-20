@@ -39,7 +39,7 @@
                                 <NumberAxis side="BOTTOM" fx:id="xAxisWavesLine" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis side="LEFT" />
+                                <NumberAxis fx:id="yAxisWavesLine" side="LEFT" />
                             </yAxis>
                         </LineChart>
                     </children>
