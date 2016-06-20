@@ -200,7 +200,7 @@ public class MainModule {
                         neuroDevice.connect();
                         neuroDevice.run();
                     } catch (Exception e) {
-                        System.out.println("O NeuroSky não está conectado");
+                        System.out.println("NeuroSky is not connected");
                     }
                 }
             }

@@ -504,6 +504,7 @@ public class MenuEmotivController extends MenuController {
     }
 
     public void createSeriesLineChartHistoryWaves() {
+        lineChartHistory.getData().retainAll();
         String[][] historic = super.getHistoric();
         xAxisHistory.setLabel("Time");
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();

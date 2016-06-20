@@ -1,12 +1,12 @@
 package com.lgp5.fw.controllers;
 
-import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class ThreadInterface implements Runnable {
     private updateInterface updateInterface;
     private SensorInterface sensorInterface;
+    private AnalysisInterface analysisInterface;
     BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(100);
     BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(100);
     private int device;
@@ -15,6 +15,12 @@ public class ThreadInterface implements Runnable {
     public ThreadInterface(BlockingQueue queue, SensorInterface t) {
         this.queue = queue;
         sensorInterface = t;
+        sensor = true;
+    }
+
+    public ThreadInterface(BlockingQueue queue, AnalysisInterface t) {
+        this.queue = queue;
+        analysisInterface = t;
         sensor = true;
     }
 

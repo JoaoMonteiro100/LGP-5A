@@ -20,7 +20,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import module.MainModule;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 
 public class MenuNeuroSkyController extends MenuController {
@@ -457,6 +454,7 @@ public class MenuNeuroSkyController extends MenuController {
     }
 
     public void createSeriesLineChartHistoryWaves() {
+        lineChartHistory.getData().retainAll();
         String[][] historic = super.getHistoric();
         xAxisHistory.setLabel("Time");
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
