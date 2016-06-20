@@ -91,45 +91,7 @@ public class SensorsController {
         Thread thread = new Thread(t);
         thread.setDaemon(true);
         thread.start();
-        //updateInterface.update2();
-     /*   updateInterface = new updateInterface() {
-            @Override
-            public void update(Double[][] finalDataArray) {
-                System.out.println("ola");
-            }
 
-            @Override
-            public void update2(Double[][] finalDataArray) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int i = 0; i < finalDataArray.length; i++) {
-                            System.out.println(finalDataArray[1][i]);
-                        }
-                    }
-                });
-            }
-        };
-        ThreadInterface t = new ThreadInterface(queue, queue2, updateInterface, 2);
-        Thread thread = new Thread(t);
-        thread.setDaemon(true);
-        thread.start();*/
-        /*Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < super.finalDataArray.length; i++) {
-                    System.out.println(finalDataArray[1][i]);
-                }
-            }
-        });*/
-
-        /*//enable button only when a choice is made
-        sensorsList.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                applySensors.setDisable(false);
-            }
-        });*/
 
         /**
          * tooltips for each sensor

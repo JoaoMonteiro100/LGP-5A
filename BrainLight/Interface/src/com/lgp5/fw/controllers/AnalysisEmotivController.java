@@ -19,10 +19,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 
-public class AnalysisEmotivController {
-    MainModule fw;
-    BlockingQueue queue = new ArrayBlockingQueue<Double[][]>(1);
-    private AnalysisInterface analysisInterface;
+public class AnalysisEmotivController extends MenuEmotivController{
+
     @FXML
     private ComboBox<String> waveToAnalyse;
     @FXML
@@ -36,9 +34,7 @@ public class AnalysisEmotivController {
     @FXML
     private CheckBox freqOfMinIntensity, freqOfMaxIntensity, amplitude, median, mode, mean, maxIntensity, minIntensity, maxAmplitude;
 
-    public AnalysisEmotivController(MainModule fw, BlockingQueue queue) {
-        this.fw = fw;
-        this.queue=queue;
+    public AnalysisEmotivController() {
     }
 
     // Called after the FXML has been initialized
@@ -46,20 +42,7 @@ public class AnalysisEmotivController {
     private void initialize() {
         waveToAnalyse.getItems().addAll("Theta", "Alfa", "Low Beta", "High Beta", "Gamma");
         lobeToAnalyse.getItems().addAll("Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe", "Mean of all lobes (default)");
-/*
-        analysisInterface = new AnalysisInterface() {
-            @Override
-            public void update(Double[][] finalDataArray) {
-                for (int i = 0; i < finalDataArray[1].length; i++) {
-                    setSensorColor(finalInfo[i], finalDataArray[1][i].intValue());
-                }
-            }
-        };
-        ThreadInterface t = new ThreadInterface(queue, analysisInterface);
-        Thread thread = new Thread(t);
-        thread.setDaemon(true);
-        thread.start();
-*/
+
         // force the field to be numeric only
         analysisPeriodField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -169,11 +152,10 @@ public class AnalysisEmotivController {
             }
         });
     }
-
-
-    private void launchAnalysisInProgressView() {
+    protected void launchAnalysisInProgressView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisInProgressView.fxml"));
+            loader.setController(new AnalysisInProgressController(fw,queue2));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));

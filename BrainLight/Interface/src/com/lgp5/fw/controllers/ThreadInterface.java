@@ -11,17 +11,20 @@ public class ThreadInterface implements Runnable {
     BlockingQueue queue2 = new ArrayBlockingQueue<Double[][]>(100);
     private int device;
     private Boolean sensor;
+    private Boolean analysis;
 
     public ThreadInterface(BlockingQueue queue, SensorInterface t) {
         this.queue = queue;
         sensorInterface = t;
         sensor = true;
+        analysis = false;
     }
 
     public ThreadInterface(BlockingQueue queue, AnalysisInterface t) {
         this.queue = queue;
         analysisInterface = t;
-        sensor = true;
+        analysis = true;
+        sensor = false;
     }
 
     public ThreadInterface(BlockingQueue queue, BlockingQueue queue2, updateInterface updateInterface, int device) {
@@ -30,6 +33,7 @@ public class ThreadInterface implements Runnable {
         this.updateInterface = updateInterface;
         this.device = device;
         sensor = false;
+        analysis = false;
     }
 
     @Override
@@ -37,7 +41,7 @@ public class ThreadInterface implements Runnable {
         try {
             int i = 0;
             while (true) {
-                if (!sensor) {
+                if (!sensor&&!analysis) {
                     if (queue.peek() != null) {
                         if (updateInterface != null) {
                             updateInterface.update((Double[][]) queue.take());
@@ -67,6 +71,12 @@ public class ThreadInterface implements Runnable {
                     if (queue.peek() != null) {
                         if (sensorInterface != null) {
                             sensorInterface.update((Double[][]) queue.take());
+                        }
+                    }
+                } else if (analysis) {
+                    if (queue.peek() != null) {
+                        if (analysisInterface != null) {
+                            analysisInterface.update((Double[][]) queue.take());
                         }
                     }
                 }
