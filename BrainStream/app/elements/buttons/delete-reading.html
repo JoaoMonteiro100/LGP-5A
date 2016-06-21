@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+=======
+<!--
+   @license
+   Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+   This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+   The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+   The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+   Code distributed by Google as part of the polymer project is also
+   subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+   -->
+>>>>>>> origin/final-dev
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="delete-reading">
     <template>
@@ -44,8 +56,15 @@
     <script>
         (function() {
             'use strict';
+<<<<<<< HEAD
             Polymer({
                 is: 'delete-reading',
+=======
+
+            Polymer({
+                is: 'delete-reading',
+
+>>>>>>> origin/final-dev
                 properties: {
                     reading: {
                         type: Object,
@@ -60,8 +79,15 @@
                         value: true
                     }
                 },
+<<<<<<< HEAD
                 _nativeSubmit: function(event) {
                     var self = this;
+=======
+
+                _nativeSubmit: function(event) {
+                    var self = this;
+
+>>>>>>> origin/final-dev
                     var onDeleted = function(error) {
                         if(error) {
                             alert('An error occurred while deleting the reading!');
@@ -70,9 +96,17 @@
                             self.$.deleteDialog.close();
                         }
                     };
+<<<<<<< HEAD
                     var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
                     var refInfoDelete;
+=======
+
+                    var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    var refInfoDelete;
+
+>>>>>>> origin/final-dev
                        ref.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 if (childSnapshot.val().Leitura == self.reading) {
@@ -81,14 +115,26 @@
                             });
                         });
                           
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/final-dev
                        //alert(refInfoDelete);
                        //alert(readingRef);
                     refInfoDelete.remove(onDeleted);
                     readingRef.remove(onDeleted);
                 },
+<<<<<<< HEAD
                 deleteFormClickHandler: function(e) {
                    this.$.deleteDialog.toggle();
                 },
+=======
+
+                deleteFormClickHandler: function(e) {
+                   this.$.deleteDialog.toggle();
+                },
+
+>>>>>>> origin/final-dev
                 ready: function() {
                     var self = this;
                     var readingdef = false;
@@ -100,9 +146,17 @@
                         }
                     });
                 },
+<<<<<<< HEAD
                 compute: function() {
                     return this.ishidden;
                 },
+=======
+
+                compute: function() {
+                    return this.ishidden;
+                },
+
+>>>>>>> origin/final-dev
                 toggle: function() {
                     this.ishidden = !this.ishidden;
                 }
