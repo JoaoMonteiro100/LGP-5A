@@ -14,71 +14,81 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="widgets/patient-history.html">
 <link rel="import" href="widgets/patient-chart.html">
 <dom-module id="page-patients">
-  <template>
-      <style include="shared-styles"></style>
-      <style>
-        :host::shadow .widget {
-          height: auto !important;  // todo: remove important
-          min-height: 460px;
-        }
-      </style>
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host::shadow .widget {
+                height: auto !important;
+            / / todo: remove important min-height: 460 px;
+            }
+        </style>
 
-      <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
-      <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+        <app-widgets selected="{{myChoice}}" widgets="{{widgets}}" cols="{{cols.style3}}"></app-widgets>
+        <app-widgets widgets="{{widgets2}}" cols="{{cols.style1}}"></app-widgets>
+        <app-widgets widgets="{{widgets3}}" cols="{{cols.style1}}"></app-widgets>
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-    Polymer({
-      is: 'page-patients',
+            Polymer({
+                is: 'page-patients',
 
-      properties: {
-        cols: {
-        type: Object,
-        notify: true
-      },
-           widgets: {
-             type: Array,
-             value: [
-               {
-                 title: 'Patients',
-                 component: 'patients-list',
-                 buttons:[
-                   /**{ button: 'search-patient' },
-                   { button: 'add-patient' }*/
-                 ]
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    },
+                    widgets: {
+                        type: Array,
+                        value: [
+                            {
+                                title: 'Patients',
+                                component: 'patients-list',
+                                buttons: [
+                                    {button: 'search-patient'},
+                                    {button: 'add-patient'}
+                                ]
 
-               },
-               {
-                 title: 'Patient Details',
-                 component: 'patient-details',
-                 buttons:[
-                   /**{ button: 'edit-patient' },
-                   { button: 'delete-patient' },
-                   { button: 'edit-note' },
-                   { button: 'request-transfer'}*/
-                 ]
-               },
-                {
-                 title: 'Patient History',
-                 component: 'patient-history',
-                 buttons:[
-                 ]
-               }
-             ]
-           },
-           widgets2: {
-             type: Array,
-             value: [
-               {
-                 title: 'Chart',
-                 component: 'patient-chart',
-                 buttons:[
-                 ]
-               }]}
-         }
-    });
-  })();
-  </script>
+                            },
+                            {
+                                title: 'Patient Details',
+                                component: 'patient-details',
+                                buttons: [
+                                    {button: 'edit-patient'},
+                                    {button: 'delete-patient'},
+                                    {button: 'edit-note'},
+                                    {button: 'request-transfer'}
+                                ]
+                            },
+                            {
+                                title: 'Patient History',
+                                component: 'patient-history',
+                                buttons: []
+                            }
+                        ]
+                    },
+                    widgets2: {
+                        type: Array,
+                        value: [
+                            {
+                                title: 'Neurosky Chart',
+                                component: 'patient-chart',
+                                buttons: []
+                            }]
+                    },
+
+                    widgets3: {
+                        type: Array,
+                        value: [
+                            {
+                                title: 'Emotiv Chart',
+                                component: 'page-charts-emotiv',
+                                buttons: []
+                            }]
+                    }
+                }
+            });
+        })();
+    </script>
 </dom-module>
