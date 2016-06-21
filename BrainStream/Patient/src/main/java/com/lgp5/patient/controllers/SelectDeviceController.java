@@ -145,6 +145,10 @@ public class SelectDeviceController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
+            AnalysisController analysisController = loader.getController();
+            analysisController.setStage(stage);
+            analysisController.createRecordAfterStart();
+
             stage.setScene(new Scene(parent));
             stage.setTitle("BrainLight");
             stage.resizableProperty().setValue(Boolean.FALSE);

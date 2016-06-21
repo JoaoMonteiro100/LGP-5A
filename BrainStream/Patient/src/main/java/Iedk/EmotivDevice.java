@@ -5,8 +5,10 @@ import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.DoubleByReference;
 import com.sun.jna.ptr.IntByReference;
+import java.util.Observable;
 
 import java.util.HashMap;
+import java.util.Observer;
 
 import static Iedk.Edk.EE_DataChannels_t.*;
 
@@ -17,6 +19,7 @@ public class EmotivDevice implements Runnable {
     private Pointer emotivEvent;
     private Pointer emotivState;
     private IntByReference userID, batteryLevelStatus, maxBatteryLevel, contactQualArray;
+
 
     DoubleByReference alpha, low_beta, high_beta, gamma, theta;
     private boolean receiveDataBool, onStateChanged, readytocollect;
@@ -138,10 +141,10 @@ public class EmotivDevice implements Runnable {
         uperFaceActionStatusPower = 0.0f;
         clenchExtentStatus = 0.0f;
 
-        hamming = new double[128];
+        hamming = new double[64];
         minFre = 0;
         maxFre = 40;
-        nSamples = 128;
+        nSamples = 64;
         Counter = new Channel();
         AF3 = new Channel();
         F7 = new Channel();
@@ -172,7 +175,7 @@ public class EmotivDevice implements Runnable {
 
         secs = 1;
         nSamplesTaken = new IntByReference(0);
-        Hamming(128);
+        Hamming(64);
         hData = Edk.INSTANCE.EE_DataCreate();
         Edk.INSTANCE.EE_DataSetBufferSizeInSec(secs);
     }
@@ -203,7 +206,7 @@ public class EmotivDevice implements Runnable {
     }
 
     void Hamming(int length) {
-        for (int i = 0; i < 128; i++)
+        for (int i = 0; i < 64; i++)
             hamming[i] = 0.54 - 0.46 * Math.cos(2 * Math.PI * i / (length - 1));
     }
 
@@ -213,14 +216,12 @@ public class EmotivDevice implements Runnable {
         int state;
         int emotivHeadsetOn = 0;
         while (receiveDataBool) {
-            newData = false;
             state = Edk.INSTANCE.EE_EngineGetNextEvent(emotivEvent);
 
             //new event to handle
             if (state == EdkErrorCode.EDK_OK.ToInt()) {
                 int eventType = Edk.INSTANCE.EE_EmoEngineEventGetType(emotivEvent);
                 Edk.INSTANCE.EE_EmoEngineEventGetUserId(emotivEvent, userID);
-                newData = eventTypeCheck(eventType);
 
                 if (eventType == Edk.EE_Event_t.EE_EmoStateUpdated.ToInt()) {
                     timestamp = EmoState.INSTANCE.ES_GetTimeFromStart(emotivState);
@@ -567,7 +568,7 @@ public class EmotivDevice implements Runnable {
 
     private void DFT(Channel channel, int N) {
         // Calculate hamming window
-        for (int i = 0; i < 128; i++)
+        for (int i = 0; i < 64; i++)
             channel.sample[i] = channel.sample[i] * hamming[i];
 
 
@@ -585,7 +586,7 @@ public class EmotivDevice implements Runnable {
         }
 
         for (int u = minFre; u <= maxFre; u++)
-            channel.magnitude[u] = 2 * Math.sqrt(channel.fourierCos[u] * channel.fourierCos[u] + channel.fourierSin[u] * channel.fourierSin[u]) / 128;
+            channel.magnitude[u] = 2 * Math.sqrt(channel.fourierCos[u] * channel.fourierCos[u] + channel.fourierSin[u] * channel.fourierSin[u]) / 64;
 
 
         // 求 delta 2--3 hz          (1-4)
@@ -617,7 +618,7 @@ public class EmotivDevice implements Runnable {
 
 
     private void calculateDFT() {
-        int N = (int) (128 / secs);
+        int N = (int) (64 / secs);
 
         DFT(AF3, N);
         DFT(AF4, N);
@@ -636,8 +637,10 @@ public class EmotivDevice implements Runnable {
 
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
+            // 99% of the time we're in the sleep, so it's very likely this exception will be thrown when needed
+            emotivDeviceDisconnect();
             e.printStackTrace();
         }
 

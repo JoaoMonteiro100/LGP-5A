@@ -11,7 +11,6 @@ import com.lgp5.patient.utils.Constants;
 import interfaces.HeadSetDataInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -66,7 +64,6 @@ public class AnalysisController {
     private HeadSetDataInterface headSetDataInterface;
     private Firebase appRef;
     @FXML private Stage stage;
-    private Thread deviceThread = null;
 
 
     public AnalysisController() {
@@ -89,6 +86,7 @@ public class AnalysisController {
 
     private void startRecordingData(Firebase readingRef) {
         if (UserData.DEVICE.equals(Constants.DeviceConstants.EMOTIV)) {
+            Thread emotivThread = null;
             EmotivInterface emotivInterface = new EmotivInterface() {
                 @Override
                 public void onReceiveData(HashMap<String, Object> data) {
@@ -106,19 +104,17 @@ public class AnalysisController {
             };
 
 
-            deviceThread = new Thread(new EmotivDevice(emotivInterface));
-            deviceThread.setDaemon(true);
-            deviceThread.start();
+            EmotivDevice emotivDevice = new EmotivDevice(emotivInterface);
+            emotivThread = new Thread(emotivDevice);
+            emotivThread.setDaemon(true);
+            emotivThread.start();
+
+            // K3agb_
+            Thread finalEmotivThread = emotivThread;
+            stage.setOnCloseRequest(event -> {
+                finalEmotivThread.interrupt();
+            });
         }
-
-
-        Thread finalDeviceThread = deviceThread;
-        stage.setOnCloseRequest(event -> {
-            if (finalDeviceThread != null) {
-                finalDeviceThread.interrupt();
-                System.out.println("[!] Terminating thread....");
-            }
-        });
     }
 
 
@@ -154,8 +150,6 @@ public class AnalysisController {
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        stage = (Stage) settings.getScene().getWindow();
-
         /**settings.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -318,6 +312,15 @@ public class AnalysisController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void createRecordAfterStart() {
+        this.stage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                createNewFirebaseRecord();
+            }
+        });
     }
 
     public void setStage(Stage stage) {
