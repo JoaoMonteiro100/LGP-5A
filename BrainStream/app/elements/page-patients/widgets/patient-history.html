@@ -137,7 +137,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         return "../../../images/offline.png";
                 },
                 _onSelected: function () {
-                    this.fire('selected-hist', this.history[this.myChoice].Leitura);
+                    if(this.history[this.myChoice].Device == 'emotiv') {
+                        this.fire('selected-hist-emotiv', this.history[this.myChoice].Leitura);
+                    }
                 },
                 itemSelected: function () {
                     var user = this.users[this.myChoice];

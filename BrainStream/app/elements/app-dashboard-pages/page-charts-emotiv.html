@@ -693,22 +693,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 yAxes: [{
                   display: true,
                   ticks: {
-                    min: 0,
+                    min: -80,
                     max: 80,
-                    stepSize: 5
+                    stepSize: 10
                   }
                 }]
               }
             }
           });
 
-          var ref = new Firebase("https://brainlight.firebaseio.com/leituras/-KKSB9xuSdWAKKBKnE57");
-          ref.limitToLast(1).on("child_added", function (snapshot) {
-            if (snapshot.val()) {
-              self.setChartData(self, snapshot);
-            }
+
+          addEventListener('selected-hist-emotiv', function(examid) {
+            alert('aqui');
+            var ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + examid.detail);
+            ref.limitToLast(1).on("child_added", function (snapshot) {
+              if (snapshot.val()) {
+                self.setChartData(self, snapshot);
+              }
+            });
           });
-        },
+        }
       });
     })();
   </script>
