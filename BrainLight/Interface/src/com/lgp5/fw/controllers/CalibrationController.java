@@ -21,7 +21,7 @@ public class CalibrationController {
 
     public void launchCalibrationView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/calibrationView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/calibrationView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent, 462, 226));

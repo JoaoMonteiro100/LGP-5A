@@ -284,7 +284,7 @@ public class MenuController {
 
 	public void launchSelectDeviceView() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/selectDeviceView.fxml"));
 			Parent parent = (Parent) loader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(parent, 900, 600));

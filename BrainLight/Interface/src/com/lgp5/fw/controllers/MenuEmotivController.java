@@ -674,7 +674,7 @@ public class MenuEmotivController extends MenuController {
 
     public void launchAnalysisView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/analysisView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent, 462, 439));
@@ -687,7 +687,7 @@ public class MenuEmotivController extends MenuController {
 
     public void launchSensorsView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/sensorsView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/sensorsView.fxml"));
             loader.setController(new SensorsController(fw,queue2));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
@@ -701,7 +701,7 @@ public class MenuEmotivController extends MenuController {
 
     public void launchCalibrationView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/calibrationView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/calibrationView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent, 462, 226));

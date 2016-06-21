@@ -66,7 +66,7 @@ public class SelectDeviceController {
 
     private void launchNeuroSkyView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuNeuroSkyView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/menuNeuroSkyView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
@@ -79,7 +79,7 @@ public class SelectDeviceController {
     }  
     private void launchEmotivView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuEmotivView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/menuEmotivView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));

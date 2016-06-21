@@ -12,11 +12,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import module.MainModule;
 
 import java.io.IOException;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 
 public class AnalysisEmotivController extends MenuEmotivController{
@@ -154,7 +151,7 @@ public class AnalysisEmotivController extends MenuEmotivController{
     }
     protected void launchAnalysisInProgressView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisInProgressView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/fw/views/analysisInProgressView.fxml"));
             loader.setController(new AnalysisInProgressController(fw,queue2));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
