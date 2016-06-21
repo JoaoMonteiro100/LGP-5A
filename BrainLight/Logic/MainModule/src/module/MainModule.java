@@ -1,6 +1,8 @@
 package module;
 
 
+
+
 import Iedk.EmotivDevice;
 import Iedk.Wave;
 import Iedk.interfaces.EmotivInterface;
@@ -20,15 +22,19 @@ import java.util.concurrent.TimeUnit;
 
 public class MainModule {
     private int selectedLobe;//[0->frontal,1->temporal,2->pariental,3->occipital,4->total]
-    private Boolean neverDelete;
-    private String fileName;
+    private int timeCalculate;
+	private Boolean neverDelete;
+	private Boolean[] checkCalc;
+	private String fileName;
     private Boolean record;
     private int days;
+    private static Vector<String> typesVector;
     protected BlockingQueue<Double[][]> queue = null;
     protected BlockingQueue<Double[][]> queue2 = null;
     private Neurosky neuroDevice;
     private EmotivDevice emotivDevice;
     private int wirelessSignal;
+    private static Vector<Float> resultFloatVector;
     public static Double[][] finalDataArray;
     public static Double[][] finalWavesArray;
     public static Double[][] finalRawData;
@@ -38,7 +44,6 @@ public class MainModule {
     private boolean running;
     private int deviceNo;
     private static boolean calculate = true;
-    ; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
 
     public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2, Boolean neverDeleteP, int daysP) {
@@ -229,7 +234,7 @@ public class MainModule {
         running = false;
     }
 
-    public static void calculate(int[][] infoArray) {
+    public static Double[] calculate(int[][] infoArray) {
         Float[][] floatArrayEmotiv;
         Double[] finalArray;
         float[][] finalArray1;
@@ -262,7 +267,6 @@ public class MainModule {
                     {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0}};
 
 
-            int count = 0;
             for (long stop = System.nanoTime() + TimeUnit.SECONDS.toNanos(infoArray[2][0]); stop > System.nanoTime(); )
 
                 if (tempArray == finalWavesArray)
@@ -275,54 +279,47 @@ public class MainModule {
             for (int i = 0; i < infoArray[1].length; i++) {
                 switch (infoArray[1][i]) {
                     case 0:
-                        types[i] = TypesOfCalculations.WAVELENGTH;
-                        break;
-                    case 1:
-                        types[i] = TypesOfCalculations.WAVENUMBER;
-                        break;
-                    case 2:
-                        types[i] = TypesOfCalculations.ANG_WAVENUMBER;
-                        break;
-                    case 3:
-                        types[i] = TypesOfCalculations.ANG_FREQUENCY;
-                        break;
-                    case 4:
-                        types[i] = TypesOfCalculations.PERIOD;
-                        break;
-                    case 5:
                         types[i] = TypesOfCalculations.AMPLITUDE;
                         break;
-                    case 6:
+                    case 1:
                         types[i] = TypesOfCalculations.MAX_AMPLITUDE;
                         break;
-                    case 7:
+                    case 2:
                         types[i] = TypesOfCalculations.MIN;
                         break;
-                    case 8:
+                    case 3:
                         types[i] = TypesOfCalculations.MAX;
                         break;
-                    case 9:
+                    case 4:
                         types[i] = TypesOfCalculations.MEAN;
                         break;
-                    case 10:
+                    case 5:
                         types[i] = TypesOfCalculations.MODE;
                         break;
-                    case 11:
+                    case 6:
                         types[i] = TypesOfCalculations.MEDIAN;
                         break;
-                    case 12:
+                    case 7:
                         types[i] = TypesOfCalculations.XFORMAXY;
                         break;
-                    case 13:
+                    case 8:
                         types[i] = TypesOfCalculations.XFORMINY;
                         break;
                     default:
                         break;
                 }
             }
+            
+            typesVector = new Vector<String>();
+            for (int i = 0; i < types.length; i++){
+            	typesVector.add(types[i].toString());
+            }
+            
+            
             floatArrayEmotiv = finalFloatArray(vector);
             int width = floatArrayEmotiv.length;
             int height = floatArrayEmotiv[0].length;
+            Double[] calculatedDataArray;
             float[][] floatmatrix = new float[width][height];
             for (int w = 0; width > w; w++) {
                 for (int h = 0; height > h; h++) {
@@ -332,8 +329,35 @@ public class MainModule {
             System.out.println(Arrays.deepToString(floatmatrix));
             Calculations Calc = new Calculations(floatmatrix, types);
             System.out.println(Calc.getResult());
+            Vector<Float> tempVec = new Vector<Float>();
+            /*creates vector with the result for the calculations of the types provided on the "types" array, 
+            and then converts it to an array*/
+            for (int i = 0; i < Calc.getResult().size(); i++)
+            {
+            tempVec.add(Calc.getResult().get(types[i]));
+            }
+            calculatedDataArray = new Double[tempVec.size()];
+            finalArray = tempVec.toArray(calculatedDataArray);
+        	return tempVec.toArray(calculatedDataArray);
         }
-
+return finalArray;
+    }
+    
+    /*converts array of booleans with trues on the types of analysis to be made, converts it to a vector
+    to make it the proper size, and then converts it to an array with length of the number of types
+    being analised, and returns that array*/
+    
+    public Double[] boolArrayToAnalysisTypes ()
+    {	Boolean[] bool = getCheckCalc();
+    	Double[] analysisArray;
+    	Vector<Double> analysisVector = new Vector<Double>();
+    	for (int i = 0; i < bool.length; i++)
+    	{
+    		if (bool[i] == true)
+    			analysisVector.add((double) i);
+    	}
+    	analysisArray = new Double[analysisVector.size()];
+    	return analysisVector.toArray(analysisArray);
     }
 
     public Float media(Float[] indexArray) {
@@ -487,12 +511,14 @@ public class MainModule {
 
                 }
             }
-            finalData = new Double[3][];
+            finalData = new Double[4][];
             finalData[0] = new Double[4];// 4 waves
             finalData[1] = new Double[14];// 1 signal Quality per Sensor
             finalData[2] = new Double[31];// all 31 average frequency
+            //ve tamanho do que recebe das analises
+            finalData[3] = new Double[boolArrayToAnalysisTypes().length];
             Double sum = 0.0;
-            Double[] finalData3;
+            Double[] finalData3 = new Double[31];
             switch (selectedLobe) {
                 case 0:/*Lobo Frontal*/
                     for (int k = 0; k < finalInfo.length; k++) {
@@ -667,46 +693,64 @@ public class MainModule {
                 //System.out.println(k+" "+emotivData.get(finalInfo[k]).getSignalQuality());
                     finalData[1][k] = (double) emotivData.get(finalInfo[k]).getSignalQuality();
             }
-            /*
-            int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};
-            int[] temporal = {4, 9};
-            int[] parietal = {5, 8};
-            int[] occipital = {6, 7};
-            int[] total = {0, 1, 2, 3,4,5,6,7,8,9, 10, 11, 12, 13};
-
-            for (int i = 0; i < finalData2.length; i++) {
-                finalData2[i][0] = emotivData.get(finalInfo[i]).getTheta();
-                finalData2[i][1] = emotivData.get(finalInfo[i]).getDelta();
-                finalData2[i][2] = emotivData.get(finalInfo[i]).getAlpha();
-                finalData2[i][3] = emotivData.get(finalInfo[i]).getBeta();
-                finalData2[i][4] = (double) emotivData.get(finalInfo[i]).getSignalQuality();
-                for (int k = 0; k <= 30; k++) {
-                    finalData2[i][k + 5] = emotivData.get(finalInfo[i]).getFreqVals().get(k);
-                }
+            
+            int[] sensors;
+            switch (selectedLobe) {
+            case 0:
+            	sensors = new int [] {0, 1, 2, 3, 10, 11, 12, 13};
+            	break;
+            case 1:
+            	sensors = new int [] {4, 9};
+            	 break;
+            case 2:
+            	sensors = new int [] {5, 8};
+            	break;
+            case 3:
+            	sensors = new int [] {6, 7};
+            	break;
+            case 4:
+            	sensors = new int [] {0, 1, 2, 3,4,5,6,7,8,9, 10, 11, 12, 13};
+            	break;
             }
-
-            Double[][] finalWavesArray2 = finalData2;
-            Double[] finalData3 = averageOfInstanceDouble(frontal, finalWavesArray2);
-            Double[] finalData4 = averageOfInstanceDouble(temporal, finalWavesArray2);
-            Double[] finalData5 = averageOfInstanceDouble(parietal, finalWavesArray2);
-            Double[] finalData6 = averageOfInstanceDouble(occipital, finalWavesArray2);
-            Double[] finalData7 = averageOfInstanceDouble(total, finalWavesArray2);
-            for (int j = 0; j < 6; j++) {
-                for (int i = 0; i < 31; i++) {
-                    if(j==5)
-                        finalData[j][i]=finalData3[j];
-                    if(j==6)
-                        finalData[j][i]=finalData4[j];
-                    if(j==7)
-                        finalData[j][i]=finalData5[j];
-                    if(j==8)
-                        finalData[j][i]=finalData6[j];
-                    if(j==8)
-                        finalData[j][i]=finalData6[j];
-                }
-            }*/
+            //array usuado para calculate
+            int [][] calculateArray = new int[3][];
+            
+            //[0] é o numero de sensores, [1] o array com os tipos de data a ser analisados
+//            e [2] o tempo entre envios de analise
+            
+            calculateArray[0] = new int[finalData3.length]; //TODO CONFIRMAR
+            calculateArray[1] = new int[boolArrayToAnalysisTypes().length];
+            calculateArray[2] = new int[1];
+            
+            
+            
+            calculateArray[0]=doubleArrayToIntArray(finalData3);
+            calculateArray[1]= doubleArrayToIntArray(boolArrayToAnalysisTypes());
+            calculateArray[2][0]=timeCalculate;
+            
+        	finalData[3] = calculate(calculateArray);
+        	for (int i =0; i < finalData[3].length; i++){
+        	resultFloatVector.add(finalData[3][i].floatValue());
+        	}
+            
+            
             finalWavesArray = finalData;
         }
+    }
+    
+    public int[] doubleArrayToIntArray (Double[] doubleArray){
+    	int[] intArrayFinal = new int[doubleArray.length];
+    	double[] doubleArrayTemp = new double[doubleArray.length];
+    	
+    	for (int i = 0; i < doubleArray.length; i++)
+    	{
+    		doubleArrayTemp[i]= (double) doubleArray[i];
+    	}
+    	for (int i = 0; i < doubleArray.length; i++)
+    	{
+    		intArrayFinal[i]= (int) doubleArrayTemp[i];
+    	}
+    	return intArrayFinal;
     }
 
     public static void initMerge(int device, HashMap<String, Object> data) {
@@ -721,7 +765,7 @@ public class MainModule {
                 return;
             }
 
-            //criar array de arrays com toda a informação do dispositivo
+            //criar array de arrays com toda a informaÃ§Ã£o do dispositivo
             finalInfo = finalInfoFinal(1);
 
 
@@ -943,4 +987,28 @@ public class MainModule {
     public void setSelectedLobe(int selectedLobe) {
         this.selectedLobe = selectedLobe;
     }
+
+    public int getTimeCalculate() {
+		return timeCalculate;
+	}
+
+	public void setTimeCalculate(int timeCalculate) {
+		this.timeCalculate = timeCalculate;
+	}
+
+    public Boolean[] getCheckCalc() {
+		return checkCalc;
+	}
+
+	public void setCheckCalc(Boolean[] checkCalc) {
+		this.checkCalc = checkCalc;
+	}
+
+	public HashMap<String, Float> getCalculateValues(){
+		HashMap<String,Float> result = new HashMap<String, Float>();
+		for (int i = 0; i < this.typesVector.size(); i++){
+			result.put(typesVector.get(i), resultFloatVector.get(i));
+		}
+		return result;
+	}
 }
