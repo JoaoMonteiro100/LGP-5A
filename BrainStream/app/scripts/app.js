@@ -87,15 +87,21 @@
     app.connectionState = 'https://brainlight.firebaseio.com/.info/connected';
     app.usersLocation = 'https://brainlight.firebaseio.com/users';
     app.requestsLocation = 'https://brainlight.firebaseio.com/requests';
+    app.readingLocation = 'https://brainlight.firebaseio.com/leiturasinfo';
+
 
     app.userURL = function(userID) {
         //return app.location + "/users/" + userID;
-        return app.location + "/users/user";
+        return app.location + "/users/" + userID;
     };
 
     app.requestURL = function(requestID) {
         return app.location + "/requests/" + requestID;
     };
+
+     app.readingURL = function(readingID) {
+         return app.location + "/leiturasinfo/" + readingID;
+     };
     
 
 

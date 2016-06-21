@@ -84,10 +84,11 @@
                         }
                     };
 
-                    var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
-
+                    var userRef = new Firebase(app.userURL(self.user));
+                        
                    userRef.on("value",function(snapshot){
                         var user = snapshot.val();
+
                         if(user != null) {
                             if(user.group1) {
                                 var groupRef = new Firebase(app.location + "/groups/group1/members/" + self.user.__firebaseKey__);
