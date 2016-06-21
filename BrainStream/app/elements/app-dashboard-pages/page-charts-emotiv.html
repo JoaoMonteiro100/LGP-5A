@@ -706,12 +706,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var self = this;
           var ref;
           var counter = 0;
-          var lastState = false;
           var currentState = false;
 
           addEventListener('selected-hist-emotiv', function(vals) {
             counter = 0;
-            lastState = currentState;
             currentState = vals.detail[0];
             if(self.myChart != undefined) {
               self.myChart.destroy();
@@ -721,7 +719,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + vals.detail[1]);
             ref.limitToLast(1).on("child_added", function (snapshot) {
               if (snapshot.val()) {
-                if(currentState == false && lastState == true) {
+                if(currentState == false) {
                   // We only want to receive one copy when changing from true -> false
                   if(counter > 0) return;
                   self.setChartData(self, snapshot);

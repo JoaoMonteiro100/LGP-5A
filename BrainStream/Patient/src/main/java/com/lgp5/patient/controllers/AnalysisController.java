@@ -119,7 +119,11 @@ public class AnalysisController {
         values.put("Leitura", appRef.getKey());
         readingRef.updateChildren(values);
 
-        //Firebase newAppRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + appRef.getKey());
+
+        Map<String, Object> vals = new HashMap<>();
+        vals.put("Live", false);
+        readingRef.onDisconnect().updateChildren(vals);
+
 
         startRecordingData(appRef);
     }
@@ -294,7 +298,7 @@ public class AnalysisController {
 
     public void createRecordAfterStart() {
         this.stage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
-            @Override
+            @Override   
             public void handle(WindowEvent event) {
                 createNewFirebaseRecord();
             }
