@@ -107,7 +107,6 @@
                     };
 
                     if (this.$.editPatientForm.validate()) {
-                        alert(app.userURL(self.user.__firebaseKey__));
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
                         userRef.update({
                             name: this.$.firstname.value,

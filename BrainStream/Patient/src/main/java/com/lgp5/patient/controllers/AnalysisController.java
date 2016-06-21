@@ -103,6 +103,38 @@ public class AnalysisController {
                 readingRef.updateChildren(vals);
                 finalEmotivThread.interrupt();
             });
+        } else {
+            Thread neuroskyThread = null;
+            // We are using Neurosky
+            HeadSetDataInterface headSetDataInterface = new HeadSetDataInterface() {
+                @Override
+                public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
+
+                }
+
+                @Override
+                public void onReceiveRawData(HashMap<String, Integer> hashMap) {
+
+                }
+            };
+
+            Neurosky neurosky = new Neurosky("0013EF004809", headSetDataInterface);
+            neuroskyThread = new Thread(neurosky);
+            neuroskyThread.setDaemon(true);
+            neuroskyThread.start();
+
+
+            Thread finalNeuroskyThread = neuroskyThread;
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    // We're closing the window, let's set the Live field of the current reading to false
+                    Map<String, Object> vals = new HashMap<>();
+                    vals.put("Live", false);
+                    readingRef.updateChildren(vals);
+                    finalNeuroskyThread.interrupt();
+                }
+            });
         }
     }
 
