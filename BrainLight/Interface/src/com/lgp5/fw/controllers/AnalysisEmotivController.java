@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import module.MainModule;
 
@@ -41,7 +40,7 @@ public class AnalysisEmotivController extends MenuEmotivController{
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        waveToAnalyse.getItems().addAll( "Alpha", "Beta", "Theta", "Delta");
+        waveToAnalyse.getItems().addAll("Theta", "Alfa", "Low Beta", "High Beta", "Gamma");
         lobeToAnalyse.getItems().addAll("Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe", "Mean of all lobes (default)");
 
         // force the field to be numeric only
@@ -65,20 +64,6 @@ public class AnalysisEmotivController extends MenuEmotivController{
                         minIntensity.isSelected() ||
                         maxAmplitude.isSelected())
                 startAnalysisButton.setDisable(false);
-                
-                Boolean[] checkCalc = new Boolean[9];
-                checkCalc[0] = freqOfMinIntensity.isSelected();
-                checkCalc[1] = freqOfMaxIntensity.isSelected();
-                checkCalc[2] = amplitude.isSelected();
-                checkCalc[3] = median.isSelected();
-                checkCalc[4] = mode.isSelected();
-                checkCalc[5] = mean.isSelected();
-                checkCalc[6] = maxIntensity.isSelected();
-                checkCalc[7] = minIntensity.isSelected();
-                checkCalc[8] = maxAmplitude.isSelected();
-                
-                fw.setCheckCalc(checkCalc);
-                setTime(); //é aqui?
             }
         });
 
@@ -166,11 +151,6 @@ public class AnalysisEmotivController extends MenuEmotivController{
                 stage.close();
             }
         });
-    }
-//TODO por isto a enviar o tempo, já o guarda no modulo
-    public void setTime() {
-    	String time = analysisPeriodField.getText();
-        fw.setTimeCalculate(Integer.parseInt(time)); 
     }
     protected void launchAnalysisInProgressView() {
         try {
