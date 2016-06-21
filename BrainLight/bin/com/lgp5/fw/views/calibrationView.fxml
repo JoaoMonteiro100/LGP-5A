@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="462.0" style="-fx-background-color: #DAD8D9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lgp5.fw.controllers.CalibrationController">
+   <children>
+      <Label layoutX="30.0" layoutY="21.0" prefHeight="19.0" prefWidth="103.0" text="Calibrating for:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="expressionToMake" layoutX="126.0" layoutY="21.0" prefHeight="19.0" prefWidth="181.0" text="Expression">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <ProgressBar fx:id="progressBarCalibration" layoutX="27.0" layoutY="130.0" prefHeight="33.0" prefWidth="409.0" progress="0.0" />
+      <Label layoutX="82.0" layoutY="65.0" prefHeight="27.0" prefWidth="299.0" text="Please, do the facial expression or action written above" />
+      <Label layoutX="42.0" layoutY="88.0" text="so that the program can personalize it according to your characteristics." />
+      <Button fx:id="nextCalibrationButton" disable="true" onMouseClicked="#launchCalibrationView" layoutX="381.0" layoutY="181.0" mnemonicParsing="false" text="Next &gt;" />
+   </children>
+</AnchorPane>

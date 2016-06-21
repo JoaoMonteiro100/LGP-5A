@@ -1,12 +1,3 @@
-<!--
-   @license
-   Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-   This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-   The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-   The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-   Code distributed by Google as part of the polymer project is also
-   subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-   -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="edit-patient">
     <template>
@@ -15,11 +6,9 @@
             :host {
                 display: block;
             }
-
             #modal {
                 width: 350px;
             }
-
             .containerdiv {
                 @apply(--layout-horizontal);
                 height: 100%;
@@ -27,15 +16,12 @@
                 padding-right: 0px;
                 font-size: 12px;
             }
-
             #genpw {
                 margin-top: 16px;
             }
-
             .flexchild {
                 @apply(--layout-flex);
             }
-
             #genderdrop {
                 @apply(--layout-horizontal);
             }
@@ -51,6 +37,9 @@
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate
                              pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required
                              auto-validate></paper-input>
+               <paper-input id="historicDays" name="historicDays" label="Historic Days" char-counter maxlength="4"
+                             auto-validate pattern="^(0|[1-9][0-9]*)$" error-message="numbers only!" value="{{user.historicDays}}"
+                             required auto-validate></paper-input>
                 <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected"
                                      label="Gender">
                     <paper-listbox class="dropdown-content" selected="{{selected}}">
@@ -73,10 +62,8 @@
     <script>
         (function () {
             'use strict';
-
             Polymer({
                 is: 'edit-patient',
-
                 properties: {
                     user: {
                         type: Object,
@@ -91,10 +78,8 @@
                         value: true
                     }
                 },
-
                 _nativeSubmit: function (event) {
                     var self = this;
-
                     var onPatientUpdated = function (error) {
                         if (error) {
                             alert('An error occurred while updating the user!');
@@ -105,28 +90,37 @@
                             self.fire('selected-user', self.user);
                         }
                     };
-
                     if (this.$.editPatientForm.validate()) {
-                        alert(app.userURL(self.user.__firebaseKey__));
+                        //alert(app.userURL(self.user.__firebaseKey__));
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/final-dev
+                        if(this.$.historicDays.value < 120) //4 months
+                            this.$.historicDays.value = 120;
+                        else if(this.$.historicDays.value > 1825) //5 years
+                            this.$.historicDays.value = 1825;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/final-dev
                         userRef.update({
                             name: this.$.firstname.value,
                             lastname: this.$.lastname.value,
+                            historicDays: this.$.historicDays.value,
                             gender: this.$.genderdrop.value
                         }, onPatientUpdated);
                     }
                 },
-
                 editFormClickHandler: function (e) {
                     this.$.editFormModal.toggle();
                 },
-
                 ready: function () {
                     var self = this;
                     var userdef = false;
                     addEventListener('selected-user-patient', function (user) {
                         var ref = new Firebase(app.userURL(user.detail));
-
                         ref.on('value', function (snapshot) {
                             self.user = snapshot.val();
                             self.user.__firebaseKey__ = snapshot.key();
@@ -138,7 +132,6 @@
                         });
                     });
                 },
-
                 _reset: function () {
                     document.getElementById('editPatientForm').reset();
                 },
