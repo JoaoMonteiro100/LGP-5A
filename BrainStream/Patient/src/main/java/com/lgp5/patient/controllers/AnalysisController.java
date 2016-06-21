@@ -109,7 +109,7 @@ public class AnalysisController {
             HeadSetDataInterface headSetDataInterface = new HeadSetDataInterface() {
                 @Override
                 public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
-
+                    appRef.push().setValue(hashMap);
                 }
 
                 @Override
