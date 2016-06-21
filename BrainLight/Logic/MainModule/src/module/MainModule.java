@@ -40,7 +40,7 @@ public class MainModule {
     private static boolean calculate = true;
     ; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
-//initialize the module and the threads that connect it to the interface
+    //initialize the module and the threads that connect it to the interface
     public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2, Boolean neverDeleteP, int daysP) {
         selectedLobe = 4;
         neverDelete = neverDeleteP;
@@ -91,12 +91,12 @@ public class MainModule {
 
                             final Object[][] bookData = {
                                     {ftTime.format(dNow), finalWavesArray[0][0], finalWavesArray[0][1],
-                                            finalWavesArray[0][2], finalWavesArray[0][3],finalDataArray[2][2],
-                                            finalDataArray[2][0],finalDataArray[2][1],finalDataArray[2][3],
-                                            finalDataArray[2][4],finalDataArray[2][5],finalDataArray[1][2],
-                                            finalDataArray[1][3],finalDataArray[1][0],finalDataArray[1][1],
-                                            finalDataArray[3][1],finalDataArray[3][3],finalDataArray[3][4],
-                                            finalDataArray[3][6],finalDataArray[3][8]},
+                                            finalWavesArray[0][2], finalWavesArray[0][3], finalDataArray[2][2],
+                                            finalDataArray[2][0], finalDataArray[2][1], finalDataArray[2][3],
+                                            finalDataArray[2][4], finalDataArray[2][5], finalDataArray[1][2],
+                                            finalDataArray[1][3], finalDataArray[1][0], finalDataArray[1][1],
+                                            finalDataArray[3][1], finalDataArray[3][3], finalDataArray[3][4],
+                                            finalDataArray[3][6], finalDataArray[3][8]},
                             };
                             WriteXLS_Emotiv.writeXLS(fileName, bookData);
                         } else {
@@ -112,7 +112,7 @@ public class MainModule {
             };
 
 
-            emotivDevice = new  EmotivDevice(sendDataInterface);
+            emotivDevice = new EmotivDevice(sendDataInterface);
         } else if (device == 2) {
             HeadSetDataInterface sendDataInterface;
             //confirmar
@@ -185,7 +185,7 @@ public class MainModule {
         return true;
     }
 
-//starts recieving data
+    //starts recieving data
     public void receiveDeviceData() {
 
         Thread receiveDataThread = new Thread("ReceiveDeviceData") {
@@ -223,12 +223,14 @@ public class MainModule {
         }
 
     }
- //called to stop recieving data
+
+    //called to stop recieving data
     public void stopReceiving() {
 
         running = false;
     }
-//recieves an int array of arrays of size 3, with the first element being an array with all the indexes of the sensors read
+
+    //recieves an int array of arrays of size 3, with the first element being an array with all the indexes of the sensors read
 //by the calculations, the second being an array with the indexes of all the types of calculations to be made, and the third
 //an array with a single int that is the time the program saves and processes the data before doing the calculations
     public static void calculate(int[][] infoArray) {
@@ -246,10 +248,26 @@ public class MainModule {
             Arrays.fill(row, 0.0);
 
         while (calculate == true) {
-
+            /*Double[][] testArray;
+                        testArray = new Double[][]{
+                                        {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                        {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
+                                       {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0}};
+*/
             int count = 0;
             for (long stop = System.nanoTime() + TimeUnit.SECONDS.toNanos(infoArray[2][0]); stop > System.nanoTime(); )
-
+                //Para testar deve trocar o array finalWavesArray para testArray nas 3 proximas ocorrencias.
                 if (tempArray == finalWavesArray)
                     continue;
                 else {
@@ -321,14 +339,16 @@ public class MainModule {
         }
 
     }
-//calculates the average between an array of floats
+
+    //calculates the average between an array of floats
     public Float media(Float[] indexArray) {
         int x = 0;
         for (int i = 0; i < indexArray.length; i++)
             x += indexArray[i];
         return (float) (x / indexArray.length);
     }
-//transforms a Vector<Float[][]> into a Float[][]
+
+    //transforms a Vector<Float[][]> into a Float[][]
     public static Float[][] finalFloatArray(Vector<Float[][]> vector) {
         Float[][] finalFloat = new Float[31][2];
 
@@ -353,21 +373,22 @@ public class MainModule {
             Arrays.fill(row, 0f);
 
         for (int sensor : sensorIdentifiers) {
-            for (int i = 5; i < finalArray[sensor].length; i++) {
-                dataToAnalyse[i][0] = (float) i;
-                dataToAnalyse[i][1] += (finalArray[sensor][i].floatValue() / sensorIdentifiers.length);
+            for (int i = 5; i < 36; i++) {
+                dataToAnalyse[i - 5][0] = (float) i;
+                dataToAnalyse[i - 5][1] += (finalArray[sensor][i].floatValue() / sensorIdentifiers.length);
             }
         }
         return dataToAnalyse;
     }
-//gives the average of each sensor on the array int[] sensorIdentifiers, based on the Double[][] finalArray
+
+    //gives the average of each sensor on the array int[] sensorIdentifiers, based on the Double[][] finalArray
     public static Double[] averageOfInstanceDouble(int[] sensorIdentifiers, Double[][] finalArray) {
         Double[] dataToAnalyse = new Double[31];
-       for(int j=0;j<dataToAnalyse.length;j++)
-            dataToAnalyse[j]=0.0;
+        for (int j = 0; j < dataToAnalyse.length; j++)
+            dataToAnalyse[j] = 0.0;
         for (int sensor : sensorIdentifiers) {
             for (int i = 5; i < 36; i++) {
-                dataToAnalyse[i-5] += (finalArray[sensor][i] / sensorIdentifiers.length);
+                dataToAnalyse[i - 5] += (finalArray[sensor][i] / sensorIdentifiers.length);
             }
         }
 
@@ -402,7 +423,8 @@ public class MainModule {
         //		MainModule fw = new MainModule(1,queue,queue2);
         //		fw.receiveDeviceData();
     }
-//tool to see more easily the keys for the emotiv and neurosky hashmaps
+
+    //tool to see more easily the keys for the emotiv and neurosky hashmaps
     public static String[][] finalInfoFinal(int device) {
         if (device == 1) {
             String[][] finalInfo = new String[][]{{"BatteryLevel", "WirelessSignal", "Timestamp", "SignalQuality"},
@@ -423,7 +445,7 @@ public class MainModule {
         } else return null;
     }
 
-//initializes the process of recieving the raw data from neurosky
+    //initializes the process of recieving the raw data from neurosky
     public static void initGetRaw(int device, HashMap<String, Integer> data) {
         Double[][] finalRaw = new Double[100][100];
 
@@ -442,7 +464,7 @@ public class MainModule {
         finalRawData = finalRaw;
     }
 
-//initializes the process of recieving the waves info from emotiv
+    //initializes the process of recieving the waves info from emotiv
     public void initGetWaves(int device, HashMap<String, Wave> data) {
         String[] finalInfo = new String[]{"AF3", "F7", "F3", "FC5", "T7", "P7",
                 "O1", "O2", "P8", "T8", "FC6", "F4", "F8", "AF4"};
@@ -471,7 +493,7 @@ public class MainModule {
                     for (int k = 0; k < 31; k++) {
                         allData[i][k + 5] = emotivData.get(finalInfo[i]).getFreqVals().get(k);
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -509,7 +531,7 @@ public class MainModule {
                     int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};
                     finalData3 = averageOfInstanceDouble(frontal, allData);
                     for (int j = 0; j < finalData3.length; j++) {
-                        finalData[2][j]=finalData3[j];
+                        finalData[2][j] = finalData3[j];
                     }
                     break;
 
@@ -540,7 +562,7 @@ public class MainModule {
                     int[] temporal = {4, 9};
                     finalData3 = averageOfInstanceDouble(temporal, allData);
                     for (int j = 0; j < finalData3.length; j++) {
-                        finalData[2][j]=finalData3[j];
+                        finalData[2][j] = finalData3[j];
                     }
                     break;
 
@@ -571,7 +593,7 @@ public class MainModule {
                     int[] parietal = {5, 8};
                     finalData3 = averageOfInstanceDouble(parietal, allData);
                     for (int j = 0; j < finalData3.length; j++) {
-                        finalData[2][j]=finalData3[j];
+                        finalData[2][j] = finalData3[j];
                     }
                     break;
 
@@ -602,7 +624,7 @@ public class MainModule {
                     int[] occipital = {6, 7};
                     finalData3 = averageOfInstanceDouble(occipital, allData);
                     for (int j = 0; j < finalData3.length; j++) {
-                        finalData[2][j]=finalData3[j];
+                        finalData[2][j] = finalData3[j];
                     }
                     break;
 
@@ -630,7 +652,7 @@ public class MainModule {
                         try {
                             sum += emotivData.get(finalInfo[k]).getDelta();
                         } catch (Exception e) {
-                           // System.out.println(e.getStackTrace());
+                            // System.out.println(e.getStackTrace());
                         }
                     }
                     finalData[0][2] = (sum / 14);
@@ -644,16 +666,16 @@ public class MainModule {
                     }
                     finalData[0][3] = (sum / 14);
 
-                    int[] total = {0, 1, 2, 3,4,5,6,7,8,9, 10, 11, 12, 13};
+                    int[] total = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
                     finalData3 = averageOfInstanceDouble(total, allData);
                     for (int j = 0; j < finalData3.length; j++) {
-                        finalData[2][j]=finalData3[j];
+                        finalData[2][j] = finalData3[j];
                     }
                     break;
             }
             for (int k = 0; k < finalInfo.length; k++) {
                 //System.out.println(k+" "+emotivData.get(finalInfo[k]).getSignalQuality());
-                    finalData[1][k] = (double) emotivData.get(finalInfo[k]).getSignalQuality();
+                finalData[1][k] = (double) emotivData.get(finalInfo[k]).getSignalQuality();
             }
             /*
             int[] frontal = {0, 1, 2, 3, 10, 11, 12, 13};
@@ -697,7 +719,7 @@ public class MainModule {
         }
     }
 
-//initializes the process of recieving the data from either emotiv or neurosky, according to the device number provided
+    //initializes the process of recieving the data from either emotiv or neurosky, according to the device number provided
     public static void initMerge(int device, HashMap<String, Object> data) {
         String[][] finalInfo;
         Double[][] finalData;
@@ -791,25 +813,28 @@ public class MainModule {
 
 
     }
-//covnerts a value to volts
+
+    //covnerts a value to volts
     public static double convertVolts(Float value) {
         value = (float) ((value * (1.8 / 4096)) / 2000);
         return value;
     }
-//covnerts an integer to double
+
+    //covnerts an integer to double
     public static double convertToDouble(Integer value) {
         if (value != null)
             return value;
         else return -1;
     }
-//converts a float to double
+
+    //converts a float to double
     public static double convertToDoubleFloat(Float value) {
         if (value != null)
             return value;
         else return -1;
     }
 
-//determines which action emotiv is recieveing
+    //determines which action emotiv is recieveing
     public static Double reverseAction(String actStr) {
 
         Double act;
@@ -848,7 +873,7 @@ public class MainModule {
 
     }
 
-//determines which expression emotiv is recieveing
+    //determines which expression emotiv is recieveing
     public static Double reverseExpression(String actStr) {
 
         Double act;
@@ -873,7 +898,7 @@ public class MainModule {
 
     }
 
-//deletes files with more then X days on the history folder since last time it was edited
+    //deletes files with more then X days on the history folder since last time it was edited
     public static void deleteOldFiles(int days) {
         String str = (System.getProperty("user.dir")).replaceAll("BrainLight", "") + "\\history";
         File dir = new File(str);
@@ -885,7 +910,8 @@ public class MainModule {
             }
         }
     }
-//deletes all files on the history folder
+
+    //deletes all files on the history folder
     public static void cleanHistory() {
         String str = (System.getProperty("user.dir")) + "\\history";
         File dir = new File(str);
