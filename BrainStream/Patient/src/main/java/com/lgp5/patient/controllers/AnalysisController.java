@@ -69,7 +69,7 @@ public class AnalysisController {
     }
 
 
-    private void startRecordingData(Firebase readingRef) {
+    private void startRecordingData(Firebase appRef, Firebase readingRef) {
         if (UserData.DEVICE.equals(Constants.DeviceConstants.EMOTIV)) {
             Thread emotivThread = null;
             EmotivInterface emotivInterface = new EmotivInterface() {
@@ -81,7 +81,7 @@ public class AnalysisController {
                 @Override
                 public void onReceiveWavesData(HashMap<String, Wave> data) {
                     try {
-                        readingRef.push().setValue(data);
+                        appRef.push().setValue(data);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -97,6 +97,10 @@ public class AnalysisController {
             // K3agb_
             Thread finalEmotivThread = emotivThread;
             stage.setOnCloseRequest(event -> {
+                // We're closing the window, let's set the Live field of the current reading to false
+                Map<String, Object> vals = new HashMap<>();
+                vals.put("Live", false);
+                readingRef.updateChildren(vals);
                 finalEmotivThread.interrupt();
             });
         }
@@ -120,12 +124,7 @@ public class AnalysisController {
         readingRef.updateChildren(values);
 
 
-        Map<String, Object> vals = new HashMap<>();
-        vals.put("Live", false);
-        readingRef.onDisconnect().updateChildren(vals);
-
-
-        startRecordingData(appRef);
+        startRecordingData(appRef, readingRef);
     }
 
 
@@ -298,7 +297,7 @@ public class AnalysisController {
 
     public void createRecordAfterStart() {
         this.stage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
-            @Override   
+            @Override
             public void handle(WindowEvent event) {
                 createNewFirebaseRecord();
             }
