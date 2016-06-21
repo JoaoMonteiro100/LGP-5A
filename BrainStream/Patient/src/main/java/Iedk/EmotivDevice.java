@@ -1,16 +1,14 @@
 package Iedk;
 
-import Iedk.interfaces.EmotivInterface;
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
-import com.sun.jna.ptr.DoubleByReference;
-import com.sun.jna.ptr.IntByReference;
-import java.util.Observable;
+        import Iedk.interfaces.EmotivInterface;
+        import com.sun.jna.Memory;
+        import com.sun.jna.Pointer;
+        import com.sun.jna.ptr.DoubleByReference;
+        import com.sun.jna.ptr.IntByReference;
 
-import java.util.HashMap;
-import java.util.Observer;
+        import java.util.HashMap;
 
-import static Iedk.Edk.EE_DataChannels_t.*;
+        import static Iedk.Edk.EE_DataChannels_t.*;
 
 
 public class EmotivDevice implements Runnable {
@@ -19,7 +17,6 @@ public class EmotivDevice implements Runnable {
     private Pointer emotivEvent;
     private Pointer emotivState;
     private IntByReference userID, batteryLevelStatus, maxBatteryLevel, contactQualArray;
-
 
     DoubleByReference alpha, low_beta, high_beta, gamma, theta;
     private boolean receiveDataBool, onStateChanged, readytocollect;
@@ -216,12 +213,14 @@ public class EmotivDevice implements Runnable {
         int state;
         int emotivHeadsetOn = 0;
         while (receiveDataBool) {
+            newData = false;
             state = Edk.INSTANCE.EE_EngineGetNextEvent(emotivEvent);
 
             //new event to handle
             if (state == EdkErrorCode.EDK_OK.ToInt()) {
                 int eventType = Edk.INSTANCE.EE_EmoEngineEventGetType(emotivEvent);
                 Edk.INSTANCE.EE_EmoEngineEventGetUserId(emotivEvent, userID);
+                newData = eventTypeCheck(eventType);
 
                 if (eventType == Edk.EE_Event_t.EE_EmoStateUpdated.ToInt()) {
                     timestamp = EmoState.INSTANCE.ES_GetTimeFromStart(emotivState);
@@ -252,14 +251,14 @@ public class EmotivDevice implements Runnable {
 
     private void getAffectiv(){
 
-        isEngActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_ENGAGEMENT_BOREDOM.ToInt());
+        isEngActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_ENGAGEMENT_BOREDOM.ToInt());
 
         if(isEngActiv ==1) {
 
             engagementBoredomScore = EmoState.INSTANCE.ES_AffectivGetEngagementBoredomScore(emotivState);
         }
 
-        isExcitementActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_EXCITEMENT.ToInt());
+        isExcitementActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_EXCITEMENT.ToInt());
 
         if(isExcitementActiv ==1) {
 
@@ -267,7 +266,7 @@ public class EmotivDevice implements Runnable {
             excitementShortScore = EmoState.INSTANCE.ES_AffectivGetExcitementShortTermScore(emotivState);
         }
 
-        isFrustActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_FRUSTRATION.ToInt());
+        isFrustActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_FRUSTRATION.ToInt());
 
         if(isFrustActiv ==1) {
 
@@ -276,7 +275,7 @@ public class EmotivDevice implements Runnable {
         }
 
 
-        isMeditationActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState, EmoState.EE_AffectivAlgo_t.AFF_MEDITATION.ToInt());
+        isMeditationActiv = EmoState.INSTANCE.ES_AffectivIsActive(emotivState,EmoState.EE_AffectivAlgo_t.AFF_MEDITATION.ToInt());
 
         if(isMeditationActiv ==1) {
 

@@ -62,25 +62,10 @@ public class AnalysisController {
     ArrayList<String> meditationQueue = new ArrayList<String>();
     ArrayList<Number> queueTime = new ArrayList<Number>();
     private HeadSetDataInterface headSetDataInterface;
-    private Firebase appRef;
     @FXML private Stage stage;
 
 
     public AnalysisController() {
-        /**headSetDataInterface = new HeadSetDataInterface() {
-        @Override public void onReceiveData(HashMap<String, HashMap<String, Object>> hashMap) {
-        double end = System.currentTimeMillis();
-        double diff = end - start;
-        HashMap<String, Object> data = hashMap.get(utils.Constants.WAVES);
-        data.put("elapsedTime", diff);
-        newAppRef.push().setValue(data);
-        }
-
-        @Override public void onReceiveRawData(HashMap<String, Integer> hashMap) {
-        }
-        };
-
-         new Thread(new Neurosky("0013EF004809", headSetDataInterface)).start();*/
     }
 
 
@@ -126,24 +111,17 @@ public class AnalysisController {
 
 
     private void createNewFirebaseRecord() {
+        Firebase appRef = new Firebase("https://brainlight.firebaseio.com/leituras").push();
         Firebase readingRef = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + UserData.READING_LAST_KEY);
         Map<String, Object> values = new HashMap<>();
         values.put("Live", true);
         values.put("Patient", UserData.KEY);
+        values.put("Leitura", appRef.getKey());
         readingRef.updateChildren(values);
 
-        // Set live to false when we disconnect in this program
-        values.clear();
-        values.put("live", false);
-        readingRef.onDisconnect().updateChildren(values);
+        //Firebase newAppRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + appRef.getKey());
 
-        final long start = System.currentTimeMillis();
-        appRef = new Firebase("https://brainlight.firebaseio.com/leituras").push();
-        System.out.println(appRef.getKey());
-        Firebase newAppRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + appRef.getKey());
-
-
-        startRecordingData(newAppRef);
+        startRecordingData(appRef);
     }
 
 

@@ -88,7 +88,7 @@ public class SelectDeviceController {
         String time = cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH) + " - " +
                 cal.get(Calendar.HOUR_OF_DAY) + "." + cal.get(Calendar.MINUTE) + "." + cal.get(Calendar.SECOND);
 
-        values.put("Time", time);
+        values.put("time", time);
 
         Firebase newAppRef = appRef.push();
         newAppRef.setValue(values);

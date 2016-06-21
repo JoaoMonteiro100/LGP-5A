@@ -13,8 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="patient-history">
     <template>
         <style is="custom-style">
-
-
             section {
                 width: 100%;
                 height: 250px;
@@ -50,14 +48,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
 
-
         <section>
             <firebase-collection
                     location="https://brainlight.firebaseio.com/leiturasinfo"></firebase-collection>
             <paper-dialog-scrollable>
                 <paper-listbox id="patientList" selected="{{myChoice}}">
-                    <!--on-iron-select="itemSelected"    VER ISTO-->
-                    <template is="dom-repeat" items="[[history]]" as="hist">  <!--  sort="_computeSort"-->
+                    <template is="dom-repeat" items="[[history]]" as="hist">
                         <paper-item>
                             <div id="name">[[hist.time]]</div>
                             <img src={{live(hist)}} style="width:10px;height:10px;">
@@ -109,12 +105,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     self.push('history', childSnapshot.val());
                                 }
                             });
-                            /*alert(snapshot.numChildren());
-                             for(int i=0; i< snapshot.numChildren(), i++){
-
-                             }*/
-
-                            // self.history = snapshot.val();
                         });
 
 
@@ -126,19 +116,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 this.myChoice -= 1;
                             }
                         });
-
-
                     });
                 },
+
                 live: function (hist) {
-                    if (hist.live)
+                    if (hist.Live)
                         return "../../../images/online.png";
                     else
                         return "../../../images/offline.png";
                 },
                 _onSelected: function () {
                     if(this.history[this.myChoice].Device == 'emotiv') {
-                        this.fire('selected-hist-emotiv', this.history[this.myChoice].Leitura);
+                        this.fire('selected-hist-emotiv', [this.history[this.myChoice].Live, this.history[this.myChoice].Leitura]);
                     }
                 },
                 itemSelected: function () {

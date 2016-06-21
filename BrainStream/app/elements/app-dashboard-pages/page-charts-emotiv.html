@@ -186,7 +186,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         },
         setChartData: function (self, snapshot) {
-
           var data = snapshot.val();
           if (self.AF3Checked) {
             var values = data.AF3;
@@ -482,11 +481,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           return this.data;
         },
-
-        ready: function () {
+        setupChart: function() {
           var self = this;
           var myLabels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
           var ctx = document.getElementById("updating-chart");
+          this.myChart = null;
           this.myChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -701,14 +700,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               }
             }
           });
+        },
 
+        ready: function () {
+          var self = this;
+          var ref;
+          var counter = 0;
+          var lastState = false;
+          var currentState = false;
 
-          addEventListener('selected-hist-emotiv', function(examid) {
-            alert('aqui');
-            var ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + examid.detail);
+          addEventListener('selected-hist-emotiv', function(vals) {
+            counter = 0;
+            lastState = currentState;
+            currentState = vals.detail[0];
+            if(self.myChart != undefined) {
+              self.myChart.destroy();
+            }
+            self.setupChart();
+
+            ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + vals.detail[1]);
             ref.limitToLast(1).on("child_added", function (snapshot) {
               if (snapshot.val()) {
-                self.setChartData(self, snapshot);
+                if(currentState == false && lastState == true) {
+                  // We only want to receive one copy when changing from true -> false
+                  if(counter > 0) return;
+                  self.setChartData(self, snapshot);
+                  counter += 1;
+                } else {
+                  self.setChartData(self, snapshot);
+                }
               }
             });
           });
