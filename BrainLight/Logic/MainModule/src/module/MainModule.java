@@ -40,7 +40,7 @@ public class MainModule {
     private static boolean calculate = true;
     ; //ver se as analises estao a correr, e se sim parar de enviar informaçao toda TODO
 
-
+//initialize the module and the threads that connect it to the interface
     public MainModule(int device, BlockingQueue<Double[][]> queue, BlockingQueue<Double[][]> queue2, Boolean neverDeleteP, int daysP) {
         selectedLobe = 4;
         neverDelete = neverDeleteP;
@@ -185,7 +185,7 @@ public class MainModule {
         return true;
     }
 
-
+//starts recieving data
     public void receiveDeviceData() {
 
         Thread receiveDataThread = new Thread("ReceiveDeviceData") {
@@ -212,7 +212,7 @@ public class MainModule {
 
     }
 
-    //done, untested
+    //called to disconnect the device
     public void deviceDisconnect() {
 
         if (deviceNo == 1) {
@@ -223,12 +223,14 @@ public class MainModule {
         }
 
     }
-
+ //called to stop recieving data
     public void stopReceiving() {
 
         running = false;
     }
-
+//recieves an int array of arrays of size 3, with the first element being an array with all the indexes of the sensors read
+//by the calculations, the second being an array with the indexes of all the types of calculations to be made, and the third
+//an array with a single int that is the time the program saves and processes the data before doing the calculations
     public static void calculate(int[][] infoArray) {
         Float[][] floatArrayEmotiv;
         Double[] finalArray;
@@ -244,23 +246,6 @@ public class MainModule {
             Arrays.fill(row, 0.0);
 
         while (calculate == true) {
-            Double[][] testArray;
-            testArray = new Double[][]{
-                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 34.0, 35.0, 62.0, 12.0, 12.0},
-                    {43.0, 52.0, 53.0, 9.0, 25.0, 34.0, 35.0, 62.0, 12.0, 12.0, 53.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 20.0, 6.0, 7.0, 3.0, 5.0, 3.0, 2.0, 3.0, 5.0, 6.0, 8.0, 24.0, 74.0, 73.0, 34.0, 35.0, 62.0, 12.0, 12.0}};
-
 
             int count = 0;
             for (long stop = System.nanoTime() + TimeUnit.SECONDS.toNanos(infoArray[2][0]); stop > System.nanoTime(); )
@@ -272,6 +257,7 @@ public class MainModule {
                     tempArray = finalWavesArray;
                 }
 
+//makes types[] hold all the types of calculations to be made 
             for (int i = 0; i < infoArray[1].length; i++) {
                 switch (infoArray[1][i]) {
                     case 0:
@@ -335,14 +321,14 @@ public class MainModule {
         }
 
     }
-
+//calculates the average between an array of floats
     public Float media(Float[] indexArray) {
         int x = 0;
         for (int i = 0; i < indexArray.length; i++)
             x += indexArray[i];
         return (float) (x / indexArray.length);
     }
-
+//transforms a Vector<Float[][]> into a Float[][]
     public static Float[][] finalFloatArray(Vector<Float[][]> vector) {
         Float[][] finalFloat = new Float[31][2];
 
@@ -374,7 +360,7 @@ public class MainModule {
         }
         return dataToAnalyse;
     }
-
+//gives the average of each sensor on the array int[] sensorIdentifiers, based on the Double[][] finalArray
     public static Double[] averageOfInstanceDouble(int[] sensorIdentifiers, Double[][] finalArray) {
         Double[] dataToAnalyse = new Double[31];
        for(int j=0;j<dataToAnalyse.length;j++)
@@ -416,7 +402,7 @@ public class MainModule {
         //		MainModule fw = new MainModule(1,queue,queue2);
         //		fw.receiveDeviceData();
     }
-
+//tool to see more easily the keys for the emotiv and neurosky hashmaps
     public static String[][] finalInfoFinal(int device) {
         if (device == 1) {
             String[][] finalInfo = new String[][]{{"BatteryLevel", "WirelessSignal", "Timestamp", "SignalQuality"},
@@ -437,6 +423,7 @@ public class MainModule {
         } else return null;
     }
 
+//initializes the process of recieving the raw data from neurosky
     public static void initGetRaw(int device, HashMap<String, Integer> data) {
         Double[][] finalRaw = new Double[100][100];
 
@@ -455,6 +442,7 @@ public class MainModule {
         finalRawData = finalRaw;
     }
 
+//initializes the process of recieving the waves info from emotiv
     public void initGetWaves(int device, HashMap<String, Wave> data) {
         String[] finalInfo = new String[]{"AF3", "F7", "F3", "FC5", "T7", "P7",
                 "O1", "O2", "P8", "T8", "FC6", "F4", "F8", "AF4"};
@@ -709,6 +697,7 @@ public class MainModule {
         }
     }
 
+//initializes the process of recieving the data from either emotiv or neurosky, according to the device number provided
     public static void initMerge(int device, HashMap<String, Object> data) {
         String[][] finalInfo;
         Double[][] finalData;
@@ -802,25 +791,25 @@ public class MainModule {
 
 
     }
-
+//covnerts a value to volts
     public static double convertVolts(Float value) {
         value = (float) ((value * (1.8 / 4096)) / 2000);
         return value;
     }
-
+//covnerts an integer to double
     public static double convertToDouble(Integer value) {
         if (value != null)
             return value;
         else return -1;
     }
-
+//converts a float to double
     public static double convertToDoubleFloat(Float value) {
         if (value != null)
             return value;
         else return -1;
     }
 
-
+//determines which action emotiv is recieveing
     public static Double reverseAction(String actStr) {
 
         Double act;
@@ -859,6 +848,7 @@ public class MainModule {
 
     }
 
+//determines which expression emotiv is recieveing
     public static Double reverseExpression(String actStr) {
 
         Double act;
@@ -883,7 +873,7 @@ public class MainModule {
 
     }
 
-
+//deletes files with more then X days on the history folder since last time it was edited
     public static void deleteOldFiles(int days) {
         String str = (System.getProperty("user.dir")).replaceAll("BrainLight", "") + "\\history";
         File dir = new File(str);
@@ -895,7 +885,7 @@ public class MainModule {
             }
         }
     }
-
+//deletes all files on the history folder
     public static void cleanHistory() {
         String str = (System.getProperty("user.dir")) + "\\history";
         File dir = new File(str);
