@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 <!--
    @license
    Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -7,6 +9,7 @@
    Code distributed by Google as part of the polymer project is also
    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
    -->
+>>>>>>> origin/final-dev
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="delete-all-readings">
     <template>
@@ -53,10 +56,15 @@
     <script>
         (function() {
             'use strict';
+<<<<<<< HEAD
+            Polymer({
+                is: 'delete-all-readings',
+=======
 
             Polymer({
                 is: 'delete-all-readings',
 
+>>>>>>> origin/final-dev
                 properties: {
                     reading: {
                         type: Object,
@@ -71,10 +79,15 @@
                         value: true
                     }
                 },
+<<<<<<< HEAD
+                _nativeSubmit: function(event) {
+                    var self = this;
+=======
 
                 _nativeSubmit: function(event) {
                     var self = this;
 
+>>>>>>> origin/final-dev
                     var onDeleted = function(error) {
                         if(error) {
                             alert('An error occurred while deleting the reading!');
@@ -83,6 +96,13 @@
                             self.$.deleteDialog.close();
                         }
                     };
+<<<<<<< HEAD
+                    var readingRef; 
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    var refInfoDelete;
+                //    alert(self.reading);
+                    var patientToDeleteHistoric;
+=======
 
                     var readingRef; 
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
@@ -92,6 +112,7 @@
 
                     var patientToDeleteHistoric;
 
+>>>>>>> origin/final-dev
                        ref.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 if (childSnapshot.val().Leitura == self.reading) {
@@ -110,11 +131,17 @@
                             });
                         });
                 },
+<<<<<<< HEAD
+                deleteFormClickHandler: function(e) {
+                   this.$.deleteDialog.toggle();
+                },
+=======
 
                 deleteFormClickHandler: function(e) {
                    this.$.deleteDialog.toggle();
                 },
 
+>>>>>>> origin/final-dev
                 ready: function() {
                     var self = this;
                     var readingdef = false;
@@ -126,11 +153,17 @@
                         }
                     });
                 },
+<<<<<<< HEAD
+                compute: function() {
+                    return this.ishidden;
+                },
+=======
 
                 compute: function() {
                     return this.ishidden;
                 },
 
+>>>>>>> origin/final-dev
                 toggle: function() {
                     this.ishidden = !this.ishidden;
                 }
