@@ -1,0 +1,218 @@
+<!--
+   @license
+   Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+   This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+   The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+   The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+   Code distributed by Google as part of the polymer project is also
+   subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+   -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="request-transfer">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: block;
+            }
+
+            #modal {
+                width: 350px;
+            }
+
+            .containerdiv {
+                @apply(--layout-horizontal);
+                height: 100%;
+                width: 100%;
+                padding-right: 0px;
+                font-size: 12px;
+            }
+
+            #genpw {
+                margin-top: 16px;
+            }
+
+            .flexchild {
+                @apply(--layout-flex);
+            }
+
+            #genderdrop {
+                @apply(--layout-horizontal);
+            }
+        </style>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:next-week"
+                           on-click="clickHandler"></paper-icon-button>
+        <paper-dialog id="requestTransferDialog" modal>
+            <h1>Request Transfer</h1>
+            <form is="iron-form" id="requestTransferForm">
+                <firebase-collection
+                        order-by-child="groups/group2"
+                        order-value-type="boolean"
+                        equal-to="true"
+                        location="https://brainlight.firebaseio.com/users"
+                        data="{{users}}">
+                </firebase-collection>
+                <div id="doctorAssociated" class="textstyle2">
+                    From Doctor: [[doctor.name]] [[doctor.lastname]]
+                </div>
+                <paper-dropdown-menu label="To Doctor" id="associateDoctor">
+                    <paper-listbox class="dropdown-content" on-iron-select="itemSelected" id="doctorList"
+                                   selected="{{myChoice}}">
+                        <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
+                            <paper-item>
+                                <div id="associateDoctor" required auto-validate>[[usr.name]] [[usr.lastname]]</div>
+                            </paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-button raised on-tap="_nativeSubmit" id="requestTransferFormSubmit">
+                    <paper-spinner id="spinner" hidden></paper-spinner>
+                    Submit
+                </paper-button>
+                <div class="output"></div>
+            </form>
+            <div class="buttons">
+                <paper-button id="closeButton" on-tap="_reset" dialog-confirm autofocus>Close</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'request-transfer',
+
+                properties: {
+                    newRequest: {
+                        type: Object,
+                        notify: true
+                    },
+                    ishidden: {
+                        type: Boolean,
+                        value: true
+                    },
+                    doctor: {
+                        type: Object,
+                        notify: true
+                    },
+                    newDoctorKey: {
+                        type: String,
+                        notify: true
+                    },
+                    users: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+
+                setNewRequest: function () {
+
+
+                  /*   var ref = new Firebase(app.userURL(this.user));
+
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                           // self.user.__firebaseKey__ = snapshot.key();
+                          /*  self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!self.userdef) {
+                                self.toggle();
+                                self.userdef = true;
+                            }*/
+                           // alert(user.doctorAssociated);
+                        //});
+                    
+                        /*alert("cenas");
+                        alert(this.user.__firebaseKey__);
+                        alert(this.user.doctorAssociated);
+                        alert(this.newDoctorKey);*/
+                    this.newRequest = {
+                        // mail: this.user.mail,
+
+                        userKey: this.user.__firebaseKey__,
+                        doctorAssociated: this.user.doctorAssociated,
+                        reqDoctorAssociated: this.newDoctorKey
+                    };
+
+                    return this.newRequest;
+                },
+
+
+                addRequest: function () {
+                    var ref = new Firebase("https://brainlight.firebaseio.com/requests");
+                    var request = this.setNewRequest();
+                    var requestRef = ref.push();
+                  //  alert(JSON.stringify(request));
+                    requestRef.set(request);
+                },
+
+                _nativeSubmit: function (event) {
+                    var self = this;
+
+                    if (this.$.requestTransferForm.validate()) {
+                        var appRef = new Firebase(app.location);
+                        self.addRequest();
+                        self.$.requestTransferForm.reset();
+                        self.$.requestTransferDialog.close();
+                    }
+                },
+
+                itemSelected: function (e) {
+                    this.$.associateDoctor.validate();
+                    this.set('newDoctorKey', this.users[this.myChoice].__firebaseKey__);
+                },
+
+                clickHandler: function (e) {
+                    this.$.requestTransferDialog.toggle();
+                },
+
+                compute: function () {
+                    return this.ishidden;
+                },
+
+                _reset: function () {
+                    document.getElementById('requestTransferForm').reset();
+                },
+
+                ready: function () {
+                    var self = this;
+                                        var userdef = false;
+
+                    addEventListener('selected-user-patient', function (user) {
+                        var userRef = new Firebase(app.userURL(user.detail));
+
+                        userRef.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!self.userdef) {
+                                self.toggle();
+                                self.userdef = true;
+                            }
+                        });
+
+                      //  self.user = user.detail;
+                      //  alert(JSON.stringify(self.user.doctorAssociated));
+                     /*   self.selected = self.user.gender == "Male" ? 1 : 0;
+                        if (!self.userdef) {
+                            self.toggle();
+                            self.userdef = true;
+                        }*/
+                        var doctorRef = new Firebase(app.userURL(self.user.doctorAssociated));
+                        //alert("cenas");
+                        //alert(doctorRef);
+                        
+                        doctorRef.on('value', function(snapshot) {
+                            var doc = snapshot.val();
+                            self.set('doctor', doc);
+                        });
+                    });
+                },
+
+                toggle: function () {
+                    this.ishidden = !this.ishidden;
+                }
+            });
+        })();
+    </script>
+</dom-module>

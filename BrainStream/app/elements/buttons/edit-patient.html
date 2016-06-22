@@ -1,0 +1,147 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="edit-patient">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: block;
+            }
+            #modal {
+                width: 350px;
+            }
+            .containerdiv {
+                @apply(--layout-horizontal);
+                height: 100%;
+                width: 100%;
+                padding-right: 0px;
+                font-size: 12px;
+            }
+            #genpw {
+                margin-top: 16px;
+            }
+            .flexchild {
+                @apply(--layout-flex);
+            }
+            #genderdrop {
+                @apply(--layout-horizontal);
+            }
+        </style>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:build"
+                           on-click="editFormClickHandler"></paper-icon-button>
+        <paper-dialog id="editFormModal" modal>
+            <h1>Edit Patient</h1>
+            <form is="iron-form" id="editPatientForm">
+                <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10"
+                             auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.name}}"
+                             required auto-validate></paper-input>
+                <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate
+                             pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required
+                             auto-validate></paper-input>
+               <paper-input id="historicDays" name="historicDays" label="Historic Days" char-counter maxlength="4"
+                             auto-validate pattern="^(0|[1-9][0-9]*)$" error-message="numbers only!" value="{{user.historicDays}}"
+                             required auto-validate></paper-input>
+                <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected"
+                                     label="Gender">
+                    <paper-listbox class="dropdown-content" selected="{{selected}}">
+                        <paper-item>Female</paper-item>
+                        <paper-item>Male</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-button raised on-tap="_nativeSubmit">
+                    <paper-spinner id="spinner" hidden></paper-spinner>
+                    Update
+                </paper-button>
+                <paper-button raised on-tap="_reset">Reset</paper-button>
+                <div class="output"></div>
+            </form>
+            <div class="buttons">
+                <paper-button id="closeButton" dialog-confirm autofocus>Close</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+            Polymer({
+                is: 'edit-patient',
+                properties: {
+                    user: {
+                        type: Object,
+                        notify: true
+                    },
+                    selected: {
+                        type: Number,
+                        notify: true
+                    },
+                    ishidden: {
+                        type: Boolean,
+                        value: true
+                    }
+                },
+                _nativeSubmit: function (event) {
+                    var self = this;
+                    var onPatientUpdated = function (error) {
+                        if (error) {
+                            alert('An error occurred while updating the user!');
+                        } else {
+                            // Close the modal
+                            self.$.editFormModal.close();
+                            self.user.gender = self.$.genderdrop.value;
+                            self.fire('selected-user', self.user);
+                        }
+                    };
+                    if (this.$.editPatientForm.validate()) {
+                        //alert(app.userURL(self.user.__firebaseKey__));
+                        var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/final-dev
+                        if(this.$.historicDays.value < 120) //4 months
+                            this.$.historicDays.value = 120;
+                        else if(this.$.historicDays.value > 1825) //5 years
+                            this.$.historicDays.value = 1825;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/final-dev
+                        userRef.update({
+                            name: this.$.firstname.value,
+                            lastname: this.$.lastname.value,
+                            historicDays: this.$.historicDays.value,
+                            gender: this.$.genderdrop.value
+                        }, onPatientUpdated);
+                    }
+                },
+                editFormClickHandler: function (e) {
+                    this.$.editFormModal.toggle();
+                },
+                ready: function () {
+                    var self = this;
+                    var userdef = false;
+                    addEventListener('selected-user-patient', function (user) {
+                        var ref = new Firebase(app.userURL(user.detail));
+                        ref.on('value', function (snapshot) {
+                            self.user = snapshot.val();
+                            self.user.__firebaseKey__ = snapshot.key();
+                            self.selected = self.user.gender == "Male" ? 1 : 0;
+                            if (!self.userdef) {
+                                self.toggle();
+                                self.userdef = true;
+                            }
+                        });
+                    });
+                },
+                _reset: function () {
+                    document.getElementById('editPatientForm').reset();
+                },
+                compute: function () {
+                    return this.ishidden;
+                },
+                toggle: function () {
+                    this.ishidden = !this.ishidden;
+                }
+            });
+        })();
+    </script>
+</dom-module>

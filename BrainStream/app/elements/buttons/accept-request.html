@@ -1,0 +1,122 @@
+<!--
+   @license
+   Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+   This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+   The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+   The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+   Code distributed by Google as part of the polymer project is also
+   subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+   -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="accept-request">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host {
+                display: block;
+            }
+            #modal{
+                width: 350px;
+            }
+            .containerdiv {
+                @apply(--layout-horizontal);
+                height: 100%;
+                width: 100%;
+                padding-right: 0px;
+                font-size: 12px;
+            }
+            #genpw{
+                margin-top: 16px;
+            }
+            .flexchild {
+                @apply(--layout-flex);
+            }
+            #genderdrop{
+                @apply(--layout-horizontal);
+            }
+        </style>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:assignment-turned-in" on-click="acceptFormClickHandler"></paper-icon-button>
+        <paper-dialog id="acceptDialog" modal>
+            <h1>Accept Request</h1>
+            <h2>Are you sure you want to accept this request?</h2>
+            <paper-button raised on-tap="_nativeSubmit" >
+                <paper-spinner id="spinner" hidden></paper-spinner>
+                Accept
+            </paper-button>
+            <div class="buttons">
+                <paper-button id="closeButton" dialog-confirm autofocus>Close</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'accept-request',
+
+                properties: {
+                    request: {
+                        type: Object,
+                        notify: true
+                    },
+                    selected: {
+                        type: Number,
+                        notify: true
+                    },
+                    ishidden: {
+                        type: Boolean,
+                        value: true
+                    }
+                },
+
+                _nativeSubmit: function(event) {
+                    var self = this;
+
+                    var onAccept = function(error) {
+                        if(error) {
+                            alert('An error occurred while accepting the request!');
+                        } else {
+                            // Close the modal
+                            self.$.acceptDialog.close();
+                        }
+                    };
+                        var userRef = new Firebase(app.userURL(self.request.userKey));
+
+                        userRef.update({
+                           doctorAssociated: self.request.reqDoctorAssociated
+                        }, onAccept);
+                    
+
+                    var requestRef = new Firebase(app.requestURL(self.request.__firebaseKey__));
+                    requestRef.remove(onAccept);
+                },
+
+                acceptFormClickHandler: function(e) {
+                   this.$.acceptDialog.toggle();
+                },
+
+                ready: function() {
+                    var self = this;
+                    var requestdef = false;
+                    addEventListener('selected-request', function(request) {
+                        self.request = request.detail;
+                        //self.selected = self.request.gender == "Male" ? 1 : 0;
+                        if(!self.requestdef){
+                            self.toggle();
+                            self.requestdef = true;
+                        }
+                    });
+                },
+
+                compute: function() {
+                    return this.ishidden;
+                },
+
+                toggle: function() {
+                    this.ishidden = !this.ishidden;
+                }
+            });
+        })();
+    </script>
+</dom-module>

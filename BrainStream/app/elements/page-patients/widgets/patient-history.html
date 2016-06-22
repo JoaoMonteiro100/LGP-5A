@@ -1,0 +1,141 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="patient-history">
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 250px;
+                @apply(--layout-vertical);
+            }
+
+            section paper-dialog-scrollable {
+
+                @apply(--layout-flex);
+            }
+
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
+
+            #name {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            span {
+                padding-right: 10px;
+            }
+
+            paper-listbox {
+                width: 100%;
+            }
+        </style>
+
+        <section>
+            <firebase-collection
+                    location="https://brainlight.firebaseio.com/leiturasinfo"></firebase-collection>
+            <paper-dialog-scrollable>
+                <paper-listbox id="patientList" selected="{{myChoice}}">
+                    <template is="dom-repeat" items="[[history]]" as="hist">
+                        <paper-item>
+                            <div id="name">[[hist.time]]</div>
+                            <img src={{live(hist)}} style="width:10px;height:10px;">
+                        </paper-item>
+                    </template>
+                </paper-listbox>
+            </paper-dialog-scrollable>
+        </section>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'patient-history',
+
+                properties: {
+                    selected: Array,
+                    users: {
+                        type: Object,
+                        notify: true
+                    },
+                    myChoice: {
+                        type: Number,
+                        notify: true,
+                        observer: '_onSelected'
+                    },
+                    deletedUserKey: {
+                        type: Number,
+                        notify: true
+                    },
+                    currentKey: {
+                        type: Number,
+                        notify: true
+                    },
+                    history: {
+                        type: Object,
+                        notify: true
+                    }
+                },
+                ready: function () {
+                    var self = this;
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo"); //trolha maximo
+                    addEventListener('selected-user-patient', function (user) {
+                        ref.on("value", function (snapshot) {
+                            self.history = [];
+                            snapshot.forEach(function (childSnapshot) {
+                                if (childSnapshot.val().Patient == user.detail) {
+                                    self.push('history', childSnapshot.val());
+                                }
+                            });
+                        });
+
+
+                        addEventListener('delete-user', function (user) {
+                            if (this.deletedUserKey == this.currentKey) {
+                                var user = this.users[this.myChoice];
+                                this.fire('selected-user', user);
+                            } else {
+                                this.myChoice -= 1;
+                            }
+                        });
+                    });
+                },
+
+                live: function (hist) {
+                    if (hist.Live)
+                        return "../../../images/online.png";
+                    else
+                        return "../../../images/offline.png";
+                },
+                _onSelected: function () {
+                    if(this.history[this.myChoice].Device == 'emotiv') {
+                        this.fire('show-emotiv');
+                        this.fire('selected-hist-emotiv', [this.history[this.myChoice].Live, this.history[this.myChoice].Leitura]);
+                    }
+                },
+                itemSelected: function () {
+                    var user = this.users[this.myChoice];
+                    this.fire('selected-exam', user);
+                }
+            });
+        })();
+    </script>
+</dom-module>

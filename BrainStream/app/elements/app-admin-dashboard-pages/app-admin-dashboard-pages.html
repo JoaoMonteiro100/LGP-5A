@@ -1,0 +1,63 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+
+<!-- Insert this code before your </body> tag -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="app-admin-dashboard-pages">
+    <style include="shared-styles"></style>
+    <style>
+        #innerpages {
+            padding: 24px 16px 56px;
+            min-height: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 640px) {
+            #innerpages {
+                padding: 24px 36px 56px;
+            }
+        }
+    </style>
+    <template>
+        <iron-pages id="innerpages" attr-for-selected="data-route" cols="{{cols}}" selected="{{params.page}}">
+            <section data-route="users">
+                <app-page-title title="Users" cols='{{cols}}'></app-page-title>
+                <page-admin-users cols="{{cols}}"></page-admin-users>
+            </section>
+            <section data-route="transfers">
+                <app-page-title title="Transfers" cols='{{cols}}'></app-page-title>
+                <page-admin-transfers cols="{{cols}}"></page-admin-transfers>
+            </section>
+            <section data-route="settings">
+                <app-page-title title="Settings" cols='{{cols}}'></app-page-title>
+                <page-admin-settings cols="{{cols}}"></page-admin-settings>
+            </section>
+        </iron-pages>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'app-admin-dashboard-pages',
+
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    }
+                }
+            });
+        })();
+    </script>
+</dom-module>

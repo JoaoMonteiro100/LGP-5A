@@ -1,0 +1,156 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="admins-list">
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 250px;
+                @apply(--layout-vertical);
+            }
+
+            section paper-dialog-scrollable {
+
+                @apply(--layout-flex);
+            }
+
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
+
+            #name {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            span {
+                padding-right: 10px;
+            }
+
+            paper-listbox {
+                width: 100%;
+            }
+        </style>
+        <section>
+            <firebase-collection
+                    order-by-child="groups/group1"
+                    order-value-type="boolean"
+                    equal-to="true"
+                    location="https://brainlight.firebaseio.com/users"
+                    data="{{users}}">
+            </firebase-collection>
+            <paper-dialog-scrollable>
+                <paper-listbox attr-for-selected="value" id="adminList" selected="{{myChoice}}">
+                    <template is="dom-repeat" items="[[users]]" as="usr"> <!--  sort="_computeSort"-->
+                        <paper-item value="{{usr.__firebaseKey__}}">
+                            <img src={{online(usr)}} style="width:10px;height:10px;">
+                            <!--  <img src="../../../images/offline.png" style="width:10px;height:10px;">-->
+                            <div id="name">[[usr.name]] [[usr.lastname]]</div>
+                            <span> - </span>
+                            <div id="mail">[[usr.mail]]</div>
+                        </paper-item>
+                    </template>
+                </paper-listbox>
+            </paper-dialog-scrollable>
+        </section>
+        </app-grid>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'admins-list',
+
+                properties: {
+                    selected: Array,
+                    users: {
+                        type: Object,
+                        notify: true
+                    },
+                    myChoice: {
+                        type: Number,
+                        notify: true,
+                        observer: '_onUserSelected'
+                    },
+                    deletedUserKey: {
+                        type: Number,
+                        notify: true
+                    },
+                    currentKey: {
+                        type: Number,
+                        notify: true
+                    }
+                },
+
+                online: function (a) {
+                    if (a.online)
+                        return "../../../images/online.png";
+                    else
+                        return "../../../images/offline.png";
+                },
+
+                _computeSort: function (a, b) {
+                    if (a.name.toLowerCase() == b.name.toLowerCase()) {
+                        return 0;
+                    }
+
+                    var aLowerCase = a.name.toLowerCase();
+                    var bLowerCase = b.name.toLowerCase();
+
+                    if (aLowerCase >= bLowerCase) {
+                        var indexA = this.users.indexOf(a);
+                        var indexB = this.users.indexOf(b);
+                        var temp = this.users[indexA];
+                        this.users[indexA] = this.users[indexB];
+                        this.users[indexB] = temp;
+                    }
+
+                    return aLowerCase < bLowerCase ? -1 : 1;
+                },
+
+                ready: function () {
+                    var appRef = new Firebase(app.usersLocation);
+                    var self = this;
+
+                    appRef.on('child_removed', function (oldChildSnapshot) {
+                        self.deletedUserKey = oldChildSnapshot.key();
+                    });
+
+                    
+                },
+
+                _onUserSelected: function () {
+                    if(this.$.adminList.selected != null) {
+                        if (this.deletedUserKey == this.currentKey) {
+                            var admin = this.myChoice;
+                            this.fire('selected-admin', admin);
+                            
+                        } else {
+                            var admin = this.myChoice;
+                            this.currentKey = admin;
+                            this.fire('selected-admin', admin);
+                            
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+</dom-module>

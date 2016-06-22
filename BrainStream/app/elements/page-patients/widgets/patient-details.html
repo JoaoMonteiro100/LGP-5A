@@ -1,0 +1,229 @@
+
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="patient-details">
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 250px;
+                @apply(--layout-vertical);
+            }
+            section paper-dialog-scrollable {
+                @apply(--layout-flex);
+            }
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
+            #name {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            span {
+                padding-right: 10px;
+            }
+            paper-listbox {
+                width: 100%;
+            }
+            .container {
+                @apply(--layout-horizontal);
+            }
+            .flexchild {
+                @apply(--layout-flex);
+                margin-top: 12px;
+            }
+            .flexchild2 {
+                @apply(--layout-flex);
+            }
+            .vertcontainer {
+                @apply(--layout-vertical);
+            }
+            #profimg {
+                margin-right: 12px;
+                margin-top: 6px;
+            }
+            .namestyle {
+                font-weight: bold;
+                color: #000000;
+                letter-spacing: 0pt;
+                word-spacing: 2pt;
+                font-size: 15px;
+                text-align: left;
+                font-family: arial black, sans-serif;
+                line-height: 1;
+                margin-bottom: 8px;
+                margin-top: 10px;
+            }
+            .textstyle2 {
+                color: #696969;
+                letter-spacing: 0pt;
+                word-spacing: 2pt;
+                font-size: 14px;
+                text-align: left;
+                font-family: arial, helvetica, sans-serif;
+                line-height: 1;
+                padding-left: 20px;
+                margin-bottom: 6px;
+            }
+            .mas {
+                white-space: pre-wrap;
+            }
+            .notecontainer {
+                @apply(--layout-flex);
+                margin-left: 12px;
+                margin-top: 0px;
+            }
+            .noteh1 {
+                font-weight: bold;
+                color: #000000;
+                letter-spacing: 0pt;
+                word-spacing: 2pt;
+                font-size: 15px;
+                text-align: left;
+                font-family: arial black, sans-serif;
+                line-height: 1;
+                margin-bottom: 6px;
+                margin-top: 0px;
+            }
+        </style>
+
+        <section>
+            <paper-dialog-scrollable>
+
+                <div hidden$="[[hidecont]]" class="vertcontainer">
+                    <div class="container">
+                        <div class="flexchild">
+                            <div id="name" class="namestyle">
+                                Name: {{user.name}} {{user.lastname}}
+                            </div>
+                            <div id="unumber" class="textstyle2">
+                                Number: [[user.number]]
+                            </div>
+                            <div id="gender" class="textstyle2">
+                                Gender: [[user.gender]]
+                            </div>
+                            <div id="doctorAssociated" class="textstyle2">
+                                Doctor Associated: [[doc.name]] [[doc.lastname]]
+                            </div>
+                        </div>
+                        <div id="profimg">
+                            <img src="../../../images/profpic.png" id="profilepic" style="width:120px;height:120px;">
+                        </div>
+                    </div>
+                    <div class="notecontainer" id="notecontainer">
+                        <h1 class="noteh1">Notes: </h1>
+                        <div class="mas" id="note">[[user.notes]]</div>
+                    </div>
+                </div>
+            </paper-dialog-scrollable>
+        </section>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+            Polymer({
+                is: 'patient-details',
+                properties: {
+                    user: {
+                        type: Object,
+                        notify: true
+                    },
+                    doc: {
+                        type: Object,
+                        notify: true
+                    },
+                    usrkey: {
+                        type: String,
+                        notify: true
+                    },
+                    hidecont: {
+                        type: Boolean,
+                        value: true
+                    }
+                },
+                ready: function () {
+                    var self = this;
+                    addEventListener('selected-user-patient', function (user) {
+                        var ref = new Firebase(app.userURL(user.detail));
+                        var ref1;
+                        var reff = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+<<<<<<< HEAD
+                         var d = new Date();
+                         var n = d.getTime();
+                   // alert(d.getTime());
+                        var readingDate;
+=======
+
+                         var d = new Date();
+                         var n = d.getTime();
+                   // alert(d.getTime());
+
+                        var readingDate;
+
+>>>>>>> origin/final-dev
+                        //readingDate = childSnapshot.val().time;
+                        var test = 1465945200000;
+                        var result;
+                        var days;
+                     //   alert(days);
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/final-dev
+                    var refInfoDelete;
+                     reff.on("value", function (snapshot) {
+                            snapshot.forEach(function (childSnapshot) {
+                                if(childSnapshot.val().Patient == user.detail){
+                                    //readingDate = childSnapshot.val().time;
+                                    result = n - test;
+                                    days = ((result / (1000*60*60*24)) % 7); //nr de dias 
+                                   // alert(days);
+                                    if(days > user.historicDays){
+                                        readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
+                                       refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+                                        refInfoDelete.remove();
+                                        readingRef.remove();    
+                                    }
+                                }
+                            });
+                        });
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> origin/final-dev
+                        ref.on("value", function (snapshot) {
+                            var user = snapshot.val();
+
+                            ref1 = new Firebase(app.userURL(user.doctorAssociated));
+                            self.set('user', user);
+                            self.set('hidecont', false);
+                        });
+                        ref1.on("value", function (snapshot) {
+                            var doc = snapshot.val();
+                            self.set('doc', doc);
+                            self.set('hidecont', false);
+                        });
+                        self.fire('select_null_doctor');
+                    });
+
+                },
+                hideMe: function (one, two) {
+                    return (!one || two);
+                },
+                changeOne: function () {
+                    this.one = !this.one;
+                },
+                changeTwo: function () {
+                    this.two = !this.two;
+                }
+            });
+        })();
+    </script>
+</dom-module>

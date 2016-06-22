@@ -1,0 +1,93 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../elements/buttons/add-patient.html">
+<link rel="import" href="../../elements/buttons/edit-patient.html">
+<link rel="import" href="../../elements/buttons/delete-patient.html">
+<link rel="import" href="../../elements/buttons/search-patient.html">
+<link rel="import" href="../../elements/buttons/add-doctor.html">
+<link rel="import" href="../../elements/buttons/delete-doctor.html">
+<link rel="import" href="../../elements/buttons/edit-doctor.html">
+<link rel="import" href="../../elements/buttons/edit-note.html">
+<link rel="import" href="../../elements/buttons/add-admin.html">
+<link rel="import" href="../../elements/buttons/edit-admin.html">
+<link rel="import" href="../../elements/buttons/delete-admin.html">
+<link rel="import" href="../../elements/buttons/request-transfer.html">
+<link rel="import" href="../../elements/buttons/delete-request.html">
+<link rel="import" href="../../elements/buttons/accept-request.html">
+<<<<<<< HEAD
+<link rel="import" href="../../elements/buttons/delete-all-readings.html">
+<link rel="import" href="../../elements/buttons/delete-reading.html">
+
+
+=======
+<link rel="import" href="../../elements/buttons/delete-reading.html">
+<link rel="import" href="../../elements/buttons/delete-all-readings.html">
+>>>>>>> origin/final-dev
+
+<dom-module id="app-widget">
+  <template>
+    <style include="shared-styles">
+
+    .containerdiv {
+        @apply(--layout-horizontal);
+        height: 100%;
+        padding-left: 18px;
+        padding-right: 0px;
+        font-size: 12px;
+      }
+      .flexchild {
+        @apply(--layout-flex);
+      }
+      hr {
+          display: block;
+          margin:0;
+          border-style: inset;
+          border-width: 1px;
+          background-color: #ffffff;
+
+      }
+      #buttons{
+        display: inherit;
+      }
+    </style>
+    <paper-material class="widget" elevation="1">
+
+        <div class="containerdiv">
+
+      <h3>{{ widget.title }} </h3>
+      <div class="flexchild" ></div>
+    <div id="buttons"></div>
+    </div>
+    <hr>
+      <div id="content"></div>
+    </paper-material>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'app-widget',
+        ready: function(){
+          var i;
+          var dynamicEl = document.createElement(this.widget.component);
+          this.$.content.appendChild(dynamicEl);
+          for (i = 0; i < this.widget.buttons.length; i++) {
+            var dynamicButton = document.createElement(this.widget.buttons[i].button);
+            this.$.buttons.appendChild(dynamicButton);
+          }
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

@@ -1,0 +1,1330 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/chart-elements/chart-elements.html">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
+
+
+<dom-module id="page-charts-emotiv">
+    <template>
+        <style include="shared-styles"></style>
+        <style>
+            :host::shadow .widget {
+                height: auto !important;
+            / / todo: remove important min-height: 460 px;
+            }
+
+            #cenas {
+                height: 500px;
+                width: 1000px;
+            }
+
+            #updating-chart {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+        <div id="cenas">
+            <canvas id="updating-chart"></canvas>
+        </div>
+
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'page-charts-emotiv',
+
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    },
+                    myChart: {
+                        type: Object,
+                        notify: true
+                    },
+                    data: {
+                        type: Object,
+                        notify: true
+                    },
+                    AF3Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    AF3Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    AF4Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    AF4Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    F3Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    F3Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    F4Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    F4Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    F7Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    F7Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    F8Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    F8Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    FC5Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    FC5Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    FC6Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    FC6Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    O1Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    O1Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    O2Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    O2Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    P7Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    P7Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    P8Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    P8Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    T7Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    T7Temp: {
+                        type: Array,
+                        notify: true
+                    },
+                    T8Checked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    T8Temp: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+                setChartData: function (self, snapshot) {
+                    var data = snapshot.val();
+                    if (self.AF3Checked) {
+                        var values = data.AF3;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[0].data = values;
+                        }
+                    } else {
+                        //self.AF3Temp.push(data.LowGamma);
+                    }
+
+                    if (self.AF4Checked) {
+                        var values = data.AF4;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[1].data = values;
+                        }
+                    } else {
+                        //self.AF4Temp.push(data.MidGamma);
+                    }
+
+                    if (self.F3Checked) {
+                        var values = data.F3;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[2].data = values;
+                        }
+                    } else {
+                        //  self.F3Temp.push(data.LowBeta);
+                    }
+
+                    if (self.F4Checked) {
+                        var values = data.F4;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[3].data = values;
+                        }
+                    } else {
+                        // self.F4Temp.push(data.HighBeta);
+                    }
+
+                    if (self.F7Checked) {
+                        var values = data.F7;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[4].data = values;
+                        }
+                    } else {
+                        //  self.F7Temp.push(data.LowAlpha);
+                    }
+
+                    if (self.F8Checked) {
+                        var values = data.F8;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[5].data = values;
+                        }
+                    } else {
+                        //  self.F8Temp.push(data.HighAlpha);
+                    }
+
+                    if (self.FC5Checked) {
+                        var values = data.FC5;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[6].data = values;
+                        }
+                    } else {
+                        //    self.FC5Temp.push(data.Theta);
+                    }
+
+                    if (self.FC6Checked) {
+                        var values = data.FC6;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[7].data = values;
+                        }
+                    } else {
+                        //  self.FC6Temp.push(data.Delta);
+                    }
+                    if (self.O1Checked) {
+                        var values = data.O1;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[8].data = values;
+                        }
+                    } else {
+                        //   self.O1Temp.push(data.Delta);
+                    }
+                    if (self.O2Checked) {
+                        var values = data.O2;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[9].data = values;
+                        }
+                    } else {
+                        //    self.O2Temp.push(data.Delta);
+                    }
+                    if (self.P7Checked) {
+                        var values = data.P7;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[10].data = values;
+                        }
+                    } else {
+                        //    self.P7Temp.push(data.Delta);
+                    }
+                    if (self.P8Checked) {
+                        var values = data.P8;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[11].data = values;
+                        }
+                    } else {
+                        //    self.P8Temp.push(data.Delta);
+                    }
+
+                    if (self.T7Checked) {
+                        var values = data.T7;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[12].data = values;
+                        }
+                    } else {
+                        //   self.T7Temp.push(data.Delta);
+                    }
+                    if (self.T8Checked) {
+                        var values = data.T8;
+                        if(values != undefined) {
+                            values = values.freqVals;
+                            self.myChart.data.datasets[13].data = values;
+                        }
+                    } else {
+                        //   self.T8Temp.push(data.Delta);
+                    }
+
+                    self.myChart.update();
+                }
+                ,
+                buildChartData: function () {
+                    this.data = {
+                        labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+                        datasets: [
+                            {
+                                label: "AF3",
+                                fillColor: "rgba(0,0,0,0)",
+                                borderColor: "#fcea0f",
+                                backgroundColor: "#fcea0f",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "AF4",
+                                fillColor: "rgba(0,0,0,0)",
+                                borderColor: "#f39200",
+                                backgroundColor: "#f39200",
+                                strokeColor: "#f39200",
+                                pointColor: "#f39200",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "F3",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#00a09a",
+                                borderColor: "#00a09a",
+                                backgroundColor: "#00a09a",
+                                pointColor: "#00a09a",
+                                pointStrokeColor: "#00a09a",
+                                pointHighlightFill: "#00a09a",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "F4",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "F7",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "F8",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "FC5",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "FC6",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "O1",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "O2",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "P7",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "P8",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "T7",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            },
+                            {
+                                label: "T8",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            }
+                        ]
+                    };
+
+
+                    return this.data;
+                },
+                setupChart: function() {
+                    var self = this;
+                    var myLabels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+                    var ctx = document.getElementById("updating-chart");
+                    this.myChart = null;
+                    this.myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: myLabels,
+                            datasets: [{
+                                label: "AF3",
+                                fillColor: "rgba(0,0,0,0)",
+                                backgroundColor: "#fcea0f",
+                                borderColor: "#fcea0f",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                fill: false,
+                                lineTension: 0
+                            },
+                                {
+                                    label: "AF4",
+                                    backgroundColor: "#f39200",
+                                    borderColor: "#f39200",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#f39200",
+                                    pointColor: "#f39200",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "F3",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    borderColor: "#00a09a",
+                                    backgroundColor: "#00a09a",
+                                    strokeColor: "#00a09a",
+                                    pointColor: "#00a09a",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "F4",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#2eac66",
+                                    borderColor: "#2eac66",
+                                    backgroundColor: "#2eac66",
+                                    pointColor: "#2eac66",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "F7",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#302683",
+                                    borderColor: "#302683",
+                                    backgroundColor: "#302683",
+                                    pointColor: "#302683",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "F8",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#1d70b7",
+                                    borderColor: "#1d70b7",
+                                    backgroundColor: "#1d70b7",
+                                    pointColor: "#1d70b7",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "FC5",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#45405e",
+                                    borderColor:  "#45405e",
+                                    backgroundColor:  "#45405e",
+                                    pointColor: "#45405e",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "FC6",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#9d9c9c",
+                                    pointColor: "#9d9c9c",
+                                    borderColor: "#9d9c9c",
+                                    backgroundColor: "#9d9c9c",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "O1",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#fcea0f",
+                                    borderColor: "#aaaa0f",
+                                    backgroundColor: "#aaaa0f",
+                                    pointColor: "#fcea0f",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "O2",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#fcea0f",
+                                    borderColor: "#a2344f",
+                                    backgroundColor: "#a2344f",
+                                    pointColor: "#fcea0f",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "P7",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#fcea0f",
+                                    borderColor: "#FF0000",
+                                    backgroundColor: "#FF0000",
+                                    pointColor: "#fcea0f",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "P8",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#fcea0f",
+                                    pointColor: "#fcea0f",
+                                    borderColor: "rgb(0,255,0)",
+                                    backgroundColor: "rgb(0,255,0)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "T7",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#fcea0f",
+                                    pointColor: "#fcea0f",
+                                    borderColor: "#00ffff",
+                                    backgroundColor: "#00ffff",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                },
+                                {
+                                    label: "T8",
+                                    fillColor: "rgba(0,0,0,0)",
+                                    strokeColor: "#fcea0f",
+                                    pointColor: "#fcea0f",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(151,187,205,1)",
+                                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    fill: false,
+                                    lineTension: 0
+                                }
+                            ]
+                        },
+                        options: {
+                            animation: false,
+                            scales: {
+                                yAxes: [{
+                                    display: true,
+                                    ticks: {
+                                        min: -80,
+                                        max: 80,
+                                        stepSize: 10
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                },
+
+                ready: function () {
+                    var self = this;
+                    var ref;
+                    var counter = 0;
+                    var currentState = false;
+
+                    addEventListener('selected-hist-emotiv', function(vals) {
+                        counter = 0;
+                        currentState = vals.detail[0];
+                        if(self.myChart != undefined) {
+                            self.myChart.destroy();
+                        }
+                        self.setupChart();
+
+                        ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + vals.detail[1]);
+                        ref.limitToLast(1).on("child_added", function (snapshot) {
+                            if (snapshot.val()) {
+                                if(currentState == false) {
+                                    // We only want to receive one copy when changing from true -> false
+                                    if(counter > 0) return;
+                                    self.setChartData(self, snapshot);
+                                    counter += 1;
+                                } else {
+                                    self.setChartData(self, snapshot);
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        })();
+    </script>
+</dom-module>
+
+
+
+
+<dom-module id="patient-chart">
+    <template>
+        <style is="custom-style">
+            section {
+                width: 100%;
+                height: 450px;
+                @apply(--layout-vertical);
+            }
+
+            section paper-dialog-scrollable {
+
+                @apply(--layout-flex);
+            }
+
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+
+            paper-item {
+                --paper-item: {
+                    cursor: pointer;
+                };
+            }
+
+            span {
+                padding-right: 10px;
+            }
+
+            #chart::content {
+                max-height: 350px;
+            }
+
+            #grafbutcont {
+                height: 100%;
+            }
+
+            #buttonscontainer {
+
+                margin-left: 15px;
+            }
+
+            #thetacheck {
+                --paper-checkbox-checked-color: #45405e;
+            }
+
+            #lowgammacheck {
+                --paper-checkbox-checked-color: #fcea0f;
+            }
+
+            #midgammacheck {
+                --paper-checkbox-checked-color: #f39200;
+            }
+
+            #lowbetacheck {
+                --paper-checkbox-checked-color: #00a09a;
+            }
+
+            #highbetacheck {
+                --paper-checkbox-checked-color: #2eac66;
+            }
+
+            #lowalphacheck {
+                --paper-checkbox-checked-color: #302683;
+            }
+
+            #highalphacheck {
+                --paper-checkbox-checked-color: #1d70b7;
+            }
+
+            #deltacheck {
+                --paper-checkbox-checked-color: #9d9c9c;
+            }
+
+            .container {
+                height: 100%;
+
+                @apply(--layout-horizontal);
+            }
+
+            .flexchild {
+                @apply(--layout-flex);
+            }
+
+            section paper-dialog-scrollable {
+                height: 100%;
+                @apply(--layout-flex);
+            }
+
+            paper-dialog-scrollable::shadow #scrollable {
+                padding: 0px;
+            }
+
+            #info {
+                width: 300px;
+                height: 100%;
+            }
+
+            #info paper-dialog-scrollable {
+                height: 100%;
+                @apply(--layout-flex);
+            }
+
+
+        </style>
+        <section>
+            <div id="grafbutcont">
+                <paper-dialog-scrollable>
+                    <div id="grafcontainer">
+                        <chart-line id="chart" data="[[data]]" options="[[options]]"></chart-line>
+                    </div>
+                    <div id="buttonscontainer">
+                        <app-grid sm-cols="2" md-cols='4'>
+                            <paper-checkbox id="thetacheck" on-change="thetaChange" checked="{{thetaChecked}}">
+                                Theta
+                            </paper-checkbox>
+                            <paper-checkbox id="lowgammacheck" on-change="lowGammaChange"
+                                            checked="{{lowGammaChecked}}">Low Gamma
+                            </paper-checkbox>
+                            <paper-checkbox id="midgammacheck" on-change="midGammaChange"
+                                            checked="{{midGammaChecked}}">Mid Gamma
+                            </paper-checkbox>
+                            <paper-checkbox id="lowbetacheck" on-change="lowBetaChange"
+                                            checked="{{lowBetaChecked}}">Low Beta
+                            </paper-checkbox>
+                            <paper-checkbox id="highbetacheck" on-change="highBetaChange"
+                                            checked="{{highBetaChecked}}">Low Beta
+                            </paper-checkbox>
+                            <paper-checkbox id="lowalphacheck" on-change="lowAlphaChange"
+                                            checked="{{lowAlphaChecked}}">Low Alpha
+                            </paper-checkbox>
+                            <paper-checkbox id="highalphacheck" on-change="highAlphaChange"
+                                            checked="{{highAlphaChecked}}">High Alpha
+                            </paper-checkbox>
+                            <paper-checkbox id="deltacheck" on-change="deltaChange" checked="{{deltaChecked}}">
+                                Delta
+                            </paper-checkbox>
+                        </app-grid>
+                    </div>
+                </paper-dialog-scrollable>
+            </div>
+
+        </section>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'patient-chart',
+
+                properties: {
+                    data: {
+                        type: Object,
+                        notify: true
+                    },
+                    options: {
+                        type: Object,
+                        notify: true
+                    },
+                    chart: {
+                        type: Object,
+                        notify: true
+                    },
+                    thetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    thetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    midGammaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    midGammaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowGammaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowGammaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowBetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowBetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    highBetaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    highBetaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    lowAlphaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    lowAlphaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    highAlphaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    highAlphaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    deltaChecked: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    deltaTmp: {
+                        type: Array,
+                        notify: true
+                    },
+                    histinfo: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+
+                buildChartData: function () {
+                    this.data = {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: "Low Gamma",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#fcea0f",
+                                pointColor: "#fcea0f",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            },
+                            {
+                                label: "Mid Gamma",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#f39200",
+                                pointColor: "#f39200",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            },
+                            {
+                                label: "Low beta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#00a09a",
+                                pointColor: "#00a09a",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            },
+                            {
+                                label: "High beta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#2eac66",
+                                pointColor: "#2eac66",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            },
+                            {
+                                label: "Low Alpha",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#302683",
+                                pointColor: "#302683",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            },
+                            {
+                                label: "High Alpha",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#1d70b7",
+                                pointColor: "#1d70b7",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            },
+                            {
+                                label: "Theta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#45405e",
+                                pointColor: "#45405e",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            },
+                            {
+                                label: "Delta",
+                                fillColor: "rgba(0,0,0,0)",
+                                strokeColor: "#9d9c9c",
+                                pointColor: "#9d9c9c",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: []
+                            }
+                        ]
+                    };
+
+                    return this.data;
+                },
+
+
+                setChartData: function (self, snapshot) {
+                    if (self.data.labels.length > 10) {
+                        self.data.labels = self.data.labels.slice(-10);
+                        if (self.lowGammaChecked) {
+                            self.data.datasets[0].data = self.data.datasets[0].data.slice(-10);
+                        } else {
+                            self.lowGammaTmp = self.lowGammaTmp.slice(-10);
+                        }
+
+                        if (self.midGammaChecked) {
+                            self.data.datasets[1].data = self.data.datasets[1].data.slice(-10);
+                        } else {
+                            self.midGammaTmp = self.midGammaTmp.slice(-10);
+                        }
+
+                        if (self.lowBetaChecked) {
+                            self.data.datasets[2].data = self.data.datasets[2].data.slice(-10);
+                        } else {
+                            self.lowBetaTmp = self.lowBetaTmp.slice(-10);
+                        }
+
+                        if (self.highBetaChecked) {
+                            self.data.datasets[3].data = self.data.datasets[3].data.slice(-10);
+                        } else {
+                            self.highBetaTmp = self.highBetaTmp.slice(-10);
+                        }
+
+                        if (self.lowAlphaChecked) {
+                            self.data.datasets[4].data = self.data.datasets[4].data.slice(-10);
+                        } else {
+                            self.lowAlphaTmp = self.lowAlphaTmp.slice(-10);
+                        }
+
+                        if (self.highAlphaChecked) {
+                            self.data.datasets[5].data = self.data.datasets[5].data.slice(-10);
+                        } else {
+                            self.highAlphaTmp = self.highAlphaTmp.slice(-10);
+                        }
+
+                        if (self.thetaChecked) {
+                            self.data.datasets[6].data = self.data.datasets[6].data.slice(-10);
+                        } else {
+                            self.thetaTmp = self.thetaTmp.slice(-10);
+                        }
+
+                        if (self.deltaChecked) {
+                            self.data.datasets[7].data = self.data.datasets[7].data.slice(-10);
+                        } else {
+                            self.deltaTmp = self.deltaTmp.slice(-10);
+                        }
+                    }
+
+                    var data = snapshot.val();
+                    if (self.lowGammaChecked) {
+                        self.data.datasets[0].data.push(data.low_gamma);
+                    } else {
+                        self.lowGammaTmp.push(data.low_gamma);
+                    }
+
+                    if (self.midGammaChecked) {
+                        self.data.datasets[1].data.push(data.mid_gamma);
+                    } else {
+                        self.midGammaTmp.push(data.mid_gamma);
+                    }
+
+                    if (self.lowBetaChecked) {
+                        self.data.datasets[2].data.push(data.low_beta);
+                    } else {
+                        self.lowBetaTmp.push(data.low_beta);
+                    }
+
+                    if (self.highBetaChecked) {
+                        self.data.datasets[3].data.push(data.high_beta);
+                    } else {
+                        self.highBetaTmp.push(data.high_beta);
+                    }
+
+                    if (self.lowAlphaChecked) {
+                        self.data.datasets[4].data.push(data.low_alpha);
+                    } else {
+                        self.lowAlphaTmp.push(data.low_alpha);
+                    }
+
+                    if (self.highAlphaChecked) {
+                        self.data.datasets[5].data.push(data.high_alpha);
+                    } else {
+                        self.highAlphaTmp.push(data.high_alpha);
+                    }
+
+                    if (self.thetaChecked) {
+                        self.data.datasets[6].data.push(data.theta);
+                    } else {
+                        self.thetaTmp.push(data.theta);
+                    }
+
+                    if (self.deltaChecked) {
+                        self.data.datasets[7].data.push(data.delta);
+                    } else {
+                        self.deltaTmp.push(data.delta);
+                    }
+
+                    self.data.labels.push(data.elapsedTime);
+                    self.$.chart.updateChart();
+                },
+                thetaChange: function (e) {
+                    if (!this.thetaChecked) {
+                        this.thetaTmp = this.data.datasets[6].data;
+                        this.data.datasets[6].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[6].data = this.thetaTmp;
+                        this.thetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                midGammaChange: function (e) {
+                    if (!this.midGammaChecked) {
+                        this.midGammaTmp = this.data.datasets[1].data;
+                        this.data.datasets[1].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[1].data = this.midGammaTmp;
+                        this.midGammaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowGammaChange: function (e) {
+                    if (!this.lowGammaChecked) {
+                        this.lowGammaTmp = this.data.datasets[0].data;
+                        this.data.datasets[0].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[0].data = this.lowGammaTmp;
+                        this.lowGammaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowBetaChange: function (e) {
+                    if (!this.lowBetaChecked) {
+                        this.lowBetaTmp = this.data.datasets[2].data;
+                        this.data.datasets[2].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[2].data = this.lowBetaTmp;
+                        this.lowBetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                highBetaChange: function (e) {
+                    if (!this.highBetaChecked) {
+                        this.highBetaTmp = this.data.datasets[3].data;
+                        this.data.datasets[3].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[3].data = this.highBetaTmp;
+                        this.highBetaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                lowAlphaChange: function (e) {
+                    if (!this.lowAlphaChecked) {
+                        this.lowAlphaTmp = this.data.datasets[4].data;
+                        this.data.datasets[4].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[4].data = this.lowAlphaTmp;
+                        this.lowAlphaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                highAlphaChange: function (e) {
+                    if (!this.highAlphaChecked) {
+                        this.highAlphaTmp = this.data.datasets[5].data;
+                        this.data.datasets[5].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[5].data = this.highAlphaTmp;
+                        this.highAlphaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                deltaChange: function (e) {
+                    if (!this.deltaChecked) {
+                        this.deltaTmp = this.data.datasets[7].data;
+                        this.data.datasets[7].data = [];
+                        this.$.chart.updateChart();
+                    } else {
+                        this.data.datasets[7].data = this.deltaTmp;
+                        this.deltaTmp = [];
+                        this.$.chart.updateChart();
+                    }
+                },
+
+                clearData: function () {
+                    document.getElementById("chart").remove();
+                    var chart = this.$.chart = document.createElement('chart-line');
+                    chart.id = 'chart';
+                    chart.style = 'width: 100%; height: 400px;';
+                    chart.data = this.data;
+                    chart.options = this.options;
+                    this.$.grafcontainer.appendChild(chart);
+                    this.data.datasets.forEach(function (entry) {
+                        entry.data = [];
+                    });
+                    this.data.labels = [];
+                },
+
+                ready: function () {
+                    var self = this;
+
+                    this.thetaTmp = [];
+                    this.midGammaTmp = [];
+                    this.lowGammaTmp = [];
+                    this.lowBetaTmp = [];
+                    this.highBetaTmp = [];
+                    this.lowAlphaTmp = [];
+                    this.highAlphaTmp = [];
+                    this.deltaTmp = [];
+
+
+                    this.$.chart.style.width = '100%';
+                    this.$.chart.style.height = 600 + 'px';
+                    this.$.chart.resize();
+
+                    this.options = {
+                        animation: false,
+                        responsive: true,
+                        bezierCurve: false
+                    };
+
+                    this.data = this.buildChartData();
+
+                    addEventListener('selected-hist', function (examid) {
+                        // Clear the old chart everytime we want to show a new chart
+                        self.clearData();
+
+                        var ref = new Firebase("https://brainlight.firebaseio.com/leituras/" + examid.detail);
+                        ref.limitToLast(11).on("child_added", function (snapshot) {
+                            if (snapshot.val()) {
+                                self.setChartData(self, snapshot);
+                                self.$.chart.updateChart();
+                            }
+                        });
+
+                        var ref2 = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                        ref2.orderByChild("Leitura").equalTo(examid.detail).on("child_added", function (snapshot) {
+                            if (snapshot.val()) {
+                                console.log(snapshot.val().Note);
+                            }
+                        });
+
+                    });
+
+                },
+
+                _nativeSubmit: function () {
+                }
+            });
+        })();
+    </script>
+</dom-module>

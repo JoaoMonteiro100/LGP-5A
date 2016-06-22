@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="stylesheet" href="../../styles/custom.css">
+
+<dom-module id="app-dashboard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #container{
+      height: 100%;
+      width:100%;
+      position: absolute;
+      }
+
+
+    </style>
+    <div id="container">
+      <paper-header-panel>
+        <paper-toolbar class="top-toolbar">
+          <h1><a data-route="dashboard" href="/dashboard" id="coisas" on-tap="onDataRouteClick">BrainStream</a></h1>
+
+      <paper-icon-button icon="menu" class="toggle-drawer" on-tap="toggleDrawer"></paper-icon-button>
+        </paper-toolbar>
+
+        <paper-drawer-panel id="paperDrawerPanel">
+          <paper-scroll-header-panel drawer>
+          <app-menu params="{{params}}" route="{{route}}"></app-menu>
+         </paper-scroll-header-panel>
+          <paper-scroll-header-panel main>
+            <app-dashboard-pages params="{{params}}" cols="{{cols}}"></app-dashboard-pages>
+          </paper-scroll-header-panel>
+</paper-drawer-panel>
+  </paper-scroll-header-panel>
+
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'app-dashboard',
+      properties:{
+      cols: {
+      type: Object,
+      notify: true
+    }
+  },
+
+      toggleDrawer: function() {
+        var drawerPanel = document.getElementById('paperDrawerPanel');
+        if (drawerPanel.narrow) {
+          drawerPanel.togglePanel();
+        } else {
+          drawerPanel.classList.toggle('collapsed-menu');
+        }
+      },
+
+    });
+  })();
+  </script>
+</dom-module>
