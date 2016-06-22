@@ -56,7 +56,11 @@ public class LoginController {
 
 
     private void loginUser(final String username, String password) {
+<<<<<<< HEAD
         Firebase appRef = new Firebase("https://brainlight.firebaseio.com");
+=======
+        Firebase appRef = new Firebase("https://brainlight.firebaseio.com/");
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
         appRef.authWithPassword(username, password, new Firebase.AuthResultHandler() {
             @Override
@@ -110,4 +114,8 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017

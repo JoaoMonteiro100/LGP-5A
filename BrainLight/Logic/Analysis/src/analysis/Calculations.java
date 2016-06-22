@@ -3,8 +3,11 @@ package analysis;
 import java.util.Arrays;
 import java.util.HashMap;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 public class Calculations {
     private float[] values;
     private float[][] valuesXY;

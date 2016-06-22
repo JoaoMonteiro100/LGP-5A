@@ -26,4 +26,8 @@
       </Button>
       <CheckBox fx:id="rememberPassword" alignment="CENTER" layoutX="232.0" layoutY="320.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseEntered="#handle" text="Remember Password" underline="true" />
    </children>
+<<<<<<< HEAD
 </AnchorPane>
+=======
+</AnchorPane>
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017

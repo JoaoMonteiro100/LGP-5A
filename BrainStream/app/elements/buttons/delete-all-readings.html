@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 <!--
    @license
    Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -53,6 +57,12 @@
     <script>
         (function() {
             'use strict';
+<<<<<<< HEAD
+=======
+            Polymer({
+                is: 'delete-all-readings',
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
             Polymer({
                 is: 'delete-all-readings',
@@ -71,6 +81,12 @@
                         value: true
                     }
                 },
+<<<<<<< HEAD
+=======
+                _nativeSubmit: function(event) {
+                    var self = this;
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
                 _nativeSubmit: function(event) {
                     var self = this;
@@ -83,9 +99,21 @@
                             self.$.deleteDialog.close();
                         }
                     };
+<<<<<<< HEAD
 
                     var readingRef; 
                     var ref = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
+=======
+                    var readingRef; 
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    var refInfoDelete;
+                //    alert(self.reading);
+                    var patientToDeleteHistoric;
+
+
+                    var readingRef; 
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                     var refInfoDelete;
 
                 //    alert(self.reading);
@@ -100,9 +128,15 @@
                             });
                             snapshot.forEach(function (childSnapshot) {
                                 if (childSnapshot.val().Patient == patientToDeleteHistoric) {
+<<<<<<< HEAD
                                         refInfoDelete = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo/" + childSnapshot.key());
                                         //alert(refInfoDelete);
                                         readingRef = new Firebase("https://brainlight2.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
+=======
+                                        refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+                                        //alert(refInfoDelete);
+                                        readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura); 
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                                         //alert(readingRef);
                                         refInfoDelete.remove(onDeleted);
                                         readingRef.remove(onDeleted);
@@ -110,6 +144,13 @@
                             });
                         });
                 },
+<<<<<<< HEAD
+=======
+                deleteFormClickHandler: function(e) {
+                   this.$.deleteDialog.toggle();
+                },
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
                 deleteFormClickHandler: function(e) {
                    this.$.deleteDialog.toggle();
@@ -126,6 +167,13 @@
                         }
                     });
                 },
+<<<<<<< HEAD
+=======
+                compute: function() {
+                    return this.ishidden;
+                },
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
                 compute: function() {
                     return this.ishidden;

@@ -7,4 +7,8 @@ public class UserData {
     public static String KEY = "";
     public static String READING_LAST_KEY = "";
     public static String DEVICE = "";
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017

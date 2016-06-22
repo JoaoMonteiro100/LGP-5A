@@ -13,8 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="patient-history">
     <template>
         <style is="custom-style">
-
-
             section {
                 width: 100%;
                 height: 250px;
@@ -50,15 +48,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
 
-
         <section>
             <firebase-collection
+<<<<<<< HEAD
                     location="https://brainlight2.firebaseio.com/leiturasinfo"
                     data="{{hisotry}}"></firebase-collection>
+=======
+                    location="https://brainlight.firebaseio.com/leiturasinfo"></firebase-collection>
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
             <paper-dialog-scrollable>
                 <paper-listbox id="patientList" selected="{{myChoice}}">
-                    <!--on-iron-select="itemSelected"    VER ISTO-->
-                    <template is="dom-repeat" items="[[history]]" as="hist">  <!--  sort="_computeSort"-->
+                    <template is="dom-repeat" items="[[history]]" as="hist">
                         <paper-item>
                             <div id="name">[[hist.Time]]</div>
                             <img src={{live(hist)}} style="width:10px;height:10px;">
@@ -98,8 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type: Object,
                         notify: true
                     }
-                }
-                ,
+                },
                 ready: function () {
                     var self = this;
                     var ref = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo"); //trolha maximo
@@ -123,10 +122,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 this.myChoice -= 1;
                             }
                         });
-
-
                     });
                 },
+
                 live: function (hist) {
                     if (hist.Live)
                         return "../../../images/online.png";
@@ -134,7 +132,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         return "../../../images/offline.png";
                 },
                 _onSelected: function () {
-                    this.fire('selected-hist', this.history[this.myChoice].Leitura);
+                    if(this.history[this.myChoice].Device == 'emotiv') {
+                        this.fire('show-emotiv');
+                        this.fire('selected-hist-emotiv', [this.history[this.myChoice].Live, this.history[this.myChoice].Leitura]);
+                    }
                 },
                 itemSelected: function () {
                     var user = this.users[this.myChoice];

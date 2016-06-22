@@ -85,6 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 text-align: center;
             }
 
+<<<<<<< HEAD
         .doctorPhoto img {
           width: 183px;
           height: 177px;
@@ -99,6 +100,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <img src="../../images/doctor.png"/>  
                <!-- <h1>Beatriz Lima </h1>-->
                <h1></h1>
+=======
+            .doctorPhoto img {
+              width: 183px;
+              height: 177px;
+              display: block;
+              margin-top: 20px;
+            }
+        </style>
+        <paper-menu class="list" attr-for-selected="data-route" selected="{{params.page}}">
+            <a ata-route="users" href="/dashboard/patients" on-click="onDataRouteClick"> 
+              <div  class="doctorPhoto"> 
+                <img src="../../images/doctor.png"/>  
+                <h1></h1>
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                 <h2>Doctor</h2>
               </div>  
             </a>
@@ -114,11 +129,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <iron-icon icon="inbox"></iron-icon>
                 <span>Messages</span>
             </a>
+<<<<<<< HEAD
             <!-- <a data-route="charts" href="/dashboard/charts">
                 <iron-icon icon="android"></iron-icon>
                 <span>Charts</span>
             </a> -->
 
+=======
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
         </paper-menu>
     </template>
     <script>

@@ -7,6 +7,10 @@
    Code distributed by Google as part of the polymer project is also
    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
    -->
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="delete-reading">
     <template>
@@ -72,6 +76,10 @@
                     }
                 },
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                 _nativeSubmit: function(event) {
                     var self = this;
 
@@ -83,15 +91,29 @@
                             self.$.deleteDialog.close();
                         }
                     };
+<<<<<<< HEAD
 
                     var readingRef = new Firebase("https://brainlight2.firebaseio.com/leituras/" + self.reading);
                     var ref = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
+=======
+                    var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    var refInfoDelete;
+
+
+                    var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                     var refInfoDelete;
 
                        ref.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 if (childSnapshot.val().Leitura == self.reading) {
+<<<<<<< HEAD
                                         refInfoDelete = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+=======
+                                        refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                                 }
                             });
                         });
@@ -102,6 +124,12 @@
                     refInfoDelete.remove(onDeleted);
                     readingRef.remove(onDeleted);
                 },
+<<<<<<< HEAD
+=======
+                deleteFormClickHandler: function(e) {
+                   this.$.deleteDialog.toggle();
+                },
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
                 deleteFormClickHandler: function(e) {
                    this.$.deleteDialog.toggle();
@@ -118,6 +146,13 @@
                         }
                     });
                 },
+<<<<<<< HEAD
+=======
+                compute: function() {
+                    return this.ishidden;
+                },
+
+>>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
                 compute: function() {
                     return this.ishidden;
