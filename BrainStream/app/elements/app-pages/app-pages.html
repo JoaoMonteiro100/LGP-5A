@@ -10,57 +10,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="app-pages">
-  <template>
-  <style include="shared-styles"></style>
-    <style is="custom-style">
-    :host{
-      display:block;
-      height: 100%
-    }
-iron-pages{
-  min-height: 100%;
-}
-section{
-  min-height: 100%;
-}
-  </style>
+    <template>
+        <style include="shared-styles"></style>
+        <style is="custom-style">
+            :host {
+                display: block;
+                height: 100%
+            }
 
-   <iron-pages attr-for-selected="data-route" selected="{{route}}" class="inner">
-    <section data-route="login">
-    <app-login user="{{user}}"></app-login>
-    </section>
+            iron-pages {
+                min-height: 100%;
+            }
 
-    <section data-route="dashboard">
-      <app-dashboard user="{{user}}" params='{{params}}' route='{{route}}' cols='{{cols}}'></app-dashboard>
-    </section>
+            section {
+                min-height: 100%;
+            }
+        </style>
 
-    <section data-route="dashboardAdmin">
-      <app-admin-dashboard user="{{user}}" params='{{params}}' route='{{route}}' cols='{{cols}}'></app-admin-dashboard>
-    </section>
+        <iron-pages attr-for-selected="data-route" selected="{{route}}" class="inner">
+            <section data-route="login">
+                <app-login user="{{user}}"></app-login>
+            </section>
 
-    <section data-route="presentation">
-      <presentation-page route='{{route}}' cols='{{cols}}'></presentation-page>
-    </section>
-    
-    <iron-pages>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+            <section data-route="dashboard">
+                <app-dashboard user="{{user}}" params='{{params}}' route='{{route}}' cols='{{cols}}'></app-dashboard>
+            </section>
 
-    Polymer({
-      is: 'app-pages',
-      cols: {
-      type: Object,
-      notify: true
-    },
-      properties: {
-        cols: {
-        type: Object,
-        notify: true
-      }
-      },
-    });
-  })();
-  </script>
+            <section data-route="dashboardAdmin">
+                <app-admin-dashboard user="{{user}}" params='{{params}}' route='{{route}}'
+                                     cols='{{cols}}'></app-admin-dashboard>
+            </section>
+
+            <section data-route="presentation">
+                <presentation-page route='{{route}}' cols='{{cols}}'></presentation-page>
+            </section>
+
+            </iron-pages>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'app-pages',
+                cols: {
+                    type: Object,
+                    notify: true
+                },
+                properties: {
+                    cols: {
+                        type: Object,
+                        notify: true
+                    }
+                },
+            });
+        })();
+    </script>
 </dom-module>

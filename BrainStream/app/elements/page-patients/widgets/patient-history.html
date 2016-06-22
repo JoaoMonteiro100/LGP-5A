@@ -138,7 +138,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 },
                 _onSelected: function () {
                     if (this.history[this.myChoice].Device == 'emotiv') {
-                        this.fire('selected-hist-emotiv', this.history[this.myChoice].Leitura);
+                        this.fire('show-emotiv');
+                        this.fire('selected-hist-emotiv', [this.history[this.myChoice].Live, this.history[this.myChoice].Leitura]);
+                    } else {
+                        this.fire('show-neurosky');
+                        this.fire('selected-hist', this.history[this.myChoice].Leitura);
                     }
                 },
                 itemSelected: function () {

@@ -85,51 +85,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 text-align: center;
             }
 
-        .doctorPhoto img {
-          width: 183px;
-          height: 177px;
-          display: block;
-          margin-top: 20px;
-        }
-        </style>
-        <paper-menu class="list" attr-for-selected="data-route" selected="{{params.page}}">
-
-        <a ata-route="users" href="/dashboard/patients" on-click="onDataRouteClick">
-              <div  class="doctorPhoto">
-                <img src="../../images/doctor.png"/>
-               <!-- <h1>Beatriz Lima </h1>-->
-               <h1></h1>
             .doctorPhoto img {
-              width: 183px;
-              height: 177px;
-              display: block;
-              margin-top: 20px;
+                width: 183px;
+                height: 177px;
+                display: block;
+                margin-top: 20px;
             }
         </style>
         <paper-menu class="list" attr-for-selected="data-route" selected="{{params.page}}">
+
             <a ata-route="users" href="/dashboard/patients" on-click="onDataRouteClick">
-              <div  class="doctorPhoto">
-                <img src="../../images/doctor.png"/>
-                <h1></h1>
-                <h2>Doctor</h2>
-              </div>
+                <div class="doctorPhoto">
+                    <img src="../../images/doctor.png"/>
+                    <!-- <h1>Beatriz Lima </h1>-->
+                    <h1></h1>
+                    <style>
+                        .doctorPhoto img {
+                            width: 183px;
+                            height: 177px;
+                            display: block;
+                            margin-top: 20px;
+                        }
+                    </style>
+                    <paper-menu class="list" attr-for-selected="data-route" selected="{{params.page}}">
+                        <a ata-route="users" href="/dashboard/patients" on-click="onDataRouteClick">
+                        </a>
+                        <a data-route="home" href="/dashboard/home">
+                            <iron-icon icon="dashboard"></iron-icon>
+                            <span>Home</span>
+                        </a>
+                        <a data-route="patients" href="/dashboard/patients">
+                            <iron-icon icon="chrome-reader-mode"></iron-icon>
+                            <span>Patients</span>
+                        </a>
+                        <a data-route="messages" href="/dashboard/messages">
+                            <iron-icon icon="inbox"></iron-icon>
+                            <span>Messages</span>
+                        </a>
+                        <!-- <a data-route="charts" href="/dashboard/charts">
+                        <iron-icon icon="android"></iron-icon>
+                                                    <span>Charts</span>
+                                                                  </a> -->
+                    </paper-menu>
+
+                </div>
             </a>
-            <a data-route="home" href="/dashboard/home">
-                <iron-icon icon="dashboard"></iron-icon>
-                <span>Home</span>
-            </a>
-            <a data-route="patients" href="/dashboard/patients">
-                <iron-icon icon="chrome-reader-mode"></iron-icon>
-                <span>Patients</span>
-            </a>
-            <a data-route="messages" href="/dashboard/messages">
-                <iron-icon icon="inbox"></iron-icon>
-                <span>Messages</span>
-            </a>
-            <!-- <a data-route="charts" href="/dashboard/charts">
-                <iron-icon icon="android"></iron-icon>
-                <span>Charts</span>
-            </a> -->
         </paper-menu>
     </template>
     <script>

@@ -1310,14 +1310,6 @@
                                 self.$.chart.updateChart();
                             }
                         });
-
-                        var ref2 = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
-                        ref2.orderByChild("Leitura").equalTo(examid.detail).on("child_added", function (snapshot) {
-                            if (snapshot.val()) {
-                                console.log(snapshot.val().Note);
-                            }
-                        });
-
                     });
 
                 },

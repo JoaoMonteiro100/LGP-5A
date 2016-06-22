@@ -58,8 +58,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 errorHandler: function (e) {
                     alert('Error: ' + e.detail.message);
-                    //this.$.toast.textContent = e.detail.message;
-                    //this.$.toast.open();
                 },
 
                 ready: function() {
@@ -67,11 +65,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                      * The user key does exist in the session storage
                      * Check if the user is logged in the firebase database
                      */
-                    var firebaseRef = new Firebase(app.location);
-                    var authData = firebaseRef.getAuth();
+                    //var firebaseRef = new Firebase(app.location);
+                    //var authData = firebaseRef.getAuth();
 
                     // User is logged in, update the connection state
-                    if (!authData) {
+                    if (!app.authData) {
                         /**
                          * User is not logged in Firebase database, although the key
                          * exists in the session storage.
@@ -99,9 +97,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     .on('value', function (snapshot) {
                                         var user = snapshot.val();
                                         if (user != null) {
-                                            localStorage.setItem('user', JSON.stringify(user));
                                             // The '/' will decide whether the current user is an Admin or a Doctor
-                                            page.redirect('/');
+                                            localStorage.setItem('user', JSON.stringify(user));
+                                            window.location = '/';
                                         }
                                     });
                         }
@@ -110,11 +108,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                          * The user key does exist in the session storage
                          * Check if the user is logged in the firebase database
                          */
-                        var firebaseRef = new Firebase(app.location);
-                        var authData = firebaseRef.getAuth();
+                        //var firebaseRef = new Firebase(app.location);
+                        //var authData = firebaseRef.getAuth();
 
                         // User is logged in, update the connection state
-                        if (authData) {
+                        if (app.authData) {
                             var connectionRef = new Firebase(app.connectionState);
                             connectionRef.on("value", function (snapshot) {
                                 var value = snapshot.val();
@@ -128,16 +126,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     userRef.update({
                                         online: true
                                     });
+
+                                    userRef.onDisconnect().update({online: false});
                                 }
 
-
-                                userRef.onDisconnect().update({online: false});
                             });
                         }
                     }
                 },
 
-                singOut: function () {
+                signOut: function () {
                     var ref = new Firebase(this.location);
                     ref.unauth();
                     this.user = null;
