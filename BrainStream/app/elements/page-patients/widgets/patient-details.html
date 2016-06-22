@@ -152,13 +152,17 @@
                         var ref = new Firebase(app.userURL(user.detail));
                         var ref1;
 <<<<<<< HEAD
+<<<<<<< HEAD
                         var reff = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
 =======
+=======
+>>>>>>> parent of e10a700... Merge
                         var reff = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
                          var d = new Date();
                          var n = d.getTime();
                    // alert(d.getTime());
                         var readingDate;
+<<<<<<< HEAD
 
 >>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
@@ -168,11 +172,14 @@
 
                         var readingDate;
 
+=======
+>>>>>>> parent of e10a700... Merge
                         //readingDate = childSnapshot.val().time;
                         var test = 1465945200000;
                         var result;
                         var days;
                      //   alert(days);
+<<<<<<< HEAD
 
 
 <<<<<<< HEAD
@@ -182,6 +189,8 @@
                             var user = snapshot.val();
                             userHistoricDays = user.historicDays;
 =======
+=======
+>>>>>>> parent of e10a700... Merge
                     var refInfoDelete;
                      reff.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
@@ -199,6 +208,7 @@
                                 }
                             });
                         });
+<<<<<<< HEAD
 
 
 
@@ -207,6 +217,10 @@
                             var user = snapshot.val();
 
 >>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
+=======
+                        ref.on("value", function (snapshot) {
+                            var user = snapshot.val();
+>>>>>>> parent of e10a700... Merge
                             ref1 = new Firebase(app.userURL(user.doctorAssociated));
                             self.set('user', user);
                             self.set('hidecont', false);
@@ -238,7 +252,6 @@
                             });
                         });
                     });
-
                 },
                 hideMe: function (one, two) {
                     return (!one || two);

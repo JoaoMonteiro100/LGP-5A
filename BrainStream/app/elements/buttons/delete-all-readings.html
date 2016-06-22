@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
@@ -11,6 +12,8 @@
    Code distributed by Google as part of the polymer project is also
    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
    -->
+=======
+>>>>>>> parent of e10a700... Merge
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="delete-all-readings">
     <template>
@@ -58,6 +61,7 @@
         (function() {
             'use strict';
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             Polymer({
                 is: 'delete-all-readings',
@@ -67,6 +71,10 @@
             Polymer({
                 is: 'delete-all-readings',
 
+=======
+            Polymer({
+                is: 'delete-all-readings',
+>>>>>>> parent of e10a700... Merge
                 properties: {
                     reading: {
                         type: Object,
@@ -82,6 +90,7 @@
                     }
                 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 _nativeSubmit: function(event) {
                     var self = this;
@@ -91,6 +100,10 @@
                 _nativeSubmit: function(event) {
                     var self = this;
 
+=======
+                _nativeSubmit: function(event) {
+                    var self = this;
+>>>>>>> parent of e10a700... Merge
                     var onDeleted = function(error) {
                         if(error) {
                             alert('An error occurred while deleting the reading!');
@@ -100,15 +113,19 @@
                         }
                     };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                     var readingRef; 
                     var ref = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
 =======
+=======
+>>>>>>> parent of e10a700... Merge
                     var readingRef; 
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
                     var refInfoDelete;
                 //    alert(self.reading);
                     var patientToDeleteHistoric;
+<<<<<<< HEAD
 
 
                     var readingRef; 
@@ -120,6 +137,8 @@
 
                     var patientToDeleteHistoric;
 
+=======
+>>>>>>> parent of e10a700... Merge
                        ref.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 if (childSnapshot.val().Leitura == self.reading) {
@@ -145,6 +164,7 @@
                         });
                 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 deleteFormClickHandler: function(e) {
                    this.$.deleteDialog.toggle();
@@ -156,6 +176,11 @@
                    this.$.deleteDialog.toggle();
                 },
 
+=======
+                deleteFormClickHandler: function(e) {
+                   this.$.deleteDialog.toggle();
+                },
+>>>>>>> parent of e10a700... Merge
                 ready: function() {
                     var self = this;
                     var readingdef = false;
@@ -168,6 +193,7 @@
                     });
                 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 compute: function() {
                     return this.ishidden;
@@ -179,6 +205,11 @@
                     return this.ishidden;
                 },
 
+=======
+                compute: function() {
+                    return this.ishidden;
+                },
+>>>>>>> parent of e10a700... Merge
                 toggle: function() {
                     this.ishidden = !this.ishidden;
                 }

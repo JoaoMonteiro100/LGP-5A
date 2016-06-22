@@ -95,11 +95,13 @@
     app.usersLocation = 'https://brainlight.firebaseio.com/users';
     app.requestsLocation = 'https://brainlight.firebaseio.com/requests';
     app.readingLocation = 'https://brainlight.firebaseio.com/leiturasinfo';
-<<<<<<< HEAD
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/final-dev
 >>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
+=======
+>>>>>>> parent of e10a700... Merge
 
     app.userURL = function(userID) {
         //return app.location + "/users/" + userID;
@@ -114,6 +116,7 @@
          return app.location + "/leiturasinfo/" + readingID;
      };
     
+<<<<<<< HEAD
       app.readingURL = function(readingID) {
         return app.location + "/leiturasinfo/" + readingID;
     };
@@ -122,6 +125,8 @@
         return app.location + "/leiturasinfo/" + readingID;
     };
     
+=======
+>>>>>>> parent of e10a700... Merge
 
 
 

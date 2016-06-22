@@ -94,16 +94,22 @@
                     if (this.$.editPatientForm.validate()) {
                         //alert(app.userURL(self.user.__firebaseKey__));
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
 
 >>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
+=======
+>>>>>>> parent of e10a700... Merge
                         if(this.$.historicDays.value < 120) //4 months
                             this.$.historicDays.value = 120;
                         else if(this.$.historicDays.value > 1825) //5 years
                             this.$.historicDays.value = 1825;
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of e10a700... Merge
                         userRef.update({
                             enableAnalysis: this.$.enableAnalysis.checked,
                             name: this.$.firstname.value,

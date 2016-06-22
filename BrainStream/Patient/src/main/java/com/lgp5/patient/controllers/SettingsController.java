@@ -46,17 +46,6 @@ public class SettingsController {
                         stage.close();
             }
         });
-        game.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage stage;
-                lauchGameView();
-                //get a handle to the stage
-                stage = (Stage) game.getScene().getWindow();
-                //close current window
-                //stage.close();
-            }
-        });
     }
 
 
@@ -95,4 +84,8 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of e10a700... Merge
