@@ -6,9 +6,11 @@
             :host {
                 display: block;
             }
+
             #modal {
                 width: 350px;
             }
+
             .containerdiv {
                 @apply(--layout-horizontal);
                 height: 100%;
@@ -16,12 +18,15 @@
                 padding-right: 0px;
                 font-size: 12px;
             }
+
             #genpw {
                 margin-top: 16px;
             }
+
             .flexchild {
                 @apply(--layout-flex);
             }
+
             #genderdrop {
                 @apply(--layout-horizontal);
             }
@@ -38,8 +43,9 @@
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate
                              pattern="[a-zA-Z]*" error-message="letters only!" value="{{user.lastname}}" required
                              auto-validate></paper-input>
-               <paper-input id="historicDays" name="historicDays" label="Historic Days" char-counter maxlength="4"
-                             auto-validate pattern="^(0|[1-9][0-9]*)$" error-message="numbers only!" value="{{user.historicDays}}"
+                <paper-input id="historicDays" name="historicDays" label="Historic Days" char-counter maxlength="4"
+                             auto-validate pattern="^(0|[1-9][0-9]*)$" error-message="numbers only!"
+                             value="{{user.historicDays}}"
                              required auto-validate></paper-input>
                 <paper-dropdown-menu id="genderdrop" required auto-validate on-iron-select="_itemSelected"
                                      label="Gender">
@@ -94,22 +100,11 @@
                     if (this.$.editPatientForm.validate()) {
                         //alert(app.userURL(self.user.__firebaseKey__));
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-=======
-
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-=======
->>>>>>> parent of e10a700... Merge
-                        if(this.$.historicDays.value < 120) //4 months
+                        if (this.$.historicDays.value < 120) //4 months
                             this.$.historicDays.value = 120;
-                        else if(this.$.historicDays.value > 1825) //5 years
+                        else if (this.$.historicDays.value > 1825) //5 years
                             this.$.historicDays.value = 1825;
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of e10a700... Merge
                         userRef.update({
                             enableAnalysis: this.$.enableAnalysis.checked,
                             name: this.$.firstname.value,
