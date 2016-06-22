@@ -152,29 +152,31 @@
                         var ref = new Firebase(app.userURL(user.detail));
                         var ref1;
                         var reff = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                         var d = new Date();
+                         var n = d.getTime();
+                   // alert(d.getTime());
+                        var readingDate;
 <<<<<<< HEAD
+
+
                          var d = new Date();
                          var n = d.getTime();
                    // alert(d.getTime());
+
                         var readingDate;
+
 =======
-
-                         var d = new Date();
-                         var n = d.getTime();
-                   // alert(d.getTime());
-
-                        var readingDate;
-
->>>>>>> origin/final-dev
+>>>>>>> parent of e10a700... Merge
                         //readingDate = childSnapshot.val().time;
                         var test = 1465945200000;
                         var result;
                         var days;
                      //   alert(days);
 <<<<<<< HEAD
-=======
 
->>>>>>> origin/final-dev
+
+=======
+>>>>>>> parent of e10a700... Merge
                     var refInfoDelete;
                      reff.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
@@ -193,14 +195,14 @@
                             });
                         });
 <<<<<<< HEAD
+
+
+
+
 =======
-
-
-
->>>>>>> origin/final-dev
+>>>>>>> parent of e10a700... Merge
                         ref.on("value", function (snapshot) {
                             var user = snapshot.val();
-
                             ref1 = new Firebase(app.userURL(user.doctorAssociated));
                             self.set('user', user);
                             self.set('hidecont', false);
@@ -212,7 +214,6 @@
                         });
                         self.fire('select_null_doctor');
                     });
-
                 },
                 hideMe: function (one, two) {
                     return (!one || two);

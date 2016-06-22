@@ -57,17 +57,6 @@ public class SettingsController {
                 //stage.close();
             }
         });
-        game.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage stage;
-                lauchGameView();
-                //get a handle to the stage
-                stage = (Stage) game.getScene().getWindow();
-                //close current window
-                //stage.close();
-            }
-        });
     }
 
 
@@ -95,11 +84,7 @@ public class SettingsController {
 
     private void lauchGameView() {
         try {
-<<<<<<< HEAD:BrainStream/Patient/src/main/java/com/lgp5/patient/controllers/SettingsController.java
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/gameView.fxml"));
-=======
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/game.fxml"));
->>>>>>> origin/final-dev:BrainStream/Patient/src/com/lgp5/patient/controllers/SettingsController.java
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
@@ -110,8 +95,4 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
-<<<<<<< HEAD:BrainStream/Patient/src/main/java/com/lgp5/patient/controllers/SettingsController.java
 }
-=======
-}
->>>>>>> origin/final-dev:BrainStream/Patient/src/com/lgp5/patient/controllers/SettingsController.java

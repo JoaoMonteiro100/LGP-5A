@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-=======
 <!--
    @license
    Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -9,7 +8,9 @@
    Code distributed by Google as part of the polymer project is also
    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
    -->
->>>>>>> origin/final-dev
+
+=======
+>>>>>>> parent of e10a700... Merge
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="delete-reading">
     <template>
@@ -57,14 +58,14 @@
         (function() {
             'use strict';
 <<<<<<< HEAD
+
             Polymer({
                 is: 'delete-reading',
+
 =======
-
             Polymer({
                 is: 'delete-reading',
-
->>>>>>> origin/final-dev
+>>>>>>> parent of e10a700... Merge
                 properties: {
                     reading: {
                         type: Object,
@@ -80,14 +81,15 @@
                     }
                 },
 <<<<<<< HEAD
+
+
                 _nativeSubmit: function(event) {
                     var self = this;
+
 =======
-
                 _nativeSubmit: function(event) {
                     var self = this;
-
->>>>>>> origin/final-dev
+>>>>>>> parent of e10a700... Merge
                     var onDeleted = function(error) {
                         if(error) {
                             alert('An error occurred while deleting the reading!');
@@ -100,13 +102,17 @@
                     var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
                     var refInfoDelete;
-=======
+
 
                     var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
                     var refInfoDelete;
 
->>>>>>> origin/final-dev
+=======
+                    var readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + self.reading); 
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    var refInfoDelete;
+>>>>>>> parent of e10a700... Merge
                        ref.on("value", function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 if (childSnapshot.val().Leitura == self.reading) {
@@ -116,9 +122,9 @@
                         });
                           
 <<<<<<< HEAD
-=======
 
->>>>>>> origin/final-dev
+=======
+>>>>>>> parent of e10a700... Merge
                        //alert(refInfoDelete);
                        //alert(readingRef);
                     refInfoDelete.remove(onDeleted);
@@ -128,13 +134,16 @@
                 deleteFormClickHandler: function(e) {
                    this.$.deleteDialog.toggle();
                 },
-=======
 
                 deleteFormClickHandler: function(e) {
                    this.$.deleteDialog.toggle();
                 },
 
->>>>>>> origin/final-dev
+=======
+                deleteFormClickHandler: function(e) {
+                   this.$.deleteDialog.toggle();
+                },
+>>>>>>> parent of e10a700... Merge
                 ready: function() {
                     var self = this;
                     var readingdef = false;
@@ -150,13 +159,17 @@
                 compute: function() {
                     return this.ishidden;
                 },
-=======
+
 
                 compute: function() {
                     return this.ishidden;
                 },
 
->>>>>>> origin/final-dev
+=======
+                compute: function() {
+                    return this.ishidden;
+                },
+>>>>>>> parent of e10a700... Merge
                 toggle: function() {
                     this.ishidden = !this.ishidden;
                 }

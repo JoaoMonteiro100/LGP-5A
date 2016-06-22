@@ -94,17 +94,18 @@
                         //alert(app.userURL(self.user.__firebaseKey__));
                         var userRef = new Firebase(app.userURL(self.user.__firebaseKey__));
 <<<<<<< HEAD
-=======
 
->>>>>>> origin/final-dev
+
+=======
+>>>>>>> parent of e10a700... Merge
                         if(this.$.historicDays.value < 120) //4 months
                             this.$.historicDays.value = 120;
                         else if(this.$.historicDays.value > 1825) //5 years
                             this.$.historicDays.value = 1825;
 <<<<<<< HEAD
-=======
 
->>>>>>> origin/final-dev
+=======
+>>>>>>> parent of e10a700... Merge
                         userRef.update({
                             name: this.$.firstname.value,
                             lastname: this.$.lastname.value,
