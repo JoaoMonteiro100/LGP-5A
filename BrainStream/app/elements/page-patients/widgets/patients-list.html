@@ -51,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     order-by-child="groups/group3"
                     order-value-type="boolean"
                     equal-to="true"
-                    location="https://brainlight2.firebaseio.com/users"
+                    location="https://brainlight.firebaseio.com/users"
                     data="{{users}}"></firebase-collection>
 
             <paper-dialog-scrollable>
@@ -161,7 +161,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 itemSelected: function (e) {
                     /**console.log(e.target.selected);
-                    if (this.deletedUserKey == this.currentKey) {
+                     if (this.deletedUserKey == this.currentKey) {
                         var user = this.users[this.myChoice];
                         this.fire('selected-user-patient', user);
                         this.fire('select_null_doctor');

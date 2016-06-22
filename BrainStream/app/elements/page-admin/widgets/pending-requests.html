@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <section>
             <firebase-collection
-                    location="https://brainlight2.firebaseio.com/requests"
+                    location="https://brainlight.firebaseio.com/requests"
                     data="{{requests}}">
             </firebase-collection>
             <paper-dialog-scrollable>
@@ -98,26 +98,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 },
 
                 getName: function(usrKey) {
-                      var ref = new Firebase(app.userURL(usrKey));
-                      var name;
+                    var ref = new Firebase(app.userURL(usrKey));
+                    var name;
 
-                       ref.on("value",function(snapshot){
+                    ref.on("value",function(snapshot){
                         var user = snapshot.val();
                         name = user.name + " " + user.lastname;
-                   });
-                        return name;
+                    });
+                    return name;
                 },
 
 
                 getNumber: function(usrKey) {
-                      var ref = new Firebase(app.userURL(usrKey));
-                      var number;
+                    var ref = new Firebase(app.userURL(usrKey));
+                    var number;
 
-                       ref.on("value",function(snapshot){
+                    ref.on("value",function(snapshot){
                         var user = snapshot.val();
                         number = user.number;
-                   });
-                        return number;
+                    });
+                    return number;
                 },
                 ready: function () {
                     var appRef = new Firebase(app.requestsLocation);
@@ -132,7 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     var request = this.requests[this.myChoice];
                     this.currentKey = request
                     this.fire('selected-request', request);
-                   // alert(JSON.stringify(request));
+                    // alert(JSON.stringify(request));
                 },
 
                 itemSelected: function () {

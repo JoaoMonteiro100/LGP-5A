@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 <!--
    @license
    Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -12,8 +7,6 @@
    Code distributed by Google as part of the polymer project is also
    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
    -->
-=======
->>>>>>> parent of e10a700... Merge
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="delete-all-readings">
     <template>
@@ -22,9 +15,11 @@
             :host {
                 display: block;
             }
-            #modal{
+
+            #modal {
                 width: 350px;
             }
+
             .containerdiv {
                 @apply(--layout-horizontal);
                 height: 100%;
@@ -32,23 +27,27 @@
                 padding-right: 0px;
                 font-size: 12px;
             }
-            #genpw{
+
+            #genpw {
                 margin-top: 16px;
             }
+
             .flexchild {
                 @apply(--layout-flex);
             }
-            #genderdrop{
+
+            #genderdrop {
                 @apply(--layout-horizontal);
             }
         </style>
-        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:cancel" on-click="deleteFormClickHandler"></paper-icon-button>
+        <paper-icon-button hidden$="{{compute(ishidden)}}" data-dialog="modal" icon="icons:cancel"
+                           on-click="deleteFormClickHandler"></paper-icon-button>
         <paper-dialog id="deleteDialog" modal>
             <h1>Delete</h1>
 
             <h2>Are you sure you want to delete all readings from this patient?</h2>
 
-            <paper-button raised on-tap="_nativeSubmit" >
+            <paper-button raised on-tap="_nativeSubmit">
                 <paper-spinner id="spinner" hidden></paper-spinner>
                 Delete
             </paper-button>
@@ -58,23 +57,10 @@
         </paper-dialog>
     </template>
     <script>
-        (function() {
+        (function () {
             'use strict';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
             Polymer({
                 is: 'delete-all-readings',
-
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-
-            Polymer({
-                is: 'delete-all-readings',
-
-=======
-            Polymer({
-                is: 'delete-all-readings',
->>>>>>> parent of e10a700... Merge
                 properties: {
                     reading: {
                         type: Object,
@@ -89,128 +75,66 @@
                         value: true
                     }
                 },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                _nativeSubmit: function(event) {
-                    var self = this;
 
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-
-                _nativeSubmit: function(event) {
+                _nativeSubmit: function (event) {
                     var self = this;
-
-=======
-                _nativeSubmit: function(event) {
-                    var self = this;
->>>>>>> parent of e10a700... Merge
-                    var onDeleted = function(error) {
-                        if(error) {
+                    var onDeleted = function (error) {
+                        if (error) {
                             alert('An error occurred while deleting the reading!');
                         } else {
                             // Close the modal
                             self.$.deleteDialog.close();
                         }
                     };
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-                    var readingRef; 
-                    var ref = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
-=======
-=======
->>>>>>> parent of e10a700... Merge
-                    var readingRef; 
+                    var readingRef;
+                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
+                    var readingRef;
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
                     var refInfoDelete;
-                //    alert(self.reading);
                     var patientToDeleteHistoric;
-<<<<<<< HEAD
 
-
-                    var readingRef; 
+                    var readingRef;
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                     var refInfoDelete;
-
-                //    alert(self.reading);
-
                     var patientToDeleteHistoric;
 
-=======
->>>>>>> parent of e10a700... Merge
-                       ref.on("value", function (snapshot) {
-                            snapshot.forEach(function (childSnapshot) {
-                                if (childSnapshot.val().Leitura == self.reading) {
-                                        patientToDeleteHistoric = childSnapshot.val().Patient;
-                                }
-                            });
-                            snapshot.forEach(function (childSnapshot) {
-                                if (childSnapshot.val().Patient == patientToDeleteHistoric) {
-<<<<<<< HEAD
-                                        refInfoDelete = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo/" + childSnapshot.key());
-                                        //alert(refInfoDelete);
-                                        readingRef = new Firebase("https://brainlight2.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
-=======
-                                        refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
-                                        //alert(refInfoDelete);
-                                        readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura); 
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-                                        //alert(readingRef);
-                                        refInfoDelete.remove(onDeleted);
-                                        readingRef.remove(onDeleted);
-                                }
-                            });
+
+                    ref.on("value", function (snapshot) {
+                        snapshot.forEach(function (childSnapshot) {
+                            if (childSnapshot.val().Leitura == self.reading) {
+                                patientToDeleteHistoric = childSnapshot.val().Patient;
+                            }
                         });
+                        snapshot.forEach(function (childSnapshot) {
+                            if (childSnapshot.val().Patient == patientToDeleteHistoric) {
+                                refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
+                                readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
+                                refInfoDelete.remove(onDeleted);
+                                readingRef.remove(onDeleted);
+                            }
+                        });
+                    });
                 },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                deleteFormClickHandler: function(e) {
-                   this.$.deleteDialog.toggle();
+                deleteFormClickHandler: function (e) {
+                    this.$.deleteDialog.toggle();
                 },
-
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-
-                deleteFormClickHandler: function(e) {
-                   this.$.deleteDialog.toggle();
-                },
-
-=======
-                deleteFormClickHandler: function(e) {
-                   this.$.deleteDialog.toggle();
-                },
->>>>>>> parent of e10a700... Merge
-                ready: function() {
+                ready: function () {
                     var self = this;
                     var readingdef = false;
-                    addEventListener('selected-hist', function(reading) {
+                    addEventListener('selected-hist', function (reading) {
                         self.reading = reading.detail;
-                        if(!self.readingdef){
+                        if (!self.readingdef) {
                             self.toggle();
                             self.readingdef = true;
                         }
                     });
                 },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                compute: function() {
+                compute: function () {
                     return this.ishidden;
                 },
 
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-
-                compute: function() {
-                    return this.ishidden;
-                },
-
-=======
-                compute: function() {
-                    return this.ishidden;
-                },
->>>>>>> parent of e10a700... Merge
-                toggle: function() {
+                toggle: function () {
                     this.ishidden = !this.ishidden;
                 }
             });

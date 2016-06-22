@@ -83,25 +83,11 @@
     app.cols = {style1: '1', style2: '2', style3: '3'};
 
     // Firebase location
-<<<<<<< HEAD
-    app.location = 'https://brainlight2.firebaseio.com';
-    app.connectionState = 'https://brainlight2.firebaseio.com/.info/connected';
-    app.usersLocation = 'https://brainlight2.firebaseio.com/users';
-    app.requestsLocation = 'https://brainlight2.firebaseio.com/requests';
-    app.readingLocation = 'https://brainlight2.firebaseio.com/leiturasinfo';
-=======
     app.location = 'https://brainlight.firebaseio.com';
     app.connectionState = 'https://brainlight.firebaseio.com/.info/connected';
     app.usersLocation = 'https://brainlight.firebaseio.com/users';
     app.requestsLocation = 'https://brainlight.firebaseio.com/requests';
     app.readingLocation = 'https://brainlight.firebaseio.com/leiturasinfo';
-
-<<<<<<< HEAD
-=======
->>>>>>> origin/final-dev
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-=======
->>>>>>> parent of e10a700... Merge
 
     app.userURL = function(userID) {
         //return app.location + "/users/" + userID;
@@ -116,19 +102,6 @@
          return app.location + "/leiturasinfo/" + readingID;
      };
     
-<<<<<<< HEAD
-      app.readingURL = function(readingID) {
-        return app.location + "/leiturasinfo/" + readingID;
-    };
-    
-      app.readingURL = function(readingID) {
-        return app.location + "/leiturasinfo/" + readingID;
-    };
-    
-=======
->>>>>>> parent of e10a700... Merge
-
-
 
     // Sign out user
     app.signOut = function () {

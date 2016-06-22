@@ -1,3 +1,12 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
@@ -9,44 +18,57 @@
                 height: 250px;
                 @apply(--layout-vertical);
             }
+
             section paper-dialog-scrollable {
+
                 @apply(--layout-flex);
             }
+
             paper-dialog-scrollable::shadow #scrollable {
                 padding: 0px;
             }
+
             paper-item {
                 --paper-item: {
                     cursor: pointer;
                 };
             }
+
             #name {
                 padding-left: 10px;
                 padding-right: 10px;
             }
+
             span {
                 padding-right: 10px;
             }
+
             paper-listbox {
                 width: 100%;
             }
+
             .container {
                 @apply(--layout-horizontal);
             }
+
             .flexchild {
                 @apply(--layout-flex);
                 margin-top: 12px;
             }
+
             .flexchild2 {
                 @apply(--layout-flex);
             }
+
             .vertcontainer {
                 @apply(--layout-vertical);
             }
+
             #profimg {
                 margin-right: 12px;
                 margin-top: 6px;
             }
+
             .namestyle {
                 font-weight: bold;
                 color: #000000;
@@ -59,6 +81,7 @@
                 margin-bottom: 8px;
                 margin-top: 10px;
             }
+
             .textstyle2 {
                 color: #696969;
                 letter-spacing: 0pt;
@@ -70,14 +93,17 @@
                 padding-left: 20px;
                 margin-bottom: 6px;
             }
+
             .mas {
                 white-space: pre-wrap;
             }
+
             .notecontainer {
                 @apply(--layout-flex);
                 margin-left: 12px;
                 margin-top: 0px;
             }
+
             .noteh1 {
                 font-weight: bold;
                 color: #000000;
@@ -90,6 +116,7 @@
                 margin-bottom: 6px;
                 margin-top: 0px;
             }
+
         </style>
 
         <section>
@@ -126,16 +153,20 @@
     <script>
         (function () {
             'use strict';
+
             Polymer({
                 is: 'patient-details',
+
                 properties: {
                     user: {
                         type: Object,
                         notify: true
+
                     },
                     doc: {
                         type: Object,
                         notify: true
+
                     },
                     usrkey: {
                         type: String,
@@ -146,111 +177,28 @@
                         value: true
                     }
                 },
+
                 ready: function () {
                     var self = this;
+
                     addEventListener('selected-user-patient', function (user) {
                         var ref = new Firebase(app.userURL(user.detail));
                         var ref1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        var reff = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo");
-=======
-=======
->>>>>>> parent of e10a700... Merge
-                        var reff = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
-                         var d = new Date();
-                         var n = d.getTime();
-                   // alert(d.getTime());
-                        var readingDate;
-<<<<<<< HEAD
-
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-
-                         var d = new Date();
-                         var n = d.getTime();
-                   // alert(d.getTime());
-
-                        var readingDate;
-
-=======
->>>>>>> parent of e10a700... Merge
-                        //readingDate = childSnapshot.val().time;
-                        var test = 1465945200000;
-                        var result;
-                        var days;
-                     //   alert(days);
-<<<<<<< HEAD
-
-
-<<<<<<< HEAD
-                     var userHistoricDays;
 
                         ref.on("value", function (snapshot) {
                             var user = snapshot.val();
-                            userHistoricDays = user.historicDays;
-=======
-=======
->>>>>>> parent of e10a700... Merge
-                    var refInfoDelete;
-                     reff.on("value", function (snapshot) {
-                            snapshot.forEach(function (childSnapshot) {
-                                if(childSnapshot.val().Patient == user.detail){
-                                    //readingDate = childSnapshot.val().time;
-                                    result = n - test;
-                                    days = ((result / (1000*60*60*24)) % 7); //nr de dias 
-                                   // alert(days);
-                                    if(days > user.historicDays){
-                                        readingRef = new Firebase("https://brainlight.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
-                                       refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
-                                        refInfoDelete.remove();
-                                        readingRef.remove();    
-                                    }
-                                }
-                            });
-                        });
-<<<<<<< HEAD
-
-
-
-
-                        ref.on("value", function (snapshot) {
-                            var user = snapshot.val();
-
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
-=======
-                        ref.on("value", function (snapshot) {
-                            var user = snapshot.val();
->>>>>>> parent of e10a700... Merge
                             ref1 = new Firebase(app.userURL(user.doctorAssociated));
                             self.set('user', user);
                             self.set('hidecont', false);
                         });
+
                         ref1.on("value", function (snapshot) {
                             var doc = snapshot.val();
                             self.set('doc', doc);
                             self.set('hidecont', false);
                         });
+
                         self.fire('select_null_doctor');
-                        var readingRef;
-                    var refInfoDelete;
-                     reff.on("value", function (snapshot) {
-                            snapshot.forEach(function (childSnapshot) {
-                                if(childSnapshot.val().Patient == user.detail){
-                                    readingDate = childSnapshot.val().Time2;
-                                    result = n - readingDate;
-                                    days = ((result * 0.0000000115741)); //nr de dias 
-                                  
-                                    if(days > userHistoricDays){
-                                      //  alert("cenas");
-                                        readingRef = new Firebase("https://brainlight2.firebaseio.com/leituras/" + childSnapshot.val().Leitura);
-                                       refInfoDelete = new Firebase("https://brainlight2.firebaseio.com/leiturasinfo/" + childSnapshot.key());
-                                       // alert(readingRef);
-                                        refInfoDelete.remove();
-                                        readingRef.remove();    
-                                    }
-                                }
-                            });
-                        });
                     });
                 },
                 hideMe: function (one, two) {
@@ -262,6 +210,7 @@
                 changeTwo: function () {
                     this.two = !this.two;
                 }
+
             });
         })();
     </script>

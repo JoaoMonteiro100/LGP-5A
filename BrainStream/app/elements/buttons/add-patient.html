@@ -38,13 +38,13 @@
         <paper-icon-button data-dialog="modal" icon="icons:add" on-click="clickHandler"></paper-icon-button>
         <paper-dialog id="newPacientDialog" modal>
             <h1>Add new Patient</h1>
-                <firebase-collection
+            <firebase-collection
                     order-by-child="groups/group2"
                     order-value-type="boolean"
                     equal-to="true"
-                    location="https://brainlight2.firebaseio.com/users"
+                    location="https://brainlight.firebaseio.com/users"
                     data="{{users}}">
-                </firebase-collection>
+            </firebase-collection>
             <paper-dropdown-menu label="Doctor associated" id="doctorAssociated">
                 <paper-listbox  class="dropdown-content" selected="{{myChoice}}">
                     <template is="dom-repeat" items="[[users]]" as="usr">
@@ -55,7 +55,6 @@
                 </paper-listbox>
             </paper-dropdown-menu>
             <form is="iron-form" id="newuserform">
-                <paper-checkbox id="enableAnalysis">Enable analysis</paper-checkbox>
                 <paper-input id="firstname" name="firstname" label="First Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="lastname" name="lastname" label="Last Name" char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" required auto-validate></paper-input>
                 <paper-input id="unumber" name="unumber" label="Number" auto-validate pattern="[0-9]*" error-message="numbers only!" required auto-validate></paper-input>
@@ -108,17 +107,12 @@
                 setNewPatient: function() {
                     this.newPatient = {
                         doctorAssociated: this.users[this.myChoice].__firebaseKey__,
-                        enableAnalysis: this.$.enableAnalysis.checked,
                         name: this.$.firstname.value,
                         lastname: this.$.lastname.value,
                         //picture: this.user.google.cachedUserProfile.picture,
-                        mail: this.$.unumber.value + "@brainstream.com",
                         number: this.$.unumber.value,
                         gender: this.$.genderdrop.value,
-<<<<<<< HEAD
-=======
                         mail: this.$unumber.value + "@brainstream.com",
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                         historicDays: 120,
                         groups: {
                             group3: true

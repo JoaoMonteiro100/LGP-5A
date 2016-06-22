@@ -49,7 +49,7 @@
                         order-by-child="groups/group2"
                         order-value-type="boolean"
                         equal-to="true"
-                        location="https://brainlight2.firebaseio.com/users"
+                        location="https://brainlight.firebaseio.com/users"
                         data="{{users}}">
                 </firebase-collection>
                 <div id="doctorAssociated" class="textstyle2">
@@ -109,23 +109,23 @@
                 setNewRequest: function () {
 
 
-                  /*   var ref = new Firebase(app.userURL(this.user));
+                    /*   var ref = new Firebase(app.userURL(this.user));
 
-                        ref.on('value', function (snapshot) {
-                            self.user = snapshot.val();
-                           // self.user.__firebaseKey__ = snapshot.key();
-                          /*  self.selected = self.user.gender == "Male" ? 1 : 0;
-                            if (!self.userdef) {
-                                self.toggle();
-                                self.userdef = true;
-                            }*/
-                           // alert(user.doctorAssociated);
-                        //});
-                    
-                        /*alert("cenas");
-                        alert(this.user.__firebaseKey__);
-                        alert(this.user.doctorAssociated);
-                        alert(this.newDoctorKey);*/
+                     ref.on('value', function (snapshot) {
+                     self.user = snapshot.val();
+                     // self.user.__firebaseKey__ = snapshot.key();
+                     /*  self.selected = self.user.gender == "Male" ? 1 : 0;
+                     if (!self.userdef) {
+                     self.toggle();
+                     self.userdef = true;
+                     }*/
+                    // alert(user.doctorAssociated);
+                    //});
+
+                    /*alert("cenas");
+                     alert(this.user.__firebaseKey__);
+                     alert(this.user.doctorAssociated);
+                     alert(this.newDoctorKey);*/
                     this.newRequest = {
                         // mail: this.user.mail,
 
@@ -139,10 +139,10 @@
 
 
                 addRequest: function () {
-                    var ref = new Firebase("https://brainlight2.firebaseio.com/requests");
+                    var ref = new Firebase("https://brainlight.firebaseio.com/requests");
                     var request = this.setNewRequest();
                     var requestRef = ref.push();
-                  //  alert(JSON.stringify(request));
+                    //  alert(JSON.stringify(request));
                     requestRef.set(request);
                 },
 
@@ -176,7 +176,7 @@
 
                 ready: function () {
                     var self = this;
-                                        var userdef = false;
+                    var userdef = false;
 
                     addEventListener('selected-user-patient', function (user) {
                         var userRef = new Firebase(app.userURL(user.detail));
@@ -191,17 +191,17 @@
                             }
                         });
 
-                      //  self.user = user.detail;
-                      //  alert(JSON.stringify(self.user.doctorAssociated));
-                     /*   self.selected = self.user.gender == "Male" ? 1 : 0;
-                        if (!self.userdef) {
-                            self.toggle();
-                            self.userdef = true;
-                        }*/
+                        //  self.user = user.detail;
+                        //  alert(JSON.stringify(self.user.doctorAssociated));
+                        /*   self.selected = self.user.gender == "Male" ? 1 : 0;
+                         if (!self.userdef) {
+                         self.toggle();
+                         self.userdef = true;
+                         }*/
                         var doctorRef = new Firebase(app.userURL(self.user.doctorAssociated));
                         //alert("cenas");
                         //alert(doctorRef);
-                        
+
                         doctorRef.on('value', function(snapshot) {
                             var doc = snapshot.val();
                             self.set('doctor', doc);
