@@ -89,13 +89,6 @@
 
                     var readingRef;
                     var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
-                    var readingRef;
-                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
-                    var refInfoDelete;
-                    var patientToDeleteHistoric;
-
-                    var readingRef;
-                    var ref = new Firebase("https://brainlight.firebaseio.com/leiturasinfo");
                     var refInfoDelete;
                     var patientToDeleteHistoric;
 
@@ -106,6 +99,8 @@
                                 patientToDeleteHistoric = childSnapshot.val().Patient;
                             }
                         });
+
+
                         snapshot.forEach(function (childSnapshot) {
                             if (childSnapshot.val().Patient == patientToDeleteHistoric) {
                                 refInfoDelete = new Firebase("https://brainlight.firebaseio.com/leiturasinfo/" + childSnapshot.key());
@@ -122,11 +117,19 @@
                 ready: function () {
                     var self = this;
                     var readingdef = false;
+                    addEventListener('selected-hist-emotiv', function (defs) {
+                        self.reading = defs.detail[1];
+                        if (!readingdef) {
+                            self.toggle();
+                            readingdef = true;
+                        }
+                    });
+
                     addEventListener('selected-hist', function (reading) {
                         self.reading = reading.detail;
-                        if (!self.readingdef) {
+                        if (!readingdef) {
                             self.toggle();
-                            self.readingdef = true;
+                            readingdef = true;
                         }
                     });
                 },
