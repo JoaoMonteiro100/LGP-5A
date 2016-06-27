@@ -1,9 +1,10 @@
-![BrainLight logo](http://i.imgur.com/uVyWA6x.png "BrainLight")
+![Dottech logo](http://i.imgur.com/TyebfdI.png "Dottech")
+![BrainLight logo](http://i.imgur.com/mDt3hTP.png "BrainLight")
 
 ## CONTENTS
    
  * [Introduction](#introduction)
- * [Release notes v.0.5](#release notes v0.5)
+ * [Releases](#releases)
  * [Client](#client)
  * [Instructions](#instructions)
  * [FAQ](#faq)
@@ -25,35 +26,11 @@ The framework, **BrainLight**, is be the foundation upon which countless applica
 ---
  
  
-## RELEASE NOTES v0.5
+## RELEASES
 
-**Documentação:**
-* Relatório de especificação de requisitos
-  * Nova user story: FW-US13 - Prioridade baixa - "Como Utilizador quero ver análises de filtros simples passa-altas, passa-baixas e de banda."
-* Plano de testes de aceitação
-  * Inclui resultados dos testes realizados para a versão atual.
-* Planeamento
-
-**BrainLight:**
-* User Manual (em desenvolvimento)
-* Interface gráfica completa para o dispositivo NeuroSky Mindset
-* Visualização da informação em tempo real na interface
-* Comunicação funcional entre Neurosky, módulo de gestão e interface
-* Análises funcionais, mas não são aplicadas ao NeuroSky
-  * Necessitam de atualizações devido a novas informações obtidas relativamente às unidades dos dados do Emotiv
-* API funcional, mas desatualizada
-* Aplicação da transformada rápida de Fourier às ondas do Emotiv
-
-**BrainStream:**
-* User Manual (em desenvolvimento)
-* Sistema de autenticação
-* Gestão de utilizadores
-* Updates em tempo real à base de dados
-* Gráficos atualizados em tempo real e com opção de selecionar ondas pretendidas
-* Histórico funcional
-* Estado online/offline de utilizadores funcional
-* Possibilidade de um médico tirar notas e sinalizar leituras
-* Interface do paciente quase completa
+Below are the release notes for each release so far:
+* [Version 0.5](Releases/0-5.md)
+* [Version 1.0](Releases/1-0.md)
 
 
 ---
@@ -61,7 +38,7 @@ The framework, **BrainLight**, is be the foundation upon which countless applica
  
 ## CLIENT
 
-This project was developed for INOVA+, a company specialized in supporting the growth of organisations through innovation, internationalization and access to financing. To learn more about them visit [their website](http://inovamais.eu/en/).
+This project was developed for INOVA+, a company specialized in research and development in the areas of health, sustainability, smart buildings and security. To learn more about them visit [their website](http://inovamais.eu/en/).
 
 
 ---
@@ -72,6 +49,10 @@ This project was developed for INOVA+, a company specialized in supporting the g
 **BrainLight** and **BrainStream** are independent projects with few similarities between then. Hence, if you want to know more about their requirements, installation guides, or other specific information please refer to their own user guides:
 * [BrainLight's User Manual](BrainLight/userManual.pdf)
 * [BrainStream's User Manual](BrainStream/userManual.pdf)
+
+If you are a developer and intend to know more about how these solutions were made or how to edit them, please consult their respective developer guides:
+* [BrainLight's Developer Manual](BrainLight/developerManual.pdf)
+* [BrainStream's Developer Manual](BrainStream/developerManual.pdf)
 
 Note, however, that both of them are currently only available in Portuguese. If you need English instructions, please contact [João Monteiro](https://github.com/JoaoMonteiro100), team leader and project manager.
 
@@ -88,7 +69,7 @@ A: When INOVA+ pitched their idea to the group, their goal was to create a frame
 
 **Q: Why did you do this project?**
 
-A: This project was done for the course [LGP](http://lgp.fe.up.pt/), a Living Lab for Professional Skills Development from the Integrated Masters in Informatics and Computing Engineering in the [Faculty of Engineering of the University of Porto](https://sigarra.up.pt/feup/en/WEB_PAGE.INICIAL) in Porto, Portugal. The goal is that companies and students work together to build solutions that may have a lasting impact in society.
+A: This project was done for the course [LGP](http://lgp.fe.up.pt/), a living lab for professional skills development from the Integrated Masters in Informatics and Computing Engineering in the [Faculty of Engineering of the University of Porto](https://sigarra.up.pt/feup/en/WEB_PAGE.INICIAL) in Porto, Portugal. The goal is that companies and students work together to build solutions that may have a lasting impact in society.
 
 
 **Q: What do you hope to achieve with this project?**
@@ -98,7 +79,7 @@ A: The ultimate goal of **BrainLight** is to help in studies related with optoge
 
 **Q: Was this done solely by informatics students?**
 
-A: No, the students were part of a fictional "company", made of dozens of students from different areas (informatics, multimedia and design). The informatics students are mentioned [below](#maintainers); but the final product is also the result of contributions from people of other areas from their company [Dottech](http://dottech.xyz/).
+A: No, the students were part of a fictional "company", composed of dozens of students from different areas (informatics, multimedia and design). The informatics students are mentioned [below](#maintainers); but the final product is also the result of contributions from people of other areas from their company [Dottech](http://dottech.xyz/).
 
 
 **Q: Why can't I see all commits since the beginning?**
