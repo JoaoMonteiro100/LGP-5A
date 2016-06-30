@@ -46,7 +46,7 @@ This project was developed for INOVA+, a company specialized in research and dev
  
 ## INSTRUCTIONS
    
-**BrainLight** and **BrainStream** are independent projects with few similarities between then. Hence, if you want to know more about their requirements, installation guides, or other specific information please refer to their own user guides:
+**BrainLight** and **BrainStream** are independent projects with few similarities between them. Hence, if you want to know more about their requirements, installation guides, or other specific information please refer to their own user guides:
 * [BrainLight's User Manual](BrainLight/userManual.pdf)
 * [BrainStream's User Manual](BrainStream/userManual.pdf)
 
