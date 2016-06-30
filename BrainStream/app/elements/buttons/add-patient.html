@@ -112,7 +112,7 @@
                         //picture: this.user.google.cachedUserProfile.picture,
                         number: this.$.unumber.value,
                         gender: this.$.genderdrop.value,
-                        mail: this.$unumber.value + "@brainstream.com",
+                        mail: this.$.unumber.value + "@brainstream.com",
                         historicDays: 120,
                         groups: {
                             group3: true
@@ -151,7 +151,7 @@
                             password: this.$.pwinput.value
                         }, function(error, userData) {
                             if(error) {
-                                alert('Error');
+                                alert(error);
                             } else {
                                 self.addPatient();
                                 self.$.newuserform.reset();
@@ -166,7 +166,7 @@
                 },
 
                 _reset:function() {
-                    document.getElementById('newuserform').reset();
+                    this.$.newuserform.reset();
                 },
 
                 generatePW:function() {
