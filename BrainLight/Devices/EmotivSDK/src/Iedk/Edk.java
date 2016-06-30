@@ -8,7 +8,7 @@ import com.sun.jna.ptr.NativeLongByReference;
 import java.util.List;
 
 public interface Edk extends Library {
-	Edk INSTANCE = (Edk) Native.loadLibrary("Devices\\EmotivSDK\\edk", Edk.class);
+	Edk INSTANCE = (Edk) Native.loadLibrary("edk", Edk.class);
 
 	public enum EE_ExpressivThreshold_t {
 		EXP_SENSITIVITY
