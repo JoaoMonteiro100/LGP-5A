@@ -104,7 +104,7 @@ public interface Edk extends Library {
 	// DEPLOYMENT::NON_PREMIUM_RELEASE::REMOVE_END
 
 	// ! Input sensor description
-	public static class InputSensorDescriptor_t extends Structure {
+	public static abstract class InputSensorDescriptor_t extends Structure {
 		EmoState.EE_InputChannels_t channelId; // logical channel id
 		int fExists; // does this sensor exist on this headset model
 		String pszLabel; // text label identifying this sensor
