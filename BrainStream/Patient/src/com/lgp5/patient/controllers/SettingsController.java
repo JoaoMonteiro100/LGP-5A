@@ -84,8 +84,4 @@ public class SettingsController {
             e.printStackTrace();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> parent of e10a700... Merge

@@ -1,10 +1,7 @@
 package com.lgp5.patient.controllers;
 
 import com.firebase.client.*;
-<<<<<<< HEAD
-=======
 import com.lgp5.patient.utils.Constants;
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 import com.lgp5.patient.utils.UserData;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -19,14 +16,10 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-=======
-import java.util.Calendar;
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,10 +71,6 @@ public class SelectDeviceController {
             public void onCancelled(FirebaseError firebaseError) {
 
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
         });
     }
 
@@ -99,35 +88,14 @@ public class SelectDeviceController {
         values.put("Note", "");
         values.put("Leitura", "");
 
-<<<<<<< HEAD
-        String time = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR) + " - " +
-                cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
-
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
-        Date date = null;
-        try {
-            date = df.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long epoch = date.getTime();
-        
-        values.put("Time", time);
-        values.put("Time2",epoch);
-=======
         String time = cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH) + " - " +
                 cal.get(Calendar.HOUR_OF_DAY) + "." + cal.get(Calendar.MINUTE) + "." + cal.get(Calendar.SECOND);
 
         values.put("time", time);
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
         Firebase newAppRef = appRef.push();
         newAppRef.setValue(values);
         UserData.READING_LAST_KEY = newAppRef.getKey();
-<<<<<<< HEAD
-
-=======
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
     }
 
 
@@ -149,20 +117,6 @@ public class SelectDeviceController {
                     Stage stage;
                     switch (comboBoxValue) {
                         case "NeuroSky Mindset":
-<<<<<<< HEAD
-                            if(!UserData.KEY.isEmpty()) {
-                                createNewInfoReading(comboBoxValue);
-                                launchNeuroSkyView();
-                                //get a handle to the stage
-                                stage = (Stage) selectDeviceComboBox.getScene().getWindow();
-                                //close current window
-                                stage.close();
-                            }
-                            break;
-                        case "Emotiv Epoc":
-                            createNewInfoReading(comboBoxValue);
-                            //launchEmotivView();
-=======
                             UserData.DEVICE = Constants.DeviceConstants.NEUROSKY;
                             createNewInfoReading(comboBoxValue);
                             launchAnalysisView();
@@ -175,7 +129,6 @@ public class SelectDeviceController {
                             UserData.DEVICE = Constants.DeviceConstants.EMOTIV;
                             createNewInfoReading(comboBoxValue);
                             launchAnalysisView();
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                             //get a handle to the stage
                             stage = (Stage) selectDeviceComboBox.getScene().getWindow();
                             //close current window
@@ -190,22 +143,14 @@ public class SelectDeviceController {
     }
 
 
-<<<<<<< HEAD
-    private void launchNeuroSkyView() {
-=======
     private void launchAnalysisView() {
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
-<<<<<<< HEAD
-=======
             AnalysisController analysisController = loader.getController();
             analysisController.setStage(stage);
             analysisController.createRecordAfterStart();
-
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
             stage.setScene(new Scene(parent));
             stage.setTitle("BrainLight");
             stage.resizableProperty().setValue(Boolean.FALSE);
@@ -229,8 +174,4 @@ public class SelectDeviceController {
             e.printStackTrace();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017

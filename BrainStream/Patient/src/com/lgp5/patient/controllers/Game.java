@@ -38,11 +38,6 @@ public class Game extends JPanel {
         myButton.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent event) {
-<<<<<<< HEAD
-                 System.out.println("cenas");
-=======
-                System.out.println("cenas");
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
                 try {
                     game.start();
                 } catch (InterruptedException e) {
@@ -126,13 +121,8 @@ public class Game extends JPanel {
         }
         if (choice1 == 1) {
             setVisible(false);
-<<<<<<< HEAD
-           System.exit(0);
-          //  frame.dispose();
-=======
             System.exit(0);
             //  frame.dispose();
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
         }
         x = 0;
         y = 0;
@@ -210,11 +200,7 @@ public class Game extends JPanel {
         frame.add(game);
         frame.setSize(500, 500);
         frame.setVisible(true);
-<<<<<<< HEAD
-      //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-=======
         //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
->>>>>>> a5bc84d3c04cf674a96b7eaf146218b33ae20017
 
 
 
