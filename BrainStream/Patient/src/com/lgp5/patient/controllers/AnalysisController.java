@@ -10,6 +10,7 @@ import com.lgp5.patient.utils.Constants;
 import interfaces.HeadSetDataInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -161,7 +162,7 @@ public class AnalysisController {
     // Called after the FXML has been initialized
     @FXML
     private void initialize() {
-        /**settings.setOnAction(new EventHandler<ActionEvent>() {
+        settings.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Stage stage;
@@ -184,7 +185,7 @@ public class AnalysisController {
                 //stage.close();
             }
         });
-        createNewFirebaseRecord();*/
+        //createNewFirebaseRecord();
 
         /** barChart things **/
         String[] moodsArray = {"Attention", "Meditation"};
