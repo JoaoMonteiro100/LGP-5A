@@ -99,7 +99,7 @@ public class LoginController {
 
     private void launchSelectDeviceView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/selectDeviceView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/selectDeviceView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));

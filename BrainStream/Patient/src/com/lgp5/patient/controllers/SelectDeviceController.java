@@ -145,7 +145,7 @@ public class SelectDeviceController {
 
     private void launchAnalysisView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/analysisView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             AnalysisController analysisController = loader.getController();
@@ -163,7 +163,7 @@ public class SelectDeviceController {
 
     private void launchEmotivView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/menuEmotivView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/menuEmotivView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));

@@ -59,7 +59,7 @@ public class SettingsController {
 
     private void lauchAnalysisView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/analysisView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
@@ -73,7 +73,7 @@ public class SettingsController {
 
     private void lauchGameView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/gameView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/gameView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));

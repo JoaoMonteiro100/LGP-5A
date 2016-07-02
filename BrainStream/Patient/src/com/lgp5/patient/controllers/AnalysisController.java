@@ -118,6 +118,7 @@ public class AnalysisController {
                 }
             };
 
+            //neurosky serial number
             Neurosky neurosky = new Neurosky("0013EF004809", headSetDataInterface);
             neuroskyThread = new Thread(neurosky);
             neuroskyThread.setDaemon(true);
@@ -281,7 +282,7 @@ public class AnalysisController {
 
     private void launchSettingsView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/settingsView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/settingsView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
@@ -296,7 +297,7 @@ public class AnalysisController {
 
     private void launchGameView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/gameView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/gameView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
@@ -311,7 +312,7 @@ public class AnalysisController {
     @FXML
     private void launchAnalysisWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/chooseAnalysisView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/chooseAnalysisView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));

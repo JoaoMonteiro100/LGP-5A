@@ -152,7 +152,7 @@ public class ChooseAnalysisController {
 
     private void launchAnalysisInProgressView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/analysisInProgressView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/lgp5/patient/views/analysisInProgressView.fxml"));
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
