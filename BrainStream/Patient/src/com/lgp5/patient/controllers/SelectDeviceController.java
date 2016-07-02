@@ -152,7 +152,7 @@ public class SelectDeviceController {
             analysisController.setStage(stage);
             analysisController.createRecordAfterStart();
             stage.setScene(new Scene(parent));
-            stage.setTitle("BrainLight");
+            stage.setTitle("BrainStream - Analysis");
             stage.resizableProperty().setValue(Boolean.FALSE);
             stage.show();
         } catch (IOException e) {
@@ -167,7 +167,7 @@ public class SelectDeviceController {
             Parent parent = (Parent) loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(parent));
-            stage.setTitle("BrainLight");
+            stage.setTitle("BrainStream");
             stage.resizableProperty().setValue(Boolean.FALSE);
             stage.show();
         } catch (IOException e) {

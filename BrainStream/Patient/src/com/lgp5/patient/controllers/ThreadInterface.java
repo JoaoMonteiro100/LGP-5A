@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Created by cenas on 16/06/2016.
- */
 public class ThreadInterface implements Runnable{
 
 
